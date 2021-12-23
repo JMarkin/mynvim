@@ -3,6 +3,16 @@ if not present then
    return
 end
 
+local highlight = function(group, fg, bg, attr, sp)
+		fg = fg and "guifg=" .. fg or "guifg=NONE"
+		bg = bg and "guibg=" .. bg or "guibg=NONE"
+		attr = attr and "gui=" ..attr or "gui=NONE"
+		sp = sp and "guisp=" .. sp or ""
+
+		vim.api.nvim_command("highlight " .. group .. " ".. fg .. " " .. bg .. " ".. attr .. " " .. sp)
+end
+
+
 return function()
 --- gruvbox
     vim.g.gruvbox_material_background = 'soft'
@@ -19,13 +29,16 @@ return function()
     vim.g.sonokai_diagnostic_text_highlight = true
     vim.g.sonokai_diagnostic_virtual_text = 'colored'
     vim.g.sonokai_diagnostic_line_highlight = true
-    
+
+-- moonfly
+    vim.g.moonflyUnderlineMatchParen = 1
+
     vim.opt.background='dark'
     vim.cmd "colorscheme sonokai"
 
     lualine.setup({
       options = {
-        theme = 'sonokai'
+          theme='sonokai'
       },
       extensions = {'quickfix'},
       sections = {
@@ -33,7 +46,7 @@ return function()
         lualine_b = {
             'branch',
             'diff',
-            {'diagnostics', sources={'nvim_lsp'}}
+            {'diagnostics', sources={'nvim_diagnostic'}}
         },
         lualine_c = {
             {'filename', path=1}
@@ -43,5 +56,6 @@ return function()
         lualine_z = {'location'}
     }
     })
+
 end
 

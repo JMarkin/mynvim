@@ -3,24 +3,19 @@ local g = vim.g
 
 return function(m)
 
+---Переопрдееляем moving в vim
+noremap("j", "h")
+noremap("k", "j")
+noremap("l", "k")
+noremap(";", "l")
+
+
 m.nname("<space>b", "Buffer")
 
 --------Основное управление буферами
-nnoremap("<space>bd", "<cmd>bdelete<Cr>", "Buffer: delete current")
-nnoremap("<space>bc", "<cmd>BufferLineCloseRight<Cr><cmd>BufferLineCloseLeft<cr>", "Buffer: delete other")
-nnoremap("b[", ":BufferLineCycleNext<CR>", "Buffer: next")
-nnoremap("b]", "<cmd>BufferLineCyclePrev<CR>","Buffer: prev")
-
-nnoremap("<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: ->1")
-nnoremap("<leader>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: ->2")
-nnoremap("<leader>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: ->3")
-nnoremap("<leader>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: ->4")
-nnoremap("<leader>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: ->5")
-nnoremap("<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: ->6")
-nnoremap("<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: ->7")
-nnoremap("<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: ->8")
-nnoremap("<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: ->9")
-
+nnoremap("<leader>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
+nnoremap("<leader>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
+require("buftabline").map({ prefix = "<Leader>c", cmd = "bdelete" })
 
 
 ---------Tab смещение
@@ -47,13 +42,13 @@ call neomake#configure#automake('w')
 g.neomake_open_list = 2
 
 ---------Управление табами
-nnoremap("<space>l", "<C-w>l", "Window: right")
+nnoremap("<space>;", "<C-w>l", "Window: right")
 nnoremap("<space><right>", "<C-w>l", "Window: right")
-nnoremap("<space>j", "<C-w>j", "Window: bottom")
+nnoremap("<space>k", "<C-w>j", "Window: bottom")
 nnoremap("<space><down>", "<C-w>j", "Window: bottom")
-nnoremap("<space>k", "<C-w>k", "Window: top")
+nnoremap("<space>l", "<C-w>k", "Window: top")
 nnoremap("<space><up>", "<C-w>k", "Window: top")
-nnoremap("<space>h", "<C-w>h", "Window: left")
+nnoremap("<space>j", "<C-w>h", "Window: left")
 nnoremap("<space><left>", "<C-w>h", "Window: left")
 
 ---------Тогл Инструментов
