@@ -59,11 +59,20 @@ exec(
 	[[
 augroup YankHighlight
 autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
+autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300}
 augroup end
 ]],
 	false
 )
+
+vim.diagnostic.config({
+	underline = true,
+	signs = true,
+	virtual_text = true,
+	float = true,
+	update_in_insert = true, -- default to false
+	severity_sort = true, -- default to false
+})
 
 return function(m)
 	nnoremap("<C-A>", "ggVG", "Vesual all")

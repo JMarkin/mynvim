@@ -7,11 +7,25 @@ end
 local use = packer.use
 
 return packer.startup(function()
-	use({ "stevearc/dressing.nvim" })
+	--- Украшения
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup()
+		end,
+	})
+	use({
+		"gelguy/wilder.nvim",
+		requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
+		config = function()
+			require("plugins.wilder")
+		end,
+	})
 	use({
 		"nvim-lua/plenary.nvim",
 	})
 
+	--- вместо ESC просто jj
 	use({
 		"max397574/better-escape.nvim",
 		event = "InsertEnter",
@@ -20,6 +34,7 @@ return packer.startup(function()
 		end,
 	})
 
+	--- Локальный настройки дял папки с помощью .lvimrc с хэшем
 	use("MarcWeber/vim-addon-local-vimrc")
 
 	use({
@@ -27,11 +42,12 @@ return packer.startup(function()
 		cmd = { "PackerCompile", "PackerInstall", "PackerSync" },
 	})
 
+	--- Подцветка отступов
 	use({
 		"lukas-reineke/indent-blankline.nvim",
 		config = function()
 			vim.opt.list = true
-			vim.opt.listchars:append("space:⋅")
+			-- vim.opt.listchars:append("space:⋅")
 			vim.g.indent_blankline_context_patterns = { "class", "function", "method", "if" }
 
 			require("indent_blankline").setup({
@@ -48,12 +64,9 @@ return packer.startup(function()
 	use({
 		"sainnhe/sonokai",
 	})
-	use({
-		"Mofiqul/dracula.nvim",
-	})
-	use("bluz71/vim-moonfly-colors")
-	use("ray-x/aurora")
 	use("Iron-E/nvim-highlite")
+	use("rmehri01/onenord.nvim")
+	use("rebelot/kanagawa.nvim")
 
 	-- Информационная строка внизу
 	use({
@@ -115,13 +128,37 @@ return packer.startup(function()
 		end,
 	})
 
-	-- Автокомплиты
+	-- LSP
 	use("neovim/nvim-lspconfig")
 	use("williamboman/nvim-lsp-installer")
 	use({
 		"RishabhRD/nvim-lsputils",
 		requires = "RishabhRD/popfix",
 	})
+	use({
+		"tami5/lspsaga.nvim",
+		config = function()
+			require("lspsaga").init_lsp_saga()
+		end,
+	})
+
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			require("null-ls").setup()
+		end,
+		requires = { "nvim-lua/plenary.nvim" },
+	})
+
+	use({
+		"ray-x/lsp_signature.nvim",
+	})
+	use({
+		"folke/lsp-colors.nvim",
+		require("lsp-colors").setup(),
+	})
+
+	--- Автокомлиты
 	use({
 		"ms-jpq/coq_nvim",
 		after = { "nvim-lsp-installer" },
@@ -141,29 +178,14 @@ return packer.startup(function()
 	})
 
 	-- Табы
-	--    	use({
-	-- 	"akinsho/bufferline.nvim",
-	-- 	requires = "kyazdani42/nvim-web-devicons",
-	-- 	after = "mapx",
-	-- 	config = function()
-	-- 		require("plugins.bufferline")
-	-- 	end,
-	-- })
 	use({
-		"jose-elias-alvarez/buftabline.nvim",
-		requires = { "kyazdani42/nvim-web-devicons" }, -- optional!
+		"akinsho/bufferline.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
-			require("buftabline").setup({})
+			require("plugins.bufferline")
 		end,
 	})
 	use("Asheq/close-buffers.vim")
-	use({
-		"kwkarlwang/bufresize.nvim",
-		after = "mapx",
-		config = function()
-			require("plugins.bufresize")
-		end,
-	})
 
 	-- Навигация внутри файла по классам и функциям
 	use("liuchengxu/vista.vim")
@@ -205,9 +227,6 @@ return packer.startup(function()
 	-- Неплохой модуль для раст
 	use({
 		"simrat39/rust-tools.nvim",
-		requires = {
-			{ "neovim/nvim-lspconfig", "mfussenegger/nvim-dap" },
-		},
 		ft = { "rust" },
 		config = function()
 			require("settings.lang").rust()
@@ -226,12 +245,7 @@ return packer.startup(function()
 	-- gtags
 	use("jsfaint/gen_tags.vim")
 
-	-- подцветка ошибок вне lsp
-	use({
-		"folke/lsp-colors.nvim",
-		require("lsp-colors").setup(),
-	})
-
+	--- поиски по фалам првоеркам и т.п. fzf вобщем
 	use({
 		"ibhagwan/fzf-lua",
 		requires = {
@@ -251,6 +265,7 @@ return packer.startup(function()
 		requires = "nvim-treesitter/nvim-treesitter",
 	})
 
+	--- Стабилизация табов и буферов при ресайзе терминала
 	use({
 		"luukvbaal/stabilize.nvim",
 		config = function()
