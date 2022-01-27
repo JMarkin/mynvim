@@ -34,7 +34,7 @@ return packer.startup(function()
 		end,
 	})
 
-	--- Локальный настройки дял папки с помощью .lvimrc с хэшем
+	--- Локальный настройки для папки с помощью .lvimrc с хэшем
 	use("MarcWeber/vim-addon-local-vimrc")
 
 	use({
