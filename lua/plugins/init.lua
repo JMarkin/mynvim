@@ -210,9 +210,9 @@ return packer.startup(function()
 	})
 
 	-- Даже если включена русская раскладка vim команды будут работать
-	use("powerman/vim-plugin-ruscmd")
-
-	-- popup окошки
+	-- use("powerman/vim-plugin-ruscmd")
+	
+    -- popup окошки
 	use("nvim-lua/popup.nvim")
 
 	-- Линтеры
