@@ -109,15 +109,18 @@ return packer.startup(function()
 	})
 
 	-- Подцветка синтаксиа
-	use("p00f/nvim-ts-rainbow")
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-		config = function()
+			})
+
+    use({
+        "p00f/nvim-ts-rainbow",
+        config = function()
 			require("plugins.treesitter")
 		end,
-		after = { "nvim-ts-rainbow" },
-	})
+		after = { "nvim-treesitter" },
+    })
 
 	use("yamatsum/nvim-cursorline")
 	use({
@@ -155,7 +158,9 @@ return packer.startup(function()
 	})
 	use({
 		"folke/lsp-colors.nvim",
-		require("lsp-colors").setup(),
+		config = function () 
+		        require("lsp-colors").setup()
+	        end
 	})
 
 	--- Автокомлиты

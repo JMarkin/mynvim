@@ -1,7 +1,5 @@
 local cmd = vim.cmd
 
-cmd "packadd packer.nvim"
-
 local present, packer = pcall(require, "packer")
 
 if not present then
@@ -13,9 +11,9 @@ if not present then
    vim.fn.system {
       "git",
       "clone",
-      "https://github.com/wbthomason/packer.nvim",
       "--depth",
-      "20",
+      "1",
+      "https://github.com/wbthomason/packer.nvim",
       packer_path,
    }
 
