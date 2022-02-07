@@ -11,8 +11,8 @@ require("bufferline").setup({
 			local is_qf = vim.bo[buf].filetype == "qf"
 			show_bf = show_bf and not is_qf
 
-			local is_noname = vim.bo[buf].filetype == ""
-			show_bf = show_bf and not is_noname
+			-- local is_noname = vim.bo[buf].filetype == ""
+			-- show_bf = show_bf and not is_noname
 			
             return show_bf
 		end,
@@ -40,14 +40,6 @@ require("bufferline").setup({
 		right_trunc_marker = "",
         always_show_bufferline = true,
 		offsets = {
-			{
-				filetype = "NvimTree",
-				text = function()
-					return vim.fn.getcwd()
-				end,
-				highlight = "Directory",
-				text_align = "left",
-			},
 			{
 				filetype = "Vista",
 				text = "TagBar",

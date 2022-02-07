@@ -15,3 +15,5 @@ ts_config.setup {
     max_file_lines = 500, -- Do not enable for files with more than n lines, int
    }
 }
+
+require("treesitter-context").setup()

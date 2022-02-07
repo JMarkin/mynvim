@@ -4,10 +4,10 @@ local g = vim.g
 return function(m)
 
 ---Переопрдееляем moving в vim
-noremap("j", "h")
-noremap("k", "j")
-noremap("l", "k")
-noremap(";", "l")
+-- noremap("j", "h")
+-- noremap("k", "j")
+-- noremap("l", "k")
+-- noremap(";", "l")
 
 
 m.nname("<space>b", "Buffer")
@@ -24,6 +24,10 @@ nnoremap("<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
 nnoremap("<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
 nnoremap("<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
 nnoremap("<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
+
+
+
+nnoremap("<leader>w", "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
 
 ---------Tab смещение
 cmd [[
@@ -43,24 +47,23 @@ g.neoformat_basic_format_trim = 1
 g.neoformat_run_all_formatters = 1
 
 ---------Линтеры
-cmd [[
-call neomake#configure#automake('w')
-]]
-g.neomake_open_list = 2
+-- cmd [[
+-- call neomake#configure#automake('w')
+-- ]]
+-- g.neomake_open_list = 2
 
 ---------Управление табами
-nnoremap("<space>;", "<C-w>l", "Window: right")
+nnoremap("<space>l", "<C-w>l", "Window: right")
 nnoremap("<space><right>", "<C-w>l", "Window: right")
-nnoremap("<space>k", "<C-w>j", "Window: bottom")
+nnoremap("<space>j", "<C-w>j", "Window: bottom")
 nnoremap("<space><down>", "<C-w>j", "Window: bottom")
-nnoremap("<space>l", "<C-w>k", "Window: top")
+nnoremap("<space>k", "<C-w>k", "Window: top")
 nnoremap("<space><up>", "<C-w>k", "Window: top")
-nnoremap("<space>j", "<C-w>h", "Window: left")
+nnoremap("<space>h", "<C-w>h", "Window: left")
 nnoremap("<space><left>", "<C-w>h", "Window: left")
 
 ---------Тогл Инструментов
-nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: toggle")
-nnoremap("<leader>n", "<Cmd>NvimTreeFindFile<CR>", "FileTree: find")
+nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
 nnoremap("<leader>t", "<Cmd>Vista!!<CR>", "Tagbar")
 nnoremap("<leader>g", "<Cmd>LazyGit<CR>", "LazyGit")
 

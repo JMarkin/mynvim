@@ -65,14 +65,6 @@ augroup end
 	false
 )
 
-vim.diagnostic.config({
-	underline = true,
-	signs = true,
-	virtual_text = true,
-	float = true,
-	update_in_insert = true, -- default to false
-	severity_sort = true, -- default to false
-})
 
 return function(m)
 	nnoremap("<C-A>", "ggVG", "Vesual all")

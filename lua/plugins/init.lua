@@ -25,6 +25,13 @@ return packer.startup(function()
 		"nvim-lua/plenary.nvim",
 	})
 
+	use({
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup()
+		end,
+	})
+
 	--- вместо ESC просто jj
 	use({
 		"max397574/better-escape.nvim",
@@ -68,6 +75,9 @@ return packer.startup(function()
 	use("rmehri01/onenord.nvim")
 	use("rebelot/kanagawa.nvim")
 
+	-- Markdown превью
+	use({ "ellisonleao/glow.nvim" })
+
 	-- Информационная строка внизу
 	use({
 		"nvim-lualine/lualine.nvim",
@@ -80,9 +90,14 @@ return packer.startup(function()
 	-- Файловый менеджер
 	use({
 		"kyazdani42/nvim-tree.lua",
-		requires = "kyazdani42/nvim-web-devicons",
+		requires = {
+			"kyazdani42/nvim-web-devicons",
+		},
+		setup = function()
+			require("plugins.filetree").setup()
+		end,
 		config = function()
-			require("plugins.filetree")
+			require("plugins.filetree").config()
 		end,
 	})
 
@@ -112,44 +127,34 @@ return packer.startup(function()
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-			})
+	})
 
-    use({
-        "p00f/nvim-ts-rainbow",
-        config = function()
-			require("plugins.treesitter")
-		end,
-		after = { "nvim-treesitter" },
-    })
-
-	use("yamatsum/nvim-cursorline")
 	use({
 		"romgrk/nvim-treesitter-context",
-		after = { "nvim-treesitter" },
-		config = function()
-			require("treesitter-context").setup()
-		end,
 	})
+	use({
+		"p00f/nvim-ts-rainbow",
+		config = function()
+			require("plugins.treesitter")
+		end,
+		after = { "nvim-treesitter", "nvim-treesitter-context" },
+	})
+
+	use("yamatsum/nvim-cursorline")
 
 	-- LSP
 	use("neovim/nvim-lspconfig")
 	use("williamboman/nvim-lsp-installer")
-	use({
-		"RishabhRD/nvim-lsputils",
-		requires = "RishabhRD/popfix",
-	})
+	-- use({
+	-- 	"RishabhRD/nvim-lsputils",
+	-- 	requires = "RishabhRD/popfix",
+	-- })
 	use({
 		"tami5/lspsaga.nvim",
-		config = function()
-			require("lspsaga").init_lsp_saga()
-		end,
 	})
 
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("null-ls").setup()
-		end,
 		requires = { "nvim-lua/plenary.nvim" },
 	})
 
@@ -158,23 +163,34 @@ return packer.startup(function()
 	})
 	use({
 		"folke/lsp-colors.nvim",
-		config = function () 
-		        require("lsp-colors").setup()
-	        end
+	})
+
+	use({ "kevinhwang91/nvim-bqf", ft = "qf" })
+
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
 	})
 
 	--- Автокомлиты
 	use({
 		"ms-jpq/coq_nvim",
-		after = { "nvim-lsp-installer" },
+		after = {
+			"nvim-lsp-installer",
+			"lspsaga.nvim",
+			"lsp_signature.nvim",
+			"null-ls.nvim",
+			"lsp-colors.nvim",
+			"trouble.nvim",
+		},
 		setup = function()
-			require("plugins.coq").setup()
+			require("plugins.lsp").setup()
 		end,
 		run = function()
 			vim.cmd(":COQdeps")
 		end,
 		config = function()
-			require("plugins.coq").config()
+			require("plugins.lsp").config()
 		end,
 	})
 	use({
@@ -193,7 +209,12 @@ return packer.startup(function()
 	use("Asheq/close-buffers.vim")
 
 	-- Навигация внутри файла по классам и функциям
-	use("liuchengxu/vista.vim")
+	use({
+		"liuchengxu/vista.vim",
+		setup = function()
+			require("plugins.vista")
+		end,
+	})
 
 	-- LazyGit
 	use("kdheepak/lazygit.nvim")
@@ -216,12 +237,12 @@ return packer.startup(function()
 
 	-- Даже если включена русская раскладка vim команды будут работать
 	-- use("powerman/vim-plugin-ruscmd")
-	
-    -- popup окошки
+
+	-- popup окошки
 	use("nvim-lua/popup.nvim")
 
-	-- Линтеры
-	use("neomake/neomake")
+	-- Линтеры испольузем null-ls
+	-- use("neomake/neomake")
 
 	-- Форматер
 	use("sbdchd/neoformat")
@@ -242,7 +263,12 @@ return packer.startup(function()
 	use({
 		"lewis6991/impatient.nvim",
 	})
-	use("nathom/filetype.nvim")
+	use({
+		"nathom/filetype.nvim",
+		config = function()
+			require("plugins.filetype")
+		end,
+	})
 
 	-- editorconfig
 	use("editorconfig/editorconfig-vim")
@@ -275,6 +301,22 @@ return packer.startup(function()
 		"luukvbaal/stabilize.nvim",
 		config = function()
 			require("stabilize").setup()
+		end,
+	})
+
+	use({
+		"https://gitlab.com/yorickpeterse/nvim-window",
+		config = function()
+			require("nvim-window").setup({})
+		end,
+	})
+
+	--- fold
+	use({
+		"anuvyklack/pretty-fold.nvim",
+		config = function()
+			require("pretty-fold").setup({})
+			require("pretty-fold.preview").setup()
 		end,
 	})
 end)

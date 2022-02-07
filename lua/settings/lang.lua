@@ -15,6 +15,8 @@ M.python = function()
 
 	g.pydocstring_formatter = "google"
 	g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
+    g.neomake_python_enabled_makers = {'python', 'flake8'}
+
 	g.pydocstring_doq_path = "~/.pyenv/shims/doq"
 end
 
@@ -30,21 +32,13 @@ M.maps = function(m)
 	nnoremap("<leader>r", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "GoTo: references")
 
 	nnoremap("<leader>ld", ":lua require('neogen').generate()<CR>", "Lang: generete docs")
-	nnoremap("<leader>lf", "<cmd>lua vim.diagnostic.open_float()<CR>", "Lang: diagnostic float")
+	nnoremap("<leader>li", "<cmd>lua vim.diagnostic.open_float()<CR>", "Lang: diagnostic float")
 	nnoremap("<leader>la", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", "Lang: code action")
 	vnoremap("<leader>la", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", "Lang: code action")
 	nnoremap("<leader>lr", "<cmd>lua require('lspsaga.rename').rename()<CR>", "Lang: rename")
 	nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", "Lang: hover")
-    
+	nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", "Lang: lsp format")
 
-    -- vim.lsp.handlers["textDocument/codeAction"] = require("lsputil.codeAction").code_action_handler
-    -- vim.lsp.handlers["textDocument/references"] = require("lsputil.locations").references_handler
-    -- vim.lsp.handlers["textDocument/definition"] = require("lsputil.locations").definition_handler
-    -- vim.lsp.handlers["textDocument/declaration"] = require("lsputil.locations").declaration_handler
-    -- vim.lsp.handlers["textDocument/typeDefinition"] = require("lsputil.locations").typeDefinition_handler
-    -- vim.lsp.handlers["textDocument/implementation"] = require("lsputil.locations").implementation_handler
-    -- vim.lsp.handlers["textDocument/documentSymbol"] = require("lsputil.symbols").document_handler
-    -- vim.lsp.handlers["workspace/symbol"] = require("lsputil.symbols").workspace_handler
 end
 
 return M
