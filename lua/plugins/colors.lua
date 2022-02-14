@@ -34,7 +34,7 @@ return function()
 		variablebuiltinStyle = "italic",
 		specialReturn = true, -- special highlight for the return keyword
 		specialException = true, -- special highlight for exception handling keywords
-		transparent = true, -- do not set background color
+		transparent = false, -- do not set background color
 		colors = {},
 		overrides = {},
 	})
@@ -44,7 +44,8 @@ return function()
 	local present, lualine = pcall(require, "lualine")
 	if present then
 		lualine.setup({
-			extensions = { "quickfix" },
+			extensions = { "quickfix", "nvim-tree", "fzf" },
+            options = { disabled_filetypes = {"Trouble", "Vista"} },
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = {
@@ -53,9 +54,22 @@ return function()
 					{ "diagnostics", sources = { "nvim_diagnostic" } },
 				},
 				lualine_c = {
+					"filesize",
 					{ "filename", path = 1 },
 				},
-				lualine_x = { "encoding", "fileformat", "filetype" },
+				lualine_x = {
+					"encoding",
+					{
+						"fileformat",
+						icons_enabled = true,
+						symbols = {
+							unix = "LF",
+							dos = "CRLF",
+							mac = "CR",
+						},
+					},
+					"filetype",
+				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
 			},

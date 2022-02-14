@@ -216,8 +216,17 @@ return packer.startup(function()
 		end,
 	})
 
-	-- LazyGit
+	--  Git
 	use("kdheepak/lazygit.nvim")
+	use({
+		"lewis6991/gitsigns.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 
 	-- Colorize
 	use({
@@ -237,6 +246,14 @@ return packer.startup(function()
 
 	-- Даже если включена русская раскладка vim команды будут работать
 	-- use("powerman/vim-plugin-ruscmd")
+
+	-- EasyMotion
+	use({
+		"ggandor/lightspeed.nvim",
+		config = function()
+			require("lightspeed").setup({})
+		end,
+	})
 
 	-- popup окошки
 	use("nvim-lua/popup.nvim")
@@ -276,7 +293,7 @@ return packer.startup(function()
 	-- gtags
 	use("jsfaint/gen_tags.vim")
 
-	--- поиски по фалам првоеркам и т.п. fzf вобщем
+	--- поиски по файлам проверкам и т.п. fzf вобщем
 	use({
 		"ibhagwan/fzf-lua",
 		requires = {
@@ -317,6 +334,34 @@ return packer.startup(function()
 		config = function()
 			require("pretty-fold").setup({})
 			require("pretty-fold.preview").setup()
+		end,
+	})
+
+	---удаление traling
+	use({ "McAuleyPenney/tidy.nvim", event = "BufWritePre" })
+
+	-- превью строчки при :%d
+	use({
+		"nacro90/numb.nvim",
+		config = function()
+			require("numb").setup()
+		end,
+	})
+
+	--nginx
+	use({
+		"chr4/nginx.vim",
+		"chr4/sslsecure.vim",
+		ft = "nginx",
+	})
+
+	-- выключаем yank на del
+	use({
+		"gbprod/cutlass.nvim",
+		config = function()
+			require("cutlass").setup({
+				cut_key = "m",
+			})
 		end,
 	})
 end)

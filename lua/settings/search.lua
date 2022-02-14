@@ -1,4 +1,4 @@
-local cmd = vim.cmd 
+local cmd = vim.cmd
 
 return function(m)
 
@@ -11,5 +11,6 @@ nnoremap("<leader>sl", "<cmd>lua require('fzf-lua').live_grep_native()<Cr>", "Se
 nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').lgrep_curbuf()<Cr>", "Search: current buffer")
 nnoremap("<leader>st", "<cmd>lua require('fzf-lua').tags()<Cr>", "Search: tags")
 nnoremap("<leader>sd", "<cmd>lua require('fzf-lua').lsp_definitions()<Cr>", "Search: Definitions")
-nnoremap("<leader>sh", "<cmd>lua require('fzf-lua').grep_last()<Cr>", "Search: Last")
+nnoremap("<leader>sc", "<cmd>lua require('fzf-lua').commands()<Cr>", "Search: commands")
+nnoremap("<leader>sch", "<cmd>lua require('fzf-lua').command_history()<Cr>", "Search: command_history")
 end

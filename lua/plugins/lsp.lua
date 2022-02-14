@@ -110,8 +110,9 @@ M.config = function()
 		Hint = "#658594",
 	})
 	require("trouble").setup({
-		auto_open = true,
-		auto_close = true,
+		padding = false,
+		auto_open = false,
+		auto_close = false,
 		auto_preview = false,
 		auto_fold = true,
 		action_keys = { -- key mappings for actions in the trouble list
@@ -133,6 +134,7 @@ M.config = function()
 			previous = "k", -- preview item
 			next = "j", -- next item
 		},
+		use_diagnostic_signs = true,
 	})
 
 	vim.diagnostic.config({
@@ -140,7 +142,7 @@ M.config = function()
 		signs = true,
 		virtual_text = true,
 		float = true,
-		update_in_insert = true, -- default to false
+		update_in_insert = false, -- default to false
 		severity_sort = true, -- default to false
 	})
 	vim.o.updatetime = 150

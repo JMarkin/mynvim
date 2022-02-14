@@ -1,4 +1,4 @@
-local cmd = vim.cmd 
+local cmd = vim.cmd
 local g = vim.g
 
 return function(m)
@@ -65,7 +65,12 @@ nnoremap("<space><left>", "<C-w>h", "Window: left")
 ---------Тогл Инструментов
 nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
 nnoremap("<leader>t", "<Cmd>Vista!!<CR>", "Tagbar")
-nnoremap("<leader>g", "<Cmd>LazyGit<CR>", "LazyGit")
+nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
+
+m.nname("<space>g", "Git")
+nnoremap("<leader>gg", "<Cmd>LazyGit<CR>", "Git: lazygit")
+nnoremap("<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
+cmd[[highlight link GitSignsCurrentLineBlame Insert]]
 
 ---------Просмотр больших файлов
 cmd[[
@@ -84,7 +89,7 @@ augroup LargeFile
                 \ if getfsize(f) > g:large_file |
                         \ set eventignore+=FileType |
                         \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
-                        \ 
+                        \
                 \ else |
                         \ set eventignore-=FileType |
                 \ endif
@@ -94,4 +99,3 @@ augroup END
 
 
 end
-
