@@ -19,9 +19,6 @@ opt.mouse = "a"
 g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
 opt.fileencoding = "utf-8"
-cmd([[
-silent! autocmd! FileExplorer *
-]])
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 opt.clipboard = "unnamedplus"

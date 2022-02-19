@@ -13,17 +13,17 @@ return function(m)
 m.nname("<space>b", "Buffer")
 
 --------Основное управление буферами
-nnoremap("<leader>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
-noremap("<leader>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
-nnoremap("<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
-nnoremap("<leader>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
-nnoremap("<leader>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: 3")
-nnoremap("<leader>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: 4")
-nnoremap("<leader>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: 5")
-nnoremap("<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
-nnoremap("<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
-nnoremap("<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
-nnoremap("<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
+nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
+nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
+nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
+nnoremap("<space>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
+nnoremap("<space>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: 3")
+nnoremap("<space>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: 4")
+nnoremap("<space>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: 5")
+nnoremap("<space>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
+nnoremap("<space>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
+nnoremap("<space>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
+nnoremap("<space>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
 
 
 

@@ -53,15 +53,7 @@ return packer.startup(function()
 	use({
 		"lukas-reineke/indent-blankline.nvim",
 		config = function()
-			vim.opt.list = true
-			-- vim.opt.listchars:append("space:⋅")
-			vim.g.indent_blankline_context_patterns = { "class", "function", "method", "if" }
-
-			require("indent_blankline").setup({
-				space_char_blankline = " ",
-				show_current_context = true,
-				show_current_context_start = true,
-			})
+			require("plugins.indent")
 		end,
 	})
 	-- Цвет тема
@@ -74,7 +66,9 @@ return packer.startup(function()
 	use("Iron-E/nvim-highlite")
 	use("rmehri01/onenord.nvim")
 	use("rebelot/kanagawa.nvim")
+	use("Mofiqul/dracula.nvim")
 
+	use("olimorris/onedarkpro.nvim")
 	-- Markdown превью
 	use({ "ellisonleao/glow.nvim" })
 
@@ -288,7 +282,7 @@ return packer.startup(function()
 	})
 
 	-- editorconfig
-	use("editorconfig/editorconfig-vim")
+	use("gpanders/editorconfig.nvim")
 
 	-- gtags
 	use("jsfaint/gen_tags.vim")
@@ -337,9 +331,6 @@ return packer.startup(function()
 		end,
 	})
 
-	---удаление traling
-	use({ "McAuleyPenney/tidy.nvim", event = "BufWritePre" })
-
 	-- превью строчки при :%d
 	use({
 		"nacro90/numb.nvim",
@@ -353,15 +344,5 @@ return packer.startup(function()
 		"chr4/nginx.vim",
 		"chr4/sslsecure.vim",
 		ft = "nginx",
-	})
-
-	-- выключаем yank на del
-	use({
-		"gbprod/cutlass.nvim",
-		config = function()
-			require("cutlass").setup({
-				cut_key = "m",
-			})
-		end,
 	})
 end)
