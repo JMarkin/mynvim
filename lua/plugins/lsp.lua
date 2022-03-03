@@ -59,7 +59,12 @@ M.pylsp = function(server, coq)
 end
 
 M.rust_analyzer = function(server, coq)
-	local opts = {
+    local present, rust_tools = pcall(require, "rust_tools")
+    if not present then
+        return
+    end
+	
+    local opts = {
 		settings = {
 			["rust-analyzer"] = {
 				checkOnSave = {
@@ -81,14 +86,14 @@ M.rust_analyzer = function(server, coq)
 	local codelldb_path = extension_path .. "adapter/codelldb"
 	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
-	require("rust-tools").setup({
+	rust_tools.setup({
 		server = opts,
 		dap = {
 			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
 		},
 	})
 	server:attach_buffers()
-	require("rust-tools").start_standalone_if_required()
+	rust_tools.start_standalone_if_required()
 end
 
 M.setup = function()
