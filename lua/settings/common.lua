@@ -34,13 +34,16 @@ g.local_vimrc = {
 -- Табы и отступы
 -----------------------------------------------------------
 cmd([[
+filetype plugin on
 filetype indent plugin on
+syntax enable
 ]])
 opt.expandtab = true -- use spaces instead of tabs
 opt.shiftwidth = 4 -- shift 4 spaces when tab
 opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
+
 -- don't auto commenting new lines
 cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
 cmd([[autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2]])
@@ -57,7 +60,7 @@ exec(
 	[[
 augroup YankHighlight
 autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300}
+autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
 augroup end
 ]],
 	false

@@ -6,12 +6,12 @@ local M = {}
 local Job = require("plenary.job")
 
 M.python = function()
-	Job
-		:new({
-			command = "pip",
-			args = { "install", "-U", "doq", "pynvim", "isort", "docformatter" },
-		})
-		:start()
+	-- Job
+	-- 	:new({
+	-- 		command = "pip",
+	-- 		args = { "install", "-U", "doq", "pynvim", "isort", "docformatter" },
+	-- 	})
+	-- 	:start()
 
 	g.pydocstring_formatter = "google"
 	g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
@@ -21,8 +21,12 @@ M.python = function()
 end
 
 M.rust = function()
-	require("rust-tools").setup({})
 	g.neoformat_enabled_rust = { "rustfmt" }
+    g.neoformat_rust_rustfmt = {
+        exe = 'rustfmt',
+        args = {'--edition', '2021'},
+        stdin = 1
+    }
 end
 
 M.maps = function(m)

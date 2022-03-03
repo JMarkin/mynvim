@@ -42,7 +42,19 @@ return packer.startup(function()
 	})
 
 	--- Локальный настройки для папки с помощью .lvimrc с хэшем
-	use("MarcWeber/vim-addon-local-vimrc")
+    use {
+      "klen/nvim-config-local",
+      config = function()
+        require('config-local').setup {
+          -- Default configuration (optional)
+          config_files = { ".vimrc.lua", ".vimrc", ".lvimrc" },  -- Config file patterns to load (lua supported)
+          hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
+          autocommands_create = true,                 -- Create autocommands (VimEnter, DirectoryChanged)
+          commands_create = true,                     -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+          silent = false,                             -- Disable plugin messages (Config loaded/ignored)
+        }
+      end
+    }
 
 	use({
 		"wbthomason/packer.nvim",
@@ -57,18 +69,23 @@ return packer.startup(function()
 		end,
 	})
 	-- Цвет тема
-	use({
-		"sainnhe/gruvbox-material",
-	})
-	use({
-		"sainnhe/sonokai",
-	})
-	use("Iron-E/nvim-highlite")
-	use("rmehri01/onenord.nvim")
-	use("rebelot/kanagawa.nvim")
-	use("Mofiqul/dracula.nvim")
-
+	-- use({
+	-- 	"sainnhe/gruvbox-material",
+	-- })
+	-- use({
+	-- 	"sainnhe/sonokai",
+	-- })
+	-- use("Iron-E/nvim-highlite")
+	-- use("rmehri01/onenord.nvim")
+	-- use("rebelot/kanagawa.nvim")
+	-- use("Mofiqul/dracula.nvim")
+	--
+	--
+	-- use({
+	-- 	"themercorp/themer.lua",
+	-- })
 	use("olimorris/onedarkpro.nvim")
+
 	-- Markdown превью
 	use({ "ellisonleao/glow.nvim" })
 
@@ -109,7 +126,7 @@ return packer.startup(function()
 		as = "mapx",
 		after = "which-key.nvim",
 		config = function()
-			local m = require("mapx").setup({ global = true, whichkey = true })
+			local m = require("mapx").setup({ global = "force", whichkey = true })
 			require("settings.view")(m)
 			require("settings.search")(m)
 			require("settings.lang").maps(m)
@@ -124,15 +141,25 @@ return packer.startup(function()
 	})
 
 	use({
-		"romgrk/nvim-treesitter-context",
+		"windwp/nvim-ts-autotag",
 	})
+
 	use({
-		"p00f/nvim-ts-rainbow",
+		"romgrk/nvim-treesitter-context",
 		config = function()
 			require("plugins.treesitter")
 		end,
-		after = { "nvim-treesitter", "nvim-treesitter-context" },
+		after = { "nvim-treesitter", "nvim-ts-autotag" },
 	})
+
+	-- вырубаем до stable ветки т.к. разрабочтик делает под master
+	-- use({
+	-- 	"p00f/nvim-ts-rainbow",
+	-- 	config = function()
+	-- 		require("plugins.treesitter")
+	-- 	end,
+	-- 	after = { "nvim-treesitter", "nvim-treesitter-context" },
+	-- })
 
 	use("yamatsum/nvim-cursorline")
 
@@ -165,6 +192,7 @@ return packer.startup(function()
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
 	})
+	use("j-hui/fidget.nvim")
 
 	--- Автокомлиты
 	use({
@@ -176,6 +204,8 @@ return packer.startup(function()
 			"null-ls.nvim",
 			"lsp-colors.nvim",
 			"trouble.nvim",
+			"fidget.nvim",
+            "nvim-config-local"
 		},
 		setup = function()
 			require("plugins.lsp").setup()
@@ -260,6 +290,13 @@ return packer.startup(function()
 
 	-- Дебагер
 	use("mfussenegger/nvim-dap")
+	use({
+		"theHamsta/nvim-dap-virtual-text",
+		config = function()
+			require("nvim-dap-virtual-text").setup()
+		end,
+		after = { "nvim-treesitter", "nvim-dap" },
+	})
 
 	-- Неплохой модуль для раст
 	use({
@@ -277,7 +314,7 @@ return packer.startup(function()
 	use({
 		"nathom/filetype.nvim",
 		config = function()
-			require("plugins.filetype")
+			require("plugins.nvimfiletype")
 		end,
 	})
 
@@ -345,4 +382,39 @@ return packer.startup(function()
 		"chr4/sslsecure.vim",
 		ft = "nginx",
 	})
+
+	-- управление терминалом
+
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup({
+				direction = "float",
+				close_on_exit = false,
+			})
+		end,
+	})
+
+	-- засейчка neovim
+	use({ "dstein64/vim-startuptime" })
+
+	-- sudo
+	use({
+		"lambdalisue/suda.vim",
+		cmd = { "SudaRead", "SudaWrite" },
+	})
+
+	-- minimap
+	-- use({
+	-- 	"wfxr/minimap.vim",
+	-- 	setup = function()
+	-- 		vim.g.minimap_auto_start_win_enter = 0
+	-- 		vim.g.minimap_auto_start = 0
+ --            vim.g.minimap_highlight_search = 1
+ --            vim.g.minimap_highlight_range = 1
+ --            vim.g.minimap_git_colors = 1
+ --            vim.g.minimap_block_filetypes={'fugitive', 'nerdtree', 'tagbar', 'fzf', 'NvimTree', 'Trouble'}
+	-- 	end,
+	-- 	event = "WinEnter",
+	-- })
 end)

@@ -1,7 +1,7 @@
 local M = {}
 
-M.pyright = function()
-	return {
+M.pyright = function(server, coq)
+	local opts = {
 		settings = {
 			python = {
 				disableOrganizeImports = true,
@@ -13,11 +13,15 @@ M.pyright = function()
 			},
 		},
 	}
+
+	vim.g[server.name .. "_config"] = opts
+	opts = coq.lsp_ensure_capabilities(opts)
+	server:setup(opts)
 end
 
-M.pylsp = function()
+M.pylsp = function(server, coq)
 	require("settings.lang").python()
-	return {
+	local opts = {
 		settings = {
 			pylsp = {
 				configurationSources = {},
@@ -43,18 +47,53 @@ M.pylsp = function()
 					yapf = {
 						enabled = false,
 					},
+                    mypy = {
+                        enabled = false
+                    }
 				},
 			},
 		},
 	}
+	opts = coq.lsp_ensure_capabilities(opts)
+	server:setup(opts)
+end
+
+M.rust_analyzer = function(server, coq)
+	local opts = {
+		settings = {
+			["rust-analyzer"] = {
+				checkOnSave = {
+					command = "clippy",
+				},
+				completion = {
+					autoimport = {
+						enable = false,
+					},
+				},
+			},
+		},
+	}
+
+	vim.tbl_deep_extend("force", server:get_default_options(), opts)
+	opts = coq.lsp_ensure_capabilities(opts)
+
+	local extension_path = vim.env.HOME .. "/.vscode-oss/extensions/vadimcn.vscode-lldb-1.6.10/"
+	local codelldb_path = extension_path .. "adapter/codelldb"
+	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+	require("rust-tools").setup({
+		server = opts,
+		dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+		},
+	})
+	server:attach_buffers()
+	require("rust-tools").start_standalone_if_required()
 end
 
 M.setup = function()
 	vim.g.coq_settings = {
 		auto_start = true,
-		match = {
-			max_results = 17,
-		},
 		clients = {
 			tmux = {
 				enabled = false,
@@ -77,23 +116,26 @@ M.config = function()
 	local lsp = M
 
 	lsp_installer.on_server_ready(function(server)
-		local opts = vim.g[server.name .. "_config"]
-		if opts ~= nil then
-			print("use local lsp config", server.name)
-		else
-			opts = lsp[server.name]
-			if opts ~= nil then
-				opts = opts()
-				print("use custom config", server.name)
-			else
-				opts = {}
-			end
+		local _setup = _G[server.name]
+
+		if _setup ~= nil then
+			_setup(server, coq)
+			print("use local config", server.name)
+			return
 		end
-		vim.g[server.name .. "_config"] = opts
-		opts = coq.lsp_ensure_capabilities(opts)
+
+		_setup = lsp[server.name]
+		if _setup ~= nil then
+			_setup(server, coq)
+			print("use custom config", server.name)
+			return
+		end
+
+		local opts = coq.lsp_ensure_capabilities({})
 		server:setup(opts)
 	end)
 
+	require("fidget").setup({})
 	require("lspsaga").setup({
 		finder_action_keys = {
 			open = "<cr>",
@@ -145,8 +187,8 @@ M.config = function()
 		update_in_insert = false, -- default to false
 		severity_sort = true, -- default to false
 	})
-	vim.o.updatetime = 150
-	vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
+	-- vim.o.updatetime = 250
+	-- vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 end
 
 return M

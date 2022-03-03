@@ -78,6 +78,19 @@ return function()
 	})
 	onedarkpro.load()
 
+	-- require("themer").setup({
+	-- 	colorscheme = "onedark",
+	-- 	styles = {
+	-- 		string = { style = "NONE" },
+	-- 		comment = { style = "italic" },
+	-- 		keyword = { style = "bold,underline" },
+	-- 		keywordBuiltIn = { style = "bold,underline" },
+	-- 		["function"] = { style = "bold" },
+	-- 		variable = { style = "NONE" },
+	-- 		variableBuiltIn = { style = "NONE" },
+	-- 	},
+	-- })
+
 	local present, lualine = pcall(require, "lualine")
 	if present then
 		lualine.setup({

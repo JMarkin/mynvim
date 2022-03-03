@@ -46,13 +46,19 @@ M.config = function()
 		update_focused_file = {
 			enable = true,
 		},
+		actions = {
+			open_file = {
+				window_picker = {
+					enable = true,
+				},
+			},
+		},
 	})
 end
 
 M.setup = function()
 	vim.g.nvim_tree_highlight_opened_files = 1
 	vim.g.nvim_tree_refresh_wait = 500
-	vim.g.nvim_tree_disable_window_picker = 1
 end
 
 return M
