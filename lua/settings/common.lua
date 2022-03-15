@@ -36,7 +36,6 @@ g.local_vimrc = {
 cmd([[
 filetype plugin on
 filetype indent plugin on
-syntax enable
 ]])
 opt.expandtab = true -- use spaces instead of tabs
 opt.shiftwidth = 4 -- shift 4 spaces when tab
@@ -65,6 +64,12 @@ augroup end
 ]],
 	false
 )
+
+-- запуск lsp для опр типов
+cmd [[
+    au FileType lua ++once lua require("settings.lang").lua()
+    au FileType python ++once python require("settings.lang").python()
+]]
 
 
 return function(m)
