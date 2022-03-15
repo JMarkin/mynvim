@@ -1,9 +1,4 @@
-local present, ts_config = pcall(require, "nvim-treesitter.configs")
-if not present then
-    return
-end
-
-ts_config.setup({
+require("nvim-treesitter.configs").setup({
     ensure_installed = "maintained",
     indent = {
         enable = true,

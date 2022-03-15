@@ -136,21 +136,21 @@ return packer.startup(function()
 
     -- Подцветка синтаксиа
     use({
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+    })
+
+    use({
         "windwp/nvim-ts-autotag",
+        after = { "nvim-treesitter" },
+        config = function()
+            require("plugins.treesitter")
+        end,
     })
 
     -- use({
     -- 	"romgrk/nvim-treesitter-context",
     -- })
-
-    use({
-        "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate",
-        after = { "nvim-ts-autotag" },
-        config = function()
-            require("plugins.treesitter")
-        end,
-    })
 
     -- вырубаем до stable ветки т.к. разрабочтик делает под master
     -- use({

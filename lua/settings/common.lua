@@ -69,11 +69,10 @@ augroup end
 )
 
 -- запуск lsp для опр типов
-cmd [[
+vim.cmd([[
     au FileType lua ++once lua require("settings.lang").lua()
-    au FileType python ++once python require("settings.lang").python()
-]]
-
+    au FileType python ++once lua require("settings.lang").python()
+]])
 
 return function(m)
     nnoremap("<C-A>", "ggVG", "Vesual all")
