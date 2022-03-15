@@ -14,13 +14,13 @@ return packer.startup(function()
 			require("dressing").setup()
 		end,
 	})
-	use({
-		"gelguy/wilder.nvim",
-		requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
-		config = function()
-			require("plugins.wilder")
-		end,
-	})
+	-- use({
+	-- 	"gelguy/wilder.nvim",
+	-- 	requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
+	-- 	config = function()
+	-- 		require("plugins.wilder")
+	-- 	end,
+	-- })
 	use({
 		"nvim-lua/plenary.nvim",
 	})
@@ -62,12 +62,12 @@ return packer.startup(function()
 	})
 
 	--- Подцветка отступов
-	use({
-		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("plugins.indent")
-		end,
-	})
+	-- use({
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	config = function()
+	-- 		require("plugins.indent")
+	-- 	end,
+	-- })
 	-- Цвет тема
 	-- use({
 	-- 	"sainnhe/gruvbox-material",
@@ -136,20 +136,20 @@ return packer.startup(function()
 
 	-- Подцветка синтаксиа
 	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-	})
-
-	use({
 		"windwp/nvim-ts-autotag",
 	})
 
-	use({
-		"romgrk/nvim-treesitter-context",
-		config = function()
+	-- use({
+	-- 	"romgrk/nvim-treesitter-context",
+	-- })
+
+    use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+   		after = { "nvim-ts-autotag" },
+        config = function()
 			require("plugins.treesitter")
-		end,
-		after = { "nvim-treesitter", "nvim-ts-autotag" },
+		end
 	})
 
 	-- вырубаем до stable ветки т.к. разрабочтик делает под master
@@ -160,16 +160,9 @@ return packer.startup(function()
 	-- 	end,
 	-- 	after = { "nvim-treesitter", "nvim-treesitter-context" },
 	-- })
-
-	use("yamatsum/nvim-cursorline")
-
-	-- LSP
+    -- LSP
 	use("neovim/nvim-lspconfig")
 	use("williamboman/nvim-lsp-installer")
-	-- use({
-	-- 	"RishabhRD/nvim-lsputils",
-	-- 	requires = "RishabhRD/popfix",
-	-- })
 	use({
 		"tami5/lspsaga.nvim",
 	})
@@ -204,8 +197,6 @@ return packer.startup(function()
 			"null-ls.nvim",
 			"lsp-colors.nvim",
 			"trouble.nvim",
-			"fidget.nvim",
-            "nvim-config-local"
 		},
 		setup = function()
 			require("plugins.lsp").setup()
@@ -322,7 +313,7 @@ return packer.startup(function()
 	use("gpanders/editorconfig.nvim")
 
 	-- gtags
-	use("jsfaint/gen_tags.vim")
+	-- use("jsfaint/gen_tags.vim")
 
 	--- поиски по файлам проверкам и т.п. fzf вобщем
 	use({
@@ -345,12 +336,12 @@ return packer.startup(function()
 	})
 
 	--- Стабилизация табов и буферов при ресайзе терминала
-	use({
-		"luukvbaal/stabilize.nvim",
-		config = function()
-			require("stabilize").setup()
-		end,
-	})
+	-- use({
+	-- 	"luukvbaal/stabilize.nvim",
+	-- 	config = function()
+	-- 		require("stabilize").setup()
+	-- 	end,
+	-- })
 
 	use({
 		"https://gitlab.com/yorickpeterse/nvim-window",
@@ -417,4 +408,7 @@ return packer.startup(function()
 	-- 	end,
 	-- 	event = "WinEnter",
 	-- })
+
+
+
 end)
