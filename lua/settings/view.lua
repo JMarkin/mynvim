@@ -33,9 +33,9 @@ return function(m)
 
     ---------Tab смещение
     cmd([[
-vmap <S-Tab> <gv
-vmap <Tab>   >gv
-]])
+    vmap <S-Tab> <gv
+    vmap <Tab>   >gv
+    ]])
 
     ---------Форматирвоание
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
