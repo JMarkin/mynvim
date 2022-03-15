@@ -1,79 +1,81 @@
 local cmd = vim.cmd
 local g = vim.g
+local opt = vim.opt
+
+vim.opt.list = true
+-- vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("multispace:¦⋅⋅⋅")
+vim.opt.listchars:append("eol:↴")
 
 return function(m)
+    ---Переопрдееляем moving в vim
+    -- noremap("j", "h")
+    -- noremap("k", "j")
+    -- noremap("l", "k")
+    -- noremap(";", "l")
 
----Переопрдееляем moving в vim
--- noremap("j", "h")
--- noremap("k", "j")
--- noremap("l", "k")
--- noremap(";", "l")
+    m.nname("<space>b", "Buffer")
 
+    --------Основное управление буферами
+    nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
+    nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
+    nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
+    nnoremap("<space>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
+    nnoremap("<space>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: 3")
+    nnoremap("<space>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: 4")
+    nnoremap("<space>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: 5")
+    nnoremap("<space>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
+    nnoremap("<space>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
+    nnoremap("<space>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
+    nnoremap("<space>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
 
-m.nname("<space>b", "Buffer")
+    nnoremap("<leader>w", "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
 
---------Основное управление буферами
-nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
-nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
-nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
-nnoremap("<space>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
-nnoremap("<space>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: 3")
-nnoremap("<space>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: 4")
-nnoremap("<space>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: 5")
-nnoremap("<space>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
-nnoremap("<space>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
-nnoremap("<space>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
-nnoremap("<space>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
-
-
-
-nnoremap("<leader>w", "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
-
----------Tab смещение
-cmd [[
+    ---------Tab смещение
+    cmd([[
 vmap <S-Tab> <gv
 vmap <Tab>   >gv
-]]
+]])
 
----------Форматирвоание
-nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
+    ---------Форматирвоание
+    nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
 
---Enable alignment
-g.neoformat_basic_format_align = 1
---Enable tab to spaces conversion
-g.neoformat_basic_format_retab = 1
---Enable trimmming of trailing whitespace
-g.neoformat_basic_format_trim = 1
-g.neoformat_run_all_formatters = 1
+    --Enable alignment
+    g.neoformat_basic_format_align = 1
+    --Enable tab to spaces conversion
+    g.neoformat_basic_format_retab = 1
+    --Enable trimmming of trailing whitespace
+    g.neoformat_basic_format_trim = 1
+    g.neoformat_run_all_formatters = 1
 
----------Линтеры
--- cmd [[
--- call neomake#configure#automake('w')
--- ]]
--- g.neomake_open_list = 2
+    ---------Линтеры
+    -- cmd [[
+    -- call neomake#configure#automake('w')
+    -- ]]
+    -- g.neomake_open_list = 2
 
----------Управление табами
-nnoremap("<space>l", "<C-w>l", "Window: right")
-nnoremap("<space><right>", "<C-w>l", "Window: right")
-nnoremap("<space>j", "<C-w>j", "Window: bottom")
-nnoremap("<space><down>", "<C-w>j", "Window: bottom")
-nnoremap("<space>k", "<C-w>k", "Window: top")
-nnoremap("<space><up>", "<C-w>k", "Window: top")
-nnoremap("<space>h", "<C-w>h", "Window: left")
-nnoremap("<space><left>", "<C-w>h", "Window: left")
+    ---------Управление табами
+    nnoremap("<space>l", "<C-w>l", "Window: right")
+    nnoremap("<space><right>", "<C-w>l", "Window: right")
+    nnoremap("<space>j", "<C-w>j", "Window: bottom")
+    nnoremap("<space><down>", "<C-w>j", "Window: bottom")
+    nnoremap("<space>k", "<C-w>k", "Window: top")
+    nnoremap("<space><up>", "<C-w>k", "Window: top")
+    nnoremap("<space>h", "<C-w>h", "Window: left")
+    nnoremap("<space><left>", "<C-w>h", "Window: left")
 
----------Тогл Инструментов
-nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
-nnoremap("<leader>t", "<Cmd>Vista!!<CR>", "Tagbar")
-nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
+    ---------Тогл Инструментов
+    nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
+    nnoremap("<leader>t", "<Cmd>Vista!!<CR>", "Tagbar")
+    nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
 
-m.nname("<space>g", "Git")
-nnoremap("<leader>gg", "<Cmd>LazyGit<CR>", "Git: lazygit")
-nnoremap("<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
-cmd[[highlight link GitSignsCurrentLineBlame Insert]]
+    m.nname("<space>g", "Git")
+    nnoremap("<leader>gg", "<Cmd>LazyGit<CR>", "Git: lazygit")
+    nnoremap("<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
+    cmd([[highlight link GitSignsCurrentLineBlame Insert]])
 
----------Просмотр больших файлов
-cmd[[
+    ---------Просмотр больших файлов
+    cmd([[
 augroup LargeFile
         let g:large_file = 10485760 " 10MB
 
@@ -94,8 +96,5 @@ augroup LargeFile
                         \ set eventignore-=FileType |
                 \ endif
 augroup END
-]]
-
-
-
+]])
 end

@@ -7,7 +7,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 -- Главные
 -----------------------------------------------------------
 opt.colorcolumn = "120"
-opt.scrolloff=15
+opt.scrolloff = 15
 opt.cursorline = true -- Подсветка строки с курсором
 opt.spelllang = { "en_us", "ru" } -- Словари рус eng
 opt.number = true -- Включаем нумерацию строк
@@ -27,9 +27,12 @@ opt.wrap = true
 opt.hidden = true
 opt.syntax = "enable"
 g.local_vimrc = {
-	names = { ".lvimrc" },
-	hash_fun = "LVRHashOfFile",
+    names = { ".lvimrc" },
+    hash_fun = "LVRHashOfFile",
 }
+opt.showmatch = false
+opt.hlsearch = false
+
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------
@@ -57,18 +60,17 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 ]])
 -- Подсвечивает на доли секунды скопированную часть текста
 exec(
-	[[
+    [[
 augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
 augroup end
 ]],
-	false
+    false
 )
 
-
 return function(m)
-	nnoremap("<C-A>", "ggVG", "Vesual all")
-	nnoremap("o", "o<Esc>", "Add line under")
-	nnoremap("O", "O<Esc>", "Add line prev")
+    nnoremap("<C-A>", "ggVG", "Vesual all")
+    nnoremap("o", "o<Esc>", "Add line under")
+    nnoremap("O", "O<Esc>", "Add line prev")
 end
