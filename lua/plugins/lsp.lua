@@ -13,7 +13,7 @@ end
 
 M.config = function()
 
-	-- require("fidget").setup({})
+	require("fidget").setup({})
 	require("lspsaga").setup({
 		finder_action_keys = {
 			open = "<cr>",
