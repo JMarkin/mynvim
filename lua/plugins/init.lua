@@ -1,8 +1,4 @@
-local present, packer = pcall(require, "plugins.initpacker")
-
-if not present then
-    return false
-end
+local packer, bootstrap = require("plugins.initpacker")
 
 local use = packer.use
 
@@ -15,11 +11,11 @@ return packer.startup(function()
         end,
     })
     -- use({
-    -- 	"gelguy/wilder.nvim",
-    -- 	requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
-    -- 	config = function()
-    -- 		require("plugins.wilder")
-    -- 	end,
+    --     "gelguy/wilder.nvim",
+    --     requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
+    --     config = function()
+    --         require("plugins.wilder")
+    --     end,
     -- })
     use({
         "nvim-lua/plenary.nvim",
@@ -63,10 +59,10 @@ return packer.startup(function()
 
     --- Подцветка отступов
     -- use({
-    -- 	"lukas-reineke/indent-blankline.nvim",
-    -- 	config = function()
-    -- 		require("plugins.indent")
-    -- 	end,
+    --     "lukas-reineke/indent-blankline.nvim",
+    --     config = function()
+    --         require("plugins.indent")
+    --     end,
     -- })
     -- Цвет тема
     -- use({
@@ -124,11 +120,11 @@ return packer.startup(function()
     use({
         "b0o/mapx.nvim",
         as = "mapx",
-        after = "which-key.nvim",
+        after = { "which-key.nvim", "smart-splits.nvim" },
         config = function()
             local m = require("mapx").setup({ global = "force", whichkey = true })
             require("settings.view")(m)
-            require("settings.search")(m)
+            require("settings.search").maps(m)
             require("settings.lang").maps(m)
             require("settings.common")(m)
         end,
@@ -139,18 +135,17 @@ return packer.startup(function()
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
     })
+    use({
+        "romgrk/nvim-treesitter-context",
+    })
 
     use({
         "windwp/nvim-ts-autotag",
-        after = { "nvim-treesitter" },
+        after = { "nvim-treesitter", "nvim-treesitter-context" },
         config = function()
             require("plugins.treesitter")
         end,
     })
-
-    -- use({
-    -- 	"romgrk/nvim-treesitter-context",
-    -- })
 
     -- вырубаем до stable ветки т.к. разрабочтик делает под master
     -- use({
@@ -222,6 +217,8 @@ return packer.startup(function()
         end,
     })
     use("Asheq/close-buffers.vim")
+
+    use({ "mrjones2014/smart-splits.nvim" })
 
     -- Навигация внутри файла по классам и функциям
     use({
@@ -313,7 +310,7 @@ return packer.startup(function()
     use("gpanders/editorconfig.nvim")
 
     -- gtags
-    -- use("jsfaint/gen_tags.vim")
+    use("jsfaint/gen_tags.vim")
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     use({
@@ -370,24 +367,18 @@ return packer.startup(function()
     --nginx
     use({
         "chr4/nginx.vim",
-        "chr4/sslsecure.vim",
-        ft = "nginx",
+        ft = { "nginx" },
     })
-
-    -- управление терминалом
 
     use({
-        "akinsho/toggleterm.nvim",
-        config = function()
-            require("toggleterm").setup({
-                direction = "float",
-                close_on_exit = false,
-            })
-        end,
+        "chr4/sslsecure.vim",
+        ft = { "nginx" },
     })
-
     -- засейчка neovim
-    use({ "dstein64/vim-startuptime" })
+    use({
+        "dstein64/vim-startuptime",
+        cmd = { "StartupTime" },
+    })
 
     -- sudo
     use({
@@ -408,4 +399,20 @@ return packer.startup(function()
     -- 	end,
     -- 	event = "WinEnter",
     -- })
+
+    -- bookmark
+    use({
+        "MattesGroeger/vim-bookmarks",
+        after = { "mapx" },
+        setup = function()
+            require("plugins.bookmark").setup()
+        end,
+        config = function()
+            require("plugins.bookmark").config()
+        end,
+    })
+
+    if bootstrap then
+        require("packer").sync()
+    end
 end)

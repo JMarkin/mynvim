@@ -2,9 +2,9 @@ local cmd = vim.cmd
 local g = vim.g
 local opt = vim.opt
 
-vim.opt.list = true
+vim.opt.list = false
 -- vim.opt.listchars:append("space:⋅")
-vim.opt.listchars:append("multispace:¦⋅⋅⋅")
+vim.opt.listchars:append("multispace:¦   ")
 vim.opt.listchars:append("eol:↴")
 
 return function(m)
@@ -29,7 +29,18 @@ return function(m)
     nnoremap("<space>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
     nnoremap("<space>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
 
-    nnoremap("<leader>w", "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
+    nnoremap({ "<leader>w", "<space>w" }, "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
+
+    ---------Управление буферами
+    nnoremap({ "<space>l", "<space><right>" }, ":lua require('smart-splits').move_cursor_right()<cr>", "right")
+    nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "down")
+    nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "top")
+    nnoremap({ "<space>h", "<space><left>" }, ":lua require('smart-splits').move_cursor_left()<cr>", "left")
+    -- resizing splits
+    nnoremap({ "<A-h>", "<space>bh" }, ':lua require("smart-splits").resize_left()<cr>', "Resize left")
+    nnoremap({ "<A-j>", "<space>bj" }, ':lua require("smart-splits").resize_down()<cr>', "Resize down")
+    nnoremap({ "<A-k>", "<space>bk" }, ':lua require("smart-splits").resize_up()<cr>', "Resize up")
+    nnoremap({ "<A-l>", "<space>bl" }, ':lua require("smart-splits").resize_right()<cr>', "Resize right")
 
     ---------Tab смещение
     cmd([[
@@ -53,16 +64,6 @@ return function(m)
     -- call neomake#configure#automake('w')
     -- ]]
     -- g.neomake_open_list = 2
-
-    ---------Управление табами
-    nnoremap("<space>l", "<C-w>l", "Window: right")
-    nnoremap("<space><right>", "<C-w>l", "Window: right")
-    nnoremap("<space>j", "<C-w>j", "Window: bottom")
-    nnoremap("<space><down>", "<C-w>j", "Window: bottom")
-    nnoremap("<space>k", "<C-w>k", "Window: top")
-    nnoremap("<space><up>", "<C-w>k", "Window: top")
-    nnoremap("<space>h", "<C-w>h", "Window: left")
-    nnoremap("<space><left>", "<C-w>h", "Window: left")
 
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")

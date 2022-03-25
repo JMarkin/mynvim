@@ -25,7 +25,10 @@ require("nvim-treesitter.configs").setup({
 
 local present, ts_context = pcall(require, "treesitter-context")
 if present then
-    ts_context.setup()
+    ts_context.setup({
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true,
+    })
 end
 
 local present, ts_atag = pcall(require, "nvim-ts-autotag")

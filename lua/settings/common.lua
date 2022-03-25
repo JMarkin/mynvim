@@ -32,6 +32,7 @@ g.local_vimrc = {
 }
 opt.showmatch = false
 opt.hlsearch = false
+opt.bs = "indent,eol,start"
 
 -----------------------------------------------------------
 -- Табы и отступы
