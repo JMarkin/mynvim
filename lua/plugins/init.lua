@@ -347,15 +347,6 @@ return packer.startup(function()
         end,
     })
 
-    --- fold
-    use({
-        "anuvyklack/pretty-fold.nvim",
-        config = function()
-            require("pretty-fold").setup({})
-            require("pretty-fold.preview").setup()
-        end,
-    })
-
     -- превью строчки при :%d
     use({
         "nacro90/numb.nvim",

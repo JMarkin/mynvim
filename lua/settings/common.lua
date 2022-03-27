@@ -31,7 +31,8 @@ g.local_vimrc = {
     hash_fun = "LVRHashOfFile",
 }
 opt.showmatch = false
-opt.hlsearch = false
+opt.hlsearch = true
+opt.linebreak = true
 opt.bs = "indent,eol,start"
 
 -----------------------------------------------------------
@@ -73,6 +74,16 @@ augroup end
 vim.cmd([[
     au FileType lua ++once lua require("settings.lang").lua()
     au FileType python ++once lua require("settings.lang").python()
+]])
+
+-- запоминаем fold
+vim.cmd([[
+set viewoptions-=options
+augroup remember_folds
+    autocmd!
+    autocmd BufWinLeave *.* if &ft !=# 'help' | mkview | endif
+    autocmd BufWinEnter *.* if &ft !=# 'help' | silent! loadview | endif
+augroup END
 ]])
 
 return function(m)
