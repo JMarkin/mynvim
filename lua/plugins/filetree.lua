@@ -39,15 +39,17 @@ M.config = function()
         open_on_tab = true,
         view = {
             auto_resize = true,
+            preserve_window_proportions = true,
             mappings = {
                 list = list,
             },
         },
         update_focused_file = {
-            enable = true,
+            enable = false,
         },
         actions = {
             open_file = {
+                quit_on_open = true,
                 window_picker = {
                     enable = true,
                 },

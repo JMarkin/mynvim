@@ -139,6 +139,11 @@ return packer.startup(function()
         "romgrk/nvim-treesitter-context",
     })
 
+    -- use({
+    --     "m-demare/hlargs.nvim",
+    --     requires = { "nvim-treesitter/nvim-treesitter" },
+    -- })
+
     use({
         "windwp/nvim-ts-autotag",
         after = { "nvim-treesitter", "nvim-treesitter-context" },
@@ -182,6 +187,9 @@ return packer.startup(function()
     })
     use("j-hui/fidget.nvim")
 
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    })
     --- Автокомлиты
     use({
         "ms-jpq/coq_nvim",
@@ -192,6 +200,7 @@ return packer.startup(function()
             "null-ls.nvim",
             "lsp-colors.nvim",
             "trouble.nvim",
+            "lsp_lines.nvim",
         },
         setup = function()
             require("plugins.lsp").setup()
@@ -213,7 +222,7 @@ return packer.startup(function()
         "akinsho/bufferline.nvim",
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
-            require("plugins.bufferline")
+            require("plugins.buffers")
         end,
     })
     use("Asheq/close-buffers.vim")
@@ -333,12 +342,12 @@ return packer.startup(function()
     })
 
     --- Стабилизация табов и буферов при ресайзе терминала
-    -- use({
-    -- 	"luukvbaal/stabilize.nvim",
-    -- 	config = function()
-    -- 		require("stabilize").setup()
-    -- 	end,
-    -- })
+    use({
+        "luukvbaal/stabilize.nvim",
+        config = function()
+            require("stabilize").setup()
+        end,
+    })
 
     use({
         "https://gitlab.com/yorickpeterse/nvim-window",
@@ -379,16 +388,13 @@ return packer.startup(function()
 
     -- minimap
     -- use({
-    -- 	"wfxr/minimap.vim",
-    -- 	setup = function()
-    -- 		vim.g.minimap_auto_start_win_enter = 0
-    -- 		vim.g.minimap_auto_start = 0
-    --            vim.g.minimap_highlight_search = 1
-    --            vim.g.minimap_highlight_range = 1
-    --            vim.g.minimap_git_colors = 1
-    --            vim.g.minimap_block_filetypes={'fugitive', 'nerdtree', 'tagbar', 'fzf', 'NvimTree', 'Trouble'}
-    -- 	end,
-    -- 	event = "WinEnter",
+    --     "wfxr/minimap.vim",
+    --     setup = function()
+    --         require("plugins.minimap").setup()
+    --     end,
+    --     config = function()
+    --         require("plugins.minimap").config()
+    --     end,
     -- })
 
     -- bookmark

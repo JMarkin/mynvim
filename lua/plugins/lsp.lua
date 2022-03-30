@@ -21,7 +21,9 @@ M.config = function()
             quit = "q",
         },
     })
-    require("lsp_signature").setup()
+    require("lsp_signature").setup({
+        zindex = 49,
+    })
     require("lsp-colors").setup({
         Error = "#E82424",
         Warning = "#FF9E3B",
@@ -59,11 +61,12 @@ M.config = function()
     vim.diagnostic.config({
         underline = true,
         signs = true,
-        virtual_text = true,
+        virtual_text = false,
         float = true,
-        update_in_insert = false, -- default to false
-        severity_sort = true, -- default to false
+        update_in_insert = false,
+        severity_sort = true,
     })
+    require("lsp_lines").register_lsp_virtual_lines()
     -- vim.o.updatetime = 250
     -- vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 end
