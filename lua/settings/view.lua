@@ -43,10 +43,8 @@ return function(m)
     nnoremap({ "<A-l>", "<space>bl" }, ':lua require("smart-splits").resize_right()<cr>', "Resize right")
 
     ---------Tab смещение
-    cmd([[
-    vmap <S-Tab> <gv
-    vmap <Tab>   >gv
-    ]])
+    vmap("<S-Tab>", "<gv")
+    vmap("<Tab>", ">gv")
 
     ---------Форматирвоание
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
@@ -77,25 +75,31 @@ return function(m)
 
     ---------Просмотр больших файлов
     cmd([[
-augroup LargeFile
-        let g:large_file = 10485760 " 10MB
+        augroup LargeFile
+                let g:large_file = 10485760 " 10MB
 
-        " Set options:
-        "   eventignore+=FileType (no syntax highlighting etc
-        "   assumes FileType always on)
-        "   noswapfile (save copy of file)
-        "   bufhidden=unload (save memory when other file is viewed)
-        "   buftype=nowritefile (is read-only)
-        "   undolevels=-1 (no undo possible)
-        au BufReadPre *
-                \ let f=expand("<afile>") |
-                \ if getfsize(f) > g:large_file |
-                        \ set eventignore+=FileType |
-                        \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
-                        \
-                \ else |
-                        \ set eventignore-=FileType |
-                \ endif
-augroup END
-]])
+                " Set options:
+                "   eventignore+=FileType (no syntax highlighting etc
+                "   assumes FileType always on)
+                "   noswapfile (save copy of file)
+                "   bufhidden=unload (save memory when other file is viewed)
+                "   buftype=nowritefile (is read-only)
+                "   undolevels=-1 (no undo possible)
+                au BufReadPre *
+                        \ let f=expand("<afile>") |
+                        \ if getfsize(f) > g:large_file |
+                                \ set eventignore+=FileType |
+                                \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
+                                \
+                        \ else |
+                                \ set eventignore-=FileType |
+                        \ endif
+        augroup END
+    ]])
+
+    ---- Fold
+    m.nname("z", "Fold")
+    m.nname("<space>f", "Fold")
+    nmap("<space>fb", "zf]%", "Fold expr block")
+
 end

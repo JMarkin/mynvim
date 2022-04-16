@@ -1,5 +1,23 @@
 require("nvim-treesitter.configs").setup({
-    ensure_installed = "maintained",
+    ensure_installed = {
+        "c",
+        "lua",
+        "rust",
+        "cpp",
+        "cuda",
+        "python",
+        "vim",
+        "typescript",
+        "yaml",
+        "toml",
+        "make",
+        "fish",
+        "go",
+        "html",
+        "css",
+        "bash",
+        "dockerfile",
+    },
     indent = {
         enable = true,
     },
@@ -40,3 +58,9 @@ local present_atag, ts_atag = pcall(require, "nvim-ts-autotag")
 if present_atag then
     ts_atag.setup()
 end
+
+vim.cmd([[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
+]])

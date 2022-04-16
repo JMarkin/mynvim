@@ -77,7 +77,7 @@ M.lua = function()
                 },
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
-                    globals = { "vim", "nnoremap", "require" },
+                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap"},
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files

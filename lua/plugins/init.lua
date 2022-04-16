@@ -65,22 +65,15 @@ return packer.startup(function()
     --     end,
     -- })
     -- Цвет тема
-    -- use({
-    -- 	"sainnhe/gruvbox-material",
-    -- })
-    -- use({
-    -- 	"sainnhe/sonokai",
-    -- })
-    -- use("Iron-E/nvim-highlite")
-    -- use("rmehri01/onenord.nvim")
-    -- use("rebelot/kanagawa.nvim")
-    -- use("Mofiqul/dracula.nvim")
-    --
-    --
-    -- use({
-    -- 	"themercorp/themer.lua",
-    -- })
+    use({
+        "sainnhe/sonokai",
+    })
+    use("rmehri01/onenord.nvim")
+    use("rebelot/kanagawa.nvim")
+    use("Mofiqul/dracula.nvim")
     use("olimorris/onedarkpro.nvim")
+    use("luisiacc/gruvbox-baby")
+    use("folke/tokyonight.nvim")
 
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
@@ -170,6 +163,9 @@ return packer.startup(function()
     use({
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("plugins.nullls")
+        end,
     })
 
     use({

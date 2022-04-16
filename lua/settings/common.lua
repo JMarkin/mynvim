@@ -34,6 +34,7 @@ opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
 opt.bs = "indent,eol,start"
+opt.fixendofline = true
 
 -----------------------------------------------------------
 -- Табы и отступы
