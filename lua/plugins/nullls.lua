@@ -6,7 +6,7 @@ end
 local h = require("null-ls.helpers")
 local methods = require("null-ls.methods")
 
-local DIAGNOSTICS = methods.internal.DIAGNOSTICS
+local DIAGNOSTICS = methods.internal.DIAGNOSTICS_ON_SAVE
 
 local bandit = h.make_builtin({
     name = "bandit",

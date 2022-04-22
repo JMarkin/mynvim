@@ -101,5 +101,4 @@ return function(m)
     m.nname("z", "Fold")
     m.nname("<space>f", "Fold")
     nmap("<space>fb", "zf]%", "Fold expr block")
-
 end

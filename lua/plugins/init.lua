@@ -123,10 +123,12 @@ return packer.startup(function()
         end,
     })
 
+    --remove whitespace
+    use({ "McAuleyPenney/tidy.nvim", event = "BufWritePre" })
+
     -- Подцветка синтаксиа
     use({
         "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate",
     })
     use({
         "romgrk/nvim-treesitter-context",
@@ -275,14 +277,18 @@ return packer.startup(function()
     -- popup окошки
     use("nvim-lua/popup.nvim")
 
-    -- Линтеры испольузем null-ls
-    -- use("neomake/neomake")
-
     -- Форматер
     use("sbdchd/neoformat")
 
     -- Дебагер
     use("mfussenegger/nvim-dap")
+    use({
+        "rcarriga/nvim-dap-ui",
+        after = { "nvim-dap" },
+        config = function()
+            require("dapui").setup()
+        end,
+    })
     use({
         "theHamsta/nvim-dap-virtual-text",
         config = function()
@@ -315,7 +321,7 @@ return packer.startup(function()
     use("gpanders/editorconfig.nvim")
 
     -- gtags
-    use("jsfaint/gen_tags.vim")
+    -- use("jsfaint/gen_tags.vim")
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     use({
