@@ -23,6 +23,7 @@ M.config = function()
     })
     require("lsp_signature").setup({
         zindex = 49,
+        auto_close_after=1,
     })
     require("lsp-colors").setup({
         Error = "#E82424",

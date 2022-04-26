@@ -124,7 +124,21 @@ return packer.startup(function()
     })
 
     --remove whitespace
-    use({ "McAuleyPenney/tidy.nvim", event = "BufWritePre" })
+    -- use({
+    --     "McAuleyPenney/tidy.nvim",
+    --     event = "BufWritePre",
+    --     branch = "cfg",
+    --     config = function()
+    --         require("tidy").setup({
+    --             eof_quant = 0,
+    --             fmts = {
+    --                 "multi",
+    --                 "sof",
+    --                 "ws",
+    --             },
+    --         })
+    --     end,
+    -- })
 
     -- Подцветка синтаксиа
     use({
@@ -166,7 +180,7 @@ return packer.startup(function()
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim" },
         config = function()
-            require("plugins.nullls")
+            require("plugins.nullls").config()
         end,
     })
 
@@ -321,7 +335,31 @@ return packer.startup(function()
     use("gpanders/editorconfig.nvim")
 
     -- gtags
-    -- use("jsfaint/gen_tags.vim")
+    use({
+        "jsfaint/gen_tags.vim",
+        setup = function()
+            vim.opt.tags = {}
+            vim.g["gen_tags#root_marker"] = ".lvimrc"
+            vim.g["loaded_gentags#gtags"] = 0
+
+            vim.g["gen_tags#ctags_opts"] = {
+                "--recurse=yes",
+                "--exclude=.git",
+                "--exclude=.mypy*",
+                "--exclude=.pytest*",
+                "--exclude=BUILD",
+                "--exclude=.svn",
+                "--exclude=vendor*",
+                "--exclude=log*",
+                "--exclude=*.min.*",
+                "--exclude=\\*.pyc",
+                "--exclude=*.cache",
+                "--exclude=*.dll",
+                "--exclude=*.pdb",
+            }
+        end,
+        config = function() end,
+    })
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     use({

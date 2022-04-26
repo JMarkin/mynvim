@@ -30,7 +30,7 @@ M.maps = function(m)
         "<cmd>lua require('fzf-lua').lgrep_curbuf({ multiprocess=true,})<Cr>",
         "Search: current buffer"
     )
-    nnoremap("<leader>st", "<cmd>lua require('fzf-lua').tags({ multiprocess=true,})<Cr>", "Search: tags")
+    nnoremap("<leader>st", "<cmd>lua require('fzf-lua').tags({ multiprocess=true,ctags_file=vim.opt.tags._value})<Cr>", "Search: tags")
     nnoremap(
         "<leader>sd",
         "<cmd>lua require('fzf-lua').lsp_definitions({ multiprocess=true,})<Cr>",

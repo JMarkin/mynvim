@@ -32,13 +32,14 @@ local list = {
 
 M.config = function()
     require("nvim-tree").setup({
+        auto_reload_on_write = true,
         disable_netrw = true,
         open_on_setup = true,
         hijack_netrw = true,
+        ignore_buffer_on_setup = true,
         hijack_cursor = true,
         open_on_tab = true,
         view = {
-            auto_resize = true,
             preserve_window_proportions = true,
             mappings = {
                 list = list,
@@ -60,6 +61,9 @@ end
 
 M.setup = function()
     vim.g.nvim_tree_highlight_opened_files = 1
+    vim.g.nvim_tree_create_in_closed_folder = 1
+    vim.g.nvim_tree_group_empty = 1
+    vim.g.nvim_tree_add_trailing = 1
     vim.g.nvim_tree_refresh_wait = 500
 end
 
