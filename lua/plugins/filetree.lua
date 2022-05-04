@@ -34,7 +34,7 @@ M.config = function()
     require("nvim-tree").setup({
         auto_reload_on_write = true,
         disable_netrw = true,
-        open_on_setup = true,
+        open_on_setup = false,
         hijack_netrw = true,
         ignore_buffer_on_setup = true,
         hijack_cursor = true,

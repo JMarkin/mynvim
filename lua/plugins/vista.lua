@@ -11,6 +11,6 @@ vim.cmd([[
     let g:vista_fzf_preview = ['right:50%']
     let g:vista#renderer#enable_icon = 1
 
-    autocmd FileType vista,vista_kind nnoremap <buffer> <silent> / :<c-u>call vista#finder#fzf#Run()<CR>
+    " autocmd FileType vista,vista_kind nnoremap <buffer> <silent> / :<c-u>call vista#finder#skim#Run()<CR>
 
 ]])

@@ -12,6 +12,8 @@ M.setup = function()
 end
 
 M.config = function()
+    require("settings.lang").config()
+
     require("fidget").setup({})
     require("lspsaga").setup({
         finder_action_keys = {
@@ -23,7 +25,7 @@ M.config = function()
     })
     require("lsp_signature").setup({
         zindex = 49,
-        auto_close_after=1,
+        auto_close_after = 1,
     })
     require("lsp-colors").setup({
         Error = "#E82424",

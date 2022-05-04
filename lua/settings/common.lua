@@ -10,8 +10,8 @@ opt.colorcolumn = "120"
 opt.scrolloff = 15
 opt.cursorline = true -- Подсветка строки с курсором
 opt.spelllang = { "en_us", "ru" } -- Словари рус eng
-opt.number = true -- Включаем нумерацию строк
-opt.relativenumber = true -- Вкл. относительную нумерацию строк
+opt.number = true
+opt.relativenumber = false
 opt.undofile = true -- Возможность отката назад
 opt.splitright = true -- vertical split вправо
 opt.splitbelow = true -- horizontal split вниз
@@ -69,12 +69,6 @@ augroup end
 ]],
     false
 )
-
--- запуск lsp для опр типов
-vim.cmd([[
-    au FileType lua ++once lua require("settings.lang").lua()
-    au FileType python ++once lua require("settings.lang").python()
-]])
 
 -- запоминаем fold
 vim.cmd([[

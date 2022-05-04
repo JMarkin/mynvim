@@ -22,9 +22,23 @@ return packer.startup(function()
     })
 
     use({
-        "karb94/neoscroll.nvim",
+        "wikitopian/hardmode",
         config = function()
-            require("neoscroll").setup()
+            vim.cmd([[
+                let g:HardMode_level = 'wannabe'
+                let g:HardMode_hardmodeMsg = 'Don''t use this!'
+                autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+            ]])
+        end,
+    })
+
+    use({
+        "declancm/cinnamon.nvim",
+        config = function()
+            require("cinnamon").setup({
+                extra_keymaps = true,
+                extended_keymaps = true,
+            })
         end,
     })
 
@@ -33,7 +47,10 @@ return packer.startup(function()
         "max397574/better-escape.nvim",
         event = "InsertEnter",
         config = function()
-            require("better_escape").setup({})
+            require("better_escape").setup({
+                mapping = { "jk", "jj", "hh" },
+                clear_empty_lines = true,
+            })
         end,
     })
 
@@ -48,6 +65,7 @@ return packer.startup(function()
                 autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
                 commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
+                lookup_parents = true,
             })
         end,
     })
@@ -116,7 +134,7 @@ return packer.startup(function()
         after = { "which-key.nvim", "smart-splits.nvim" },
         config = function()
             local m = require("mapx").setup({ global = "force", whichkey = true })
-            require("settings.view")(m)
+            require("settings.view").maps(m)
             require("settings.search").maps(m)
             require("settings.lang").maps(m)
             require("settings.common")(m)
@@ -172,9 +190,7 @@ return packer.startup(function()
     -- LSP
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
-    use({
-        "tami5/lspsaga.nvim",
-    })
+    use("tami5/lspsaga.nvim")
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -206,6 +222,7 @@ return packer.startup(function()
     use({
         "ms-jpq/coq_nvim",
         after = {
+            "nvim-lspconfig",
             "nvim-lsp-installer",
             "lspsaga.nvim",
             "lsp_signature.nvim",
@@ -242,12 +259,14 @@ return packer.startup(function()
     use({ "mrjones2014/smart-splits.nvim" })
 
     -- Навигация внутри файла по классам и функциям
-    use({
-        "liuchengxu/vista.vim",
-        setup = function()
-            require("plugins.vista")
-        end,
-    })
+    -- use({
+    --     "liuchengxu/vista.vim",
+    --     requires = "lotabout/skim",
+    --     setup = function()
+    --         require("plugins.vista")
+    --     end,
+    -- })
+    use({ "simrat39/symbols-outline.nvim" })
 
     --  Git
     use("kdheepak/lazygit.nvim")
@@ -314,10 +333,6 @@ return packer.startup(function()
     -- Неплохой модуль для раст
     use({
         "simrat39/rust-tools.nvim",
-        ft = { "rust" },
-        config = function()
-            require("settings.lang").rust()
-        end,
     })
 
     -- профилировщик оптимизатор neovim
@@ -338,6 +353,7 @@ return packer.startup(function()
     use({
         "jsfaint/gen_tags.vim",
         setup = function()
+            vim.g["gen_tags#ctags_bin"] = "ptags"
             vim.opt.tags = {}
             vim.g["gen_tags#root_marker"] = ".lvimrc"
             vim.g["loaded_gentags#gtags"] = 0
@@ -365,9 +381,12 @@ return packer.startup(function()
     use({
         "ibhagwan/fzf-lua",
         requires = {
-            "vijaymarupudi/nvim-fzf",
+            "lotabout/skim",
             "kyazdani42/nvim-web-devicons",
         },
+        config = function()
+            require("plugins.fzflua")
+        end,
     })
 
     --- Генераци докстрингов и т.п.

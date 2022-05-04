@@ -1,13 +1,11 @@
-local cmd = vim.cmd
 local g = vim.g
+local lspconfig = require("lspconfig")
 
 local M = {}
 
-local Job = require("plenary.job")
-
-function setup_lsp(lsp_name, opts)
+local function setup_lsp(lsp_name, opts)
     local lsp_installer = require("nvim-lsp-installer")
-    local ok, server = lsp_installer.get_server(lsp_name)
+    local ok, _ = lsp_installer.get_server(lsp_name)
     if not ok then
         print("not found " .. lsp_name)
         return
@@ -19,13 +17,12 @@ function setup_lsp(lsp_name, opts)
     end
 
     opts = coq.lsp_ensure_capabilities(opts)
-    server:setup(opts)
+    lspconfig[lsp_name].setup(opts)
 end
 
-M.python = function()
+M.pylsp = function()
     g.pydocstring_formatter = "google"
     g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
-    g.neomake_python_enabled_makers = { "python", "flake8" }
 
     g.pydocstring_doq_path = "~/.pyenv/shims/doq"
 
@@ -53,11 +50,14 @@ M.python = function()
                         enabled = false,
                     },
                     yapf = {
-                        enabled = false,
+                        enabled = true,
                     },
                     mypy = {
                         enabled = false,
                     },
+                    isort = {
+                        enabled = true,
+                    }
                 },
             },
         },
@@ -65,7 +65,7 @@ M.python = function()
     setup_lsp("pylsp", opts)
 end
 
-M.lua = function()
+M.sumneko_lua = function()
     local opts = {
         settings = {
             Lua = {
@@ -77,7 +77,7 @@ M.lua = function()
                 },
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
-                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap"},
+                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap" },
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files
@@ -92,7 +92,7 @@ M.lua = function()
     setup_lsp("sumneko_lua", opts)
 end
 
-M.rust = function()
+M.rust_analyzer = function()
     g.neoformat_enabled_rust = { "rustfmt" }
     g.neoformat_rust_rustfmt = {
         exe = "rustfmt",
@@ -127,7 +127,7 @@ M.rust = function()
         print("not found rust_analyzer")
         return
     end
-    local present, coq = pcall(require, "coq")
+    local _, coq = pcall(require, "coq")
     if not present then
         print("not found coq_nvim")
         return
@@ -148,6 +148,51 @@ M.rust = function()
     })
     server:attach_buffers()
     rust_tools.start_standalone_if_required()
+end
+
+M.config = function()
+    local servers = {
+        "ccls",
+        "cmake",
+        "cssls",
+        "dockerls",
+        "eslint",
+        "graphql",
+        "html",
+        "jsonls",
+        "pylsp",
+        "rust_analyzer",
+        "spectral",
+        "sqls",
+        "sumneko_lua",
+        "tsserver",
+        "vimls",
+        "volar",
+        "yamlls",
+    }
+
+    require("nvim-lsp-installer").setup({
+        ensure_installed = servers,
+        automatic_installation = true,
+        ui = {
+            icons = {
+                server_installed = "✓",
+                server_pending = "➜",
+                server_uninstalled = "✗",
+            },
+        },
+    })
+
+    local opts = {}
+
+    for _, lsp in pairs(servers) do
+        local s_lsp = M[lsp]
+        if s_lsp == nil or s_lsp == "" then
+            setup_lsp(lsp, opts)
+        else
+            s_lsp()
+        end
+    end
 end
 
 M.maps = function(m)

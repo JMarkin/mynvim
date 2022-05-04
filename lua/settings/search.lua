@@ -13,6 +13,7 @@ M.maps = function(m)
     m.nname("<leader>s", "Search")
 
     nnoremap("<leader>sq", "<cmd>lua require('fzf-lua').quickfix({ multiprocess=true})<Cr>", "Search: quickfix")
+    nnoremap("<leader>s\\", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
     nnoremap("<leader>sb", "<cmd>lua require('settings.search').bookmark()<Cr>", "Search: bookmark")
     nnoremap("<leader>sf", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>", "Search: find files")
     nnoremap(
@@ -30,7 +31,11 @@ M.maps = function(m)
         "<cmd>lua require('fzf-lua').lgrep_curbuf({ multiprocess=true,})<Cr>",
         "Search: current buffer"
     )
-    nnoremap("<leader>st", "<cmd>lua require('fzf-lua').tags({ multiprocess=true,ctags_file=vim.opt.tags._value})<Cr>", "Search: tags")
+    nnoremap(
+        "<leader>st",
+        "<cmd>lua require('fzf-lua').tags({ multiprocess=true,ctags_file=vim.opt.tags._value})<Cr>",
+        "Search: tags"
+    )
     nnoremap(
         "<leader>sd",
         "<cmd>lua require('fzf-lua').lsp_definitions({ multiprocess=true,})<Cr>",
@@ -47,6 +52,8 @@ M.maps = function(m)
         "<cmd>lua require('fzf-lua').command_history({ multiprocess=true,})<Cr>",
         "Search: command_history"
     )
+
+    nnoremap("<leader>h", ":lua require('replacer').run()<cr>", "Replace")
 end
 
 return M

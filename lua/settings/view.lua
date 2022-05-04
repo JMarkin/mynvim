@@ -1,23 +1,32 @@
-local cmd = vim.cmd
-local g = vim.g
-local opt = vim.opt
+local M = {}
 
-vim.opt.list = false
--- vim.opt.listchars:append("space:⋅")
-vim.opt.listchars:append("multispace:¦   ")
-vim.opt.listchars:append("eol:↴")
+M.detach_buffer = function(bufnr)
+    local clients = vim.lsp.buf_get_clients(bufnr)
+    for client_id, _ in pairs(clients) do
+        vim.lsp.buf_detach_client(bufnr, client_id)
+    end
+end
 
-return function(m)
-    ---Переопрдееляем moving в vim
-    -- noremap("j", "h")
-    -- noremap("k", "j")
-    -- noremap("l", "k")
-    -- noremap(";", "l")
+M.setup = function()
+    vim.opt.list = false
+    -- vim.opt.listchars:append("space:⋅")
+    vim.opt.listchars:append("multispace:¦   ")
+    vim.opt.listchars:append("eol:↴")
+end
+
+M.maps = function(m)
+    local g = vim.g
+    local cmd = vim.cmd
+
 
     m.nname("<space>b", "Buffer")
 
     --------Основное управление буферами
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
+    cmd([[
+        autocmd BufDelete <buffer> lua require("settings.view").detach_buffer(tonumber(vim.fn.expand("<abuf>")))
+    ]])
+
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
     nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
     nnoremap("<space>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
@@ -65,7 +74,7 @@ return function(m)
 
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
-    nnoremap("<leader>t", "<Cmd>Vista!!<CR>", "Tagbar")
+    nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
 
     m.nname("<space>g", "Git")
@@ -102,3 +111,5 @@ return function(m)
     m.nname("<space>f", "Fold")
     nmap("<space>fb", "zf]%", "Fold expr block")
 end
+
+return M
