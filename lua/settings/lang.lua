@@ -156,7 +156,6 @@ M.config = function()
         "cmake",
         "cssls",
         "dockerls",
-        "eslint",
         "graphql",
         "html",
         "jsonls",
@@ -172,7 +171,6 @@ M.config = function()
     }
 
     require("nvim-lsp-installer").setup({
-        ensure_installed = servers,
         automatic_installation = true,
         ui = {
             icons = {

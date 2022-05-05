@@ -339,13 +339,6 @@ return packer.startup(function()
     use({
         "lewis6991/impatient.nvim",
     })
-    use({
-        "nathom/filetype.nvim",
-        config = function()
-            require("plugins.nvimfiletype")
-        end,
-    })
-
     -- editorconfig
     use("gpanders/editorconfig.nvim")
 
