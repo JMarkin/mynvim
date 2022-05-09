@@ -22,17 +22,6 @@ return packer.startup(function()
     })
 
     use({
-        "wikitopian/hardmode",
-        config = function()
-            vim.cmd([[
-                let g:HardMode_level = 'wannabe'
-                let g:HardMode_hardmodeMsg = 'Don''t use this!'
-                autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-            ]])
-        end,
-    })
-
-    use({
         "declancm/cinnamon.nvim",
         config = function()
             require("cinnamon").setup({

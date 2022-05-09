@@ -8,6 +8,7 @@ require("nvim-treesitter.configs").setup({
         "python",
         "vim",
         "typescript",
+        "javascript",
         "yaml",
         "toml",
         "make",
@@ -17,6 +18,8 @@ require("nvim-treesitter.configs").setup({
         "css",
         "bash",
         "dockerfile",
+        "vue",
+        "scss",
     },
     indent = {
         enable = true,
