@@ -22,7 +22,7 @@ require("nvim-treesitter.configs").setup({
         "scss",
     },
     indent = {
-        enable = true,
+        enable = false,
     },
     highlight = {
         enable = true,
@@ -42,6 +42,7 @@ require("nvim-treesitter.configs").setup({
             node_decremental = "grm",
         },
     },
+    yati = { enable = true },
 })
 
 local present_hlargs, ts_hlargs = pcall(require, "hlargs")

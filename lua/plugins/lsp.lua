@@ -64,12 +64,12 @@ M.config = function()
     vim.diagnostic.config({
         underline = true,
         signs = true,
-        virtual_text = false,
+        virtual_text = true,
         float = true,
         update_in_insert = false,
         severity_sort = true,
     })
-    require("lsp_lines").register_lsp_virtual_lines()
+    -- require("lsp_lines").register_lsp_virtual_lines()
     -- vim.o.updatetime = 250
     -- vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 end

@@ -1,7 +1,6 @@
 vim.filetype.add({
     extension = {
         dockerfile = "dockerfile",
-        lvimrc = "lua",
     },
     pattern = {
         ["*%.nginx"] = "nginx",

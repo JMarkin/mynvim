@@ -62,7 +62,6 @@ end
 M.setup = function()
     vim.g.nvim_tree_highlight_opened_files = 1
     vim.g.nvim_tree_create_in_closed_folder = 1
-    vim.g.nvim_tree_group_empty = 1
     vim.g.nvim_tree_add_trailing = 1
     vim.g.nvim_tree_refresh_wait = 500
 end

@@ -1,12 +1,5 @@
 local M = {}
 
-M.detach_buffer = function(bufnr)
-    local clients = vim.lsp.buf_get_clients(bufnr)
-    for client_id, _ in pairs(clients) do
-        vim.lsp.buf_detach_client(bufnr, client_id)
-    end
-end
-
 M.setup = function()
     vim.opt.list = false
     -- vim.opt.listchars:append("space:⋅")
@@ -18,14 +11,10 @@ M.maps = function(m)
     local g = vim.g
     local cmd = vim.cmd
 
-
     m.nname("<space>b", "Buffer")
 
     --------Основное управление буферами
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
-    cmd([[
-        autocmd BufDelete <buffer> lua require("settings.view").detach_buffer(tonumber(vim.fn.expand("<abuf>")))
-    ]])
 
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
     nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
@@ -110,6 +99,10 @@ M.maps = function(m)
     m.nname("z", "Fold")
     m.nname("<space>f", "Fold")
     nmap("<space>fb", "zf]%", "Fold expr block")
+
+    ---- Перемещения
+    nnoremap("J", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>", "half down")
+    nnoremap("K", "<Cmd>lua Scroll('<C-u>', 1, 1)<CR>", "half up")
 end
 
 return M

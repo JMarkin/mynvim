@@ -20,6 +20,9 @@ return packer.startup(function()
     use({
         "nvim-lua/plenary.nvim",
     })
+    use({
+        "rcarriga/nvim-notify",
+    })
 
     use({
         "declancm/cinnamon.nvim",
@@ -152,8 +155,9 @@ return packer.startup(function()
         "nvim-treesitter/nvim-treesitter",
     })
     use({
-        "romgrk/nvim-treesitter-context",
+        "nvim-treesitter/nvim-treesitter-context",
     })
+    use({ "yioneko/nvim-yati" })
 
     -- use({
     --     "m-demare/hlargs.nvim",
@@ -162,7 +166,7 @@ return packer.startup(function()
 
     use({
         "windwp/nvim-ts-autotag",
-        after = { "nvim-treesitter", "nvim-treesitter-context" },
+        after = { "nvim-treesitter", "nvim-treesitter-context", "nvim-yati" },
         config = function()
             require("plugins.treesitter")
         end,
@@ -180,6 +184,15 @@ return packer.startup(function()
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
     use("tami5/lspsaga.nvim")
+    -- use({
+    --     "rmagatti/goto-preview",
+    --     config = function()
+    --         require("goto-preview").setup({
+    --             dismiss_on_move = false,
+    --             bufhidden = "",
+    --         })
+    --     end,
+    -- })
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -204,9 +217,9 @@ return packer.startup(function()
     })
     use("j-hui/fidget.nvim")
 
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    })
+    -- use({
+    --     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    -- })
     --- Автокомлиты
     use({
         "ms-jpq/coq_nvim",
@@ -218,7 +231,7 @@ return packer.startup(function()
             "null-ls.nvim",
             "lsp-colors.nvim",
             "trouble.nvim",
-            "lsp_lines.nvim",
+            -- "lsp_lines.nvim",
         },
         setup = function()
             require("plugins.lsp").setup()
@@ -377,6 +390,13 @@ return packer.startup(function()
         config = function()
             require("neogen").setup({
                 enabled = true,
+                languages = {
+                    python = {
+                        template = {
+                            annotation_convention = "reST",
+                        },
+                    },
+                },
             })
         end,
         requires = "nvim-treesitter/nvim-treesitter",

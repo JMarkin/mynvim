@@ -47,6 +47,7 @@ M.maps = function(m)
         "Search: References"
     )
     nnoremap("<leader>sc", "<cmd>lua require('fzf-lua').commands({ multiprocess=true,})<Cr>", "Search: commands")
+    nnoremap("<leader>sk", "<cmd>lua require('fzf-lua').keymaps({ multiprocess=true,})<Cr>", "Search: keymaps")
     nnoremap(
         "<leader>sch",
         "<cmd>lua require('fzf-lua').command_history({ multiprocess=true,})<Cr>",
