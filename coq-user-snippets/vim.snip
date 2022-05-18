@@ -1,6 +1,6 @@
 snippet init_pylint
     lua << EOF
-    vim.g["loaded_gentags#gtags"] = 1
+    vim.g["loaded_gentags#gtags"] = 0
     vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
 
     require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
@@ -9,7 +9,7 @@ snippet init_pylint
 
 snippet init_flake8
     lua << EOF
-    vim.g["loaded_gentags#gtags"] = 1
+    vim.g["loaded_gentags#gtags"] = 0
     vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
 
     require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
@@ -18,5 +18,5 @@ snippet init_flake8
 
 snippet init_gtags
     lua << EOF
-    vim.g["loaded_gentags#gtags"] = 1
+    vim.g["loaded_gentags#gtags"] = 0
     EOF

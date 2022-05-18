@@ -348,10 +348,11 @@ return packer.startup(function()
     use({
         "jsfaint/gen_tags.vim",
         setup = function()
+            vim.g["loaded_gentags#gtags"] = 1
+            vim.g["loaded_gentags#ctags"] = 1
             vim.g["gen_tags#ctags_bin"] = "ptags"
             vim.opt.tags = {}
             vim.g["gen_tags#root_marker"] = ".lvimrc"
-            vim.g["loaded_gentags#gtags"] = 0
 
             vim.g["gen_tags#ctags_opts"] = {
                 "--recurse=yes",
