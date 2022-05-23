@@ -75,15 +75,17 @@ return packer.startup(function()
     --     end,
     -- })
     -- Цвет тема
-    use({
-        "sainnhe/sonokai",
-    })
+    use("sainnhe/sonokai")
     use("rmehri01/onenord.nvim")
     use("rebelot/kanagawa.nvim")
-    use("Mofiqul/dracula.nvim")
     use("olimorris/onedarkpro.nvim")
     use("luisiacc/gruvbox-baby")
     use("folke/tokyonight.nvim")
+    use("ray-x/aurora")
+    use({
+        "1995parham/naz.vim",
+        requires = { "tjdevries/colorbuddy.nvim" },
+    })
 
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
@@ -166,33 +168,22 @@ return packer.startup(function()
 
     use({
         "windwp/nvim-ts-autotag",
-        after = { "nvim-treesitter", "nvim-treesitter-context", "nvim-yati" },
-        config = function()
-            require("plugins.treesitter")
-        end,
     })
 
     -- вырубаем до stable ветки т.к. разрабочтик делает под master
-    -- use({
-    -- 	"p00f/nvim-ts-rainbow",
-    -- 	config = function()
-    -- 		require("plugins.treesitter")
-    -- 	end,
-    -- 	after = { "nvim-treesitter", "nvim-treesitter-context" },
-    -- })
+    use({
+        "p00f/nvim-ts-rainbow",
+        config = function()
+            require("plugins.treesitter")
+        end,
+        after = { "nvim-treesitter", "nvim-treesitter-context", "nvim-yati", "nvim-ts-autotag" },
+    })
+
     -- LSP
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
     use("tami5/lspsaga.nvim")
-    -- use({
-    --     "rmagatti/goto-preview",
-    --     config = function()
-    --         require("goto-preview").setup({
-    --             dismiss_on_move = false,
-    --             bufhidden = "",
-    --         })
-    --     end,
-    -- })
+
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -202,9 +193,6 @@ return packer.startup(function()
         end,
     })
 
-    use({
-        "ray-x/lsp_signature.nvim",
-    })
     use({
         "folke/lsp-colors.nvim",
     })
@@ -227,7 +215,6 @@ return packer.startup(function()
             "nvim-lspconfig",
             "nvim-lsp-installer",
             "lspsaga.nvim",
-            "lsp_signature.nvim",
             "null-ls.nvim",
             "lsp-colors.nvim",
             "trouble.nvim",

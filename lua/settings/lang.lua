@@ -52,13 +52,13 @@ M.pylsp = function()
                         enabled = false,
                     },
                     yapf = {
-                        enabled = true,
+                        enabled = false,
                     },
                     mypy = {
                         enabled = false,
                     },
                     isort = {
-                        enabled = true,
+                        enabled = false,
                     },
                 },
             },
@@ -315,18 +315,43 @@ M.config = function()
 end
 
 M.maps = function(m)
-    nnoremap("<leader>d", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
-    nnoremap("<leader>D", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", "GoTo: definition")
-    nnoremap("<leader>i", "<cmd>lua vim.lsp.buf.implementation()<CR>", "GoTo: implementation")
-    nnoremap("<leader>r", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "GoTo: references")
+    nnoremap("gdd", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
+    nnoremap("gD", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", "GoTo: definition")
+    nnoremap("gr", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "GoTo: references")
 
-    nnoremap("<leader>ld", ":lua require('neogen').generate()<CR>", "Lang: generete docs")
-    nnoremap("<leader>li", "<cmd>lua vim.diagnostic.open_float()<CR>", "Lang: diagnostic float")
-    nnoremap("<leader>la", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", "Lang: code action")
-    nnoremap("<leader>la", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", "Lang: code action")
-    nnoremap("<leader>lr", "<cmd>lua require('lspsaga.rename').rename()<CR>", "Lang: rename")
-    nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", "Lang: hover")
-    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", "Lang: lsp format")
+    nnoremap("ggd", ":lua require('neogen').generate()<CR>", "Lang: generete docs")
+
+    nnoremap(
+        "gdc",
+        "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>",
+        "Lang: diagnostic float under cursor"
+    )
+    nnoremap(
+        "gdl",
+        "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>",
+        "Lang: diagnostic float under line"
+    )
+    nnoremap(
+        "[e",
+        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+        "Lang: diagnostic jump prev"
+    )
+    nnoremap(
+        "]e",
+        "<cmd>Lspsaga diagnostic_jump_next<CR>",
+        "Lang: diagnostic jump next"
+    )
+
+    nnoremap("ga", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", "Lang: code action")
+    nnoremap("gA", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", "Lang: range code action")
+
+    nnoremap("gR", "<cmd>lua require('lspsaga.rename').rename()<CR>", "Lang: rename")
+
+    nnoremap("gH", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", "Lang: hover doc")
+
+    nnoremap("gf", "<cmd>lua vim.lsp.buf.formatting()<CR>", "Lang: lsp format")
+
+    nnoremap("gs", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", "Lang: show signature")
 end
 
 return M

@@ -3,9 +3,17 @@ local M = {}
 M.setup = function()
     vim.g.coq_settings = {
         auto_start = true,
+        display = {
+            preview = {
+                resolve_timeout = 0.1,
+            },
+        },
         clients = {
             tmux = {
                 enabled = true,
+            },
+            lsp = {
+                resolve_timeout = 0.08,
             },
         },
     }
@@ -22,10 +30,6 @@ M.config = function()
             split = "s",
             quit = "q",
         },
-    })
-    require("lsp_signature").setup({
-        zindex = 49,
-        auto_close_after = 1,
     })
     require("lsp-colors").setup({
         Error = "#E82424",
@@ -64,14 +68,11 @@ M.config = function()
     vim.diagnostic.config({
         underline = true,
         signs = true,
-        virtual_text = true,
+        virtual_text = false,
         float = true,
         update_in_insert = false,
         severity_sort = true,
     })
-    -- require("lsp_lines").register_lsp_virtual_lines()
-    -- vim.o.updatetime = 250
-    -- vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 end
 
 return M

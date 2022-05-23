@@ -29,9 +29,9 @@ require("nvim-treesitter.configs").setup({
         additional_vim_regex_highlighting = false,
     },
     rainbow = {
-        enable = false,
+        enable = true,
         extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = 500, -- Do not enable for files with more than n lines, int
+        max_file_lines = 1500, -- Do not enable for files with more than n lines, int
     },
     incremental_selection = {
         enable = true,
@@ -63,8 +63,8 @@ if present_atag then
     ts_atag.setup()
 end
 
-vim.cmd([[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
-]])
+-- vim.cmd([[
+-- set foldmethod=expr
+-- set foldexpr=nvim_treesitter#foldexpr()
+-- set nofoldenable
+-- ]])
