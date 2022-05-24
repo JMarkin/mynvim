@@ -11,7 +11,8 @@ return function()
         type = "bold,italic",
     }
 
-    local colorscheme = "kanagawa"
+    local colorscheme = "highlite"
+    local vim_colorscheme = "colorscheme " .. colorscheme
 
     if colorscheme == "onedarkpro" then
         local onedarkpro = require("onedarkpro")
@@ -79,7 +80,7 @@ return function()
         })
     end
 
-    vim.cmd([[colorscheme kanagawa]])
+    vim.cmd(vim_colorscheme)
 
     local present, lualine = pcall(require, "lualine")
     if present then

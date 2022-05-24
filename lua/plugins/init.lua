@@ -10,13 +10,7 @@ return packer.startup(function()
             require("dressing").setup()
         end,
     })
-    -- use({
-    --     "gelguy/wilder.nvim",
-    --     requires = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
-    --     config = function()
-    --         require("plugins.wilder")
-    --     end,
-    -- })
+
     use({
         "nvim-lua/plenary.nvim",
     })
@@ -82,10 +76,7 @@ return packer.startup(function()
     use("luisiacc/gruvbox-baby")
     use("folke/tokyonight.nvim")
     use("ray-x/aurora")
-    use({
-        "1995parham/naz.vim",
-        requires = { "tjdevries/colorbuddy.nvim" },
-    })
+    use("Iron-E/nvim-highlite")
 
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
@@ -183,7 +174,6 @@ return packer.startup(function()
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
     use("tami5/lspsaga.nvim")
-
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -435,6 +425,13 @@ return packer.startup(function()
         cmd = { "SudaRead", "SudaWrite" },
     })
 
+    use({
+        "ethanholz/nvim-lastplace",
+        config = function()
+            require("nvim-lastplace").setup({})
+        end,
+    })
+
     -- minimap
     -- use({
     --     "wfxr/minimap.vim",
@@ -455,6 +452,14 @@ return packer.startup(function()
         end,
         config = function()
             require("plugins.bookmark").config()
+        end,
+    })
+
+    -- spellcheck
+    use({
+        "lewis6991/spellsitter.nvim",
+        config = function()
+            require("spellsitter").setup()
         end,
     })
 
