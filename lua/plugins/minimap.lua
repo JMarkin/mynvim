@@ -11,18 +11,18 @@ end
 
 M.config = function()
     vim.cmd([[
-function! FloatWindowMinimapHack() abort
-    let mmwinnr = bufwinnr('-MINIMAP-')
-    if mmwinnr == -1
-        return
-    endif
-    if winnr() == mmwinnr
-        " Go to the other window
-        execute 'wincmd t'
-    endif
-endfunction
-autocmd WinEnter <buffer> call FloatWindowMinimapHack()
-]])
+        function! FloatWindowMinimapHack() abort
+            let mmwinnr = bufwinnr('-MINIMAP-')
+            if mmwinnr == -1
+                return
+            endif
+            if winnr() == mmwinnr
+                " Go to the other window
+                execute 'wincmd t'
+            endif
+        endfunction
+        autocmd WinEnter <buffer> call FloatWindowMinimapHack()
+    ]])
 end
 
 return M

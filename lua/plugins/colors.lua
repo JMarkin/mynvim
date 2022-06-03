@@ -28,18 +28,12 @@ return function()
                 treesitter = true,
                 lsp_saga = true,
                 nvim_tree = true,
-                nvim_ts_rainbow = false,
+                nvim_ts_rainbow = true,
                 trouble_nvim = true,
                 which_key_nvim = true,
                 indentline = true,
             },
-            styles = {
-                strings = "NONE", -- Style that is applied to strings
-                comments = "italic", -- Style that is applied to comments
-                keywords = "bold,underline", -- Style that is applied to keywords
-                functions = "bold,undercurl", -- Style that is applied to functions
-                variables = "NONE", -- Style that is applied to variables
-            },
+            styles = style,
             options = {
                 bold = true, -- Use the themes opinionated bold styles?
                 italic = true, -- Use the themes opinionated italic styles?
@@ -88,7 +82,7 @@ return function()
             extensions = { "quickfix", "nvim-tree", "fzf" },
             options = {
                 disabled_filetypes = { "Trouble", "Vista" },
-                theme = colorscheme,
+                theme = 'auto',
             },
             sections = {
                 lualine_a = { "mode" },

@@ -19,6 +19,16 @@ return packer.startup(function()
     })
 
     use({
+        "b0o/incline.nvim",
+        setup = function()
+            vim.opt.laststatus = 3
+        end,
+        config = function()
+            require("incline").setup()
+        end,
+    })
+
+    use({
         "declancm/cinnamon.nvim",
         config = function()
             require("cinnamon").setup({
@@ -433,15 +443,15 @@ return packer.startup(function()
     })
 
     -- minimap
-    -- use({
-    --     "wfxr/minimap.vim",
-    --     setup = function()
-    --         require("plugins.minimap").setup()
-    --     end,
-    --     config = function()
-    --         require("plugins.minimap").config()
-    --     end,
-    -- })
+    use({
+        "wfxr/minimap.vim",
+        setup = function()
+            require("plugins.minimap").setup()
+        end,
+        config = function()
+            require("plugins.minimap").config()
+        end,
+    })
 
     -- bookmark
     use({
@@ -458,6 +468,11 @@ return packer.startup(function()
     -- spellcheck
     use({
         "lewis6991/spellsitter.nvim",
+        after = "nvim-ts-rainbow",
+        setup = function()
+            -- vim.opt.spell = true
+            -- vim.opt.spelllang = "en"
+        end,
         config = function()
             require("spellsitter").setup()
         end,

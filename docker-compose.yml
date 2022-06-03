@@ -11,3 +11,4 @@ services:
     command: /bin/sh -c "while :; do sleep 1; done"
     tmpfs:
       - /root/.config/nvim/plugin
+
