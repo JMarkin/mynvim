@@ -55,11 +55,6 @@ M.maps = function(m)
     g.neoformat_basic_format_trim = 1
     g.neoformat_run_all_formatters = 1
 
-    ---------Линтеры
-    -- cmd [[
-    -- call neomake#configure#automake('w')
-    -- ]]
-    -- g.neomake_open_list = 2
 
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
@@ -103,6 +98,8 @@ M.maps = function(m)
     ---- Перемещения
     nnoremap("J", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>", "half down")
     nnoremap("K", "<Cmd>lua Scroll('<C-u>', 1, 1)<CR>", "half up")
+    
+    vim.cmd[[xnoremap <expr> p 'pgv"' . v:register . 'y']]
 end
 
 return M

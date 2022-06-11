@@ -20,3 +20,17 @@ snippet init_gtags
     lua << EOF
     vim.g["loaded_gentags#gtags"] = 0
     EOF
+
+snippet pydoc
+    require("neogen").setup({
+        enabled = true,
+        languages = {
+            python = {
+                template = {
+                    annotation_convention = "reST",
+                },
+            },
+        },
+    })
+
+

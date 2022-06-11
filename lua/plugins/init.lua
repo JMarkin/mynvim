@@ -324,10 +324,6 @@ return packer.startup(function()
         "simrat39/rust-tools.nvim",
     })
 
-    -- профилировщик оптимизатор neovim
-    use({
-        "lewis6991/impatient.nvim",
-    })
     -- editorconfig
     use("gpanders/editorconfig.nvim")
 
@@ -375,18 +371,6 @@ return packer.startup(function()
     --- Генераци докстрингов и т.п.
     use({
         "danymat/neogen",
-        config = function()
-            require("neogen").setup({
-                enabled = true,
-                languages = {
-                    python = {
-                        template = {
-                            annotation_convention = "reST",
-                        },
-                    },
-                },
-            })
-        end,
         requires = "nvim-treesitter/nvim-treesitter",
     })
 
@@ -477,6 +461,16 @@ return packer.startup(function()
             require("spellsitter").setup()
         end,
     })
+
+    -- Времено до мерджа в neovim фиксов
+
+    -- профилировщик оптимизатор neovim
+    use({
+        "lewis6991/impatient.nvim",
+    })
+
+    --обноление cursorhold
+    use("antoinemadec/FixCursorHold.nvim")
 
     if bootstrap then
         require("packer").sync()
