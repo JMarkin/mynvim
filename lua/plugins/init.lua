@@ -12,6 +12,13 @@ return packer.startup(function()
     })
 
     use({
+        "VonHeikemen/searchbox.nvim",
+        requires = {
+            { "MunifTanjim/nui.nvim" },
+        },
+    })
+
+    use({
         "nvim-lua/plenary.nvim",
     })
     use({
@@ -71,13 +78,6 @@ return packer.startup(function()
         cmd = { "PackerCompile", "PackerInstall", "PackerSync" },
     })
 
-    --- Подцветка отступов
-    -- use({
-    --     "lukas-reineke/indent-blankline.nvim",
-    --     config = function()
-    --         require("plugins.indent")
-    --     end,
-    -- })
     -- Цвет тема
     use("sainnhe/sonokai")
     use("rmehri01/onenord.nvim")
@@ -87,6 +87,7 @@ return packer.startup(function()
     use("folke/tokyonight.nvim")
     use("ray-x/aurora")
     use("Iron-E/nvim-highlite")
+    use("yorik1984/newpaper.nvim")
 
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
@@ -114,45 +115,6 @@ return packer.startup(function()
         end,
     })
 
-    -- Классная штука по отображению shortcut
-    use({
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup()
-        end,
-    })
-
-    -- Удобный способ задания shortcut с интеграцией в which-key
-    use({
-        "b0o/mapx.nvim",
-        as = "mapx",
-        after = { "which-key.nvim", "smart-splits.nvim" },
-        config = function()
-            local m = require("mapx").setup({ global = "force", whichkey = true })
-            require("settings.view").maps(m)
-            require("settings.search").maps(m)
-            require("settings.lang").maps(m)
-            require("settings.common")(m)
-        end,
-    })
-
-    --remove whitespace
-    -- use({
-    --     "McAuleyPenney/tidy.nvim",
-    --     event = "BufWritePre",
-    --     branch = "cfg",
-    --     config = function()
-    --         require("tidy").setup({
-    --             eof_quant = 0,
-    --             fmts = {
-    --                 "multi",
-    --                 "sof",
-    --                 "ws",
-    --             },
-    --         })
-    --     end,
-    -- })
-
     -- Подцветка синтаксиа
     use({
         "nvim-treesitter/nvim-treesitter",
@@ -161,11 +123,6 @@ return packer.startup(function()
         "nvim-treesitter/nvim-treesitter-context",
     })
     use({ "yioneko/nvim-yati" })
-
-    -- use({
-    --     "m-demare/hlargs.nvim",
-    --     requires = { "nvim-treesitter/nvim-treesitter" },
-    -- })
 
     use({
         "windwp/nvim-ts-autotag",
@@ -205,9 +162,10 @@ return packer.startup(function()
     })
     use("j-hui/fidget.nvim")
 
-    -- use({
-    --     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    -- })
+    use({
+        "ray-x/lsp_signature.nvim",
+    })
+
     --- Автокомлиты
     use({
         "ms-jpq/coq_nvim",
@@ -218,7 +176,7 @@ return packer.startup(function()
             "null-ls.nvim",
             "lsp-colors.nvim",
             "trouble.nvim",
-            -- "lsp_lines.nvim",
+            "lsp_signature.nvim",
         },
         setup = function()
             require("plugins.lsp").setup()
@@ -426,17 +384,6 @@ return packer.startup(function()
         end,
     })
 
-    -- minimap
-    use({
-        "wfxr/minimap.vim",
-        setup = function()
-            require("plugins.minimap").setup()
-        end,
-        config = function()
-            require("plugins.minimap").config()
-        end,
-    })
-
     -- bookmark
     use({
         "MattesGroeger/vim-bookmarks",
@@ -444,33 +391,52 @@ return packer.startup(function()
         setup = function()
             require("plugins.bookmark").setup()
         end,
-        config = function()
-            require("plugins.bookmark").config()
-        end,
     })
-
-    -- spellcheck
-    use({
-        "lewis6991/spellsitter.nvim",
-        after = "nvim-ts-rainbow",
-        setup = function()
-            -- vim.opt.spell = true
-            -- vim.opt.spelllang = "en"
-        end,
-        config = function()
-            require("spellsitter").setup()
-        end,
-    })
-
-    -- Времено до мерджа в neovim фиксов
 
     -- профилировщик оптимизатор neovim
     use({
         "lewis6991/impatient.nvim",
     })
 
-    --обноление cursorhold
+    -- обноление cursorhold
     use("antoinemadec/FixCursorHold.nvim")
+
+    -- терминал
+    use({
+        "oberblastmeister/termwrapper.nvim",
+        config = function()
+            require("termwrapper").setup({
+                -- these are all of the defaults
+                open_autoinsert = false, -- autoinsert when opening
+                toggle_autoinsert = true, -- autoinsert when toggling
+                autoclose = true, -- autoclose, (no [Process exited 0])
+                winenter_autoinsert = false, -- autoinsert when entering the window
+                default_window_command = "belowright 13split", -- the default window command to run when none is specified,
+                -- opens a window in the bottom
+                open_new_toggle = true, -- open a new terminal if the toggle target does not exist
+                log = 1, -- 1 = warning, 2 = info, 3 = debug
+            })
+        end,
+    })
+
+    -- Классная штука по отображению shortcut
+    use({
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup()
+        end,
+    })
+
+    -- Удобный способ задания shortcut с интеграцией в which-key
+    use({
+        "b0o/mapx.nvim",
+        as = "mapx",
+        after = { "which-key.nvim" },
+        config = function()
+            local m = require("mapx").setup({ global = "force", whichkey = true })
+            require("settings.keymap")(m)
+        end,
+    })
 
     if bootstrap then
         require("packer").sync()

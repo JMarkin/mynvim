@@ -44,21 +44,4 @@ M.setup = function()
     ]])
 end
 
-M.config = function()
-    local m = require("mapx")
-
-    m.nname("<leader>b", "Bookmark")
-
-    nnoremap("<leader>bb", "<Plug>BookmarkToggle", "Bookmark: Toggle")
-    nnoremap("<leader>bi", "<Plug>BookmarkAnnotate", "Bookmark: Annotate")
-    nnoremap("<leader>ba", "<Plug>BookmarkShowAll", "Bookmark: ShowAll")
-    nnoremap("<leader>bj", "<Plug>BookmarkNext", "Bookmark: Next")
-    nnoremap("<leader>bk", "<Plug>BookmarkPrev", "Bookmark: Prev")
-    nnoremap("<leader>bc", "<Plug>BookmarkClear", "Bookmark: Clear")
-    nnoremap("<leader>bx", "<Plug>BookmarkClearAll", "Bookmark: ClearAll")
-    nnoremap("<leader>bkk", "<Plug>BookmarkMoveUp", "Bookmark: MoveUp")
-    nnoremap("<leader>bjj", "<Plug>BookmarkMoveDown", "Bookmark: MoveDown")
-    nnoremap("<leader>bg", "<Plug>BookmarkMoveToLine", "Bookmark: MoveToLine")
-end
-
 return M

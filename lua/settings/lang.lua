@@ -5,6 +5,10 @@ local lspconfig_util = require("lspconfig.util")
 
 local M = {}
 
+local on_attach = function(client, bufnr)
+    require("lsp_signature").on_attach()
+end
+
 local function setup_lsp(lsp_name, opts)
     local lsp_installer = require("nvim-lsp-installer")
     local ok, _ = lsp_installer.get_server(lsp_name)
@@ -19,6 +23,7 @@ local function setup_lsp(lsp_name, opts)
     end
 
     opts = coq.lsp_ensure_capabilities(opts)
+    opts.on_attach = on_attach
     lspconfig[lsp_name].setup(opts)
 end
 
@@ -79,7 +84,7 @@ M.sumneko_lua = function()
                 },
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
-                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap" },
+                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap", "tnoremap" },
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files
@@ -312,46 +317,6 @@ M.config = function()
             s_lsp()
         end
     end
-end
-
-M.maps = function(m)
-    nnoremap("gdd", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
-    nnoremap("gD", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", "GoTo: definition")
-    nnoremap("gr", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "GoTo: references")
-
-    nnoremap("ggd", ":lua require('neogen').generate()<CR>", "Lang: generete docs")
-
-    nnoremap(
-        "gdc",
-        "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>",
-        "Lang: diagnostic float under cursor"
-    )
-    nnoremap(
-        "gdl",
-        "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>",
-        "Lang: diagnostic float under line"
-    )
-    nnoremap(
-        "[e",
-        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-        "Lang: diagnostic jump prev"
-    )
-    nnoremap(
-        "]e",
-        "<cmd>Lspsaga diagnostic_jump_next<CR>",
-        "Lang: diagnostic jump next"
-    )
-
-    nnoremap("ga", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", "Lang: code action")
-    nnoremap("gA", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", "Lang: range code action")
-
-    nnoremap("gR", "<cmd>lua require('lspsaga.rename').rename()<CR>", "Lang: rename")
-
-    nnoremap("gH", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", "Lang: hover doc")
-
-    nnoremap("gf", "<cmd>lua vim.lsp.buf.formatting()<CR>", "Lang: lsp format")
-
-    nnoremap("gs", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", "Lang: show signature")
 end
 
 return M

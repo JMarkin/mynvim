@@ -69,6 +69,7 @@ augroup end
 ]],
     false
 )
+vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 
 -- запоминаем fold
 vim.cmd([[
@@ -80,8 +81,3 @@ augroup remember_folds
 augroup END
 ]])
 
-return function(m)
-    nnoremap("<C-A>", "ggVG", "Vesual all")
-    nnoremap("o", "o<Esc>", "Add line under")
-    nnoremap("O", "O<Esc>", "Add line prev")
-end

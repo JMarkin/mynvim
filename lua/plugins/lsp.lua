@@ -10,7 +10,7 @@ M.setup = function()
         },
         clients = {
             tmux = {
-                enabled = true,
+                enabled = false,
             },
             lsp = {
                 resolve_timeout = 0.08,

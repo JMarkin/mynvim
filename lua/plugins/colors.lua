@@ -1,18 +1,17 @@
 return function()
-    vim.opt.background = "dark"
-
     local style = {
         string = "NONE",
         comments = "italic",
         keywords = "bold,undercurl",
         functions = "bold,undercurl",
+        tags = "bold,italic",
         variables = "NONE",
         statemant = "bold",
         type = "bold,italic",
     }
 
-    local colorscheme = "highlite"
-    local vim_colorscheme = "colorscheme " .. colorscheme
+    local colorscheme = "kanagawa"
+    local background = "dark"
 
     if colorscheme == "onedarkpro" then
         local onedarkpro = require("onedarkpro")
@@ -58,12 +57,11 @@ return function()
     if colorscheme == "kanagawa" then
         require("kanagawa").setup({
             undercurl = true, -- enable undercurls
-            commentStyle = style.comments,
-            functionStyle = style.functions,
-            keywordStyle = style.keywords,
-            statementStyle = style.statemant,
-            typeStyle = style.type,
-            variablebuiltinStyle = style.variables,
+            commentStyle = { italic = true },
+            functionStyle = { bold = true, undercurl = true },
+            keywordStyle = { bold = true, undercurl = true },
+            statementStyle = { bold = true },
+            typeStyle = { bold = true, italic = true },
             specialReturn = true, -- special highlight for the return keyword
             specialException = true, -- special highlight for exception handling keywords
             transparent = false, -- do not set background color
@@ -74,6 +72,26 @@ return function()
         })
     end
 
+    if colorscheme == "aurora" then
+        vim.cmd([[
+            let g:aurora_italic=1
+            let g:aurora_bold=1
+        ]])
+    end
+
+    vim.opt.background = background
+
+    if colorscheme == "newpaper" then
+        require("newpaper").setup({
+            style = background,
+            sidebars_contrast = { "Trouble", "NvimTree", "qf", "Outline", "terminal", "packer" },
+            keywords = style.keywords,
+            tags = style.tags,
+            error_highlight = "both",
+        })
+    end
+
+    local vim_colorscheme = "colorscheme " .. colorscheme
     vim.cmd(vim_colorscheme)
 
     local present, lualine = pcall(require, "lualine")
@@ -82,7 +100,7 @@ return function()
             extensions = { "quickfix", "nvim-tree", "fzf" },
             options = {
                 disabled_filetypes = { "Trouble", "Vista" },
-                theme = 'auto',
+                theme = "auto",
             },
             sections = {
                 lualine_a = { "mode" },

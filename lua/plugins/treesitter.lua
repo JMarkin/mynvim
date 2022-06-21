@@ -63,8 +63,3 @@ if present_atag then
     ts_atag.setup()
 end
 
--- vim.cmd([[
--- set foldmethod=expr
--- set foldexpr=nvim_treesitter#foldexpr()
--- set nofoldenable
--- ]])
