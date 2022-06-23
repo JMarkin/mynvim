@@ -44,4 +44,11 @@ M.setup = function()
     ]])
 end
 
+M.search = function()
+    vim.cmd([[
+        cgetexpr bm#location_list()
+    ]])
+    require("fzf-lua").quickfix({})
+end
+
 return M

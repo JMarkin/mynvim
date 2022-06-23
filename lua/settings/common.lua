@@ -71,13 +71,7 @@ augroup end
 )
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 
--- запоминаем fold
-vim.cmd([[
-set viewoptions-=options
-augroup remember_folds
-    autocmd!
-    autocmd BufWinLeave *.* if &ft !=# 'help' | mkview | endif
-    autocmd BufWinEnter *.* if &ft !=# 'help' | silent! loadview | endif
-augroup END
-]])
-
+-- fold
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldlevel=2

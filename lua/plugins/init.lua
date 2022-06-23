@@ -194,15 +194,15 @@ return packer.startup(function()
     })
 
     -- Табы
-    use({
-        "akinsho/bufferline.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
-        config = function()
-            require("plugins.buffers")
-        end,
-    })
+    -- use({
+    --     "akinsho/bufferline.nvim",
+    --     requires = "kyazdani42/nvim-web-devicons",
+    --     config = function()
+    --         require("plugins.buffers")
+    --     end,
+    -- })
     use("Asheq/close-buffers.vim")
-
+    --
     use({ "mrjones2014/smart-splits.nvim" })
 
     -- Навигация внутри файла по классам и функциям

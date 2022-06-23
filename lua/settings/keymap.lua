@@ -6,18 +6,8 @@ function maps(m)
     m.nname("<space>b", "Buffer")
 
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
-
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
-    nnoremap("<space>1", "<Cmd>BufferLineGoToBuffer 1<CR>", "Buffer: 1")
-    nnoremap("<space>2", "<Cmd>BufferLineGoToBuffer 2<CR>", "Buffer: 2")
-    nnoremap("<space>3", "<Cmd>BufferLineGoToBuffer 3<CR>", "Buffer: 3")
-    nnoremap("<space>4", "<Cmd>BufferLineGoToBuffer 4<CR>", "Buffer: 4")
-    nnoremap("<space>5", "<Cmd>BufferLineGoToBuffer 5<CR>", "Buffer: 5")
-    nnoremap("<space>6", "<Cmd>BufferLineGoToBuffer 6<CR>", "Buffer: 6")
-    nnoremap("<space>7", "<Cmd>BufferLineGoToBuffer 7<CR>", "Buffer: 7")
-    nnoremap("<space>8", "<Cmd>BufferLineGoToBuffer 8<CR>", "Buffer: 8")
-    nnoremap("<space>9", "<Cmd>BufferLineGoToBuffer 9<CR>", "Buffer: 9")
-
+    
     nnoremap({ "<space>l", "<space><right>" }, ":lua require('smart-splits').move_cursor_right()<cr>", "right")
     nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "down")
     nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "top")
@@ -39,15 +29,12 @@ function maps(m)
     ---------Форматирвоание
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
 
-    
-
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
     nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "toggle term")
     nnoremap("<leader>g", "<Cmd>LazyGit<CR>", "Git: lazygit")
-    vim.cmd([[:tnoremap <Esc> <C-\><C-n>]])
 
     --- GIT
     m.nname("<space>g", "Git")
@@ -81,8 +68,8 @@ function maps(m)
 
     ---- Fold
     m.nname("z", "Fold")
-    m.nname("<space>f", "Fold")
-    nmap("<space>fb", "zf]%", "Fold expr block")
+    nnoremap("zf", "<cmd>setl fdm&<CR>zf", "Create fold")
+    xnoremap("zf", "<cmd>setl fdm&<CR>zf", "Create fold")
 
     ---- Перемещения
     nnoremap("J", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>", "half down")
@@ -93,7 +80,8 @@ function maps(m)
 
     nnoremap("<leader>sq", "<cmd>lua require('fzf-lua').quickfix({ multiprocess=true})<Cr>", "Search: quickfix")
     nnoremap("<leader>ss", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
-    nnoremap("<leader>sb", "<cmd>lua require('settings.search').bookmark()<Cr>", "Search: bookmark")
+    nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: previous")
+    nnoremap("<leader>sB", "<cmd>lua require('plugins.bookmark').search()<Cr>", "Search: bookmark")
     nnoremap("<leader>sf", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>", "Search: find files")
     nnoremap(
         "<leader>sg",
