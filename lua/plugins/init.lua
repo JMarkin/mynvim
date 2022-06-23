@@ -162,13 +162,9 @@ return packer.startup(function()
     })
     use("j-hui/fidget.nvim")
 
-    use({
-        "ray-x/lsp_signature.nvim",
-    })
-
     --- Автокомлиты
     use({
-        "ms-jpq/coq_nvim",
+        "JMarkin/coq_nvim",
         after = {
             "nvim-lspconfig",
             "nvim-lsp-installer",
@@ -176,7 +172,6 @@ return packer.startup(function()
             "null-ls.nvim",
             "lsp-colors.nvim",
             "trouble.nvim",
-            "lsp_signature.nvim",
         },
         setup = function()
             require("plugins.lsp").setup()

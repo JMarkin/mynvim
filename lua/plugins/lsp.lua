@@ -3,17 +3,9 @@ local M = {}
 M.setup = function()
     vim.g.coq_settings = {
         auto_start = true,
-        display = {
-            preview = {
-                resolve_timeout = 0.1,
-            },
-        },
         clients = {
             tmux = {
-                enabled = false,
-            },
-            lsp = {
-                resolve_timeout = 0.08,
+                enabled = true,
             },
         },
     }

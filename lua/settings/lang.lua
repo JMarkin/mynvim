@@ -6,7 +6,6 @@ local lspconfig_util = require("lspconfig.util")
 local M = {}
 
 local on_attach = function(client, bufnr)
-    require("lsp_signature").on_attach()
 end
 
 local function setup_lsp(lsp_name, opts)
