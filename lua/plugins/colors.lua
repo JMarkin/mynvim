@@ -10,8 +10,20 @@ return function()
         type = "bold,italic",
     }
 
-    local colorscheme = "kanagawa"
+    local colorscheme = "sonokai"
     local background = "dark"
+
+    if colorscheme == "sonokai" then
+        vim.g.sonokai_style = "andromeda"
+        vim.g.sonokai_better_perfomance = 1
+        vim.g.sonokai_enable_italic = 1
+        vim.g.sonokai_transparent_background = 1
+        vim.g.sonokai_spell_foreground = 1
+        vim.g.sonokai_show_eob = 1
+        vim.g.sonokai_diagnostic_text_highlight = 1
+        vim.g.sonokai_diagnostic_line_highlight = 1
+        vim.g.sonokai_diagnostic_virtual_text = 1
+    end
 
     if colorscheme == "onedarkpro" then
         local onedarkpro = require("onedarkpro")
@@ -54,7 +66,7 @@ return function()
         vim.g.gruvbox_baby_variable_style = style.variables
     end
 
-    if colorscheme == "kanagawa" then
+    if colorscheme == "kanagawa" or colorscheme == "highlite" then
         require("kanagawa").setup({
             undercurl = true, -- enable undercurls
             commentStyle = { italic = true },
@@ -72,11 +84,88 @@ return function()
         })
     end
 
+    if colorscheme == "highlite" then
+        vim.cmd("colorscheme kanagawa")
+    end
+
     if colorscheme == "aurora" then
         vim.cmd([[
             let g:aurora_italic=1
             let g:aurora_bold=1
         ]])
+    end
+
+    if colorscheme == "catppuccin" then
+        require("catppuccin").setup({
+            styles = {
+                comments = style.comments,
+                conditionals = style.statemant,
+                loops = "NONE",
+                functions = style.functions,
+                keywords = style.keywords,
+                strings = style.string,
+                variables = style.variables,
+                numbers = "NONE",
+                booleans = "NONE",
+                properties = "NONE",
+                types = style.type,
+                operators = style.statemant,
+            },
+            integrations = {
+                treesitter = true,
+                native_lsp = {
+                    enabled = true,
+                    virtual_text = {
+                        errors = "italic",
+                        hints = "italic",
+                        warnings = "italic",
+                        information = "italic",
+                    },
+                    underlines = {
+                        errors = "underline",
+                        hints = "underline",
+                        warnings = "underline",
+                        information = "underline",
+                    },
+                },
+                coc_nvim = false,
+                lsp_trouble = false,
+                cmp = false,
+                lsp_saga = true,
+                gitgutter = false,
+                gitsigns = false,
+                telescope = false,
+                nvimtree = {
+                    enabled = true,
+                    show_root = true,
+                    transparent_panel = true,
+                },
+                neotree = {
+                    enabled = false,
+                    show_root = false,
+                    transparent_panel = false,
+                },
+                which_key = true,
+                indent_blankline = {
+                    enabled = false,
+                    colored_indent_levels = false,
+                },
+                dashboard = false,
+                neogit = false,
+                vim_sneak = false,
+                fern = false,
+                barbar = false,
+                bufferline = false,
+                markdown = true,
+                lightspeed = true,
+                ts_rainbow = true,
+                hop = false,
+                notify = true,
+                telekasten = false,
+                symbols_outline = true,
+            },
+        })
+        vim.g.catppuccin_flavour = "macchiato"
     end
 
     vim.opt.background = background
@@ -132,4 +221,3 @@ return function()
         })
     end
 end
-

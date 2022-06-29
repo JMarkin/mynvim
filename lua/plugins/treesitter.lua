@@ -62,4 +62,3 @@ local present_atag, ts_atag = pcall(require, "nvim-ts-autotag")
 if present_atag then
     ts_atag.setup()
 end
-

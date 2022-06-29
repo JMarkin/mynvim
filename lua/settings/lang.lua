@@ -5,8 +5,7 @@ local lspconfig_util = require("lspconfig.util")
 
 local M = {}
 
-local on_attach = function(client, bufnr)
-end
+local on_attach = function(client, bufnr) end
 
 local function setup_lsp(lsp_name, opts)
     local lsp_installer = require("nvim-lsp-installer")
@@ -56,19 +55,28 @@ M.pylsp = function()
                         enabled = false,
                     },
                     yapf = {
-                        enabled = false,
+                        enabled = true,
                     },
                     mypy = {
                         enabled = false,
                     },
                     isort = {
-                        enabled = false,
+                        enabled = true,
                     },
                 },
             },
         },
     }
     setup_lsp("pylsp", opts)
+end
+
+M.jedi_language_server = function()
+    g.pydocstring_formatter = "google"
+    g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
+
+    g.pydocstring_doq_path = "~/.pyenv/shims/doq"
+
+    setup_lsp("jedi_language_server", {})
 end
 
 M.sumneko_lua = function()
@@ -83,7 +91,7 @@ M.sumneko_lua = function()
                 },
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
-                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap", "tnoremap" },
+                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap", "tnoremap", "xnoremap" },
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files
@@ -285,7 +293,7 @@ M.config = function()
         "graphql",
         "html",
         "jsonls",
-        "pylsp",
+        "jedi_language_server",
         "rust_analyzer",
         "sqls",
         "sumneko_lua",

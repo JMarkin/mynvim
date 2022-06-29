@@ -1,13 +1,13 @@
-local g = vim.g
 local cmd = vim.cmd
 
 function maps(m)
     --------Основное управление буферами
     m.nname("<space>b", "Buffer")
+    nnoremap("<space>bb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Buffer: search")
 
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
-    
+
     nnoremap({ "<space>l", "<space><right>" }, ":lua require('smart-splits').move_cursor_right()<cr>", "right")
     nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "down")
     nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "top")
@@ -80,7 +80,7 @@ function maps(m)
 
     nnoremap("<leader>sq", "<cmd>lua require('fzf-lua').quickfix({ multiprocess=true})<Cr>", "Search: quickfix")
     nnoremap("<leader>ss", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
-    nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: previous")
+    nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: buffers")
     nnoremap("<leader>sB", "<cmd>lua require('plugins.bookmark').search()<Cr>", "Search: bookmark")
     nnoremap("<leader>sf", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>", "Search: find files")
     nnoremap(
@@ -149,7 +149,7 @@ function maps(m)
 
     nnoremap("<leader>lH", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", "Lang: hover doc")
 
-    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", "Lang: lsp format")
+    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "Lang: lsp format")
 
     nnoremap("<leader>lh", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", "Lang: show signature")
 

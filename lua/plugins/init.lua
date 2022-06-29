@@ -17,6 +17,7 @@ return packer.startup(function()
             { "MunifTanjim/nui.nvim" },
         },
     })
+    use("tversteeg/registers.nvim")
 
     use({
         "nvim-lua/plenary.nvim",
@@ -88,6 +89,14 @@ return packer.startup(function()
     use("ray-x/aurora")
     use("Iron-E/nvim-highlite")
     use("yorik1984/newpaper.nvim")
+    use({
+        "catppuccin/nvim",
+        as = "catppuccin",
+    })
+    use({
+        "RishabhRD/gruvy",
+        requires={"rktjmp/lush.nvim"}
+    })
 
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
@@ -127,14 +136,17 @@ return packer.startup(function()
     use({
         "windwp/nvim-ts-autotag",
     })
+    use({
+        "JMarkin/hlargs.nvim",
+        branch = "colorpalette",
+    })
 
-    -- вырубаем до stable ветки т.к. разрабочтик делает под master
     use({
         "p00f/nvim-ts-rainbow",
         config = function()
             require("plugins.treesitter")
         end,
-        after = { "nvim-treesitter", "nvim-treesitter-context", "nvim-yati", "nvim-ts-autotag" },
+        after = { "hlargs.nvim", "nvim-treesitter", "nvim-treesitter-context", "nvim-yati", "nvim-ts-autotag" },
     })
 
     -- LSP
@@ -431,6 +443,18 @@ return packer.startup(function()
             local m = require("mapx").setup({ global = "force", whichkey = true })
             require("settings.keymap")(m)
         end,
+    })
+
+    -- db
+    use({
+        "kristijanhusak/vim-dadbod-ui",
+        requires = { "tpope/vim-dadbod" },
+    })
+
+    --nvim dev
+    use({
+        "bfredl/nvim-luadev",
+        cmd = { "Luadev" },
     })
 
     if bootstrap then
