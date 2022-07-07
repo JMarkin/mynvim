@@ -1,12 +1,7 @@
 local M = {}
 
 M.setup = function()
-    vim.opt.list = false
-    -- vim.opt.listchars:append("space:⋅")
-    vim.opt.listchars:append("multispace:¦   ")
-    vim.opt.listchars:append("eol:↴")
-
-        --Enable alignment
+    --Enable alignment
     vim.g.neoformat_basic_format_align = 1
     --Enable tab to spaces conversion
     vim.g.neoformat_basic_format_retab = 1

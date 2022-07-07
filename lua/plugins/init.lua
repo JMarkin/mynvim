@@ -11,6 +11,8 @@ return packer.startup(function()
         end,
     })
 
+    use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
+
     use({
         "VonHeikemen/searchbox.nvim",
         requires = {
@@ -43,6 +45,14 @@ return packer.startup(function()
                 extra_keymaps = true,
                 extended_keymaps = true,
             })
+        end,
+    })
+
+    use({
+        "goolord/alpha-nvim",
+        requires = { "kyazdani42/nvim-web-devicons" },
+        config = function()
+            require("alpha").setup(require("alpha.themes.startify").config)
         end,
     })
 
@@ -79,27 +89,14 @@ return packer.startup(function()
         cmd = { "PackerCompile", "PackerInstall", "PackerSync" },
     })
 
-    -- Цвет тема
-    use("sainnhe/sonokai")
-    use("rmehri01/onenord.nvim")
-    use("rebelot/kanagawa.nvim")
-    use("olimorris/onedarkpro.nvim")
-    use("luisiacc/gruvbox-baby")
-    use("folke/tokyonight.nvim")
-    use("ray-x/aurora")
-    use("Iron-E/nvim-highlite")
-    use("yorik1984/newpaper.nvim")
-    use({
-        "catppuccin/nvim",
-        as = "catppuccin",
-    })
-    use({
-        "RishabhRD/gruvy",
-        requires={"rktjmp/lush.nvim"}
-    })
-
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
+
+    -- Цвет тема
+    use("rebelot/kanagawa.nvim")
+    use("Iron-E/nvim-highlite")
+    use("Avimitin/neovim-deus")
+    use("rktjmp/lush.nvim")
 
     -- Информационная строка внизу
     use({
@@ -149,10 +146,17 @@ return packer.startup(function()
         after = { "hlargs.nvim", "nvim-treesitter", "nvim-treesitter-context", "nvim-yati", "nvim-ts-autotag" },
     })
 
+    use({
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("plugins.indent")
+        end,
+    })
+
     -- LSP
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
-    use("tami5/lspsaga.nvim")
+    use({ "glepnir/lspsaga.nvim" })
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -201,25 +205,11 @@ return packer.startup(function()
     })
 
     -- Табы
-    -- use({
-    --     "akinsho/bufferline.nvim",
-    --     requires = "kyazdani42/nvim-web-devicons",
-    --     config = function()
-    --         require("plugins.buffers")
-    --     end,
-    -- })
     use("Asheq/close-buffers.vim")
     --
     use({ "mrjones2014/smart-splits.nvim" })
 
     -- Навигация внутри файла по классам и функциям
-    -- use({
-    --     "liuchengxu/vista.vim",
-    --     requires = "lotabout/skim",
-    --     setup = function()
-    --         require("plugins.vista")
-    --     end,
-    -- })
     use({ "simrat39/symbols-outline.nvim" })
 
     --  Git

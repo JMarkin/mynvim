@@ -7,6 +7,19 @@ local M = {}
 
 local on_attach = function(client, bufnr) end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+}
+capabilities.textDocument.completion = {
+    completionItem = {
+        insertReplaceSupport = true,
+        preselectSupport = true,
+        snippetSupport = true,
+    },
+}
+
 local function setup_lsp(lsp_name, opts)
     local lsp_installer = require("nvim-lsp-installer")
     local ok, _ = lsp_installer.get_server(lsp_name)
@@ -20,7 +33,7 @@ local function setup_lsp(lsp_name, opts)
         return
     end
 
-    opts = coq.lsp_ensure_capabilities(opts)
+    opts.capabilities = capabilities
     opts.on_attach = on_attach
     lspconfig[lsp_name].setup(opts)
 end

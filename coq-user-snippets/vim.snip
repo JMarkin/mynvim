@@ -1,4 +1,5 @@
 snippet init_pylint
+alias pylint
     lua << EOF
     vim.g["loaded_gentags#gtags"] = 0
     vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
@@ -8,6 +9,7 @@ snippet init_pylint
     EOF
 
 snippet init_flake8
+alias flake8
     lua << EOF
     vim.g["loaded_gentags#gtags"] = 0
     vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
@@ -17,11 +19,14 @@ snippet init_flake8
     EOF
 
 snippet init_gtags
+alias tags
     lua << EOF
     vim.g["loaded_gentags#gtags"] = 0
     EOF
 
 snippet pydoc
+alias neogen
+alias doc
     require("neogen").setup({
         enabled = true,
         languages = {

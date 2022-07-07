@@ -123,35 +123,37 @@ function maps(m)
 
     ---go to
     nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
-    nnoremap("gD", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", "GoTo: definition")
-    nnoremap("gr", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "GoTo: references")
+    nnoremap("gD", require("lspsaga.definition").preview_definition, "silent", "GoTo: definition")
+    nnoremap("gr", require("lspsaga.finder").lsp_finder, "silent", "GoTo: references")
 
     -- lang
     m.nname("<leader>l", "Language features")
-    nnoremap("<leader>lD", ":lua require('neogen').generate()<CR>", "Lang: generete docs")
+    nnoremap("<leader>lD", require("neogen").generate, "silent", "Lang: generete docs")
     nnoremap(
         "<leader>ls",
-        "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>",
+        require("lspsaga.diagnostic").show_cursor_diagnostics,
+        "silent",
         "Lang: diagnostic float under cursor"
     )
     nnoremap(
         "<leader>lS",
-        "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>",
+        require("lspsaga.diagnostic").show_line_diagnostics,
+        "silent",
         "Lang: diagnostic float under line"
     )
-    nnoremap("<leader>le", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Lang: diagnostic jump prev")
-    nnoremap("<leader>lE", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Lang: diagnostic jump next")
+    nnoremap("[e", require("lspsaga.diagnostic").goto_prev, "silent", "Lang: diagnostic jump prev")
+    nnoremap("]e", require("lspsaga.diagnostic").goto_next, "silent", "Lang: diagnostic jump next")
 
-    nnoremap("<leader>la", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", "Lang: code action")
-    nnoremap("<leader>lA", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", "Lang: range code action")
+    nnoremap("<leader>la", require("lspsaga.codeaction").code_action, "silent", "Lang: code action")
+    nnoremap("<leader>lA", require("lspsaga.codeaction").range_code_action, "silent", "Lang: range code action")
 
-    nnoremap("<leader>lR", "<cmd>lua require('lspsaga.rename').rename()<CR>", "Lang: rename")
+    nnoremap("<leader>lR", require("lspsaga.rename").lsp_rename, "silent", "Lang: rename")
 
-    nnoremap("<leader>lH", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", "Lang: hover doc")
+    nnoremap("<leader>lH", require("lspsaga.hover").render_hover_doc, "silent", "Lang: hover doc")
 
-    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "Lang: lsp format")
+    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
 
-    nnoremap("<leader>lh", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", "Lang: show signature")
+    nnoremap("<leader>lh", require("lspsaga.signaturehelp").signature_help, "silent", "Lang: show signature")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")

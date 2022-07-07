@@ -2,7 +2,7 @@ local M = {}
 
 M.setup = function()
     vim.g.coq_settings = {
-        auto_start = true,
+        auto_start = "shut-up",
         clients = {
             tmux = {
                 enabled = true,
@@ -11,16 +11,56 @@ M.setup = function()
     }
 end
 
+local foldHandler = function(virtText, lnum, endLnum, width, truncate)
+    local newVirtText = {}
+    local suffix = ("  %d "):format(endLnum - lnum)
+    local sufWidth = vim.fn.strdisplaywidth(suffix)
+    local targetWidth = width - sufWidth
+    local curWidth = 0
+    for _, chunk in ipairs(virtText) do
+        local chunkText = chunk[1]
+        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+        if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+        else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, { chunkText, hlGroup })
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+                suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+        end
+        curWidth = curWidth + chunkWidth
+    end
+    table.insert(newVirtText, { suffix, "MoreMsg" })
+    return newVirtText
+end
+
+local foldMap = {
+    vim = "indent",
+    python = { "treesitter" },
+    git = "",
+}
+
 M.config = function()
     require("settings.lang").config()
 
     require("fidget").setup({})
-    require("lspsaga").setup({
+    require("lspsaga").init_lsp_saga({
         finder_action_keys = {
             open = "<cr>",
             vsplit = "v",
             split = "s",
             quit = "q",
+        },
+        symbol_in_winbar = {
+            in_custom = false,
+            enable = true,
+            separator = " ",
+            show_file = true,
         },
     })
     require("lsp-colors").setup({
@@ -28,12 +68,13 @@ M.config = function()
         Warning = "#FF9E3B",
         Information = "#6A9589",
         Hint = "#658594",
+        winbar_separator = true,
     })
     require("trouble").setup({
         padding = false,
         auto_open = false,
-        auto_close = false,
-        auto_preview = false,
+        auto_close = true,
+        auto_preview = true,
         auto_fold = true,
         action_keys = { -- key mappings for actions in the trouble list
             close = "q", -- close the list
@@ -65,6 +106,13 @@ M.config = function()
         update_in_insert = false,
         severity_sort = true,
     })
+
+    -- require("ufo").setup({
+    --     fold_virt_text_handler = foldHandler,
+    --     provider_selector = function(bufnr, filetype)
+    --         return foldMap[filetype] or { "treesitter",  "lsp", "indent" }
+    --     end,
+    -- })
 end
 
 return M

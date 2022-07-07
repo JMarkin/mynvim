@@ -6,7 +6,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
-opt.colorcolumn = "120"
+vim.cmd("set cc=")
 opt.scrolloff = 15
 opt.cursorline = true -- Подсветка строки с курсором
 opt.spelllang = { "en_us", "ru" } -- Словари рус eng
@@ -36,7 +36,7 @@ opt.linebreak = true
 opt.bs = "indent,eol,start"
 g.do_filetype_lua = 1
 g.did_load_filetypes = 0
-opt.cmdheight=0
+opt.cmdheight = 0
 
 -----------------------------------------------------------
 -- Табы и отступы
@@ -75,6 +75,8 @@ augroup end
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 
 -- fold
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldlevel=2
+opt.foldlevel = 2
+opt.foldmethod = "indent"
+vim.wo.foldcolumn = "1"
+vim.wo.foldlevel = 2
+vim.wo.foldenable = false
