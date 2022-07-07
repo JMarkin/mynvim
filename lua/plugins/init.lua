@@ -125,9 +125,6 @@ return packer.startup(function()
     use({
         "nvim-treesitter/nvim-treesitter",
     })
-    use({
-        "nvim-treesitter/nvim-treesitter-context",
-    })
     use({ "yioneko/nvim-yati" })
 
     use({
@@ -143,7 +140,7 @@ return packer.startup(function()
         config = function()
             require("plugins.treesitter")
         end,
-        after = { "hlargs.nvim", "nvim-treesitter", "nvim-treesitter-context", "nvim-yati", "nvim-ts-autotag" },
+        after = { "hlargs.nvim", "nvim-treesitter", "nvim-yati", "nvim-ts-autotag" },
     })
 
     use({
@@ -281,35 +278,6 @@ return packer.startup(function()
 
     -- editorconfig
     use("gpanders/editorconfig.nvim")
-
-    -- gtags
-    use({
-        "jsfaint/gen_tags.vim",
-        setup = function()
-            vim.g["loaded_gentags#gtags"] = 1
-            vim.g["loaded_gentags#ctags"] = 1
-            vim.g["gen_tags#ctags_bin"] = "ptags"
-            vim.opt.tags = {}
-            vim.g["gen_tags#root_marker"] = ".lvimrc"
-
-            vim.g["gen_tags#ctags_opts"] = {
-                "--recurse=yes",
-                "--exclude=.git",
-                "--exclude=.mypy*",
-                "--exclude=.pytest*",
-                "--exclude=BUILD",
-                "--exclude=.svn",
-                "--exclude=vendor*",
-                "--exclude=log*",
-                "--exclude=*.min.*",
-                "--exclude=\\*.pyc",
-                "--exclude=*.cache",
-                "--exclude=*.dll",
-                "--exclude=*.pdb",
-            }
-        end,
-        config = function() end,
-    })
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     use({

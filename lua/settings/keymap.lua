@@ -128,7 +128,7 @@ function maps(m)
 
     -- lang
     m.nname("<leader>l", "Language features")
-    nnoremap("<leader>lD", require("neogen").generate, "silent", "Lang: generete docs")
+    nnoremap("<leader>lD", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
     nnoremap(
         "<leader>ls",
         require("lspsaga.diagnostic").show_cursor_diagnostics,

@@ -47,14 +47,8 @@ require("nvim-treesitter.configs").setup({
 
 local present_hlargs, ts_hlargs = pcall(require, "hlargs")
 if present_hlargs then
-    ts_hlargs.setup()
-end
-
-local present_ctx, ts_context = pcall(require, "treesitter-context")
-if present_ctx then
-    ts_context.setup({
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true,
+    ts_hlargs.setup({
+        use_colorpalette=true,
     })
 end
 
