@@ -131,8 +131,7 @@ return packer.startup(function()
         "windwp/nvim-ts-autotag",
     })
     use({
-        "JMarkin/hlargs.nvim",
-        branch = "colorpalette",
+        "m-demare/hlargs.nvim",
     })
 
     use({

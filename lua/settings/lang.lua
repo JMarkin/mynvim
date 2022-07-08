@@ -302,6 +302,7 @@ M.config = function()
         "ccls",
         "cmake",
         "cssls",
+        "dockerls",
         "graphql",
         "html",
         "jsonls",
