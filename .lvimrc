@@ -1,3 +1,0 @@
-lua << EOF
-vim.g["loaded_gentags#gtags"] = 0
-EOF

@@ -3,6 +3,7 @@ vim.filetype.add({
         dockerfile = "dockerfile",
     },
     pattern = {
+        ["*%.snip"] = "vim",
         ["*%.nginx"] = "nginx",
         [".*nginx.*%.conf"] = "nginx",
         [".*nginx/.*/conf.*"] = "nginx",

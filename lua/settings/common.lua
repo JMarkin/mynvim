@@ -34,9 +34,10 @@ opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
 opt.bs = "indent,eol,start"
+opt.tags = {}
 g.do_filetype_lua = 1
 g.did_load_filetypes = 0
-opt.cmdheight = 0
+-- opt.cmdheight = 0
 
 -----------------------------------------------------------
 -- Табы и отступы

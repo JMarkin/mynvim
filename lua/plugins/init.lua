@@ -19,13 +19,23 @@ return packer.startup(function()
             { "MunifTanjim/nui.nvim" },
         },
     })
+    use({
+        "rcarriga/nvim-notify",
+        config = function()
+            require("notify").setup({
+                timeout = 500,
+                stages = "fade",
+                level = vim.log.levels.WARN,
+                background_colour = "#000000",
+            })
+            vim.notify = require("notify")
+        end,
+    })
+
     use("tversteeg/registers.nvim")
 
     use({
         "nvim-lua/plenary.nvim",
-    })
-    use({
-        "rcarriga/nvim-notify",
     })
 
     use({
@@ -65,21 +75,6 @@ return packer.startup(function()
                 mapping = { "jk", "jj", "hh" },
                 clear_empty_lines = true,
             })
-        end,
-    })
-
-    use({
-        "PHSix/faster.nvim",
-        event = { "VimEnter *" },
-        config = function()
-            vim.api.nvim_set_keymap("n", "j", "<Plug>(faster_move_j)", { noremap = false, silent = true })
-            vim.api.nvim_set_keymap("n", "k", "<Plug>(faster_move_k)", { noremap = false, silent = true })
-            -- or
-            -- vim.api.nvim_set_keymap('n', 'j', '<Plug>(faster_move_gj)', {noremap=false, silent=true})
-            -- vim.api.nvim_set_keymap('n', 'k', '<Plug>(faster_move_gk)', {noremap=false, silent=true})
-            -- if you need map in visual mode
-            vim.api.nvim_set_keymap("v", "j", "<Plug>(faster_vmove_j)", { noremap = false, silent = true })
-            vim.api.nvim_set_keymap("v", "k", "<Plug>(faster_vmove_k)", { noremap = false, silent = true })
         end,
     })
 
@@ -213,6 +208,13 @@ return packer.startup(function()
     use({
         "ms-jpq/coq.artifacts",
         after = "coq_nvim",
+    })
+
+    use({
+        "JMarkin/gentags.lua",
+        config = function()
+            require("gentags").setup()
+        end,
     })
 
     -- Табы
