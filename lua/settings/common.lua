@@ -6,9 +6,8 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
-vim.cmd("set cc=")
+cmd("set cc=")
 opt.scrolloff = 15
-opt.cursorline = true -- Подсветка строки с курсором
 opt.spelllang = { "en_us", "ru" } -- Словари рус eng
 opt.number = true
 opt.relativenumber = false
@@ -35,9 +34,9 @@ opt.hlsearch = true
 opt.linebreak = true
 opt.bs = "indent,eol,start"
 opt.tags = {}
-g.do_filetype_lua = 1
-g.did_load_filetypes = 0
--- opt.cmdheight = 0
+--g.do_filetype_lua = 1
+--g.did_load_filetypes = 0
+opt.cmdheight = 0
 
 -----------------------------------------------------------
 -- Табы и отступы
@@ -81,3 +80,10 @@ opt.foldmethod = "indent"
 vim.wo.foldcolumn = "1"
 vim.wo.foldlevel = 2
 vim.wo.foldenable = false
+
+-- format
+g.neoformat_try_formatprg = 1
+g.neoformat_basic_format_align = 1
+g.neoformat_basic_format_retab = 1
+g.neoformat_basic_format_trim = 1
+g.neoformat_run_all_formatters = 1

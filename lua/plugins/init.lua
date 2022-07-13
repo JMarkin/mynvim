@@ -11,6 +11,15 @@ return packer.startup(function()
         end,
     })
 
+    use({
+        "mvllow/modes.nvim",
+        config = function()
+            require("modes").setup({
+                set_cursor = false,
+            })
+        end,
+    })
+
     use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
     use({
@@ -61,8 +70,32 @@ return packer.startup(function()
     use({
         "goolord/alpha-nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
+
         config = function()
-            require("alpha").setup(require("alpha.themes.startify").config)
+            local alpha = require("alpha")
+            local startify = require("alpha.themes.startify")
+            startify.section.header.val = {
+                [[                                   __                ]],
+                [[      ___     ___    ___   __  __ /\_\    ___ ___    ]],
+                [[     / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
+                [[    /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+                [[    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+                [[     \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+            }
+            startify.section.top_buttons.val = {
+                startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+            }
+            -- disable MRU
+            startify.section.mru.val = { { type = "padding", val = 0 } }
+            -- disable nvim_web_devicons
+            --
+            startify.section.bottom_buttons.val = {
+                startify.button("q", "  Quit NVIM", ":qa<CR>"),
+            }
+            startify.section.footer = {
+                { type = "text", val = "footer" },
+            }
+            alpha.setup(startify.config)
         end,
     })
 
@@ -163,6 +196,10 @@ return packer.startup(function()
     use("neovim/nvim-lspconfig")
     use("williamboman/nvim-lsp-installer")
     use({ "glepnir/lspsaga.nvim" })
+
+    use({
+        "ray-x/lsp_signature.nvim",
+    })
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -404,7 +441,13 @@ return packer.startup(function()
     use({
         "folke/which-key.nvim",
         config = function()
-            require("which-key").setup()
+            require("which-key").setup({
+                plugins = {
+                    presets = {
+                        operators = false,
+                    },
+                },
+            })
         end,
     })
 

@@ -1,4 +1,47 @@
+local function get_status_line()
+    if not pcall(require, "lsp_signature") then
+        return nil
+    end
+    return require("lsp_signature").status_line(1000)
+end
+
+local current_signature_label = function()
+    local sig = get_status_line()
+
+    if not sig then
+        return ""
+    end
+    if sig.label == "" then
+        return ""
+    end
+
+    return sig.label:sub(0, sig.range.start - 1)
+end
+
+local current_signature_hint = function()
+    local sig = get_status_line()
+    if not sig then
+        return ""
+    end
+    return sig.hint
+end
+
+local current_signature_label_end = function()
+    local sig = get_status_line()
+
+    if not sig then
+        return ""
+    end
+    if sig.label == "" then
+        return ""
+    end
+
+    return sig.label:sub(sig.range["end"] + 1)
+end
+
 return function()
+    local lualine = require("lualine")
+
     local style = {
         string = "NONE",
         comments = "italic",
@@ -44,41 +87,41 @@ return function()
     local vim_colorscheme = "colorscheme " .. colorscheme
     vim.cmd(vim_colorscheme)
 
-    local present, lualine = pcall(require, "lualine")
-    if present then
-        lualine.setup({
-            extensions = { "quickfix", "nvim-tree", "fzf" },
-            options = {
-                disabled_filetypes = { "Trouble", "Vista" },
-                theme = "auto",
+    lualine.setup({
+        extensions = { "quickfix", "nvim-tree", "fzf", "symbols-outline", "nvim-dap-ui", "toggleterm" },
+        options = {
+            disabled_filetypes = { "Trouble", "Vista" },
+            theme = "auto",
+        },
+        sections = {
+            lualine_a = { "mode" },
+            lualine_b = {
+                "branch",
+                "diff",
+                { "diagnostics", sources = { "nvim_diagnostic" } },
             },
-            sections = {
-                lualine_a = { "mode" },
-                lualine_b = {
-                    "branch",
-                    "diff",
-                    { "diagnostics", sources = { "nvim_diagnostic" } },
-                },
-                lualine_c = {
-                    "filesize",
-                    { "filename", path = 1 },
-                },
-                lualine_x = {
-                    "encoding",
-                    {
-                        "fileformat",
-                        icons_enabled = true,
-                        symbols = {
-                            unix = "LF",
-                            dos = "CRLF",
-                            mac = "CR",
-                        },
+            lualine_c = {
+                "filesize",
+                { "filename", path = 1 },
+                { current_signature_label, icons_enabled = false },
+                { current_signature_hint, icons_enabled = false, color="LspSignatureActiveParameter", },
+                { current_signature_label_end, icons_enabled = false },
+            },
+            lualine_x = {
+                "encoding",
+                {
+                    "fileformat",
+                    icons_enabled = true,
+                    symbols = {
+                        unix = "LF",
+                        dos = "CRLF",
+                        mac = "CR",
                     },
-                    "filetype",
                 },
-                lualine_y = { "progress" },
-                lualine_z = { "location" },
+                "filetype",
             },
-        })
-    end
+            lualine_y = { "progress" },
+            lualine_z = { "location" },
+        },
+    })
 end

@@ -5,7 +5,9 @@ local lspconfig_util = require("lspconfig.util")
 
 local M = {}
 
-local on_attach = function(client, bufnr) end
+local on_attach = function(client, bufnr)
+    require("lsp_signature").on_attach({ floating_window = false, hint_enable = false })
+end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
