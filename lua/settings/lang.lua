@@ -316,6 +316,7 @@ M.config = function()
         "vimls",
         "volar",
         "yamlls",
+        "taplo",
     }
 
     require("nvim-lsp-installer").setup({
