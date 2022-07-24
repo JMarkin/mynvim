@@ -7,6 +7,20 @@ local M = {}
 
 local on_attach = function(client, bufnr)
     require("lsp_signature").on_attach({ floating_window = false, hint_enable = false })
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                border = "rounded",
+                source = "always",
+                prefix = " ",
+                scope = "cursor",
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end,
+    })
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -299,9 +313,24 @@ M.volar = function()
     setup_lsp("volar", {})
 end
 
+M.clangd = function()
+    require("clangd_extensions").setup()
+end
+
+M.jsonls = function()
+    require("lspconfig").jsonls.setup({
+        settings = {
+            json = {
+                schemas = require("schemastore").json.schemas(),
+                validate = { enable = true },
+            },
+        },
+    })
+end
+
 M.config = function()
     local servers = {
-        "ccls",
+        "clangd",
         "cmake",
         "cssls",
         "dockerls",

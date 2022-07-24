@@ -331,10 +331,12 @@ return packer.startup(function()
         after = { "nvim-treesitter", "nvim-dap" },
     })
 
-    -- Неплохой модуль для раст
+    -- Доп утился дял языков
     use({
         "simrat39/rust-tools.nvim",
     })
+    use("https://sr.ht/~p00f/clangd_extensions.nvim")
+    use("b0o/schemastore.nvim")
 
     -- editorconfig
     use("gpanders/editorconfig.nvim")

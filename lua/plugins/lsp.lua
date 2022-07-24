@@ -100,11 +100,12 @@ M.config = function()
     vim.diagnostic.config({
         underline = true,
         signs = true,
-        virtual_text = true,
+        virtual_text = false,
         float = true,
         update_in_insert = false,
         severity_sort = true,
     })
+
 
     -- require("ufo").setup({
     --     fold_virt_text_handler = foldHandler,
