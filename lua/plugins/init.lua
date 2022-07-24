@@ -335,7 +335,7 @@ return packer.startup(function()
     use({
         "simrat39/rust-tools.nvim",
     })
-    use("https://sr.ht/~p00f/clangd_extensions.nvim")
+    use("https://git.sr.ht/~p00f/clangd_extensions.nvim")
     use("b0o/schemastore.nvim")
 
     -- editorconfig

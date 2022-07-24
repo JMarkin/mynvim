@@ -35,6 +35,7 @@ capabilities.textDocument.completion = {
         snippetSupport = true,
     },
 }
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_lsp(lsp_name, opts)
     local lsp_installer = require("nvim-lsp-installer")
@@ -194,123 +195,17 @@ M.rust_analyzer = function()
 end
 
 M.volar = function()
-    --- https://github.com/johnsoncodehk/volar/discussions/606
-    local function on_new_config(new_config, new_root_dir)
-        local function get_typescript_server_path(root_dir)
-            local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
-            return project_root
-                    and (lspconfig_util.path.join(
-                        project_root,
-                        "node_modules",
-                        "typescript",
-                        "lib",
-                        "tsserverlibrary.js"
-                    ))
-                or ""
-        end
-
-        if
-            new_config.init_options
-            and new_config.init_options.typescript
-            and new_config.init_options.typescript.serverPath == ""
-        then
-            new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
-        end
+    if vim.g.vue2_enabled ~= 1 then
+        setup_lsp("volar", {
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+        })
     end
+end
 
-    local volar_cmd = { "vue-language-server", "--stdio" }
-    local volar_root_dir = lspconfig_util.root_pattern("package.json")
-
-    lspconfig_configs.volar_api = {
-        default_config = {
-            cmd = volar_cmd,
-            root_dir = volar_root_dir,
-            on_new_config = on_new_config,
-            filetypes = { "vue" },
-            -- If you want to use Volar's Take Over Mode (if you know, you know)
-            --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-            init_options = {
-                typescript = {
-                    serverPath = "",
-                },
-                languageFeatures = {
-                    implementation = true, -- new in @volar/vue-language-server v0.33
-                    references = true,
-                    definition = true,
-                    typeDefinition = true,
-                    callHierarchy = true,
-                    hover = true,
-                    rename = true,
-                    renameFileRefactoring = true,
-                    signatureHelp = true,
-                    codeAction = true,
-                    workspaceSymbol = true,
-                    completion = {
-                        defaultTagNameCase = "both",
-                        defaultAttrNameCase = "kebabCase",
-                        getDocumentNameCasesRequest = false,
-                        getDocumentSelectionRequest = false,
-                    },
-                },
-            },
-        },
-    }
-
-    lspconfig_configs.volar_doc = {
-        default_config = {
-            cmd = volar_cmd,
-            root_dir = volar_root_dir,
-            on_new_config = on_new_config,
-
-            filetypes = { "vue" },
-            -- If you want to use Volar's Take Over Mode (if you know, you know):
-            --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-            init_options = {
-                typescript = {
-                    serverPath = "",
-                },
-                languageFeatures = {
-                    implementation = true, -- new in @volar/vue-language-server v0.33
-                    documentHighlight = true,
-                    documentLink = true,
-                    codeLens = { showReferencesNotification = true },
-                    -- not supported - https://github.com/neovim/neovim/pull/15723
-                    semanticTokens = false,
-                    diagnostics = true,
-                    schemaRequestService = true,
-                },
-            },
-        },
-    }
-
-    lspconfig_configs.volar_html = {
-        default_config = {
-            cmd = volar_cmd,
-            root_dir = volar_root_dir,
-            on_new_config = on_new_config,
-
-            filetypes = { "vue" },
-            -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-            --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-            init_options = {
-                typescript = {
-                    serverPath = "",
-                },
-                documentFeatures = {
-                    selectionRange = true,
-                    foldingRange = true,
-                    linkedEditingRange = true,
-                    documentSymbol = true,
-                    -- not supported - https://github.com/neovim/neovim/pull/13654
-                    documentColor = false,
-                    documentFormatting = {
-                        defaultPrintWidth = 100,
-                    },
-                },
-            },
-        },
-    }
-    setup_lsp("volar", {})
+M.vuels = function()
+    if vim.g.vue2_enabled == 1 then
+        setup_lsp("vuels", {})
+    end
 end
 
 M.clangd = function()
@@ -318,6 +213,7 @@ M.clangd = function()
 end
 
 M.jsonls = function()
+
     require("lspconfig").jsonls.setup({
         settings = {
             json = {
@@ -341,9 +237,9 @@ M.config = function()
         "rust_analyzer",
         "sqls",
         "sumneko_lua",
-        "tsserver",
         "vimls",
         "volar",
+        "vuels",
         "yamlls",
         "taplo",
     }
