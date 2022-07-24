@@ -58,7 +58,7 @@ M.config = function()
         },
         symbol_in_winbar = {
             in_custom = false,
-            enable = true,
+            enable = vim.fn.has("nvim-0.8") == 1,
             separator = " ",
             show_file = true,
         },
@@ -100,7 +100,7 @@ M.config = function()
     vim.diagnostic.config({
         underline = true,
         signs = true,
-        virtual_text = false,
+        virtual_text = true,
         float = true,
         update_in_insert = false,
         severity_sort = true,

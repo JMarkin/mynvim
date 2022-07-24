@@ -34,9 +34,12 @@ opt.hlsearch = true
 opt.linebreak = true
 opt.bs = "indent,eol,start"
 opt.tags = {}
---g.do_filetype_lua = 1
---g.did_load_filetypes = 0
-opt.cmdheight = 0
+if vim.fn.has("nvim-0.8") == 1 then
+    opt.cmdheight = 0
+else
+    g.do_filetype_lua = 1
+    g.did_load_filetypes = 0
+end
 
 -----------------------------------------------------------
 -- Табы и отступы
