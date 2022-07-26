@@ -1,8 +1,9 @@
-local packer, bootstrap = require("plugins.initpacker")
+vim.cmd [[packadd packer.nvim]]
 
-local use = packer.use
+return require('packer').startup(function(use)
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
-return packer.startup(function()
     --- Украшения
     use({
         "stevearc/dressing.nvim",
@@ -122,7 +123,7 @@ return packer.startup(function()
         event = "InsertEnter",
         config = function()
             require("better_escape").setup({
-                mapping = { "jk", "jj", "hh", "qq" },
+                mapping = { "jj", "qq", ":w" },
                 clear_empty_lines = true,
             })
         end,
@@ -487,7 +488,4 @@ return packer.startup(function()
         cmd = { "Luadev" },
     })
 
-    if bootstrap then
-        require("packer").sync()
-    end
 end)
