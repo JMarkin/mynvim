@@ -27,6 +27,17 @@ return packer.startup(function()
         end,
     })
 
+    use({
+        "ojroques/nvim-osc52",
+        config = function()
+            require("osc52").setup({
+                max_length = 100000000, -- Maximum length of selection
+                silent = false, -- Disable message on successful copy
+                trim = true, -- Trim text before copy
+            })
+        end,
+    })
+
     use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
     use({
@@ -95,7 +106,6 @@ return packer.startup(function()
             -- disable MRU
             startify.section.mru.val = { { type = "padding", val = 0 } }
             -- disable nvim_web_devicons
-            --
             startify.section.bottom_buttons.val = {
                 startify.button("q", "  Quit NVIM", ":qa<CR>"),
             }
@@ -112,7 +122,7 @@ return packer.startup(function()
         event = "InsertEnter",
         config = function()
             require("better_escape").setup({
-                mapping = { "jk", "jj", "hh" },
+                mapping = { "jk", "jj", "hh", "qq" },
                 clear_empty_lines = true,
             })
         end,
@@ -129,7 +139,7 @@ return packer.startup(function()
                 autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
                 commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
-                lookup_parents = true,
+                lookup_parents = false,
             })
         end,
     })
@@ -201,7 +211,8 @@ return packer.startup(function()
 
     -- LSP
     use("neovim/nvim-lspconfig")
-    use("williamboman/nvim-lsp-installer")
+    use({ "williamboman/mason.nvim" })
+    use({ "williamboman/mason-lspconfig.nvim" })
     use({ "glepnir/lspsaga.nvim" })
 
     use({
@@ -231,14 +242,7 @@ return packer.startup(function()
     --- Автокомлиты
     use({
         "JMarkin/coq_nvim",
-        after = {
-            "nvim-lspconfig",
-            "nvim-lsp-installer",
-            "lspsaga.nvim",
-            "null-ls.nvim",
-            "lsp-colors.nvim",
-            "trouble.nvim",
-        },
+        after = "nvim-config-local",
         setup = function()
             require("plugins.lsp").setup()
         end,

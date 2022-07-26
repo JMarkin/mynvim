@@ -20,7 +20,7 @@ opt.termguicolors = true --  24-bit RGB colors
 opt.fileencoding = "utf-8"
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 opt.guicursor = ""
 opt.wrap = true
 opt.hidden = true
@@ -76,6 +76,8 @@ augroup end
     false
 )
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
+vim.cmd([[command! Qa :qa]])
+vim.cmd([[command! Q :q]])
 
 -- fold
 opt.foldlevel = 2

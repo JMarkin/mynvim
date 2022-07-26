@@ -38,12 +38,6 @@ capabilities.textDocument.completion = {
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_lsp(lsp_name, opts)
-    local lsp_installer = require("nvim-lsp-installer")
-    local ok, _ = lsp_installer.get_server(lsp_name)
-    if not ok then
-        print("not found " .. lsp_name)
-        return
-    end
     local present, coq = pcall(require, "coq")
     if not present then
         print("not found coq_nvim")
@@ -163,21 +157,14 @@ M.rust_analyzer = function()
                 },
             },
         },
+        standalone = true,
     }
 
-    local lsp_installer = require("nvim-lsp-installer")
-    local ok, server = lsp_installer.get_server("rust_analyzer")
-    if not ok then
-        print("not found rust_analyzer")
-        return
-    end
     local _, coq = pcall(require, "coq")
     if not present then
         print("not found coq_nvim")
         return
     end
-    vim.tbl_deep_extend("force", server:get_default_options(), opts)
-
     opts = coq.lsp_ensure_capabilities(opts)
 
     local extension_path = vim.env.HOME .. "/.vscode-oss/extensions/vadimcn.vscode-lldb-1.6.10/"
@@ -190,22 +177,12 @@ M.rust_analyzer = function()
             adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
     })
-    server:attach_buffers()
-    rust_tools.start_standalone_if_required()
 end
 
 M.volar = function()
-    if vim.g.vue2_enabled ~= 1 then
-        setup_lsp("volar", {
-            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-        })
-    end
-end
-
-M.vuels = function()
-    if vim.g.vue2_enabled == 1 then
-        setup_lsp("vuels", {})
-    end
+    setup_lsp("volar", {
+        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+    })
 end
 
 M.clangd = function()
@@ -213,7 +190,6 @@ M.clangd = function()
 end
 
 M.jsonls = function()
-
     require("lspconfig").jsonls.setup({
         settings = {
             json = {
@@ -224,47 +200,26 @@ M.jsonls = function()
     })
 end
 
+local is_load = 0
+
 M.config = function()
-    local servers = {
-        "clangd",
-        "cmake",
-        "cssls",
-        "dockerls",
-        "graphql",
-        "html",
-        "jsonls",
-        "jedi_language_server",
-        "rust_analyzer",
-        "sqls",
-        "sumneko_lua",
-        "vimls",
-        "volar",
-        "vuels",
-        "yamlls",
-        "taplo",
-    }
-
-    require("nvim-lsp-installer").setup({
-        automatic_installation = true,
-        ui = {
-            icons = {
-                server_installed = "✓",
-                server_pending = "➜",
-                server_uninstalled = "✗",
-            },
-        },
-    })
-
-    local opts = {}
-
-    for _, lsp in pairs(servers) do
-        local s_lsp = M[lsp]
-        if s_lsp == nil or s_lsp == "" then
-            setup_lsp(lsp, opts)
-        else
-            s_lsp()
-        end
+    if is_load == 1 then
+        return
     end
+    require("mason").setup()
+    require("mason-lspconfig").setup()
+    require("mason-lspconfig").setup_handlers({
+        function(server_name)
+            local s_lsp = M[server_name]
+            if s_lsp == nil or s_lsp == "" then
+                vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
+                setup_lsp(server_name, {})
+            else
+                s_lsp()
+            end
+        end,
+    })
+    is_load = 1
 end
 
 return M
