@@ -75,6 +75,8 @@ M.config = function()
         auto_close = true,
         auto_preview = true,
         auto_fold = true,
+        mode = "document_diagnostics",
+        group = false,
         action_keys = { -- key mappings for actions in the trouble list
             close = "q", -- close the list
             cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
@@ -104,6 +106,7 @@ M.config = function()
         float = true,
         update_in_insert = false,
         severity_sort = true,
+        virtual_lines = false,
     })
 
 

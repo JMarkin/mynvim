@@ -33,7 +33,8 @@ function maps(m)
     nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
-    nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "toggle term")
+    nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
+    nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
     nnoremap("<leader>g", "<Cmd>LazyGit<CR>", "Git: lazygit")
 
     --- GIT

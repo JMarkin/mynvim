@@ -145,11 +145,6 @@ return require('packer').startup(function(use)
         end,
     })
 
-    use({
-        "wbthomason/packer.nvim",
-        cmd = { "PackerCompile", "PackerInstall", "PackerSync" },
-    })
-
     -- Markdown превью
     use({ "ellisonleao/glow.nvim" })
 
@@ -218,6 +213,13 @@ return require('packer').startup(function(use)
 
     use({
         "ray-x/lsp_signature.nvim",
+    })
+
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").setup()
+      end,
     })
 
     use({

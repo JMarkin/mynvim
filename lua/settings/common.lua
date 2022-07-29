@@ -63,7 +63,7 @@ cmd([[autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> s
 -----------------------------------------------------------
 -- Запоминает где nvim последний раз редактировал файл
 cmd([[
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
 ]])
 -- Подсвечивает на доли секунды скопированную часть текста
 exec(
