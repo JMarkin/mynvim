@@ -315,9 +315,6 @@ return require('packer').startup(function(use)
         end,
     })
 
-    -- popup окошки
-    use("nvim-lua/popup.nvim")
-
     -- Форматер
     use("sbdchd/neoformat")
 
@@ -364,21 +361,6 @@ return require('packer').startup(function(use)
     use({
         "danymat/neogen",
         requires = "nvim-treesitter/nvim-treesitter",
-    })
-
-    --- Стабилизация табов и буферов при ресайзе терминала
-    use({
-        "luukvbaal/stabilize.nvim",
-        config = function()
-            require("stabilize").setup()
-        end,
-    })
-
-    use({
-        "https://gitlab.com/yorickpeterse/nvim-window",
-        config = function()
-            require("nvim-window").setup({})
-        end,
     })
 
     -- превью строчки при :%d
@@ -482,12 +464,6 @@ return require('packer').startup(function(use)
     use({
         "kristijanhusak/vim-dadbod-ui",
         requires = { "tpope/vim-dadbod" },
-    })
-
-    --nvim dev
-    use({
-        "bfredl/nvim-luadev",
-        cmd = { "Luadev" },
     })
 
 end)

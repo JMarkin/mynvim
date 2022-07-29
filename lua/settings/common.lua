@@ -1,4 +1,3 @@
-local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
@@ -6,7 +5,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- Главные
 -----------------------------------------------------------
-cmd("set cc=")
+vim.cmd("set cc=")
 opt.scrolloff = 15
 opt.spelllang = { "en_us", "ru" } -- Словари рус eng
 opt.number = true
@@ -44,7 +43,7 @@ end
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------
-cmd([[
+vim.cmd([[
 filetype plugin on
 filetype indent plugin on
 ]])
@@ -54,30 +53,15 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 
--- don't auto commenting new lines
-cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
-cmd([[autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2]])
 
 -----------------------------------------------------------
 -- Полезные фишки
 -----------------------------------------------------------
--- Запоминает где nvim последний раз редактировал файл
-cmd([[
-autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
-]])
--- Подсвечивает на доли секунды скопированную часть текста
-exec(
-    [[
-augroup YankHighlight
-autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
-augroup end
-]],
-    false
-)
+
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 vim.cmd([[command! Qa :qa]])
 vim.cmd([[command! Q :q]])
+
 
 -- fold
 opt.foldlevel = 2
