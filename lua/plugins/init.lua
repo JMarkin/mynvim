@@ -39,14 +39,6 @@ return require('packer').startup(function(use)
         end,
     })
 
-    use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
-
-    use({
-        "VonHeikemen/searchbox.nvim",
-        requires = {
-            { "MunifTanjim/nui.nvim" },
-        },
-    })
     use({
         "rcarriga/nvim-notify",
         config = function()
@@ -59,8 +51,6 @@ return require('packer').startup(function(use)
             vim.notify = require("notify")
         end,
     })
-
-    use("tversteeg/registers.nvim")
 
     use({
         "nvim-lua/plenary.nvim",
@@ -230,10 +220,6 @@ return require('packer').startup(function(use)
         end,
     })
 
-    use({
-        "folke/lsp-colors.nvim",
-    })
-
     use({ "kevinhwang91/nvim-bqf", ft = "qf" })
 
     use({
@@ -303,9 +289,6 @@ return require('packer').startup(function(use)
             require("Comment").setup()
         end,
     })
-
-    -- Даже если включена русская раскладка vim команды будут работать
-    -- use("powerman/vim-plugin-ruscmd")
 
     -- EasyMotion
     use({

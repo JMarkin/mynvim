@@ -109,11 +109,6 @@ function maps(m)
         "<cmd>lua require('fzf-lua').lsp_definitions({ multiprocess=true,})<Cr>",
         "Search: Definitions"
     )
-    nnoremap(
-        "<leader>sr",
-        "<cmd>lua require('fzf-lua').lsp_references({ multiprocess=true,})<Cr>",
-        "Search: References"
-    )
     nnoremap("<leader>sc", "<cmd>lua require('fzf-lua').commands({ multiprocess=true,})<Cr>", "Search: commands")
     nnoremap("<leader>sk", "<cmd>lua require('fzf-lua').keymaps({ multiprocess=true,})<Cr>", "Search: keymaps")
     nnoremap(
@@ -124,26 +119,16 @@ function maps(m)
 
     ---go to
     nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
-    nnoremap("gD", require("lspsaga.definition").preview_definition, "silent", "GoTo: definition")
-    nnoremap("gr", require("lspsaga.finder").lsp_finder, "silent", "GoTo: references")
+    nnoremap(
+        "gr",
+        "<cmd>lua require('fzf-lua').lsp_references({ multiprocess=true,})<Cr>",
+        "silent",
+        "GoTo: references"
+    )
 
     -- lang
     m.nname("<leader>l", "Language features")
     nnoremap("<leader>lD", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
-    nnoremap(
-        "<leader>ls",
-        require("lspsaga.diagnostic").show_cursor_diagnostics,
-        "silent",
-        "Lang: diagnostic float under cursor"
-    )
-    nnoremap(
-        "<leader>lS",
-        require("lspsaga.diagnostic").show_line_diagnostics,
-        "silent",
-        "Lang: diagnostic float under line"
-    )
-    nnoremap("[e", require("lspsaga.diagnostic").goto_prev, "silent", "Lang: diagnostic jump prev")
-    nnoremap("]e", require("lspsaga.diagnostic").goto_next, "silent", "Lang: diagnostic jump next")
 
     nnoremap("<leader>la", require("lspsaga.codeaction").code_action, "silent", "Lang: code action")
     nnoremap("<leader>lA", require("lspsaga.codeaction").range_code_action, "silent", "Lang: range code action")

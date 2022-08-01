@@ -1,11 +1,9 @@
 local g = vim.g
 local lspconfig = require("lspconfig")
-local lspconfig_configs = require("lspconfig.configs")
-local lspconfig_util = require("lspconfig.util")
 
 local M = {}
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     require("lsp_signature").on_attach({ floating_window = false, hint_enable = false })
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
@@ -38,7 +36,7 @@ capabilities.textDocument.completion = {
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_lsp(lsp_name, opts)
-    local present, coq = pcall(require, "coq")
+    local present, _ = pcall(require, "coq")
     if not present then
         print("not found coq_nvim")
         return

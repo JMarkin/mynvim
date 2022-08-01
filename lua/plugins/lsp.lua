@@ -11,39 +11,6 @@ M.setup = function()
     }
 end
 
-local foldHandler = function(virtText, lnum, endLnum, width, truncate)
-    local newVirtText = {}
-    local suffix = ("  %d "):format(endLnum - lnum)
-    local sufWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = width - sufWidth
-    local curWidth = 0
-    for _, chunk in ipairs(virtText) do
-        local chunkText = chunk[1]
-        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-        if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-        else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-                suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-        end
-        curWidth = curWidth + chunkWidth
-    end
-    table.insert(newVirtText, { suffix, "MoreMsg" })
-    return newVirtText
-end
-
-local foldMap = {
-    vim = "indent",
-    python = { "treesitter" },
-    git = "",
-}
 
 M.config = function()
     require("settings.lang").config()
@@ -62,12 +29,6 @@ M.config = function()
             separator = " ",
             show_file = true,
         },
-    })
-    require("lsp-colors").setup({
-        Error = "#E82424",
-        Warning = "#FF9E3B",
-        Information = "#6A9589",
-        Hint = "#658594",
     })
     require("trouble").setup({
         padding = false,
@@ -108,13 +69,6 @@ M.config = function()
         virtual_lines = false,
     })
 
-
-    -- require("ufo").setup({
-    --     fold_virt_text_handler = foldHandler,
-    --     provider_selector = function(bufnr, filetype)
-    --         return foldMap[filetype] or { "treesitter",  "lsp", "indent" }
-    --     end,
-    -- })
 end
 
 return M
