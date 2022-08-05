@@ -15,20 +15,17 @@ augroup END
 ]])
 
 -- Подсвечивает на доли секунды скопированную часть текста
-vim.cmd(
-    [[
+vim.cmd([[
 augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
 augroup end
 ]])
 
-vim.cmd(
-    [[
+vim.cmd([[
 augroup SHADA
     autocmd!
     autocmd CursorHold,TextYankPost,FocusGained,FocusLost *
                 \ if exists(':rshada') | rshada | wshada | endif
 augroup END
 ]])
-

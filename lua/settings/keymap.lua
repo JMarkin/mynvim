@@ -22,10 +22,6 @@ function maps(m)
     ---windows
     nnoremap({ "<leader>w", "<space>w" }, "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
 
-    ---------Tab смещение
-    vmap("<S-Tab>", "<gv")
-    vmap("<Tab>", ">gv")
-
     ---------Форматирвоание
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
 

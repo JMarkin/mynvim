@@ -1,8 +1,8 @@
-vim.cmd [[packadd packer.nvim]]
+vim.cmd([[packadd packer.nvim]])
 
-return require('packer').startup(function(use)
+return require("packer").startup(function(use)
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use("wbthomason/packer.nvim")
 
     --- Украшения
     use({
@@ -188,12 +188,6 @@ return require('packer').startup(function(use)
         after = { "hlargs.nvim", "nvim-treesitter", "nvim-yati", "nvim-ts-autotag" },
     })
 
-    use({
-        "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require("plugins.indent")
-        end,
-    })
 
     -- LSP
     use("neovim/nvim-lspconfig")
@@ -206,10 +200,10 @@ return require('packer').startup(function(use)
     })
 
     use({
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-        require("lsp_lines").setup()
-      end,
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+        end,
     })
 
     use({
@@ -376,13 +370,6 @@ return require('packer').startup(function(use)
         cmd = { "SudaRead", "SudaWrite" },
     })
 
-    use({
-        "ethanholz/nvim-lastplace",
-        config = function()
-            require("nvim-lastplace").setup({})
-        end,
-    })
-
     -- bookmark
     use({
         "MattesGroeger/vim-bookmarks",
@@ -443,10 +430,21 @@ return require('packer').startup(function(use)
         end,
     })
 
-    -- db
+    -- autosave
     use({
-        "kristijanhusak/vim-dadbod-ui",
-        requires = { "tpope/vim-dadbod" },
-    })
+        "Pocco81/auto-save.nvim",
+        config = function()
+            require("auto-save").setup({
+                condition = function(buf)
+                    local fn = vim.fn
+                    local utils = require("auto-save.utils.data")
 
+                    if fn.getbufvar(buf, "&modifiable") == 1 or utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+                        return true -- met condition(s), can save
+                    end
+                    return false -- can't save
+                end,
+            })
+        end,
+    })
 end)

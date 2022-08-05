@@ -5,20 +5,6 @@ local M = {}
 
 local on_attach = function(_, bufnr)
     require("lsp_signature").on_attach({ floating_window = false, hint_enable = false })
-    vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
-        callback = function()
-            local opts = {
-                focusable = false,
-                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                border = "rounded",
-                source = "always",
-                prefix = " ",
-                scope = "cursor",
-            }
-            vim.diagnostic.open_float(nil, opts)
-        end,
-    })
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

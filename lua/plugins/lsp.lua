@@ -11,7 +11,6 @@ M.setup = function()
     }
 end
 
-
 M.config = function()
     require("settings.lang").config()
 
@@ -68,7 +67,6 @@ M.config = function()
         severity_sort = true,
         virtual_lines = false,
     })
-
 end
 
 return M
