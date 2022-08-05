@@ -1,31 +1,47 @@
 -- don't auto commenting new lines
-vim.cmd([[
-augroup DisableAutoComment
-    au!
-    au BufEnter * set fo-=c fo-=r fo-=o
-augroup END
-]])
+local disable_auto_comment = "DisableAutoComment"
+vim.api.nvim_create_augroup(disable_auto_comment, { clear = true })
+vim.api.nvim_create_autocmd("BufEnter", {
+    group = disable_auto_comment,
+    pattern = { "*" },
+    command = "set fo-=c fo-=r fo-=o",
+})
 
 -- Запоминает где nvim последний раз редактировал файл
-vim.cmd([[
-augroup LastChange
-    au!
-    autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
-augroup END
-]])
+local last_change = "LastChange"
+vim.api.nvim_create_augroup(last_change, { clear = true })
+
+local function save_last_change()
+    vim.cmd(
+        [[if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]]
+    )
+end
+vim.api.nvim_create_autocmd("BufReadPost", {
+    group = last_change,
+    pattern = { "*" },
+    callback = save_last_change,
+})
 
 -- Подсвечивает на доли секунды скопированную часть текста
-vim.cmd([[
-augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
-augroup end
-]])
+local yank_hightlight = "YankHighlight"
+vim.api.nvim_create_augroup(yank_hightlight, { clear = true })
 
-vim.cmd([[
-augroup SHADA
-    autocmd!
-    autocmd CursorHold,TextYankPost,FocusGained,FocusLost *
-                \ if exists(':rshada') | rshada | wshada | endif
-augroup END
-]])
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = yank_hightlight,
+    pattern = { "*" },
+    callback = function()
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
+    end,
+})
+
+-- синхронизация между инстансами
+local sync_neovim = "SHADA"
+vim.api.nvim_create_augroup(sync_neovim, { clear = true })
+
+vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
+    group = yank_hightlight,
+    pattern = { "*" },
+    callback = function()
+        vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
+    end,
+})
