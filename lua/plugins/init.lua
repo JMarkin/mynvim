@@ -188,7 +188,6 @@ return require("packer").startup(function(use)
         after = { "hlargs.nvim", "nvim-treesitter", "nvim-yati", "nvim-ts-autotag" },
     })
 
-
     -- LSP
     use("neovim/nvim-lspconfig")
     use({ "williamboman/mason.nvim" })
@@ -427,24 +426,6 @@ return require("packer").startup(function(use)
         config = function()
             local m = require("mapx").setup({ global = "force", whichkey = true })
             require("settings.keymap")(m)
-        end,
-    })
-
-    -- autosave
-    use({
-        "Pocco81/auto-save.nvim",
-        config = function()
-            require("auto-save").setup({
-                condition = function(buf)
-                    local fn = vim.fn
-                    local utils = require("auto-save.utils.data")
-
-                    if fn.getbufvar(buf, "&modifiable") == 1 or utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-                        return true -- met condition(s), can save
-                    end
-                    return false -- can't save
-                end,
-            })
         end,
     })
 end)

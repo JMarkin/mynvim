@@ -4,9 +4,14 @@ local lspconfig = require("lspconfig")
 local M = {}
 
 local on_attach = function(_, bufnr)
-    require("lsp_signature").on_attach({ floating_window = false, hint_enable = false })
+    require("lsp_signature").on_attach({
+        floating_window = true,
+        hint_enable = false,
+        transparency = 20,
+        toggle_key = "<C-s>",
+        select_signature_key = "<C-e>",
+    })
 end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
