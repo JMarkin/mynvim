@@ -269,7 +269,7 @@ return require("packer").startup(function(use)
 
     -- Colorize
     use({
-        "norcalli/nvim-colorizer.lua",
+        "NvChad/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup()
         end,
@@ -285,9 +285,15 @@ return require("packer").startup(function(use)
 
     -- EasyMotion
     use({
-        "ggandor/lightspeed.nvim",
+        "ggandor/leap.nvim",
+        requires = { "tpope/vim-repeat" },
         config = function()
-            require("lightspeed").setup({})
+            vim.api.nvim_set_hl(0, "LeapBackdrop", { fg = "#707070" })
+            require("leap").setup({
+                highlight_unlabeled = true,
+                case_sensitive = false,
+            })
+            require("leap").set_default_keymaps()
         end,
     })
 
