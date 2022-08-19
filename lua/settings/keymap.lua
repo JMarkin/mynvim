@@ -26,12 +26,14 @@ function maps(m)
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
 
     ---------Тогл Инструментов
-    nnoremap("<leader>f", "<Cmd>NvimTreeToggle<CR>", "FileTree: open")
+    nnoremap("<leader>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
+    nnoremap("<leader>B", "<Cmd>Neotree buffers<CR>", "Neotree: buffers")
+    nnoremap("<leader>g", "<Cmd>Neotree git_status<CR>", "Neotree: git_status")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
     nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
     nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
-    nnoremap("<leader>g", "<Cmd>LazyGit<CR>", "Git: lazygit")
+    nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
 
     --- GIT
     m.nname("<space>g", "Git")

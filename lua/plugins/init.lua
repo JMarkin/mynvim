@@ -155,9 +155,12 @@ return require("packer").startup(function(use)
 
     -- Файловый менеджер
     use({
-        "kyazdani42/nvim-tree.lua",
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
         requires = {
-            "kyazdani42/nvim-web-devicons",
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
         },
         setup = function()
             require("plugins.filetree").setup()
@@ -253,7 +256,12 @@ return require("packer").startup(function(use)
     use({ "mrjones2014/smart-splits.nvim" })
 
     -- Навигация внутри файла по классам и функциям
-    use({ "simrat39/symbols-outline.nvim" })
+    use({
+        "simrat39/symbols-outline.nvim",
+        config = function()
+            require("symbols-outline").setup({})
+        end,
+    })
 
     --  Git
     use("kdheepak/lazygit.nvim")
