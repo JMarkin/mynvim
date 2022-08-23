@@ -274,6 +274,12 @@ return require("packer").startup(function(use)
             require("gitsigns").setup()
         end,
     })
+    use({
+        "akinsho/git-conflict.nvim",
+        config = function()
+            require("git-conflict").setup()
+        end,
+    })
 
     -- Colorize
     use({

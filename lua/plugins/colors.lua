@@ -104,7 +104,7 @@ return function()
                 "filesize",
                 { "filename", path = 1 },
                 { current_signature_label, icons_enabled = false },
-                { current_signature_hint, icons_enabled = false, color="LspSignatureActiveParameter", },
+                { current_signature_hint, icons_enabled = false, color = "LspSignatureActiveParameter" },
                 { current_signature_label_end, icons_enabled = false },
             },
             lualine_x = {

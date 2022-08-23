@@ -137,8 +137,6 @@ function maps(m)
 
     nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
 
-    nnoremap("<leader>lh", require("lspsaga.signaturehelp").signature_help, "silent", "Lang: show signature")
-
     -- DEBUG
     m.nname("<leader>d", "Debug")
 

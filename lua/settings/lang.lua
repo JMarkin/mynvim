@@ -27,12 +27,6 @@ capabilities.textDocument.completion = {
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_lsp(lsp_name, opts)
-    local present, _ = pcall(require, "coq")
-    if not present then
-        print("not found coq_nvim")
-        return
-    end
-
     opts.capabilities = capabilities
     opts.on_attach = on_attach
     lspconfig[lsp_name].setup(opts)
@@ -149,12 +143,8 @@ M.rust_analyzer = function()
         standalone = true,
     }
 
-    local _, coq = pcall(require, "coq")
-    if not present then
-        print("not found coq_nvim")
-        return
-    end
-    opts = coq.lsp_ensure_capabilities(opts)
+    opts.capabilities = capabilities
+    opts.on_attach = on_attach
 
     local extension_path = vim.env.HOME .. "/.vscode-oss/extensions/vadimcn.vscode-lldb-1.6.10/"
     local codelldb_path = extension_path .. "adapter/codelldb"
@@ -175,7 +165,13 @@ M.volar = function()
 end
 
 M.clangd = function()
-    require("clangd_extensions").setup()
+    local opts = {}
+    opts.capabilities = capabilities
+    opts.on_attach = on_attach
+
+    require("clangd_extensions").setup({
+        server = opts,
+    })
 end
 
 M.jsonls = function()

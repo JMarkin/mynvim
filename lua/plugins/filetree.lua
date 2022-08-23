@@ -90,7 +90,15 @@ M.config = function()
                 },
                 ["<2-LeftMouse>"] = "open",
                 ["<cr>"] = "open",
-                ["<tab>"] = "open",
+                ["<tab>"] = function(state)
+                    local node = state.tree:get_node()
+                    if require("neo-tree.utils").is_expandable(node) then
+                        state.commands["toggle_node"](state)
+                    else
+                        state.commands["open"](state)
+                        vim.cmd("Neotree reveal")
+                    end
+                end,
                 ["<c-s>"] = "open_split",
                 ["S"] = "open_split",
                 ["s"] = "open_vsplit",
@@ -153,9 +161,9 @@ M.config = function()
                     --"thumbs.db"
                 },
             },
-            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            follow_current_file = false, -- This will find and focus the file in the active buffer every
             -- time the current file is changed while the tree is open.
-            group_empty_dirs = true, -- when true, empty folders will be grouped together
+            group_empty_dirs = false, -- when true, empty folders will be grouped together
             hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
             -- in whatever position is specified in window.position
             -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -180,8 +188,8 @@ M.config = function()
         buffers = {
             follow_current_file = true, -- This will find and focus the file in the active buffer every
             -- time the current file is changed while the tree is open.
-            group_empty_dirs = true, -- when true, empty folders will be grouped together
-            show_unloaded = true,
+            group_empty_dirs = false, -- when true, empty folders will be grouped together
+            show_unloaded = false,
             window = {
                 mappings = {
                     ["bd"] = "buffer_delete",
@@ -201,6 +209,15 @@ M.config = function()
                     ["gp"] = "git_push",
                     ["gg"] = "git_commit_and_push",
                 },
+            },
+        },
+        event_handlers = {
+            {
+                event = "file_opened",
+                handler = function(file_path)
+                    --auto close
+                    require("neo-tree").close_all()
+                end,
             },
         },
     })
