@@ -222,7 +222,7 @@ return require("packer").startup(function(use)
         "folke/trouble.nvim",
         requires = "kyazdani42/nvim-web-devicons",
     })
-    use("j-hui/fidget.nvim")
+    use("WhoIsSethDaniel/lualine-lsp-progress")
 
     --- Автокомлиты
     use({

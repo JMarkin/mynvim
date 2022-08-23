@@ -1,43 +1,3 @@
-local function get_status_line()
-    if not pcall(require, "lsp_signature") then
-        return nil
-    end
-    return require("lsp_signature").status_line(1000)
-end
-
-local current_signature_label = function()
-    local sig = get_status_line()
-
-    if not sig then
-        return ""
-    end
-    if sig.label == "" then
-        return ""
-    end
-
-    return sig.label:sub(0, sig.range.start - 1)
-end
-
-local current_signature_hint = function()
-    local sig = get_status_line()
-    if not sig then
-        return ""
-    end
-    return sig.hint
-end
-
-local current_signature_label_end = function()
-    local sig = get_status_line()
-
-    if not sig then
-        return ""
-    end
-    if sig.label == "" then
-        return ""
-    end
-
-    return sig.label:sub(sig.range["end"] + 1)
-end
 
 return function()
     local lualine = require("lualine")
@@ -103,9 +63,7 @@ return function()
             lualine_c = {
                 "filesize",
                 { "filename", path = 1 },
-                { current_signature_label, icons_enabled = false },
-                { current_signature_hint, icons_enabled = false, color = "LspSignatureActiveParameter" },
-                { current_signature_label_end, icons_enabled = false },
+                "lsp_progress",
             },
             lualine_x = {
                 "encoding",

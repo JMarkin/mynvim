@@ -14,7 +14,6 @@ end
 M.config = function()
     require("settings.lang").config()
 
-    require("fidget").setup({})
     require("lspsaga").init_lsp_saga({
         finder_action_keys = {
             open = "<cr>",

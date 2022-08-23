@@ -19,8 +19,7 @@ function maps(m)
     nnoremap({ "<A-k>", "<space>bk" }, ':lua require("smart-splits").resize_up()<cr>', "Resize up")
     nnoremap({ "<A-l>", "<space>bl" }, ':lua require("smart-splits").resize_right()<cr>', "Resize right")
 
-    ---windows
-    nnoremap({ "<leader>w", "<space>w" }, "<cmd>:lua require('nvim-window').pick()<CR>", "Pick Window")
+    nnoremap("<c-s>", "i<space><right><esc>")
 
     ---------Форматирвоание
     nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
@@ -36,9 +35,7 @@ function maps(m)
     nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
 
     --- GIT
-    m.nname("<space>g", "Git")
-    nnoremap("<space>gg", "<Cmd>LazyGit<CR>", "Git: lazygit")
-    nnoremap("<space>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
+    nnoremap("<space>b", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
     cmd([[highlight link GitSignsCurrentLineBlame Insert]])
 
     ---------Просмотр больших файлов
