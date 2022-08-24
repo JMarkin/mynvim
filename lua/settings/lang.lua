@@ -22,9 +22,19 @@ capabilities.textDocument.completion = {
         insertReplaceSupport = true,
         preselectSupport = true,
         snippetSupport = true,
+        labelDetailsSupport = true,
+        deprecatedSupport = true,
+        commitCharactersSupport = true,
+        tagSupport = { valueSet = { 1 } },
+        resolveSupport = {
+            properties = {
+                "documentation",
+                "detail",
+                "additionalTextEdits",
+            },
+        },
     },
 }
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities

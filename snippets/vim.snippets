@@ -1,0 +1,32 @@
+snippet init_pylint
+	lua << EOF
+	vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
+
+	require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
+
+	EOF
+
+snippet init_flake8
+	lua << EOF
+	vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
+
+	require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
+
+	EOF
+
+
+snippet neogen
+	require("neogen").setup({
+		enabled = true,
+		languages = {
+			python = {
+				template = {
+					annotation_convention = "reST",
+				},
+			},
+		},
+	})
+
+snippet tags
+	require("gentags").enable()
+

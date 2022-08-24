@@ -128,7 +128,7 @@ function maps(m)
     nnoremap("<leader>la", require("lspsaga.codeaction").code_action, "silent", "Lang: code action")
     nnoremap("<leader>lA", require("lspsaga.codeaction").range_code_action, "silent", "Lang: range code action")
 
-    nnoremap("<leader>lR", require("lspsaga.rename").lsp_rename, "silent", "Lang: rename")
+    nnoremap("<leader>lR", "<cmd>Lspsaga rename<cr>", "silent", "Lang: rename")
 
     nnoremap("<leader>lH", require("lspsaga.hover").render_hover_doc, "silent", "Lang: hover doc")
 

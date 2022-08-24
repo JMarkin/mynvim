@@ -225,22 +225,22 @@ return require("packer").startup(function(use)
     use("WhoIsSethDaniel/lualine-lsp-progress")
 
     --- Автокомлиты
+    use("L3MON4D3/LuaSnip")
+    use("lukas-reineke/cmp-rg")
+    use("andersevenrud/cmp-tmux")
+    use("hrsh7th/cmp-nvim-lsp")
+    use("quangnguyen30192/cmp-nvim-tags")
+    use("rcarriga/cmp-dap")
+    use("saadparwaiz1/cmp_luasnip")
+    use("hrsh7th/cmp-path")
+    use("petertriho/cmp-git")
+    use("hrsh7th/cmp-cmdline")
     use({
-        "JMarkin/coq_nvim",
+        "hrsh7th/nvim-cmp",
         after = "nvim-config-local",
-        setup = function()
-            require("plugins.lsp").setup()
-        end,
-        run = function()
-            vim.cmd(":COQdeps")
-        end,
         config = function()
             require("plugins.lsp").config()
         end,
-    })
-    use({
-        "ms-jpq/coq.artifacts",
-        after = "coq_nvim",
     })
 
     use({
