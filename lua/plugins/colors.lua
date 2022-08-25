@@ -1,4 +1,3 @@
-
 return function()
     local lualine = require("lualine")
 
@@ -13,7 +12,7 @@ return function()
         type = "bold,italic",
     }
 
-    local colorscheme = "highlite"
+    local colorscheme = "desert"
     local background = "dark"
 
     if colorscheme == "deus" then

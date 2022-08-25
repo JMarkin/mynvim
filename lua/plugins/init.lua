@@ -141,8 +141,6 @@ return require("packer").startup(function(use)
     -- Цвет тема
     use("rebelot/kanagawa.nvim")
     use("Iron-E/nvim-highlite")
-    use("Avimitin/neovim-deus")
-    use("rktjmp/lush.nvim")
 
     -- Информационная строка внизу
     use({
