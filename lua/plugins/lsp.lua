@@ -54,7 +54,42 @@ M.config = function()
 
     local cmp = require("cmp")
 
+    local move_down = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        elseif has_words_before() then
+            cmp.complete()
+        else
+            fallback()
+        end
+    end, { "i", "s" })
+
+    local move_up = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            fallback()
+        end
+    end, { "i", "s" })
+
     cmp.setup({
+        preselect = cmp.PreselectMode.None,
+        sorting = {
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
+                require("cmp-under-comparator").under,
+                cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
+        },
         enabled = function()
             return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
         end,
@@ -69,36 +104,17 @@ M.config = function()
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.abort(),
             ["<CR>"] = cmp.mapping.confirm({ select = true }),
-            ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                elseif has_words_before() then
-                    cmp.complete()
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-
-            ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
+            ["<Tab>"] = move_down,
+            ["<S-Tab>"] = move_up,
         },
         sources = {
             { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
             { name = "luasnip", priority_weight = 80 },
             {
                 name = "tmux",
-                priority_weight = 65,
+                priority_weight = 60,
                 keyword_length = 5,
-                max_item_count = 20,
+                max_item_count = 5,
                 option = {
                     all_panes = false,
                     label = "tmux",
@@ -122,7 +138,7 @@ M.config = function()
             format = function(entry, vim_item)
                 vim_item.menu = menu_map[entry.source.name] or string.format("[%s]", entry.source.name)
 
-                vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+                vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
                 return vim_item
             end,
         },
@@ -153,7 +169,15 @@ M.config = function()
     cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-            { name = "rg" },
+            {
+                name = "rg",
+                keyword_length = 3,
+                max_item_count = 5,
+                priority_weight = 60,
+                option = {
+                    additional_arguments = "--smart-case --hidden",
+                },
+            },
         },
     })
 

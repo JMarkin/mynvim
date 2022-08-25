@@ -235,6 +235,7 @@ return require("packer").startup(function(use)
     use("hrsh7th/cmp-path")
     use("petertriho/cmp-git")
     use("hrsh7th/cmp-cmdline")
+    use("lukas-reineke/cmp-under-comparator")
     use({
         "hrsh7th/nvim-cmp",
         after = "nvim-config-local",

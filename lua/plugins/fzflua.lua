@@ -1,5 +1,6 @@
 require("fzf-lua").setup({
     fzf_bin = "sk",
+    async_or_timeout = 3000,
     global_resume = true,
     global_resume_query = true,
     winopts = {

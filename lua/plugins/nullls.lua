@@ -3,6 +3,8 @@ if not present then
     return
 end
 
+local u = require("null-ls.utils")
+
 local methods = require("null-ls.methods")
 local DIAGNOSTICS = methods.internal.DIAGNOSTICS_ON_SAVE
 
@@ -96,7 +98,7 @@ M.enable_python = function(opts)
         })
     )
 
-    nullls.setup({ sources = sources })
+    nullls.setup({ sources = sources, root_dir = u.root_pattern(".lvimrc", "Makefile", ".git") })
 end
 
 return M
