@@ -125,17 +125,24 @@ function maps(m)
     m.nname("<leader>l", "Language features")
     nnoremap("<leader>lD", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
 
-    nnoremap("<leader>la", require("lspsaga.codeaction").code_action, "silent", "Lang: code action")
-    nnoremap("<leader>lA", require("lspsaga.codeaction").range_code_action, "silent", "Lang: range code action")
+    nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
-    nnoremap("<leader>lR", "<cmd>Lspsaga rename<cr>", "silent", "Lang: rename")
-
-    nnoremap("<leader>lH", require("lspsaga.hover").render_hover_doc, "silent", "Lang: hover doc")
-
+    if vim.fn.has("nvim-0.8") == 1 then
+        inoremap("<F2>", "<cmd>IncRename<cr>", "silent", "Lang: rename")
+        vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+        nnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+    else
+        inoremap("<F2>", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+        vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+        nnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+    end
     nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")
+    nnoremap("<leader>dt", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>", "silent")
+    nnoremap("<leader>dc", "<cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>", "silent")
+    nnoremap("<leader>dda", "<cmd>lua require('persistent-breakpoints.api').clear_all_breakpoints()<cr>", "silent")
 
     -- Visual
     nnoremap("<C-A>", "ggVG", "Visual all")

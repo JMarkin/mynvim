@@ -8,7 +8,15 @@ return require("packer").startup(function(use)
     use({
         "stevearc/dressing.nvim",
         config = function()
-            require("dressing").setup()
+            require("dressing").setup({
+                input = {
+                    override = function(conf)
+                        conf.col = -1
+                        conf.row = 0
+                        return conf
+                    end,
+                },
+            })
         end,
     })
 
@@ -130,7 +138,7 @@ return require("packer").startup(function(use)
                 autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
                 commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
-                lookup_parents = false,
+                lookup_parents = true,
             })
         end,
     })
@@ -141,14 +149,16 @@ return require("packer").startup(function(use)
     -- Цвет тема
     use("rebelot/kanagawa.nvim")
     use("Iron-E/nvim-highlite")
+    use({
+        "catppuccin/nvim",
+        as = "catppuccin",
+        run = ":CatppuccinCompile",
+    })
 
     -- Информационная строка внизу
     use({
         "nvim-lualine/lualine.nvim",
-        requires = { "kyazdani42/nvim-web-devicons", opt = true },
-        config = function()
-            require("plugins.colors")()
-        end,
+        requires = { "kyazdani42/nvim-web-devicons" },
     })
 
     -- Файловый менеджер
@@ -193,12 +203,17 @@ return require("packer").startup(function(use)
     use("neovim/nvim-lspconfig")
     use({ "williamboman/mason.nvim" })
     use({ "williamboman/mason-lspconfig.nvim" })
-    use({ "glepnir/lspsaga.nvim" })
 
-    use({
-        "ray-x/lsp_signature.nvim",
-    })
-
+    if vim.fn.has("nvim-0.8") == 1 then
+        use({
+            "SmiteshP/nvim-navic",
+            requires = "neovim/nvim-lspconfig",
+            config = function()
+                require("nvim-navic").setup({ highlight = true })
+                vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+            end,
+        })
+    end
     use({
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
@@ -221,7 +236,37 @@ return require("packer").startup(function(use)
         requires = "kyazdani42/nvim-web-devicons",
     })
     use("WhoIsSethDaniel/lualine-lsp-progress")
+    use({
+        "someone-stole-my-name/yaml-companion.nvim",
+        requires = {
+            { "neovim/nvim-lspconfig" },
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-telescope/telescope.nvim" },
+        },
+    })
 
+    use({
+        "weilbith/nvim-code-action-menu",
+        cmd = "CodeActionMenu",
+    })
+
+    if vim.fn.has("nvim-0.8") == 1 then
+        use({
+            "smjonas/inc-rename.nvim",
+            config = function()
+                require("inc_rename").setup()
+            end,
+        })
+    else
+        use({
+            "filipdutescu/renamer.nvim",
+            branch = "master",
+            requires = { { "nvim-lua/plenary.nvim" } },
+            config = function()
+                require("renamer").setup({})
+            end,
+        })
+    end
     --- Автокомлиты
     use("L3MON4D3/LuaSnip")
     use("lukas-reineke/cmp-rg")
@@ -234,6 +279,9 @@ return require("packer").startup(function(use)
     use("petertriho/cmp-git")
     use("hrsh7th/cmp-cmdline")
     use("lukas-reineke/cmp-under-comparator")
+    use("hrsh7th/cmp-nvim-lsp-signature-help")
+    use("hrsh7th/cmp-buffer")
+    use("hrsh7th/cmp-nvim-lsp-document-symbol")
     use({
         "hrsh7th/nvim-cmp",
         after = "nvim-config-local",
@@ -295,6 +343,15 @@ return require("packer").startup(function(use)
             require("Comment").setup()
         end,
     })
+    use({
+        "s1n7ax/nvim-comment-frame",
+        requires = {
+            { "nvim-treesitter" },
+        },
+        config = function()
+            require("nvim-comment-frame").setup()
+        end,
+    })
 
     -- EasyMotion
     use({
@@ -329,8 +386,15 @@ return require("packer").startup(function(use)
         end,
         after = { "nvim-treesitter", "nvim-dap" },
     })
+    use("ofirgall/goto-breakpoints.nvim")
+    use({
+        "Weissle/persistent-breakpoints.nvim",
+        config = function()
+            require("persistent-breakpoints").setup({})
+        end,
+    })
 
-    -- Доп утился дял языков
+    -- Доп утился для языков
     use({
         "simrat39/rust-tools.nvim",
     })
@@ -457,5 +521,15 @@ return require("packer").startup(function(use)
                 preserve_visual_selection = true,
             })
         end,
+    })
+
+    -- yaml
+    use({
+        "cuducos/yaml.nvim",
+        ft = { "yaml" }, -- optional
+        requires = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-telescope/telescope.nvim", -- optional
+        },
     })
 end)

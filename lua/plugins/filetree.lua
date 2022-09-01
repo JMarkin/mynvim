@@ -8,7 +8,7 @@ M.config = function()
 
     require("neo-tree").setup({
         source_selector = {
-            winbar = true,
+            winbar = vim.fn.has("nvim-0.8") == 1,
             statusline = true,
         },
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab

@@ -7,3 +7,4 @@ if not present then
 end
 require("settings")
 require("plugins")
+require("plugins.colors")()

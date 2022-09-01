@@ -45,3 +45,6 @@ vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "Focu
         vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
     end,
 })
+
+--- загрузка брекпоинтов
+vim.api.nvim_create_autocmd({ "BufReadPost" }, { callback = require("persistent-breakpoints.api").load_breakpoints })

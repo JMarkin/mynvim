@@ -12,14 +12,14 @@ return function()
         type = "bold,italic",
     }
 
-    local colorscheme = "desert"
+    local colorscheme = "highlite"
     local background = "dark"
 
     if colorscheme == "deus" then
         vim.g.deus_background = "hard"
     end
 
-    if colorscheme == "kanagawa" or colorscheme == "highlite" then
+    if colorscheme == "kanagawa" then
         require("kanagawa").setup({
             undercurl = true, -- enable undercurls
             commentStyle = { italic = true },
@@ -37,12 +37,88 @@ return function()
         })
     end
 
-    if colorscheme == "highlite" then
-        vim.cmd("colorscheme kanagawa")
+    if colorscheme == "catppuccin" then
+        vim.g.catppuccin_flavour = "frappe"
+        require("catppuccin").setup({
+            dim_inactive = {
+                enabled = true,
+                shade = "dark",
+                percentage = 0.15,
+            },
+            transparent_background = true,
+            term_colors = true,
+            compile = {
+                enabled = true,
+                path = vim.fn.stdpath("cache") .. "/catppuccin",
+            },
+            styles = {
+                comments = { "italic" },
+                conditionals = { "bold" },
+                loops = { "bold" },
+                functions = { "bold" },
+                keywords = { "bold" },
+                strings = { "italic" },
+                variables = {},
+                numbers = { "italic" },
+                booleans = { "italic" },
+                properties = { "undercurl" },
+                types = { "italic" },
+                operators = {},
+            },
+            integrations = {
+                treesitter = true,
+                native_lsp = {
+                    enabled = true,
+                    virtual_text = {
+                        errors = { "italic" },
+                        hints = { "italic" },
+                        warnings = { "italic" },
+                        information = { "italic" },
+                    },
+                    underlines = {
+                        errors = { "underline" },
+                        hints = { "underline" },
+                        warnings = { "underline" },
+                        information = { "underline" },
+                    },
+                },
+                coc_nvim = false,
+                lsp_trouble = true,
+                cmp = true,
+                lsp_saga = true,
+                gitgutter = false,
+                gitsigns = true,
+                leap = true,
+                telescope = false,
+                nvimtree = false,
+                neotree = {
+                    enabled = true,
+                    show_root = true,
+                    transparent_panel = true,
+                },
+                dap = {
+                    enabled = true,
+                    enable_ui = true,
+                },
+                which_key = true,
+                indent_blankline = {
+                    enabled = false,
+                    colored_indent_levels = false,
+                },
+                dashboard = true,
+                markdown = true,
+                ts_rainbow = true,
+                notify = true,
+                telekasten = false,
+                symbols_outline = true,
+                vimwiki = true,
+            },
+            color_overrides = {},
+            highlight_overrides = {},
+        })
+    else
+        vim.opt.background = background
     end
-
-    vim.opt.background = background
-
     local vim_colorscheme = "colorscheme " .. colorscheme
     vim.cmd(vim_colorscheme)
 

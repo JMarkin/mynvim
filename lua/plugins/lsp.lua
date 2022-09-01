@@ -57,10 +57,10 @@ M.config = function()
     local move_down = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-        elseif has_words_before() then
-            cmp.complete()
+        -- elseif luasnip.expand_or_jumpable() then
+        --     luasnip.expand_or_jump()
+        -- elseif has_words_before() then
+        --     cmp.complete()
         else
             fallback()
         end
@@ -69,8 +69,8 @@ M.config = function()
     local move_up = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+        -- elseif luasnip.jumpable(-1) then
+        --     luasnip.jump(-1)
         else
             fallback()
         end
@@ -90,6 +90,12 @@ M.config = function()
                 cmp.config.compare.order,
             },
         },
+        view = {
+            entries = "custom",
+        },
+        experimental = {
+            ghost_text = true,
+        },
         enabled = function()
             return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
         end,
@@ -108,6 +114,7 @@ M.config = function()
             ["<S-Tab>"] = move_up,
         },
         sources = {
+            { name = "nvim_lsp_signature_help", priority_weight = 120 },
             { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
             { name = "luasnip", priority_weight = 80 },
             {
@@ -122,7 +129,7 @@ M.config = function()
                     trigger_characters_ft = {}, -- { filetype = { '.' } }
                 },
             },
-            { name = "path", priority_weight = 110 },
+            { name = "path", priority_weight = 81 },
             { name = "tags", priority_weight = 85, max_item_count = 20 },
             {
                 name = "rg",
@@ -166,19 +173,12 @@ M.config = function()
     })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            {
-                name = "rg",
-                keyword_length = 3,
-                max_item_count = 5,
-                priority_weight = 60,
-                option = {
-                    additional_arguments = "--smart-case --hidden",
-                },
-            },
-        },
+    require("cmp").setup.cmdline("/", {
+        sources = cmp.config.sources({
+            { name = "nvim_lsp_document_symbol" },
+        }, {
+            { name = "buffer" },
+        }),
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -191,20 +191,6 @@ M.config = function()
 
     require("settings.lang").config()
 
-    require("lspsaga").init_lsp_saga({
-        finder_action_keys = {
-            open = "<cr>",
-        },
-        code_action_lightbulb = {
-            enable = false,
-        },
-        symbol_in_winbar = {
-            in_custom = false,
-            enable = vim.fn.has("nvim-0.8") == 1,
-            separator = " ",
-            show_file = true,
-        },
-    })
     require("trouble").setup({
         padding = false,
         auto_open = false,

@@ -3,16 +3,17 @@ local lspconfig = require("lspconfig")
 local lspconfig_configs = require("lspconfig.configs")
 local lspconfig_util = require("lspconfig.util")
 
+local navic = nil
+
+if vim.fn.has("nvim-0.8") == 1 then
+    navic = require("nvim-navic")
+end
 local M = {}
 
-local on_attach = function(_, bufnr)
-    require("lsp_signature").on_attach({
-        floating_window = true,
-        hint_enable = false,
-        transparency = 20,
-        toggle_key = "<C-s>",
-        select_signature_key = "<C-e>",
-    })
+local on_attach = function(client, bufnr)
+    if navic ~= nil then
+        navic.attach(client, bufnr)
+    end
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -42,6 +43,11 @@ local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities
     opts.on_attach = on_attach
     lspconfig[lsp_name].setup(opts)
+end
+
+M.yamlls = function()
+    local cfg = require("yaml-companion").setup({})
+    setup_lsp("yamlls", cfg)
 end
 
 M.pylsp = function()
@@ -110,7 +116,18 @@ M.sumneko_lua = function()
                 },
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
-                    globals = { "vim", "nnoremap", "require", "map", "vmap", "nmap", "tnoremap", "xnoremap" },
+                    globals = {
+                        "vim",
+                        "nnoremap",
+                        "require",
+                        "map",
+                        "vmap",
+                        "nmap",
+                        "tnoremap",
+                        "xnoremap",
+                        "inoremap",
+                        "vnoremap",
+                    },
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files
@@ -204,7 +221,7 @@ M.volar = function()
             on_new_config = on_new_config,
             -- filetypes = { "vue" },
             -- If you want to use Volar's Take Over Mode (if you know, you know)
-            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
             init_options = {
                 typescript = {
                     serverPath = "",
@@ -241,7 +258,7 @@ M.volar = function()
 
             -- filetypes = { "vue" },
             -- If you want to use Volar's Take Over Mode (if you know, you know):
-            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
             init_options = {
                 typescript = {
                     serverPath = "",
@@ -269,7 +286,7 @@ M.volar = function()
 
             -- filetypes = { "vue" },
             -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
             init_options = {
                 typescript = {
                     serverPath = "",
