@@ -48,3 +48,33 @@ vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "Focu
 
 --- загрузка брекпоинтов
 vim.api.nvim_create_autocmd({ "BufReadPost" }, { callback = require("persistent-breakpoints.api").load_breakpoints })
+
+--- сохранение fold
+local save_fold = "PersistentFold"
+vim.api.nvim_create_augroup(save_fold, { clear = true })
+vim.api.nvim_create_autocmd("BufWinLeave", {
+    pattern = "*.*",
+    command = "mkview",
+    group = save_fold,
+    desc = "Save view on leaving buffer",
+})
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    pattern = "*.*",
+    command = "silent! loadview",
+    group = save_fold,
+    desc = "Load view on entering buffer",
+})
+
+--- диагностики
+local diagnostics = "Diagnostics"
+vim.api.nvim_create_augroup(diagnostics, { clear = true })
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+    pattern = "*.*",
+    group = diagnostics,
+    callback = require("settings.dg").sync_all,
+})
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    pattern = "*.*",
+    group = diagnostics,
+    callback = require("settings.dg").sync_buffer,
+})

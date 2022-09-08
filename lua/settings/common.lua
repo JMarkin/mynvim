@@ -64,11 +64,11 @@ vim.cmd([[command! Q :q]])
 
 
 -- fold
-opt.foldlevel = 2
-opt.foldmethod = "indent"
-vim.wo.foldcolumn = "1"
-vim.wo.foldlevel = 2
-vim.wo.foldenable = false
+-- opt.foldlevel = 2
+-- opt.foldmethod = "indent"
+-- vim.wo.foldcolumn = "1"
+-- vim.wo.foldlevel = 2
+-- vim.wo.foldenable = false
 
 -- format
 g.neoformat_try_formatprg = 1

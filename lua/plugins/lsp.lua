@@ -129,7 +129,7 @@ M.config = function()
                     trigger_characters_ft = {}, -- { filetype = { '.' } }
                 },
             },
-            { name = "path", priority_weight = 81 },
+            { name = "path", priority_weight = 81, keyword_length = 2 },
             { name = "tags", priority_weight = 85, max_item_count = 20 },
             {
                 name = "rg",
@@ -174,6 +174,7 @@ M.config = function()
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     require("cmp").setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
             { name = "nvim_lsp_document_symbol" },
         }, {
@@ -189,36 +190,6 @@ M.config = function()
         }),
     })
 
-    require("settings.lang").config()
-
-    require("trouble").setup({
-        padding = false,
-        auto_open = false,
-        auto_close = true,
-        auto_preview = true,
-        auto_fold = true,
-        mode = "document_diagnostics",
-        action_keys = { -- key mappings for actions in the trouble list
-            close = "q", -- close the list
-            cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-            refresh = "r", -- manually refresh
-            jump = { "<cr>", "<tab>" }, -- jump to the diagnostic or open / close folds
-            open_split = { "<c-x>", "s" }, -- open buffer in new split
-            open_vsplit = { "<c-v>", "v" }, -- open buffer in new vsplit
-            open_tab = { "<c-t>" }, -- open buffer in new tab
-            jump_close = { "o" }, -- jump to the diagnostic and close the list
-            toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
-            toggle_preview = "P", -- toggle auto_preview
-            hover = "K", -- opens a small popup with the full multiline message
-            preview = "p", -- preview the diagnostic location
-            close_folds = { "zM", "zm" }, -- close all folds
-            open_folds = { "zR", "zr" }, -- open all folds
-            toggle_fold = { "zA", "za" }, -- toggle fold of current file
-            previous = "k", -- preview item
-            next = "j", -- next item
-        },
-        use_diagnostic_signs = true,
-    })
 
     vim.diagnostic.config({
         underline = true,

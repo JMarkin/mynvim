@@ -6,6 +6,7 @@ local lspconfig_util = require("lspconfig.util")
 local navic = nil
 
 if vim.fn.has("nvim-0.8") == 1 then
+    vim.g.navic_silence = true
     navic = require("nvim-navic")
 end
 local M = {}
@@ -348,6 +349,9 @@ M.config = function()
             end
         end,
     })
+    
+    require("plugins.ufo").setup()
+
     is_load = 1
 end
 

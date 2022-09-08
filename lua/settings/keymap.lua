@@ -29,7 +29,8 @@ function maps(m)
     nnoremap("<leader>B", "<Cmd>Neotree buffers<CR>", "Neotree: buffers")
     nnoremap("<leader>g", "<Cmd>Neotree git_status<CR>", "Neotree: git_status")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
-    nnoremap("<leader>e", "<Cmd>Trouble<CR>", "Trouble")
+    nnoremap("<leader>E", require("settings.dg").open_all, "All Diagnostics")
+    nnoremap("<leader>e", require("settings.dg").open_buffer, "Buffer Diagnostics")
     nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
     nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
     nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
@@ -75,6 +76,7 @@ function maps(m)
     m.nname("<leader>s", "Search")
 
     nnoremap("<leader>sq", "<cmd>lua require('fzf-lua').quickfix({ multiprocess=true})<Cr>", "Search: quickfix")
+    nnoremap("<leader>sl", "<cmd>lua require('fzf-lua').loclist({ multiprocess=true})<Cr>", "Search: loclist")
     nnoremap("<leader>ss", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
     nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: buffers")
     nnoremap("<leader>sB", "<cmd>lua require('plugins.bookmark').search()<Cr>", "Search: bookmark")
@@ -83,11 +85,6 @@ function maps(m)
         "<leader>sg",
         "<cmd>lua require('fzf-lua').grep_project({  multiprocess=true,continue_last_search = true })<Cr>",
         "Search: project"
-    )
-    nnoremap(
-        "<leader>sl",
-        "<cmd>lua require('fzf-lua').live_grep_native({  multiprocess=true, continue_last_search = true })<Cr>",
-        "Search: live grep native"
     )
     nnoremap(
         "<leader>s/",
@@ -128,9 +125,24 @@ function maps(m)
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
     if vim.fn.has("nvim-0.8") == 1 then
-        inoremap("<F2>", "<cmd>IncRename<cr>", "silent", "Lang: rename")
-        vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
-        nnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+        inoremap(
+            "<F2>",
+            'require("inc_rename").rename({ default = vim.fn.expand("<cword>") })',
+            "silent",
+            "Lang: rename"
+        )
+        vnoremap(
+            "<leader>lR",
+            '<cmd>lua require("inc_rename").rename({ default = vim.fn.expand("<cword>") })<cr>',
+            "silent",
+            "Lang: rename"
+        )
+        nnoremap(
+            "<leader>lR",
+            '<cmd>lua require("inc_rename").rename({ default = vim.fn.expand("<cword>") })<cr>',
+            "silent",
+            "Lang: rename"
+        )
     else
         inoremap("<F2>", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
         vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
@@ -167,6 +179,44 @@ function maps(m)
     vim.keymap.set("n", "<leader>c", require("osc52").copy_operator, { expr = true })
     vim.keymap.set("n", "<leader>cc", "<leader>c_", { remap = true })
     vim.keymap.set("x", "<leader>c", require("osc52").copy_visual)
+    vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { expr = true })
+    vim.keymap.set("n", "<leader>yy", "<leader>y_", { remap = true })
+    vim.keymap.set("x", "<leader>y", require("osc52").copy_visual)
+
+    -- qf loclist
+    nnoremap("<leader>lo", "<cmd>lua require'qf'.open('l')<CR>", "Open location list")
+    nnoremap("<leader>lc", "<cmd>lua require'qf'.close('l')<CR>", " Close location list")
+    nnoremap(
+        "<leader>ll",
+        "<cmd>lua require'qf'.toggle('l', true)<CR>",
+        "Toggle location list and stay in current window"
+    )
+
+    nnoremap("<leader>co", "<cmd>lua require'qf'.open('c')<CR>", "Open quickfix list")
+    nnoremap("<leader>cc", "<cmd>lua require'qf'.close('c')<CR>", "Close quickfix list")
+    nnoremap(
+        "<leader>cl",
+        "<cmd>lua require'qf'.toggle('c', true)<CR>",
+        "Toggle quickfix list and stay in current window"
+    )
+
+    nnoremap("]l", "<cmd>lua require'qf'.below('l')<CR>", "Go to next location list entry from cursor")
+    nnoremap("[l", "<cmd>lua require'qf'.above('l')<CR>", "Go to previous location list entry from cursor")
+
+    nnoremap("]q", "<cmd>lua require'qf'.below('c')<CR>", "Go to next quickfix entry from cursor")
+    nnoremap("[q", "<cmd>lua require'qf'.above('c')<CR>", "Go to previous quickfix entry from cursor")
+
+    nnoremap("]e", "<cmd>lua require'qf'.below('visible')<CR>", "Go to next entry from cursor in visible list")
+    nnoremap("[e", "<cmd>lua require'qf'.above('visible')<CR>", "Go to previous entry from cursor in visible list")
+
+    -- todo
+    vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next()
+    end, { desc = "Next todo comment" })
+
+    vim.keymap.set("n", "[t", function()
+        require("todo-comments").jump_prev()
+    end, { desc = "Previous todo comment" })
 end
 
 return maps

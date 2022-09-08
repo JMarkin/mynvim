@@ -147,13 +147,7 @@ return require("packer").startup(function(use)
     use({ "ellisonleao/glow.nvim" })
 
     -- Цвет тема
-    use("rebelot/kanagawa.nvim")
-    use("Iron-E/nvim-highlite")
-    use({
-        "catppuccin/nvim",
-        as = "catppuccin",
-        run = ":CatppuccinCompile",
-    })
+    use({ "/projects/nvim-highlite" })
 
     -- Информационная строка внизу
     use({
@@ -188,7 +182,8 @@ return require("packer").startup(function(use)
         "windwp/nvim-ts-autotag",
     })
     use({
-        "m-demare/hlargs.nvim",
+        "JMarkin/hlargs.nvim",
+        branch="fix-colorpalette"
     })
 
     use({
@@ -197,6 +192,18 @@ return require("packer").startup(function(use)
             require("plugins.treesitter")
         end,
         after = { "hlargs.nvim", "nvim-treesitter", "nvim-yati", "nvim-ts-autotag" },
+    })
+
+    use({
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("todo-comments").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            })
+        end,
     })
 
     -- LSP
@@ -230,10 +237,11 @@ return require("packer").startup(function(use)
     })
 
     use({ "kevinhwang91/nvim-bqf", ft = "qf" })
-
     use({
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
+        "https://gitlab.com/yorickpeterse/nvim-pqf.git",
+        config = function()
+            require("pqf").setup()
+        end,
     })
     use("WhoIsSethDaniel/lualine-lsp-progress")
     use({
@@ -267,6 +275,21 @@ return require("packer").startup(function(use)
             end,
         })
     end
+
+    use({
+        "ThePrimeagen/refactoring.nvim",
+        config = function()
+            require("refactoring").setup({})
+        end,
+    })
+
+    use({
+        "kevinhwang91/nvim-ufo",
+        requires = "kevinhwang91/promise-async",
+        config = function()
+            require("plugins.ufo").config()
+        end,
+    })
     --- Автокомлиты
     use("L3MON4D3/LuaSnip")
     use("lukas-reineke/cmp-rg")
@@ -287,6 +310,7 @@ return require("packer").startup(function(use)
         after = "nvim-config-local",
         config = function()
             require("plugins.lsp").config()
+            require("settings.lang").config()
         end,
     })
 
@@ -321,18 +345,28 @@ return require("packer").startup(function(use)
             require("gitsigns").setup()
         end,
     })
-    use({
-        "akinsho/git-conflict.nvim",
-        config = function()
-            require("git-conflict").setup()
-        end,
-    })
+    use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
     -- Colorize
     use({
         "NvChad/nvim-colorizer.lua",
         config = function()
-            require("colorizer").setup()
+            require("colorizer").setup({
+                user_default_options = {
+                    RGB = true, -- #RGB hex codes
+                    RRGGBB = true, -- #RRGGBB hex codes
+                    names = true, -- "Name" codes like Blue or blue
+                    RRGGBBAA = true, -- #RRGGBBAA hex codes
+                    AARRGGBB = true, -- 0xAARRGGBB hex codes
+                    rgb_fn = true, -- CSS rgb() and rgba() functions
+                    hsl_fn = true, -- CSS hsl() and hsla() functions
+                    css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                    css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                    -- Available modes for `mode`: foreground, background,  virtualtext
+                    mode = "background", -- Set the display mode.
+                    virtualtext = "■",
+                },
+            })
         end,
     })
 
@@ -358,7 +392,6 @@ return require("packer").startup(function(use)
         "ggandor/leap.nvim",
         requires = { "tpope/vim-repeat" },
         config = function()
-            vim.api.nvim_set_hl(0, "LeapBackdrop", { fg = "#707070" })
             require("leap").setup({
                 highlight_unlabeled = true,
                 case_sensitive = false,
@@ -531,5 +564,24 @@ return require("packer").startup(function(use)
             "nvim-treesitter/nvim-treesitter",
             "nvim-telescope/telescope.nvim", -- optional
         },
+    })
+    -- databases
+    use({ "tpope/vim-dadbod" })
+    use({
+        "kristijanhusak/vim-dadbod-ui",
+        setup = function()
+            vim.g.db_ui_env_variable_url = "DATABASE_URL"
+            vim.g.db_ui_env_variable_name = "DATABASE_NAME"
+            vim.g.db_ui_dotenv_variable_prefix = 'DB_'
+        end,
+    })
+    use({
+        "kristijanhusak/vim-dadbod-completion",
+        after = "vim-dadbod",
+        config = function()
+            vim.cmd([[
+                autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+            ]])
+        end,
     })
 end)
