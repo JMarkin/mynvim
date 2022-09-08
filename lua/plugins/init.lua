@@ -147,7 +147,7 @@ return require("packer").startup(function(use)
     use({ "ellisonleao/glow.nvim" })
 
     -- Цвет тема
-    use({ "/projects/nvim-highlite" })
+    use({ "JMarkin/nvim-highlite" })
 
     -- Информационная строка внизу
     use({
