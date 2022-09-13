@@ -7,6 +7,8 @@ local u = require("null-ls.utils")
 
 local methods = require("null-ls.methods")
 local DIAGNOSTICS = methods.internal.DIAGNOSTICS_ON_SAVE
+local FORMATTING = methods.internal.FORMATTING
+local RANGE_FORMATTING = methods.internal.RANGE_FORMATTING
 
 local M = {}
 
@@ -54,20 +56,50 @@ M.config = function()
     })
 
     rawset(nullls.builtins.diagnostics, "bandit", bandit)
+
+    local docformatter = h.make_builtin({
+        name = "docformatter",
+        meta = {
+            url = "https://github.com/PyCQA/docformatter",
+            description = "Formats docstrings to follow PEP 257",
+        },
+        method = { FORMATTING, RANGE_FORMATTING },
+        filetypes = { "python" },
+        generator_opts = {
+            command = "docformatter",
+            args = h.range_formatting_args_factory({
+                "--make-summary-multi-line",
+                "--force-wrap",
+                "-",
+            }, "--range", nil, { use_rows = true }),
+            to_stdin = true,
+        },
+        factory = h.formatter_factory,
+    })
+    rawset(nullls.builtins.formatting, "docformatter", docformatter)
 end
 
-M.enable_python = function(opts)
-    opts = opts or {
-        linter = "flake8",
-        mypy = false,
-        bandit = false,
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+M.enable = function(diagnostics, formatters)
+    diagnostics = diagnostics or {
+        "flake8",
+        "djlint",
+        "protolint",
+    }
+
+    formatters = formatters or {
+        "isort",
+        "yapf",
+        "stylua",
+        "protolint",
     }
 
     local sources = {}
-    if opts.mypy then
+
+    for _, diag in ipairs(diagnostics) do
         table.insert(
             sources,
-            nullls.builtins.diagnostics.mypy.with({
+            nullls.builtins.diagnostics[diag].with({
                 method = DIAGNOSTICS,
                 env = {
                     PYTHONPATH = vim.env.PYTHONPATH,
@@ -76,27 +108,16 @@ M.enable_python = function(opts)
         )
     end
 
-    if opts.bandit then
+    for _, fmt in ipairs(formatters) do
         table.insert(
             sources,
-            nullls.builtins.diagnostics.bandit.with({
-                method = DIAGNOSTICS,
+            nullls.builtins.formatting[fmt].with({
                 env = {
                     PYTHONPATH = vim.env.PYTHONPATH,
                 },
             })
         )
     end
-
-    table.insert(
-        sources,
-        nullls.builtins.diagnostics[opts.linter].with({
-            method = DIAGNOSTICS,
-            env = {
-                PYTHONPATH = vim.env.PYTHONPATH,
-            },
-        })
-    )
 
     nullls.setup({ sources = sources, root_dir = u.root_pattern(".lvimrc", "Makefile", ".git") })
 end

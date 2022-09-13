@@ -9,11 +9,35 @@ if vim.fn.has("nvim-0.8") == 1 then
     vim.g.navic_silence = true
     navic = require("nvim-navic")
 end
+
+local lsp_formatting = function(bufnr)
+    vim.lsp.buf.format({
+        filter = function(client)
+            -- apply whatever logic you want (in this example, we'll only use null-ls)
+            return client.name == "null-ls"
+        end,
+        bufnr = bufnr,
+    })
+end
+
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 local M = {}
 
 local on_attach = function(client, bufnr)
     if navic ~= nil then
         navic.attach(client, bufnr)
+    end
+
+    if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+                lsp_formatting(bufnr)
+            end,
+        })
     end
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -349,7 +373,7 @@ M.config = function()
             end
         end,
     })
-    
+
     require("plugins.ufo").setup()
 
     is_load = 1

@@ -1,3 +1,7 @@
+import os
+from sys import audit
+
+
 class A:
     s: str = 'sad'
 
@@ -5,8 +9,8 @@ class A:
         self.a = '123'
         variable = variable
 
-c = A()
 
+c = A()
 
 c.__setattr__(name, value)
 
@@ -21,15 +25,31 @@ if True or False:
 def f():
     ...
 
+
 @f
 def s():
     ...
 
-s = '^[1-9]123\n\t$'
 
+s = '^[1-9]123\n\t$'
 
 s = '<h>asd</h>'
 
 sum()
 
 print()
+
+
+def a():
+    """
+    asdsad.
+    """
+
+    def f():
+
+        def c():
+            print(1)
+
+        return c
+
+    return f

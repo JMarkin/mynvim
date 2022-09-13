@@ -1,5 +1,13 @@
 local cmd = vim.cmd
 
+local MEM = {
+    diffview = 0,
+}
+
+local lazy = require("diffview.lazy")
+
+local diffview = lazy.require("diffview")
+
 function maps(m)
     --------Основное управление буферами
     m.nname("<space>b", "Buffer")
@@ -21,9 +29,6 @@ function maps(m)
 
     nnoremap("<c-s>", "i<space><right><esc>")
 
-    ---------Форматирвоание
-    nnoremap("<space>bf", "<cmd>Neoformat<Cr>", "Buffer: format")
-
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
     nnoremap("<leader>B", "<Cmd>Neotree buffers<CR>", "Neotree: buffers")
@@ -34,6 +39,15 @@ function maps(m)
     nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
     nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
     nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
+    nnoremap("<leader>D", function()
+        if MEM.diffview == 0 then
+            diffview.open()
+            MEM.diffview = 1
+        else
+            diffview.close()
+            MEM.diffview = 0
+        end
+    end, "Git: diff")
 
     --- GIT
     nnoremap("<space>b", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
@@ -125,30 +139,18 @@ function maps(m)
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
     if vim.fn.has("nvim-0.8") == 1 then
-        inoremap(
-            "<F2>",
-            'require("inc_rename").rename({ default = vim.fn.expand("<cword>") })',
-            "silent",
-            "Lang: rename"
-        )
-        vnoremap(
-            "<leader>lR",
-            '<cmd>lua require("inc_rename").rename({ default = vim.fn.expand("<cword>") })<cr>',
-            "silent",
-            "Lang: rename"
-        )
-        nnoremap(
-            "<leader>lR",
-            '<cmd>lua require("inc_rename").rename({ default = vim.fn.expand("<cword>") })<cr>',
-            "silent",
-            "Lang: rename"
-        )
+        vim.keymap.set("n", "<leader>lR", function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+        end, { expr = true, desc = "Lang: rename" })
+        vim.keymap.set("v", "<leader>lR", function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+        end, { expr = true, desc = "Lang: rename" })
     else
-        inoremap("<F2>", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
         vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
         nnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
     end
     nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
+    vnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")

@@ -115,6 +115,13 @@ return require("packer").startup(function(use)
         end,
     })
 
+    use({
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("plugins.indent")
+        end,
+    })
+
     --- вместо ESC просто jj
     use({
         "max397574/better-escape.nvim",
@@ -183,7 +190,7 @@ return require("packer").startup(function(use)
     })
     use({
         "JMarkin/hlargs.nvim",
-        branch="fix-colorpalette"
+        branch = "fix-colorpalette",
     })
 
     use({
@@ -249,7 +256,6 @@ return require("packer").startup(function(use)
         requires = {
             { "neovim/nvim-lspconfig" },
             { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope.nvim" },
         },
     })
 
@@ -262,7 +268,7 @@ return require("packer").startup(function(use)
         use({
             "smjonas/inc-rename.nvim",
             config = function()
-                require("inc_rename").setup()
+                require("inc_rename").setup({ input_buffer_type = "dressing" })
             end,
         })
     else
@@ -399,9 +405,6 @@ return require("packer").startup(function(use)
             require("leap").set_default_keymaps()
         end,
     })
-
-    -- Форматер
-    use("sbdchd/neoformat")
 
     -- Дебагер
     use("mfussenegger/nvim-dap")
@@ -572,7 +575,7 @@ return require("packer").startup(function(use)
         setup = function()
             vim.g.db_ui_env_variable_url = "DATABASE_URL"
             vim.g.db_ui_env_variable_name = "DATABASE_NAME"
-            vim.g.db_ui_dotenv_variable_prefix = 'DB_'
+            vim.g.db_ui_dotenv_variable_prefix = "DB_"
         end,
     })
     use({

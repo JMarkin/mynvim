@@ -1,18 +1,22 @@
-snippet init_pylint
+snippet init
 	lua << EOF
-	vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
-
-	require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
-
 	EOF
 
-snippet init_flake8
-	lua << EOF
-	vim.g.neoformat_enabled_python = { "isort", "yapf", "docformatter" }
+snippet nullls
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {})
+	
+snippet pylint
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({"pylint", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
 
-	require("plugins.nullls").enable_python({linter="pylint", mypy=true, bandit=true})
+snippet flake8
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({"flake8", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
 
-	EOF
+snippet stylua
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {"stylua"})
 
 
 snippet neogen
