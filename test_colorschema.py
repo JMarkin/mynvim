@@ -21,10 +21,8 @@ os.path.abspath(A)
 if True or False:
     print(123)
 
-
 def f():
     ...
-
 
 @f
 def s():

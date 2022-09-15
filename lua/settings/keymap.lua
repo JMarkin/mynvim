@@ -31,9 +31,8 @@ function maps(m)
 
     ---------Тогл Инструментов
     nnoremap("<leader>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
-    nnoremap("<leader>B", "<Cmd>Neotree buffers<CR>", "Neotree: buffers")
-    nnoremap("<leader>g", "<Cmd>Neotree git_status<CR>", "Neotree: git_status")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
+    nnoremap("<leader>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
     nnoremap("<leader>E", require("settings.dg").open_all, "All Diagnostics")
     nnoremap("<leader>e", require("settings.dg").open_buffer, "Buffer Diagnostics")
     nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
@@ -48,34 +47,6 @@ function maps(m)
             MEM.diffview = 0
         end
     end, "Git: diff")
-
-    --- GIT
-    nnoremap("<space>b", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
-    cmd([[highlight link GitSignsCurrentLineBlame Insert]])
-
-    ---------Просмотр больших файлов
-    cmd([[
-        augroup LargeFile
-                let g:large_file = 10485760 " 10MB
-
-                " Set options:
-                "   eventignore+=FileType (no syntax highlighting etc
-                "   assumes FileType always on)
-                "   noswapfile (save copy of file)
-                "   bufhidden=unload (save memory when other file is viewed)
-                "   buftype=nowritefile (is read-only)
-                "   undolevels=-1 (no undo possible)
-                au BufReadPre *
-                        \ let f=expand("<afile>") |
-                        \ if getfsize(f) > g:large_file |
-                                \ set eventignore+=FileType |
-                                \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
-                                \
-                        \ else |
-                                \ set eventignore-=FileType |
-                        \ endif
-        augroup END
-    ]])
 
     ---- Fold
     m.nname("z", "Fold")
@@ -139,18 +110,27 @@ function maps(m)
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
     if vim.fn.has("nvim-0.8") == 1 then
-        vim.keymap.set("n", "<leader>lR", function()
+        local rename = function()
             return ":IncRename " .. vim.fn.expand("<cword>")
-        end, { expr = true, desc = "Lang: rename" })
-        vim.keymap.set("v", "<leader>lR", function()
-            return ":IncRename " .. vim.fn.expand("<cword>")
-        end, { expr = true, desc = "Lang: rename" })
+        end
+        vim.keymap.set("n", "<leader>lR", rename, { expr = true, desc = "Lang: rename" })
+        vim.keymap.set("v", "<leader>lR", rename, { expr = true, desc = "Lang: rename" })
     else
-        vnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
-        nnoremap("<leader>lR", "<cmd>lua require('renamer').rename()<cr>", "silent", "Lang: rename")
+        vnoremap("<leader>lR", require("renamer").rename, "silent", "Lang: rename")
+        nnoremap("<leader>lR", require("renamer").rename, "silent", "Lang: rename")
     end
-    nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
-    vnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "silent", "Lang: lsp format")
+
+    local format = function()
+        vim.lsp.buf.format({
+            filter = function(client)
+                -- apply whatever logic you want (in this example, we'll only use null-ls)
+                return client.name == "null-ls"
+            end,
+            async = true,
+        })
+    end
+    nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
+    vnoremap("<leader>lf", format, "silent", "Lang: lsp format")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")
@@ -219,6 +199,7 @@ function maps(m)
     vim.keymap.set("n", "[t", function()
         require("todo-comments").jump_prev()
     end, { desc = "Previous todo comment" })
+    
 end
 
 return maps

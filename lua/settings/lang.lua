@@ -31,13 +31,13 @@ local on_attach = function(client, bufnr)
 
     if client.supports_method("textDocument/formatting") then
         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-                lsp_formatting(bufnr)
-            end,
-        })
+        -- vim.api.nvim_create_autocmd("BufWritePre", {
+        --     group = augroup,
+        --     buffer = bufnr,
+        --     callback = function()
+        --         lsp_formatting(bufnr)
+        --     end,
+        -- })
     end
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -49,7 +49,7 @@ capabilities.textDocument.completion = {
     completionItem = {
         insertReplaceSupport = true,
         preselectSupport = true,
-        snippetSupport = true,
+        snippetSupport = false,
         labelDetailsSupport = true,
         deprecatedSupport = true,
         commitCharactersSupport = true,
@@ -126,7 +126,13 @@ M.jedi_language_server = function()
 
     g.pydocstring_doq_path = "~/.pyenv/shims/doq"
 
-    setup_lsp("jedi_language_server", {})
+    setup_lsp("jedi_language_server", {
+        initializationOptions = {
+            completion = {
+                disableSnippets = true
+            }
+        }
+    })
 end
 
 M.sumneko_lua = function()

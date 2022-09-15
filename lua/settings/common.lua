@@ -53,7 +53,6 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 
-
 -----------------------------------------------------------
 -- Полезные фишки
 -----------------------------------------------------------
@@ -62,17 +61,33 @@ vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 vim.cmd([[command! Qa :qa]])
 vim.cmd([[command! Q :q]])
 
-
--- fold
--- opt.foldlevel = 2
--- opt.foldmethod = "indent"
--- vim.wo.foldcolumn = "1"
--- vim.wo.foldlevel = 2
--- vim.wo.foldenable = false
-
 -- format
 g.neoformat_try_formatprg = 1
 g.neoformat_basic_format_align = 1
 g.neoformat_basic_format_retab = 1
 g.neoformat_basic_format_trim = 1
 g.neoformat_run_all_formatters = 1
+
+---------Просмотр больших файлов
+vim.cmd([[
+        augroup LargeFile
+                let g:large_file = 10485760 " 10MB
+
+                " Set options:
+                "   eventignore+=FileType (no syntax highlighting etc
+                "   assumes FileType always on)
+                "   noswapfile (save copy of file)
+                "   bufhidden=unload (save memory when other file is viewed)
+                "   buftype=nowritefile (is read-only)
+                "   undolevels=-1 (no undo possible)
+                au BufReadPre *
+                        \ let f=expand("<afile>") |
+                        \ if getfsize(f) > g:large_file |
+                                \ set eventignore+=FileType |
+                                \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
+                                \
+                        \ else |
+                                \ set eventignore-=FileType |
+                        \ endif
+        augroup END
+    ]])

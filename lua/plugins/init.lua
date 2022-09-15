@@ -398,11 +398,7 @@ return require("packer").startup(function(use)
         "ggandor/leap.nvim",
         requires = { "tpope/vim-repeat" },
         config = function()
-            require("leap").setup({
-                highlight_unlabeled = true,
-                case_sensitive = false,
-            })
-            require("leap").set_default_keymaps()
+            require("plugins.leap")
         end,
     })
 
@@ -576,15 +572,23 @@ return require("packer").startup(function(use)
             vim.g.db_ui_env_variable_url = "DATABASE_URL"
             vim.g.db_ui_env_variable_name = "DATABASE_NAME"
             vim.g.db_ui_dotenv_variable_prefix = "DB_"
+            vim.g.db_ui_execute_on_save = 0
+            vim.g.db_ui_win_position = 'right'
+            vim.g.db_ui_show_database_icon = 1
+            vim.g.db_ui_use_nerd_fonts = 1
         end,
     })
     use({
         "kristijanhusak/vim-dadbod-completion",
         after = "vim-dadbod",
+    })
+
+    -- uncompiler
+    use({
+        "p00f/godbolt.nvim",
         config = function()
-            vim.cmd([[
-                autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
-            ]])
+            require("godbolt").setup()
         end,
+        cmd = { "Godbolt", "GodboltCompiler" },
     })
 end)
