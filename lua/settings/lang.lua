@@ -129,9 +129,10 @@ M.jedi_language_server = function()
     setup_lsp("jedi_language_server", {
         initializationOptions = {
             completion = {
-                disableSnippets = true
-            }
-        }
+                disableSnippets = true,
+            },
+        },
+        filetypes = { "python", "python.django", "django" },
     })
 end
 
@@ -357,6 +358,12 @@ M.jsonls = function()
                 validate = { enable = true },
             },
         },
+    })
+end
+
+M.html = function()
+    setup_lsp("html", {
+        filetypes = { "html", "htmldjango" },
     })
 end
 

@@ -154,12 +154,22 @@ return require("packer").startup(function(use)
     use({ "ellisonleao/glow.nvim" })
 
     -- Цвет тема
-    use({ "JMarkin/nvim-highlite" })
+    use({
+        "JMarkin/nvim-highlite",
+        config = function()
+            vim.opt.background = "dark"
+            vim.cmd("colorscheme highlite")
+        end,
+    })
 
     -- Информационная строка внизу
     use({
         "nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
+        event = "BufReadPre",
+        config = function()
+            require("plugins.lualine")
+        end,
     })
 
     -- Файловый менеджер
@@ -177,28 +187,45 @@ return require("packer").startup(function(use)
         config = function()
             require("plugins.filetree").config()
         end,
+        cmd = "Neotree",
     })
 
     -- Подцветка синтаксиа
-    use({
-        "nvim-treesitter/nvim-treesitter",
-    })
     use({ "yioneko/nvim-yati" })
 
     use({
         "windwp/nvim-ts-autotag",
+        after = "nvim-treesitter",
+        config = function()
+            require("nvim-ts-autotag").setup()
+        end,
     })
     use({
-        "JMarkin/hlargs.nvim",
-        branch = "fix-colorpalette",
+        "m-demare/hlargs.nvim",
+        after = "nvim-treesitter",
+        config = function()
+            require("hlargs").setup({
+                use_colorpalette = true,
+            })
+        end,
     })
 
     use({
-        "p00f/nvim-ts-rainbow",
+        "andymass/vim-matchup",
+        setup = function()
+            vim.g.matchup_surround_enabled = 1
+            vim.g.matchup_transmute_enabled = 1
+            vim.g.matchup_matchparen_deferred = 1
+            vim.g.matchup_matchparen_hi_surround_always = 1
+        end,
+    })
+
+    use({
+        "nvim-treesitter/nvim-treesitter",
+        after = { "vim-matchup", "nvim-yati" },
         config = function()
             require("plugins.treesitter")
         end,
-        after = { "hlargs.nvim", "nvim-treesitter", "nvim-yati", "nvim-ts-autotag" },
     })
 
     use({
@@ -216,7 +243,10 @@ return require("packer").startup(function(use)
     -- LSP
     use("neovim/nvim-lspconfig")
     use({ "williamboman/mason.nvim" })
-    use({ "williamboman/mason-lspconfig.nvim" })
+    use({
+        "williamboman/mason-lspconfig.nvim",
+        after = { "nvim-lspconfig", "mason.nvim" },
+    })
 
     if vim.fn.has("nvim-0.8") == 1 then
         use({
@@ -264,23 +294,14 @@ return require("packer").startup(function(use)
         cmd = "CodeActionMenu",
     })
 
-    if vim.fn.has("nvim-0.8") == 1 then
-        use({
-            "smjonas/inc-rename.nvim",
-            config = function()
-                require("inc_rename").setup({ input_buffer_type = "dressing" })
-            end,
-        })
-    else
-        use({
-            "filipdutescu/renamer.nvim",
-            branch = "master",
-            requires = { { "nvim-lua/plenary.nvim" } },
-            config = function()
-                require("renamer").setup({})
-            end,
-        })
-    end
+    use({
+        "filipdutescu/renamer.nvim",
+        branch = "master",
+        requires = { { "nvim-lua/plenary.nvim" } },
+        config = function()
+            require("renamer").setup({})
+        end,
+    })
 
     use({
         "ThePrimeagen/refactoring.nvim",
@@ -292,18 +313,26 @@ return require("packer").startup(function(use)
     use({
         "kevinhwang91/nvim-ufo",
         requires = "kevinhwang91/promise-async",
+        after = { "nvim-lspconfig", "mason.nvim", "mason-lspconfig.nvim" },
+        event = "BufReadPre",
         config = function()
             require("plugins.ufo").config()
         end,
     })
     --- Автокомлиты
-    use("L3MON4D3/LuaSnip")
+    use({
+        "L3MON4D3/LuaSnip",
+        event = "InsertEnter",
+    })
     use("lukas-reineke/cmp-rg")
     use("andersevenrud/cmp-tmux")
     use("hrsh7th/cmp-nvim-lsp")
     use("quangnguyen30192/cmp-nvim-tags")
     use("rcarriga/cmp-dap")
-    use("saadparwaiz1/cmp_luasnip")
+    use({
+        "saadparwaiz1/cmp_luasnip",
+        after = "LuaSnip",
+    })
     use("hrsh7th/cmp-path")
     use("petertriho/cmp-git")
     use("hrsh7th/cmp-cmdline")
@@ -313,11 +342,27 @@ return require("packer").startup(function(use)
     use("hrsh7th/cmp-nvim-lsp-document-symbol")
     use({
         "hrsh7th/nvim-cmp",
-        after = "nvim-config-local",
+        after = {
+            "nvim-config-local",
+            "cmp-rg",
+            "cmp-tmux",
+            "cmp-nvim-lsp",
+            "cmp-nvim-tags",
+            "cmp-dap",
+            "cmp_luasnip",
+            "cmp-path",
+            "cmp-git",
+            "cmp-cmdline",
+            "cmp-under-comparator",
+            "cmp-nvim-lsp-signature-help",
+            "cmp-nvim-lsp-document-symbol",
+            "nvim-ufo",
+        },
         config = function()
             require("plugins.lsp").config()
             require("settings.lang").config()
         end,
+        event = "InsertEnter",
     })
 
     use({
@@ -328,9 +373,14 @@ return require("packer").startup(function(use)
     })
 
     -- Табы
-    use("Asheq/close-buffers.vim")
+    use({
+        "Asheq/close-buffers.vim",
+        keys = "<space>b",
+    })
     --
-    use({ "mrjones2014/smart-splits.nvim" })
+    use({
+        "mrjones2014/smart-splits.nvim",
+    })
 
     -- Навигация внутри файла по классам и функциям
     use({
@@ -338,6 +388,7 @@ return require("packer").startup(function(use)
         config = function()
             require("symbols-outline").setup({})
         end,
+        event = "BufReadPre",
     })
 
     --  Git
@@ -351,7 +402,39 @@ return require("packer").startup(function(use)
             require("gitsigns").setup()
         end,
     })
-    use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
+    use({
+        "sindrets/diffview.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("diffview").setup({
+                view = {
+                    -- Configure the layout and behavior of different types of views.
+                    -- Available layouts:
+                    --  'diff1_plain'
+                    --    |'diff2_horizontal'
+                    --    |'diff2_vertical'
+                    --    |'diff3_horizontal'
+                    --    |'diff3_vertical'
+                    --    |'diff3_mixed'
+                    --    |'diff4_mixed'
+                    -- For more info, see ':h diffview-config-view.x.layout'.
+                    default = {
+                        -- Config for changed files, and staged files in diff views.
+                        layout = "diff2_horizontal",
+                    },
+                    merge_tool = {
+                        -- Config for conflicted files in diff views during a merge or rebase.
+                        layout = "diff3_mixed",
+                        disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
+                    },
+                    file_history = {
+                        -- Config for changed files in file history views.
+                        layout = "diff2_horizontal",
+                    },
+                },
+            })
+        end,
+    })
 
     -- Colorize
     use({
@@ -400,6 +483,7 @@ return require("packer").startup(function(use)
         config = function()
             require("plugins.leap")
         end,
+        event = "BufReadPre",
     })
 
     -- Дебагер
@@ -446,6 +530,7 @@ return require("packer").startup(function(use)
         config = function()
             require("plugins.fzflua")
         end,
+        event = "VimEnter",
     })
 
     --- Генераци докстрингов и т.п.
@@ -460,6 +545,7 @@ return require("packer").startup(function(use)
         config = function()
             require("numb").setup()
         end,
+        event = "VimEnter",
     })
 
     --nginx
@@ -491,6 +577,7 @@ return require("packer").startup(function(use)
         setup = function()
             require("plugins.bookmark").setup()
         end,
+        keys = "<leader>b",
     })
 
     -- профилировщик оптимизатор neovim
@@ -573,7 +660,7 @@ return require("packer").startup(function(use)
             vim.g.db_ui_env_variable_name = "DATABASE_NAME"
             vim.g.db_ui_dotenv_variable_prefix = "DB_"
             vim.g.db_ui_execute_on_save = 0
-            vim.g.db_ui_win_position = 'right'
+            vim.g.db_ui_win_position = "right"
             vim.g.db_ui_show_database_icon = 1
             vim.g.db_ui_use_nerd_fonts = 1
         end,
@@ -591,4 +678,6 @@ return require("packer").startup(function(use)
         end,
         cmd = { "Godbolt", "GodboltCompiler" },
     })
+
+    use({ "ten3roberts/window-picker.nvim" })
 end)

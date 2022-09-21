@@ -22,14 +22,14 @@ require("nvim-treesitter.configs").setup({
         "scss",
     },
     indent = {
-        enable = true,
+        enable = false,
     },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
     },
     rainbow = {
-        enable = true,
+        enable = false,
         extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
         max_file_lines = 1500, -- Do not enable for files with more than n lines, int
     },
@@ -43,16 +43,7 @@ require("nvim-treesitter.configs").setup({
         },
     },
     yati = { enable = true },
+    matchup = {
+        enable = true,
+    },
 })
-
-local present_hlargs, ts_hlargs = pcall(require, "hlargs")
-if present_hlargs then
-    ts_hlargs.setup({
-        use_colorpalette=true,
-    })
-end
-
-local present_atag, ts_atag = pcall(require, "nvim-ts-autotag")
-if present_atag then
-    ts_atag.setup()
-end

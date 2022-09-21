@@ -34,3 +34,13 @@ snippet neogen
 snippet tags
 	require("gentags").enable()
 
+snippet tags_python
+	require("gentags").enable("python")
+
+snippet django
+	vim.filetype.add({
+		extension = {
+			html = "htmldjango",
+			htm = "htmldjango",
+		}
+	})

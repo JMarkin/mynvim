@@ -26,13 +26,18 @@ snippet from
 	from ${1:package} import ${0:module}
 
 # Module Docstring
-snippet docs
+snippet filedocs
 	"""
-	File: ${1:`vim_snippets#Filename('$1.py', 'foo.py')`}
+	File: ${1:`expand('%:t') `}
 	Author: `g:snips_author`
 	Email: `g:snips_email`
 	Github: `g:snips_github`
 	Description: ${0}
+	"""
+
+snippet docs
+	"""
+		${0:docstring}
 	"""
 
 # Unittest skip
@@ -70,6 +75,10 @@ snippet cla
 	class ${1:class_name}:
 		"""${0:description}"""
 
+snippet acl
+	class ABC${1:class_name}(Protocol):
+		"""${0:description}"""
+
 snippet clai
 	class ${1:class_name}:
 		"""${2:description}"""
@@ -82,10 +91,13 @@ snippet dcl dataclass
 	class ${1:ClassName}:
 		"""${2:description}"""
 		${3:var_1}: ${4:int}
-		${5:var_2}: ${6:float} = ${7:0}
 
-		def ${8:total}(self): -> $6:
-			return ${0:self.$3 * self.$5}
+snippet pdcl
+	
+	@dataclass
+	class ${1:ClassName}(Protocol):
+		"""${2:description}"""
+		${3:var_1}: ${4:int}
 
 # New Function
 snippet def
@@ -166,7 +178,7 @@ snippet cascii
 	# -*- coding: ascii -*-
 
 # Lambda
-snippet ld
+snippet lbd
 	${1:var} = lambda ${2:vars} : ${0:action}
 
 snippet ret
@@ -309,20 +321,19 @@ snippet pargs
 
 # logging
 # glog = get log
-snippet glog
-	import logging
-	LOGGER = logging.getLogger(${0:__name__})
+snippet logger
+	logger = logging.getLogger(${0:__name__})
 snippet le
-	LOGGER.error(${0:msg})
+	logger.error(${0:msg})
 # conflict with lambda=ld, therefor we change into Logger.debuG
-snippet lg
-	LOGGER.debug(${0:msg})
+snippet ld
+	logger.debug(${0:msg})
 snippet lw
-	LOGGER.warning(${0:msg})
+	logger.warning(${0:msg})
 snippet lc
-	LOGGER.critical(${0:msg})
+	logger.critical(${0:msg})
 snippet li
-	LOGGER.info(${0:msg})
+	logger.info(${0:msg})
 snippet epydoc
 	"""${1:Description}
 

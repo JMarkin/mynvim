@@ -5,9 +5,9 @@ from sys import audit
 class A:
     s: str = 'sad'
 
-    def __init__(self, variable):
+    def __init__(self, varible):
         self.a = '123'
-        variable = variable
+        self.variable = varible
 
 
 c = A()
@@ -39,9 +39,7 @@ print()
 
 
 def a():
-    """
-    asdsad.
-    """
+    """asdsad."""
 
     def f():
 

@@ -68,8 +68,6 @@ M.config = function()
         generator_opts = {
             command = "docformatter",
             args = h.range_formatting_args_factory({
-                "--make-summary-multi-line",
-                "--force-wrap",
                 "-",
             }, "--range", nil, { use_rows = true }),
             to_stdin = true,
@@ -97,26 +95,51 @@ M.enable = function(diagnostics, formatters)
     local sources = {}
 
     for _, diag in ipairs(diagnostics) do
-        table.insert(
-            sources,
-            nullls.builtins.diagnostics[diag].with({
-                method = DIAGNOSTICS,
-                env = {
-                    PYTHONPATH = vim.env.PYTHONPATH,
-                },
-            })
-        )
+        if diag == "djlint" then
+            table.insert(
+                sources,
+                nullls.builtins.diagnostics[diag].with({
+                    method = DIAGNOSTICS,
+                    filetypes = { "jinja.html", "htmldjango" },
+                    env = {
+                        PYTHONPATH = vim.env.PYTHONPATH,
+                    },
+                })
+            )
+        else
+            table.insert(
+                sources,
+                nullls.builtins.diagnostics[diag].with({
+                    method = DIAGNOSTICS,
+                    env = {
+                        PYTHONPATH = vim.env.PYTHONPATH,
+                    },
+                })
+            )
+        end
     end
 
     for _, fmt in ipairs(formatters) do
-        table.insert(
-            sources,
-            nullls.builtins.formatting[fmt].with({
-                env = {
-                    PYTHONPATH = vim.env.PYTHONPATH,
-                },
-            })
-        )
+        if fmt == "djlint" then
+            table.insert(
+                sources,
+                nullls.builtins.formatting[fmt].with({
+                    filetypes = { "jinja.html", "htmldjango" },
+                    env = {
+                        PYTHONPATH = vim.env.PYTHONPATH,
+                    },
+                })
+            )
+        else
+            table.insert(
+                sources,
+                nullls.builtins.formatting[fmt].with({
+                    env = {
+                        PYTHONPATH = vim.env.PYTHONPATH,
+                    },
+                })
+            )
+        end
     end
 
     nullls.setup({ sources = sources, root_dir = u.root_pattern(".lvimrc", "Makefile", ".git") })

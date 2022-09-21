@@ -9,9 +9,14 @@ local lazy = require("diffview.lazy")
 local diffview = lazy.require("diffview")
 
 function maps(m)
+
+    m.nname("<space>p", "Packer")
+    nnoremap("<leader>ps", "<cmd>PackerSync<cr>", "Packer: sync")
+    nnoremap("<leader>pc", "<cmd>PackerCompile<cr>", "Packer: compile")
+    nnoremap("<leader>pi", "<cmd>PackerInstall<cr>", "Packer: install")
+
     --------Основное управление буферами
     m.nname("<space>b", "Buffer")
-    nnoremap("<space>bb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Buffer: search")
 
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
@@ -109,16 +114,11 @@ function maps(m)
 
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
-    if vim.fn.has("nvim-0.8") == 1 then
-        local rename = function()
-            return ":IncRename " .. vim.fn.expand("<cword>")
-        end
-        vim.keymap.set("n", "<leader>lR", rename, { expr = true, desc = "Lang: rename" })
-        vim.keymap.set("v", "<leader>lR", rename, { expr = true, desc = "Lang: rename" })
-    else
-        vnoremap("<leader>lR", require("renamer").rename, "silent", "Lang: rename")
-        nnoremap("<leader>lR", require("renamer").rename, "silent", "Lang: rename")
+    local rename = function()
+        require("renamer").rename()
     end
+    vnoremap("<leader>lR", rename, "silent", "Lang: rename")
+    nnoremap("<leader>lR", rename, "silent", "Lang: rename")
 
     local format = function()
         vim.lsp.buf.format({
@@ -199,7 +199,12 @@ function maps(m)
     vim.keymap.set("n", "[t", function()
         require("todo-comments").jump_prev()
     end, { desc = "Previous todo comment" })
-    
+
+    -- windows
+    m.nname("<leader>w", "Windows")
+    nnoremap("<leader>ww", "<cmd>WindowPick<cr>", "Windows: pick")
+    nnoremap("<leader>ws", "<cmd>WindowSwap<cr>", "Windows: swap")
+    nnoremap("<leader>wq", "<cmd>WindowZap<cr>", "Windows: zap swap")
 end
 
 return maps
