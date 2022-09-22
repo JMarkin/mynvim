@@ -117,7 +117,12 @@ M.config = function()
             { name = "nvim_lsp_signature_help", priority_weight = 120 },
             { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
             { name = "luasnip", priority_weight = 80 },
-            { name = "vim-dadbod-completion", max_item_count = 20, priority_weight = 100, filetype = {'sql', 'mssql', 'plsql'}},
+            {
+                name = "vim-dadbod-completion",
+                max_item_count = 20,
+                priority_weight = 100,
+                filetype = { "sql", "mssql", "plsql" },
+            },
             {
                 name = "tmux",
                 priority_weight = 60,
@@ -189,17 +194,6 @@ M.config = function()
         sources = cmp.config.sources({
             { name = "cmdline" },
         }),
-    })
-
-
-    vim.diagnostic.config({
-        underline = true,
-        signs = true,
-        virtual_text = false,
-        float = true,
-        update_in_insert = false,
-        severity_sort = true,
-        virtual_lines = false,
     })
 end
 

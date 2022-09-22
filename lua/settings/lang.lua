@@ -387,8 +387,15 @@ M.config = function()
         end,
     })
 
-    require("plugins.ufo").setup()
-
+    vim.diagnostic.config({
+        underline = true,
+        signs = true,
+        virtual_text = false,
+        float = true,
+        update_in_insert = false,
+        severity_sort = true,
+        virtual_lines = false,
+    })
     is_load = 1
 end
 
