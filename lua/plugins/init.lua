@@ -5,6 +5,13 @@ return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
 
     --- Украшения
+
+    use({
+        "mcauley-penney/tidy.nvim",
+        config = function()
+            require("tidy").setup()
+        end,
+    })
     use({
         "stevearc/dressing.nvim",
         config = function()
@@ -221,7 +228,6 @@ return require("packer").startup(function(use)
 
     use({
         "windwp/nvim-ts-autotag",
-        after = "nvim-treesitter",
         config = function()
             require("plugins.treesitter").callback_after_setup(function()
                 require("nvim-ts-autotag").setup()
@@ -230,7 +236,6 @@ return require("packer").startup(function(use)
     })
     use({
         "m-demare/hlargs.nvim",
-        after = "nvim-treesitter",
         config = function()
             require("plugins.treesitter").callback_after_setup(function()
                 require("hlargs").setup({
@@ -361,8 +366,7 @@ return require("packer").startup(function(use)
 
     use({
         "lukas-reineke/cmp-under-comparator",
-        event = { "InsertEnter", "CmdlineEnter" },
-        keymap = "/",
+        event = { "VimEnter" },
     })
     use({
         "hrsh7th/nvim-cmp",

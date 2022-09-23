@@ -28,6 +28,9 @@ def f():
 def s():
     ...
 
+def f(val, ss):
+    print(val, ss)
+
 
 s = '^[1-9]123\n\t$'
 
