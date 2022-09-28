@@ -245,16 +245,16 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "andymass/vim-matchup",
-        after = "nvim-treesitter",
-        setup = function()
-            vim.g.matchup_surround_enabled = 1
-            vim.g.matchup_transmute_enabled = 1
-            vim.g.matchup_matchparen_deferred = 1
-            vim.g.matchup_matchparen_hi_surround_always = 1
-        end,
-    })
+    -- use({
+    --     "andymass/vim-matchup",
+    --     after = "nvim-treesitter",
+    --     setup = function()
+    --         vim.g.matchup_surround_enabled = 1
+    --         vim.g.matchup_transmute_enabled = 1
+    --         vim.g.matchup_matchparen_deferred = 1
+    --         vim.g.matchup_matchparen_hi_surround_always = 1
+    --     end,
+    -- })
 
     use({
         "folke/todo-comments.nvim",
@@ -281,6 +281,17 @@ return require("packer").startup(function(use)
     use("williamboman/mason.nvim")
     use({
         "williamboman/mason-lspconfig.nvim",
+    })
+
+    use({
+        "folke/trouble.nvim",
+        config = function()
+            require("trouble").setup({
+                auto_fold = false,
+                auto_close = true,
+            })
+        end,
+        cmd = "TroubleToggle",
     })
 
     if vim.fn.has("nvim-0.8") == 1 then
@@ -345,16 +356,16 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "kevinhwang91/nvim-ufo",
-        requires = "kevinhwang91/promise-async",
-        event = "BufReadPre",
-        after = "nvim-treesitter",
-        config = function()
-            require("plugins.ufo").config()
-            require("plugins.ufo").setup()
-        end,
-    })
+    -- use({
+    --     "kevinhwang91/nvim-ufo",
+    --     requires = "kevinhwang91/promise-async",
+    --     event = "BufReadPre",
+    --     after = "nvim-treesitter",
+    --     config = function()
+    --         require("plugins.ufo").config()
+    --         require("plugins.ufo").setup()
+    --     end,
+    -- })
 
     --- Автокомлиты
 
@@ -418,7 +429,6 @@ return require("packer").startup(function(use)
     -- Табы
     use({
         "Asheq/close-buffers.vim",
-        keys = "<space>b",
     })
     --
     use({

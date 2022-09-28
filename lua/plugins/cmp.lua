@@ -97,7 +97,10 @@ M.config = function()
             ghost_text = true,
         },
         enabled = function()
-            return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+            local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+            enabled = enabled or require("cmp_dap").is_dap_buffer()
+            enabled = enabled and require("plugins.renamer").rename_win_id == nil
+            return enabled
         end,
         snippet = {
             expand = function(args)
@@ -192,7 +195,7 @@ M.config = function()
     cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-            { name = "cmdline" },
+            { name = "cmdline", keyword_pattern = [[\!\@<!\w*]] },
         }),
     })
 end

@@ -9,7 +9,6 @@ local lazy = require("diffview.lazy")
 local diffview = lazy.require("diffview")
 
 function maps(m)
-
     m.nname("<space>p", "Packer")
     nnoremap("<leader>ps", "<cmd>PackerSync<cr>", "Packer: sync")
     nnoremap("<leader>pc", "<cmd>PackerCompile<cr>", "Packer: compile")
@@ -38,8 +37,8 @@ function maps(m)
     nnoremap("<leader>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
     nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<leader>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
-    nnoremap("<leader>E", require("settings.dg").open_all, "All Diagnostics")
-    nnoremap("<leader>e", require("settings.dg").open_buffer, "Buffer Diagnostics")
+    nnoremap("<leader>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", "All Diagnostics")
+    nnoremap("<leader>e", "<cmd>TroubleToggle document_diagnostics<cr>", "Buffer Diagnostics")
     nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
     nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
     nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
@@ -114,11 +113,8 @@ function maps(m)
 
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
-    local rename = function()
-        require("renamer").rename()
-    end
-    vnoremap("<leader>lR", rename, "silent", "Lang: rename")
-    nnoremap("<leader>lR", rename, "silent", "Lang: rename")
+    vnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
+    nnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
 
     local format = function()
         vim.lsp.buf.format({

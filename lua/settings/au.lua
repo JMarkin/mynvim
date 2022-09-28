@@ -62,20 +62,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     desc = "Load view on entering buffer",
 })
 
---- диагностики
-local diagnostics = "Diagnostics"
-vim.api.nvim_create_augroup(diagnostics, { clear = true })
-vim.api.nvim_create_autocmd("DiagnosticChanged", {
-    pattern = "*.*",
-    group = diagnostics,
-    callback = require("settings.dg").sync_all,
-})
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    pattern = "*.*",
-    group = diagnostics,
-    callback = require("settings.dg").sync_buffer,
-})
-
 -- lsp init
 local lsp_init = "LspInit"
 vim.api.nvim_create_augroup(lsp_init, { clear = true })

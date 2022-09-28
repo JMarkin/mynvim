@@ -15,7 +15,7 @@ M.setup = function()
             "cpp",
             "cuda",
             "python",
-            "vim",
+            -- "vim",
             "typescript",
             "javascript",
             "yaml",
@@ -53,7 +53,7 @@ M.setup = function()
         },
         yati = { enable = true },
         matchup = {
-            enable = true,
+            enable = false,
         },
     })
 
@@ -61,6 +61,5 @@ M.setup = function()
         call()
     end
 end
-
 
 return M

@@ -14,8 +14,6 @@ c = A()
 
 c.__setattr__(name, value)
 
-import os
-
 os.path.abspath(A)
 
 if True or False:
