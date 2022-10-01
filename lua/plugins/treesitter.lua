@@ -10,12 +10,10 @@ M.setup = function()
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
             "c",
-            "lua",
             "rust",
             "cpp",
             "cuda",
             "python",
-            -- "vim",
             "typescript",
             "javascript",
             "yaml",
