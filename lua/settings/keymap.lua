@@ -20,16 +20,21 @@ function maps(m)
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
 
-    nnoremap({ "<space>l", "<space><right>" }, ":lua require('smart-splits').move_cursor_right()<cr>", "right")
-    nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "down")
-    nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "top")
-    nnoremap({ "<space>h", "<space><left>" }, ":lua require('smart-splits').move_cursor_left()<cr>", "left")
+    nnoremap(
+        { "<space>l", "<space><right>" },
+        ":lua require('smart-splits').move_cursor_right()<cr>",
+        "silent",
+        "right"
+    )
+    nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "silent", "down")
+    nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "silent", "top")
+    nnoremap({ "<space>h", "<space><left>" }, ":lua require('smart-splits').move_cursor_left()<cr>", "silent", "left")
 
     -- resizing splits
-    nnoremap({ "<A-h>", "<space>bh" }, ':lua require("smart-splits").resize_left()<cr>', "Resize left")
-    nnoremap({ "<A-j>", "<space>bj" }, ':lua require("smart-splits").resize_down()<cr>', "Resize down")
-    nnoremap({ "<A-k>", "<space>bk" }, ':lua require("smart-splits").resize_up()<cr>', "Resize up")
-    nnoremap({ "<A-l>", "<space>bl" }, ':lua require("smart-splits").resize_right()<cr>', "Resize right")
+    nnoremap({ "<A-h>", "<space>bh" }, ':lua require("smart-splits").resize_left()<cr>', "silent", "Resize left")
+    nnoremap({ "<A-j>", "<space>bj" }, ':lua require("smart-splits").resize_down()<cr>', "silent", "Resize down")
+    nnoremap({ "<A-k>", "<space>bk" }, ':lua require("smart-splits").resize_up()<cr>', "silent", "Resize up")
+    nnoremap({ "<A-l>", "<space>bl" }, ':lua require("smart-splits").resize_right()<cr>', "silent", "Resize right")
 
     nnoremap("<c-s>", "i<space><right><esc>")
 
@@ -197,10 +202,7 @@ function maps(m)
     end, { desc = "Previous todo comment" })
 
     -- windows
-    m.nname("<leader>w", "Windows")
-    nnoremap("<leader>ww", "<cmd>WindowPick<cr>", "Windows: pick")
-    nnoremap("<leader>ws", "<cmd>WindowSwap<cr>", "Windows: swap")
-    nnoremap("<leader>wq", "<cmd>WindowZap<cr>", "Windows: zap swap")
+    nnoremap("<space>w", require("nvim-window").pick, "silent", "Windows: pick")
 end
 
 return maps

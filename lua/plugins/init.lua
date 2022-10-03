@@ -3,12 +3,20 @@ vim.cmd([[packadd packer.nvim]])
 local packer = require("packer")
 
 packer.init({
-    max_jobs = 6
+    max_jobs = 16,
 })
 
 return packer.startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
+
+    -- профилировщик оптимизатор neovim
+    use({
+        "lewis6991/impatient.nvim",
+    })
+
+    -- обноление cursorhold
+    use("antoinemadec/FixCursorHold.nvim")
 
     --- Украшения
 
@@ -84,7 +92,7 @@ return packer.startup(function(use)
             vim.opt.laststatus = 3
         end,
         config = function()
-            require("incline").setup()
+            require("plugins.incline")
         end,
     })
 
@@ -250,17 +258,6 @@ return packer.startup(function(use)
             end)
         end,
     })
-
-    -- use({
-    --     "andymass/vim-matchup",
-    --     after = "nvim-treesitter",
-    --     setup = function()
-    --         vim.g.matchup_surround_enabled = 1
-    --         vim.g.matchup_transmute_enabled = 1
-    --         vim.g.matchup_matchparen_deferred = 1
-    --         vim.g.matchup_matchparen_hi_surround_always = 1
-    --     end,
-    -- })
 
     use({
         "folke/todo-comments.nvim",
@@ -609,7 +606,7 @@ return packer.startup(function(use)
         config = function()
             require("numb").setup()
         end,
-        event = "VimEnter",
+        event = "CmdlineEnter",
     })
 
     --nginx
@@ -643,14 +640,6 @@ return packer.startup(function(use)
         end,
         keys = "<leader>b",
     })
-
-    -- профилировщик оптимизатор neovim
-    use({
-        "lewis6991/impatient.nvim",
-    })
-
-    -- обноление cursorhold
-    use("antoinemadec/FixCursorHold.nvim")
 
     -- терминал
     use({
@@ -750,7 +739,6 @@ return packer.startup(function(use)
     })
 
     use({
-        "ten3roberts/window-picker.nvim",
-        keymap = "<leader>w",
+        "https://gitlab.com/yorickpeterse/nvim-window",
     })
 end)
