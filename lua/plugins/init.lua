@@ -125,31 +125,8 @@ return packer.startup(function(use)
     use({
         "goolord/alpha-nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
-
         config = function()
-            local alpha = require("alpha")
-            local startify = require("alpha.themes.startify")
-            startify.section.header.val = {
-                [[                                   __                ]],
-                [[      ___     ___    ___   __  __ /\_\    ___ ___    ]],
-                [[     / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-                [[    /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-                [[    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-                [[     \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
-            }
-            startify.section.top_buttons.val = {
-                startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-            }
-            -- disable MRU
-            startify.section.mru.val = { { type = "padding", val = 0 } }
-            -- disable nvim_web_devicons
-            startify.section.bottom_buttons.val = {
-                startify.button("q", "  Quit NVIM", ":qa<CR>"),
-            }
-            startify.section.footer = {
-                { type = "text", val = "footer" },
-            }
-            alpha.setup(startify.config)
+            require("plugins.dashboard")
         end,
     })
 
@@ -609,7 +586,7 @@ return packer.startup(function(use)
             "kyazdani42/nvim-web-devicons",
         },
         config = function()
-            require("plugins.fzflua")
+            require("plugins.fzflua").setup()
         end,
         event = "VimEnter",
     })
