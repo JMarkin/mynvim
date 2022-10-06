@@ -83,6 +83,22 @@ return packer.startup(function(use)
     })
 
     use({
+        "anuvyklack/windows.nvim",
+        requires = {
+            "anuvyklack/middleclass",
+            "anuvyklack/animation.nvim",
+        },
+        config = function()
+            vim.o.winwidth = 10
+            vim.o.winminwidth = 10
+            vim.o.equalalways = false
+            require("windows").setup()
+        end,
+    })
+
+    use({ "rainbowhxch/beacon.nvim" })
+
+    use({
         "nvim-lua/plenary.nvim",
     })
 
@@ -348,7 +364,7 @@ return packer.startup(function(use)
         branch = "master",
         requires = { { "nvim-lua/plenary.nvim" } },
         config = function()
-            require("renamer").setup({})
+            require("plugins.renamer").config()
         end,
     })
 
@@ -393,6 +409,10 @@ return packer.startup(function(use)
     })
     use({
         "lukas-reineke/cmp-rg",
+        after = "nvim-cmp",
+    })
+    use({
+        "f3fora/cmp-spell",
         after = "nvim-cmp",
     })
     use({

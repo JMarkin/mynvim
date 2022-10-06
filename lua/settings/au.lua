@@ -70,3 +70,46 @@ vim.api.nvim_create_autocmd("BufReadPre", {
     pattern = { "*" },
     callback = require("settings.lang").config,
 })
+
+---------Просмотр больших файлов
+local large_files = "LargeFiles"
+vim.api.nvim_create_augroup(large_files, { clear = true })
+
+local max_file_size = 5242880 -- 5MB
+local max_file_size_readonly = 10485760 -- 10MB
+local disable_filetype = false
+
+vim.api.nvim_create_autocmd("BufReadPre", {
+    group = large_files,
+    pattern = { "*" },
+    callback = function()
+        local file = vim.fn.expand("%:p")
+        if file == nil or #file == 0 then
+            if disable_filetype then
+                vim.opt.eventignore:remove({ "FileType" })
+            end
+            return
+        end
+        local size = vim.fn.getfsize(file)
+        if size > max_file_size then
+            vim.opt.eventignore:append({ "FileType" })
+            vim.opt_local.noswapfile = true
+            vim.opt_local.bufhidden = "unload"
+            vim.opt_local.wrap = false
+            vim.opt_local.syntax = "disable"
+            vim.opt_local.wrap = false
+            vim.opt_local.spell = false
+
+            if size > max_file_size_readonly then
+                vim.opt_local.buftype = "nowrite"
+                vim.opt_local.undolevels = -1
+                vim.opt_local.undofile = false
+                vim.opt_local.lazyredraw = true
+            end
+            disable_filetype = true
+        else
+            vim.opt.eventignore:remove({ "FileType" })
+            disable_filetype = false
+        end
+    end,
+})
