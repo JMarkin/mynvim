@@ -47,6 +47,14 @@ local menu_map = {
     spell = "[SP]",
 }
 
+local enabled = function ()
+    local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+    enabled = enabled or require("cmp_dap").is_dap_buffer()
+    enabled = enabled and not require("plugins.renamer").show_renamer()
+
+    return enabled
+end
+
 M.config = function()
     local luasnip = require("luasnip")
     require("luasnip.loaders.from_snipmate").lazy_load()
@@ -97,12 +105,7 @@ M.config = function()
         experimental = {
             ghost_text = true,
         },
-        enabled = function()
-            local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-            enabled = enabled or require("cmp_dap").is_dap_buffer()
-            enabled = enabled and require("plugins.renamer").rename_win == nil
-            return enabled
-        end,
+        enabled = enabled,
         snippet = {
             expand = function(args)
                 require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
@@ -132,12 +135,6 @@ M.config = function()
                 priority_weight = 60,
                 keyword_length = 5,
                 max_item_count = 5,
-                option = {
-                    all_panes = false,
-                    label = "tmux",
-                    trigger_characters = { "." },
-                    trigger_characters_ft = {}, -- { filetype = { '.' } }
-                },
             },
             { name = "path", priority_weight = 82, keyword_length = 2 },
             { name = "tags", priority_weight = 85, max_item_count = 20 },
@@ -146,16 +143,6 @@ M.config = function()
                 keyword_length = 3,
                 max_item_count = 5,
                 priority_weight = 60,
-                option = {
-                    additional_arguments = "--smart-case --hidden",
-                },
-            },
-            {
-                name = "spell",
-                priority_weight = 81,
-                keyword_length = 2,
-
-                max_item_count = 5,
             },
         },
         formatting = {

@@ -39,15 +39,15 @@ function maps(m)
     nnoremap("<c-s>", "i<space><right><esc>")
 
     ---------Тогл Инструментов
-    nnoremap("<leader>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
-    nnoremap("<leader>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
-    nnoremap("<leader>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
-    nnoremap("<leader>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", "All Diagnostics")
-    nnoremap("<leader>e", "<cmd>TroubleToggle document_diagnostics<cr>", "Buffer Diagnostics")
-    nnoremap("<leader>L", require("lsp_lines").toggle, "silent", "Show lsp Lines")
-    nnoremap("<leader>T", "<Cmd>Ttoggle<CR>", "Terminal")
-    nnoremap("<leader>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
-    nnoremap("<leader>D", function()
+    nnoremap("<space>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
+    nnoremap("<space>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
+    nnoremap("<space>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
+    nnoremap("<space>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", "All Diagnostics")
+    nnoremap("<space>e", "<cmd>TroubleToggle document_diagnostics<cr>", "Buffer Diagnostics")
+    nnoremap("<space>v", require("lsp_lines").toggle, "silent", "Show lsp Lines")
+    nnoremap("<space>T", "<Cmd>Ttoggle<CR>", "Terminal")
+    nnoremap("<space>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
+    nnoremap("<space>D", function()
         if MEM.diffview == 0 then
             diffview.open()
             MEM.diffview = 1
@@ -56,6 +56,8 @@ function maps(m)
             MEM.diffview = 0
         end
     end, "Git: diff")
+
+    nnoremap("<space>r", require("smart-splits").start_resize_mode, "Resize mode")
 
     ---- Fold
     m.nname("z", "Fold")

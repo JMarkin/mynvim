@@ -92,7 +92,12 @@ return packer.startup(function(use)
             vim.o.winwidth = 10
             vim.o.winminwidth = 10
             vim.o.equalalways = false
-            require("windows").setup()
+            require("windows").setup({
+                ignore = {
+                    buftype = { "quickfix", "nofile" },
+                    filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
+                },
+            })
         end,
     })
 
@@ -389,10 +394,6 @@ return packer.startup(function(use)
         after = "nvim-cmp",
     })
     use({
-        "f3fora/cmp-spell",
-        after = "nvim-cmp",
-    })
-    use({
         "andersevenrud/cmp-tmux",
         after = "nvim-cmp",
     })
@@ -562,18 +563,18 @@ return packer.startup(function(use)
         after = { "nvim-treesitter", "nvim-dap" },
     })
     use({ "ofirgall/goto-breakpoints.nvim", after = "nvim-dap" })
-    use({
-        "Weissle/persistent-breakpoints.nvim",
-        after = "nvim-dap",
-        config = function()
-            require("persistent-breakpoints").setup({})
-            --- загрузка брекпоинтов
-            vim.api.nvim_create_autocmd(
-                { "BufReadPost" },
-                { callback = require("persistent-breakpoints.api").load_breakpoints }
-            )
-        end,
-    })
+    -- use({
+    --     "Weissle/persistent-breakpoints.nvim",
+    --     after = "nvim-dap",
+    --     config = function()
+    --         require("persistent-breakpoints").setup({})
+    --         --- загрузка брекпоинтов
+    --         vim.api.nvim_create_autocmd(
+    --             { "BufReadPost" },
+    --             { callback = require("persistent-breakpoints.api").load_breakpoints }
+    --         )
+    --     end,
+    -- })
 
     -- editorconfig
     use("gpanders/editorconfig.nvim")

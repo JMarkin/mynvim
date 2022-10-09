@@ -27,6 +27,7 @@ M.setup = function()
             "dockerfile",
             "vue",
             "scss",
+            "lua",
         },
         indent = {
             enable = false,

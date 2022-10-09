@@ -2,6 +2,10 @@ local M = {}
 
 M.rename_win_id = nil
 
+M.show_renamer = function ()
+    return M.rename_win_id ~= nil
+end
+
 M.rename = function()
     local win_id, _ = require("renamer").rename({})
     M.rename_win_id = win_id

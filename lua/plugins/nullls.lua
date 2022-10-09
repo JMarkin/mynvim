@@ -78,7 +78,7 @@ M.config = function()
 end
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-M.enable = function(diagnostics, formatters)
+M.enable = function(diagnostics, formatters, completions)
     diagnostics = diagnostics or {
         "flake8",
         "djlint",
@@ -91,6 +91,8 @@ M.enable = function(diagnostics, formatters)
         "stylua",
         "protolint",
     }
+
+    completions = completions or {}
 
     local sources = {}
 
@@ -140,6 +142,17 @@ M.enable = function(diagnostics, formatters)
                 })
             )
         end
+    end
+
+    for _, cmp in ipairs(completions) do
+        table.insert(
+            sources,
+            nullls.builtins.completion[cmp].with({
+                env = {
+                    PYTHONPATH = vim.env.PYTHONPATH,
+                },
+            })
+        )
     end
 
     nullls.setup({ sources = sources, root_dir = u.root_pattern(".lvimrc", "Makefile", ".git") })
