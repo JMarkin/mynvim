@@ -47,7 +47,7 @@ local menu_map = {
     spell = "[SP]",
 }
 
-local enabled = function ()
+local enabled = function()
     local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
     enabled = enabled or require("cmp_dap").is_dap_buffer()
     enabled = enabled and not require("plugins.renamer").show_renamer()
@@ -86,6 +86,11 @@ M.config = function()
     end, { "i", "s" })
 
     cmp.setup({
+        performance = {
+            debounce = 60,
+            throttle = 30,
+            fetching_timeout = 100,
+        },
         preselect = cmp.PreselectMode.None,
         sorting = {
             comparators = {
@@ -129,12 +134,6 @@ M.config = function()
                 max_item_count = 20,
                 priority_weight = 100,
                 filetype = { "sql", "mssql", "plsql" },
-            },
-            {
-                name = "tmux",
-                priority_weight = 60,
-                keyword_length = 5,
-                max_item_count = 5,
             },
             { name = "path", priority_weight = 82, keyword_length = 2 },
             { name = "tags", priority_weight = 85, max_item_count = 20 },

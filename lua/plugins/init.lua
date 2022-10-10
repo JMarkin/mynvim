@@ -394,10 +394,6 @@ return packer.startup(function(use)
         after = "nvim-cmp",
     })
     use({
-        "andersevenrud/cmp-tmux",
-        after = "nvim-cmp",
-    })
-    use({
         "hrsh7th/cmp-nvim-lsp",
         after = "nvim-cmp",
     })
