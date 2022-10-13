@@ -8,6 +8,16 @@ local lazy = require("diffview.lazy")
 
 local diffview = lazy.require("diffview")
 
+local format = function()
+    vim.lsp.buf.format({
+        filter = function(client)
+            -- apply whatever logic you want (in this example, we'll only use null-ls)
+            return client.name == "null-ls"
+        end,
+        async = true,
+    })
+end
+
 function maps(m)
     m.nname("<space>p", "Packer")
     nnoremap("<leader>ps", "<cmd>PackerSync<cr>", "Packer: sync")
@@ -19,6 +29,8 @@ function maps(m)
 
     nnoremap("<space>bd", "<cmd>Bdelete this<Cr>", "Buffer: delete current")
     nnoremap("<space>bc", "<cmd>Bdelete other<Cr>", "Buffer: delete other")
+
+    nnoremap("<space>bf", format, "silent", "Lang: lsp format")
 
     nnoremap(
         { "<space>l", "<space><right>" },
@@ -123,17 +135,7 @@ function maps(m)
     vnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
     nnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
 
-    local format = function()
-        vim.lsp.buf.format({
-            filter = function(client)
-                -- apply whatever logic you want (in this example, we'll only use null-ls)
-                return client.name == "null-ls"
-            end,
-            async = true,
-        })
-    end
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
-    vnoremap("<leader>lf", format, "silent", "Lang: lsp format")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")
@@ -205,6 +207,11 @@ function maps(m)
 
     -- windows
     nnoremap("<space>w", require("nvim-window").pick, "silent", "Windows: pick")
+
+    --save shortcut
+    nnoremap("<leader>w", ":w<CR>", "silent", "normal mode: save")
+    inoremap("<leader>w", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
+    vnoremap("<leader>w", "<Esc>:w<CR>", "visual mode: escape to normal and save")
 end
 
 return maps
