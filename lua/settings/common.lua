@@ -38,6 +38,7 @@ if vim.fn.has("nvim-0.8") ~= 1 then
     g.do_filetype_lua = 1
     g.did_load_filetypes = 0
 end
+opt.foldmethod="manual"
 
 -----------------------------------------------------------
 -- Табы и отступы
@@ -59,10 +60,3 @@ opt.autoindent = true
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 vim.cmd([[command! Qa :qa]])
 vim.cmd([[command! Q :q]])
-
--- format
-g.neoformat_try_formatprg = 1
-g.neoformat_basic_format_align = 1
-g.neoformat_basic_format_retab = 1
-g.neoformat_basic_format_trim = 1
-g.neoformat_run_all_formatters = 1

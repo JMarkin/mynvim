@@ -212,6 +212,13 @@ function maps(m)
     nnoremap("<leader>w", ":w<CR>", "silent", "normal mode: save")
     inoremap("<leader>w", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
     vnoremap("<leader>w", "<Esc>:w<CR>", "visual mode: escape to normal and save")
+
+    -- tests
+    m.nname("t", "Tests")
+    nnoremap("tt", '<cmd>lua require("neotest").run.run()<cr>', "Tests: run nearest test")
+    nnoremap("ts", '<cmd>lua require("neotest").run.stop()<cr>', "Tests: stop nearest test")
+    nnoremap("ta", '<cmd>lua require("neotest").run.attach()<cr>', "Tests: attach nearest test")
+    nnoremap("tf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<cr>', "Tests: run current file")
 end
 
 return maps

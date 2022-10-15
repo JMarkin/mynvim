@@ -44,3 +44,28 @@ snippet django
 			htm = "htmldjango",
 		}
 	})
+
+snippet tests
+	require("neotest").setup({})
+
+snippet pytest
+	require("neotest").setup({
+	  adapters = {
+		require("neotest-python")({
+			dap = { justMyCode = false },
+			args = {"--log-level", "DEBUG"},
+			runner = "pytest",
+		})
+	  }
+	})
+
+snippet unittest
+	require("neotest").setup({
+	  adapters = {
+		require("neotest-python")({
+			dap = { justMyCode = false },
+			args = {"--log-level", "DEBUG"},
+			runner = "pytest",
+		})
+	  }
+	})

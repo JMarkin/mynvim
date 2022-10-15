@@ -357,16 +357,18 @@ return packer.startup(function(use)
         end,
     })
 
-    -- use({
-    --     "kevinhwang91/nvim-ufo",
-    --     requires = "kevinhwang91/promise-async",
-    --     event = "BufReadPre",
-    --     after = "nvim-treesitter",
-    --     config = function()
-    --         require("plugins.ufo").config()
-    --         require("plugins.ufo").setup()
-    --     end,
-    -- })
+--     use({
+--         "kevinhwang91/nvim-ufo",
+--         requires = "kevinhwang91/promise-async",
+--         event = "BufReadPre",
+--         after = "nvim-treesitter",
+--         setup = function ()
+--            require("plugins.ufo").setup()
+--         end
+--         config = function()
+--             require("plugins.ufo").config()
+--         end,
+--     })
 
     --- Автокомлиты
 
@@ -734,5 +736,23 @@ return packer.startup(function(use)
 
     use({
         "https://gitlab.com/yorickpeterse/nvim-window",
+    })
+
+    -- tests
+    use({
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+        },
+    })
+    use({
+        "nvim-neotest/neotest-python",
+        after = "neotest",
+    })
+    use({
+        "rouge8/neotest-rust",
+        after = "neotest",
     })
 end)

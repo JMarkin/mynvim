@@ -39,7 +39,7 @@ local sync_neovim = "SHADA"
 vim.api.nvim_create_augroup(sync_neovim, { clear = true })
 
 vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
-    group = yank_hightlight,
+    group = sync_neovim,
     pattern = { "*" },
     callback = function()
         vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])

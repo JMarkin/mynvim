@@ -28,6 +28,7 @@ M.setup = function()
             "vue",
             "scss",
             "lua",
+            "vim",
         },
         indent = {
             enable = false,
@@ -59,6 +60,7 @@ M.setup = function()
     for _, call in ipairs(callbacks) do
         call()
     end
+
 end
 
 return M
