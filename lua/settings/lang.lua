@@ -29,8 +29,8 @@ local on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
     end
 
-    if client.supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    -- if client.supports_method("textDocument/formatting") then
+        -- vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
         -- vim.api.nvim_create_autocmd("BufWritePre", {
         --     group = augroup,
         --     buffer = bufnr,
@@ -38,7 +38,7 @@ local on_attach = function(client, bufnr)
         --         lsp_formatting(bufnr)
         --     end,
         -- })
-    end
+    -- end
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -48,8 +48,8 @@ capabilities.textDocument.foldingRange = {
 capabilities.textDocument.completion = {
     completionItem = {
         insertReplaceSupport = true,
-        preselectSupport = true,
-        snippetSupport = false,
+        preselectSupport = false,
+        snippetSupport = true,
         labelDetailsSupport = true,
         deprecatedSupport = true,
         commitCharactersSupport = true,

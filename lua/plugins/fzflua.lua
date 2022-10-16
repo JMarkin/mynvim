@@ -11,6 +11,7 @@ M.setup = function()
             preview = {
                 default = "builtin",
                 layout = "vertical",
+                title_align = "center",
             },
         },
         keymap = {
