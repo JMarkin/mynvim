@@ -417,6 +417,7 @@ return packer.startup(function(use)
     use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
     use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
     use({ "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" })
+    use({ "ray-x/cmp-treesitter", after = "nvim-cmp" })
 
     use({
         "JMarkin/gentags.lua",

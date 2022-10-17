@@ -33,14 +33,29 @@ function maps(m)
     nnoremap("<space>bf", format, "silent", "Lang: lsp format")
 
     nnoremap(
-        { "<space>l", "<space><right>" },
+        { "<space>l", "<space><right>", "<c-l>" },
         ":lua require('smart-splits').move_cursor_right()<cr>",
         "silent",
         "right"
     )
-    nnoremap({ "<space>j", "<space><down>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "silent", "down")
-    nnoremap({ "<space>k", "<space><up>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "silent", "top")
-    nnoremap({ "<space>h", "<space><left>" }, ":lua require('smart-splits').move_cursor_left()<cr>", "silent", "left")
+    nnoremap(
+        { "<space>j", "<space><down>", "<c-j>" },
+        ":lua require('smart-splits').move_cursor_down()<cr>",
+        "silent",
+        "down"
+    )
+    nnoremap(
+        { "<space>k", "<space><up>", "<c-k>" },
+        ":lua require('smart-splits').move_cursor_up()<cr>",
+        "silent",
+        "top"
+    )
+    nnoremap(
+        { "<space>h", "<space><left>", "<c-h>" },
+        ":lua require('smart-splits').move_cursor_left()<cr>",
+        "silent",
+        "left"
+    )
 
     -- resizing splits
     nnoremap({ "<A-h>", "<space>bh" }, ':lua require("smart-splits").resize_left()<cr>', "silent", "Resize left")

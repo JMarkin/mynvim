@@ -135,13 +135,14 @@ M.config = function()
                 priority_weight = 100,
                 filetype = { "sql", "mssql", "plsql" },
             },
-            { name = "path", priority_weight = 82, keyword_length = 2 },
-            { name = "tags", priority_weight = 85, max_item_count = 20 },
+            { name = "path", priority_weight = 82, keyword_length = 4 },
+            { name = "tags", priority_weight = 85, max_item_count = 5 },
+            { name = "treesitter", priority_weight = 86, max_item_count = 5 },
             {
                 name = "rg",
                 keyword_length = 3,
                 max_item_count = 5,
-                priority_weight = 60,
+                priority_weight = 84,
             },
         },
         formatting = {

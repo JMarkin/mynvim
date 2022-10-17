@@ -159,6 +159,7 @@ M.sumneko_lua = function()
                         "xnoremap",
                         "inoremap",
                         "vnoremap",
+                        "packer_plugins",
                     },
                 },
                 workspace = {
