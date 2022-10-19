@@ -22,18 +22,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     callback = save_last_change,
 })
 
--- Подсвечивает на доли секунды скопированную часть текста
-local yank_hightlight = "YankHighlight"
-vim.api.nvim_create_augroup(yank_hightlight, { clear = true })
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-    group = yank_hightlight,
-    pattern = { "*" },
-    callback = function()
-        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
-    end,
-})
-
 -- синхронизация между инстансами
 local sync_neovim = "SHADA"
 vim.api.nvim_create_augroup(sync_neovim, { clear = true })
@@ -111,5 +99,18 @@ vim.api.nvim_create_autocmd("BufReadPre", {
             vim.opt.eventignore:remove({ "FileType" })
             disable_filetype = false
         end
+    end,
+})
+
+-- filetype textwidth colorcolumn
+local ft_width = "FTWidth"
+vim.api.nvim_create_augroup(ft_width, { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = ft_width,
+    pattern = { "python" },
+    callback = function(opts)
+        local max_line = vim.g.python_max_line or 120
+        vim.opt_local.textwidth = max_line
+        vim.opt_local.colorcolumn = '+1'
     end,
 })

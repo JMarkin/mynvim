@@ -177,14 +177,6 @@ function maps(m)
     nnoremap("<leader>bjj", "<Plug>BookmarkMoveDown", "Bookmark: MoveDown")
     nnoremap("<leader>bg", "<Plug>BookmarkMoveToLine", "Bookmark: MoveToLine")
 
-    -- CLipboard OSC52
-    vim.keymap.set("n", "<leader>c", require("osc52").copy_operator, { expr = true })
-    vim.keymap.set("n", "<leader>cc", "<leader>c_", { remap = true })
-    vim.keymap.set("x", "<leader>c", require("osc52").copy_visual)
-    vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { expr = true })
-    vim.keymap.set("n", "<leader>yy", "<leader>y_", { remap = true })
-    vim.keymap.set("x", "<leader>y", require("osc52").copy_visual)
-
     -- qf loclist
     nnoremap("<leader>lo", "<cmd>lua require'qf'.open('l')<CR>", "Open location list")
     nnoremap("<leader>lc", "<cmd>lua require'qf'.close('l')<CR>", " Close location list")
@@ -234,6 +226,10 @@ function maps(m)
     nnoremap("ts", '<cmd>lua require("neotest").run.stop()<cr>', "Tests: stop nearest test")
     nnoremap("ta", '<cmd>lua require("neotest").run.attach()<cr>', "Tests: attach nearest test")
     nnoremap("tf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<cr>', "Tests: run current file")
+
+    m.nname("<leader>r", "PythonCopyReferences")
+    nnoremap("<leader>rd", ":PythonCopyReferenceDotted<CR>")
+    nnoremap("<leader>rp", ":PythonCopyReferencePytest<CR>")
 end
 
 return maps

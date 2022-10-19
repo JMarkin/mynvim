@@ -21,12 +21,6 @@ return packer.startup(function(use)
     --- Украшения
 
     use({
-        "mcauley-penney/tidy.nvim",
-        config = function()
-            require("tidy").setup()
-        end,
-    })
-    use({
         "stevearc/dressing.nvim",
         config = function()
             require("dressing").setup({
@@ -59,12 +53,14 @@ return packer.startup(function(use)
     })
 
     use({
-        "ojroques/nvim-osc52",
+        "ibhagwan/smartyank.nvim",
         config = function()
-            require("osc52").setup({
-                max_length = 100000000, -- Maximum length of selection
-                silent = false, -- Disable message on successful copy
-                trim = true, -- Trim text before copy
+            require("smartyank").setup({
+                highlight = {
+                    enabled = true, -- highlight yanked text
+                    higroup = "ModesCopy", -- highlight group of yanked text
+                    timeout = 200, -- timeout for clearing the highlight
+                },
             })
         end,
     })
@@ -93,6 +89,9 @@ return packer.startup(function(use)
             vim.o.winminwidth = 10
             vim.o.equalalways = false
             require("windows").setup({
+                autowidth = {
+                    winwidth = 5,
+                },
                 ignore = {
                     buftype = { "quickfix", "nofile" },
                     filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
@@ -276,6 +275,7 @@ return packer.startup(function(use)
     })
     use("https://git.sr.ht/~p00f/clangd_extensions.nvim")
     use("b0o/schemastore.nvim")
+    use("ranelpadon/python-copy-reference.vim")
 
     -- LSP
     use("neovim/nvim-lspconfig")
@@ -351,24 +351,34 @@ return packer.startup(function(use)
     })
 
     use({
+        "rmagatti/goto-preview",
+        config = function()
+            require("goto-preview").setup({
+                dismiss_on_move = true,
+                default_mappings = true,
+            })
+        end,
+    })
+
+    use({
         "ThePrimeagen/refactoring.nvim",
         config = function()
             require("refactoring").setup({})
         end,
     })
 
---     use({
---         "kevinhwang91/nvim-ufo",
---         requires = "kevinhwang91/promise-async",
---         event = "BufReadPre",
---         after = "nvim-treesitter",
---         setup = function ()
---            require("plugins.ufo").setup()
---         end
---         config = function()
---             require("plugins.ufo").config()
---         end,
---     })
+    --     use({
+    --         "kevinhwang91/nvim-ufo",
+    --         requires = "kevinhwang91/promise-async",
+    --         event = "BufReadPre",
+    --         after = "nvim-treesitter",
+    --         setup = function ()
+    --            require("plugins.ufo").setup()
+    --         end
+    --         config = function()
+    --             require("plugins.ufo").config()
+    --         end,
+    --     })
 
     --- Автокомлиты
 
@@ -755,5 +765,13 @@ return packer.startup(function(use)
     use({
         "rouge8/neotest-rust",
         after = "neotest",
+    })
+
+    -- trim
+    use({
+        "zakharykaplan/nvim-retrail",
+        config = function()
+            require("retrail").setup()
+        end,
     })
 end)
