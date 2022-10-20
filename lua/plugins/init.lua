@@ -353,19 +353,16 @@ return packer.startup(function(use)
     use({
         "rmagatti/goto-preview",
         config = function()
-            require("goto-preview").setup({
-                dismiss_on_move = true,
-                default_mappings = true,
-            })
+            require("plugins.preview")
         end,
     })
 
-    use({
-        "ThePrimeagen/refactoring.nvim",
-        config = function()
-            require("refactoring").setup({})
-        end,
-    })
+    -- use({
+    --     "ThePrimeagen/refactoring.nvim",
+    --     config = function()
+    --         require("refactoring").setup({})
+    --     end,
+    -- })
 
     --     use({
     --         "kevinhwang91/nvim-ufo",
