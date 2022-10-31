@@ -99,6 +99,7 @@ function maps(m)
     m.nname("<leader>s", "Search")
 
     nnoremap("<leader>sq", "<cmd>lua require('fzf-lua').quickfix({ multiprocess=true})<Cr>", "Search: quickfix")
+    nnoremap("<leader>sr", "<cmd>lua require('plugins.fzflua').search_old_files()<Cr>", "Search: old files")
     nnoremap("<leader>sl", "<cmd>lua require('fzf-lua').loclist({ multiprocess=true})<Cr>", "Search: loclist")
     nnoremap("<leader>ss", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
     nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: buffers")

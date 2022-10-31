@@ -78,6 +78,20 @@ return packer.startup(function(use)
         end,
     })
 
+    -- use({
+    --     "folke/noice.nvim",
+    --     config = function()
+    --         require("plugins.noice")
+    --     end,
+    --     requires = {
+    --         "MunifTanjim/nui.nvim",
+    --         "rcarriga/nvim-notify",
+    --     },
+    --     after={"nvim-notify", "nvim-cmp"},
+    --     event = { "CmdlineEnter" },
+    --     keymap = "/",
+    -- })
+
     use({
         "anuvyklack/windows.nvim",
         requires = {
@@ -186,17 +200,13 @@ return packer.startup(function(use)
 
     -- Информационная строка внизу
     use({
-        "WhoIsSethDaniel/lualine-lsp-progress",
-        event = "BufReadPre",
-    })
-    use({
         "nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
         event = "BufReadPre",
         config = function()
             require("plugins.lualine")
         end,
-        after = "lualine-lsp-progress",
+        -- after = "noice.nvim",
     })
 
     -- Файловый менеджер
@@ -222,9 +232,14 @@ return packer.startup(function(use)
     use({
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
-        config = function()
-            require("plugins.treesitter").setup()
-        end,
+        config = function() end,
+    })
+
+    use({
+        "windwp/nvim-ts-autotag",
+    })
+    use({
+        "m-demare/hlargs.nvim",
     })
 
     use({
@@ -235,25 +250,6 @@ return packer.startup(function(use)
     use({
         "p00f/nvim-ts-rainbow",
         after = "nvim-treesitter",
-    })
-
-    use({
-        "windwp/nvim-ts-autotag",
-        config = function()
-            require("plugins.treesitter").callback_after_setup(function()
-                require("nvim-ts-autotag").setup()
-            end)
-        end,
-    })
-    use({
-        "m-demare/hlargs.nvim",
-        config = function()
-            require("plugins.treesitter").callback_after_setup(function()
-                require("hlargs").setup({
-                    use_colorpalette = true,
-                })
-            end)
-        end,
     })
 
     use({

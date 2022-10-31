@@ -1,11 +1,5 @@
 local M = {}
 
-local callbacks = {}
-
-M.callback_after_setup = function(call)
-    table.insert(callbacks, call)
-end
-
 M.setup = function()
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
@@ -43,7 +37,7 @@ M.setup = function()
             max_file_lines = 1500, -- Do not enable for files with more than n lines, int
         },
         incremental_selection = {
-            enable = false,
+            enable = true,
             keymaps = {
                 init_selection = "gi",
                 node_incremental = "gnn",
@@ -57,10 +51,20 @@ M.setup = function()
         },
     })
 
-    for _, call in ipairs(callbacks) do
-        call()
-    end
+    require("nvim-ts-autotag").setup()
 
+    require("hlargs").setup({
+        use_colorpalette = true,
+        paint_arg_declarations = true,
+        paint_arg_usages = true,
+        paint_catch_blocks = {
+            declarations = true,
+            usages = true,
+        },
+        extras = {
+            named_parameters = true,
+        },
+    })
 end
 
 return M

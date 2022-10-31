@@ -16,7 +16,6 @@ lualine.setup({
         lualine_c = {
             "filesize",
             { "filename", path = 1 },
-            "lsp_progress",
         },
         lualine_x = {
             "encoding",

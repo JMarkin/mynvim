@@ -11,7 +11,7 @@ class A:
 
 
 c = A()
-
+setattr(A, "s", value)
 c.__setattr__(name, value)
 
 os.path.abspath(A)
@@ -26,8 +26,8 @@ def f():
 def s():
     ...
 
-def f(val, ss):
-    print(val, ss)
+def f(val, ss, sncjllll):
+    print(val, ss, sncjllll)
 
 
 s = '^[1-9]123\n\t$'
