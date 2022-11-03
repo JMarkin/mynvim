@@ -6,7 +6,7 @@ class A:
     s: str = 'sad'
 
     def __init__(self, varible):
-        self.a = '123'
+        self.a = '%123'
         self.variable = varible
 
 
@@ -34,6 +34,11 @@ s = '^[1-9]123\n\t$'
 
 s = '<h>asd</h>'
 
+
+"""
+ss
+"""
+
 sum()
 
 print()
@@ -45,6 +50,9 @@ def a():
     def f():
 
         def c():
+            v = {
+
+            }
             print(1)
 
         return c

@@ -24,9 +24,7 @@ M.setup = function()
             "lua",
             "vim",
         },
-        indent = {
-            enable = false,
-        },
+
         highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
@@ -46,8 +44,12 @@ M.setup = function()
             },
         },
         yati = { enable = true },
-        matchup = {
+        indent = {
             enable = false,
+        },
+        matchup = {
+            enable = true,
+            include_match_words = true,
         },
     })
 

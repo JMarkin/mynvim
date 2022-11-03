@@ -9,6 +9,7 @@ local present, _ = pcall(require, "impatient")
 if not present then
     print("Impations not install run :PackerInstall")
 end
+vim.g.loaded_matchit = 1
 require("settings")
 require("plugins")
 require("plugins.treesitter").setup()

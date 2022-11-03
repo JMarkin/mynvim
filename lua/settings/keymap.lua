@@ -152,6 +152,7 @@ function maps(m)
     nnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
 
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
+    nnoremap("<leader>lp", "<cmd>lua require('zippy').insert_print()<CR>", "silent", "Lang: print variable")
 
     -- DEBUG
     m.nname("<leader>d", "Debug")
@@ -218,7 +219,7 @@ function maps(m)
 
     --save shortcut
     nnoremap("<leader>w", ":w<CR>", "silent", "normal mode: save")
-    inoremap("<leader>w", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
+    inoremap("<C-s>", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
     vnoremap("<leader>w", "<Esc>:w<CR>", "visual mode: escape to normal and save")
 
     -- tests

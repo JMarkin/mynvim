@@ -243,6 +243,16 @@ return packer.startup(function(use)
     })
 
     use({
+        "andymass/vim-matchup",
+        setup = function()
+            vim.g.matchup_transmute_enabled = 1
+            vim.g.matchup_delim_noskips = 1
+            vim.g.matchup_matchparen_deferred = 1
+            vim.g.matchup_matchparen_hi_surround_always = 1
+        end,
+    })
+
+    use({
         "yioneko/nvim-yati",
         after = "nvim-treesitter",
     })
@@ -272,7 +282,12 @@ return packer.startup(function(use)
     use("https://git.sr.ht/~p00f/clangd_extensions.nvim")
     use("b0o/schemastore.nvim")
     use("ranelpadon/python-copy-reference.vim")
-
+    use({
+        "PatschD/zippy.nvim",
+        config = function()
+            require("plugins.zippy")
+        end,
+    })
     -- LSP
     use("neovim/nvim-lspconfig")
     use("williamboman/mason.nvim")

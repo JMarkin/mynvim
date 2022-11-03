@@ -114,3 +114,12 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.colorcolumn = '+1'
     end,
 })
+
+--matchup custom
+local matchup_words = "MatchUpWords"
+vim.api.nvim_create_augroup(matchup_words, {clear=true})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     group = matchup_words,
+--     pattern = {"css", "javascript", "typescript", "cpp", "c"},
+--     command = "call matchup#util#append_match_words('\/\*:\*\/')",
+-- })

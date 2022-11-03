@@ -20,7 +20,14 @@ M.setup = function()
                 ["ctrl-b"] = "beginning-of-line",
             },
         },
+        fzf_opts = {
+            ["--ansi"] = "",
+            ["--info"] = "inline",
+            ["--height"] = "100%",
+            ["--layout"] = "reverse",
+        },
     })
+    require('fzf-lua').config.globals.fzf_opts['--border'] = nil
 end
 
 M.search_old_files = function()
