@@ -123,19 +123,27 @@ M.config = function()
                 ["y"] = "copy_to_clipboard",
                 ["x"] = "cut_to_clipboard",
                 ["p"] = "paste_from_clipboard",
-                ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
-                -- ["c"] = {
-                --  "copy",
-                --  config = {
-                --    show_path = "none" -- "none", "relative", "absolute"
-                --  }
-                --}
+                ["C"] = {
+                    "copy",
+                    config = {
+                        show_path = "relative", -- "none", "relative", "absolute"
+                    },
+                },
                 ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
                 ["q"] = "close_window",
                 ["R"] = "refresh",
                 ["?"] = "show_help",
                 ["<"] = "prev_source",
                 [">"] = "next_source",
+                ["c"] = function(state)
+                    local node = state.tree:get_node()
+                    local content = node.path
+                    -- relative
+                    -- local content = node.path:gsub(state.path, ""):sub(2)
+                    vim.fn.setreg('"', content)
+                    vim.fn.setreg("1", content)
+                    vim.fn.setreg("+", content)
+                end,
             },
         },
         nesting_rules = {},
@@ -217,6 +225,7 @@ M.config = function()
                 handler = function(file_path)
                     --auto close
                     require("neo-tree").close_all()
+                    vim.cmd(":doautocmd VimResized")
                 end,
             },
         },

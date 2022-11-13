@@ -1,4 +1,15 @@
-vim.cmd([[packadd packer.nvim]])
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+        vim.cmd([[packadd packer.nvim]])
+        return true
+    end
+    return false
+end
+
+local packer_bootstrap = ensure_packer()
 
 local packer = require("packer")
 
@@ -107,7 +118,7 @@ return packer.startup(function(use)
                     winwidth = 5,
                 },
                 ignore = {
-                    buftype = { "quickfix", "nofile" },
+                    buftype = { "quickfix", },
                     filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })
@@ -181,9 +192,9 @@ return packer.startup(function(use)
             require("config-local").setup({
                 -- Default configuration (optional)
                 config_files = { ".vimrc.lua", ".vimrc", ".lvimrc" }, -- Config file patterns to load (lua supported)
-                hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
+                hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
                 autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-                commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+                commands_create = false, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
                 lookup_parents = true,
             })
@@ -620,6 +631,24 @@ return packer.startup(function(use)
         event = "VimEnter",
     })
 
+    use({
+        "cshuaimin/ssr.nvim",
+        module = "ssr",
+        -- Calling setup is optional.
+        config = function()
+            require("ssr").setup({
+                min_width = 50,
+                min_height = 5,
+                keymaps = {
+                    close = "q",
+                    next_match = "n",
+                    prev_match = "N",
+                    replace_all = "<leader>RA",
+                },
+            })
+        end,
+    })
+
     --- Генераци докстрингов и т.п.
     use({
         "danymat/neogen",
@@ -800,4 +829,8 @@ return packer.startup(function(use)
             require("retrail").setup()
         end,
     })
+
+    if packer_bootstrap then
+        require("packer").sync()
+    end
 end)

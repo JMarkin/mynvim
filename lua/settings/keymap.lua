@@ -130,6 +130,13 @@ function maps(m)
     vnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
     nnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
 
+    local ssr_rename = function()
+        require("ssr").open()
+    end
+    vnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
+    nnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
+    xnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
+
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
     nnoremap("<leader>lp", "<cmd>lua require('zippy').insert_print()<CR>", "silent", "Lang: print variable")
 

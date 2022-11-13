@@ -24,10 +24,6 @@ opt.guicursor = "a:block"
 opt.wrap = true
 opt.hidden = true
 opt.syntax = "enable"
-g.local_vimrc = {
-    names = { ".lvimrc" },
-    hash_fun = "LVRHashOfFile",
-}
 opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
@@ -39,7 +35,7 @@ if vim.fn.has("nvim-0.8") ~= 1 then
 end
 
 -- fold
--- opt.foldmethod="manual"
+opt.foldmethod="manual"
 opt.foldcolumn = "1"
 opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 opt.foldlevelstart = 99
@@ -58,10 +54,5 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 
------------------------------------------------------------
--- Полезные фишки
------------------------------------------------------------
 
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
-vim.cmd([[command! Qa :qa]])
-vim.cmd([[command! Q :q]])

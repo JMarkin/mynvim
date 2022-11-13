@@ -111,15 +111,23 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function(opts)
         local max_line = vim.g.python_max_line or 120
         vim.opt_local.textwidth = max_line
-        vim.opt_local.colorcolumn = '+1'
+        vim.opt_local.colorcolumn = "+1"
     end,
 })
 
 --matchup custom
 local matchup_words = "MatchUpWords"
-vim.api.nvim_create_augroup(matchup_words, {clear=true})
+vim.api.nvim_create_augroup(matchup_words, { clear = true })
 -- vim.api.nvim_create_autocmd("FileType", {
 --     group = matchup_words,
 --     pattern = {"css", "javascript", "typescript", "cpp", "c"},
 --     command = "call matchup#util#append_match_words('\/\*:\*\/')",
 -- })
+
+local fzf = "FZF"
+vim.api.nvim_create_augroup(fzf, { clear = true })
+vim.api.nvim_create_autocmd("VimResized", {
+    pattern = "*",
+    group = fzf,
+    command = 'lua require("fzf-lua").redraw()',
+})
