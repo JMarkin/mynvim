@@ -18,10 +18,15 @@ snippet stylua
 	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 	require("plugins.nullls").enable({}, {"stylua"})
 
+snippet rustfmt
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {"rustfmt"})
 
 snippet neogen
 	require("neogen").setup({
 		enabled = true,
+	    input_after_comment = true,
+		snippet_engine = "luasnip",
 		languages = {
 			python = {
 				template = {

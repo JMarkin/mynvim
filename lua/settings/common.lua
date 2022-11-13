@@ -1,4 +1,3 @@
-local exec = vim.api.nvim_exec -- execute Vimscript
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
@@ -6,6 +5,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 -- Главные
 -----------------------------------------------------------
 vim.cmd("set cc=")
+opt.updatetime = 100
 opt.scrolloff = 15
 opt.spell = false
 opt.spelllang = { "en", "ru" } -- Словари рус eng
@@ -37,7 +37,13 @@ if vim.fn.has("nvim-0.8") ~= 1 then
     g.do_filetype_lua = 1
     g.did_load_filetypes = 0
 end
-opt.foldmethod="manual"
+
+-- fold
+-- opt.foldmethod="manual"
+opt.foldcolumn = "1"
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 -----------------------------------------------------------
 -- Табы и отступы

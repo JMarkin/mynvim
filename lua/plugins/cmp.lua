@@ -62,12 +62,15 @@ M.config = function()
     vim.cmd([[set completeopt=menu,menuone,noselect]])
 
     local cmp = require("cmp")
+    local neogen = require("neogen")
 
     local move_down = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.in_snippet() and luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
+        elseif neogen.jumpable() then
+            neogen.jump_next()
         elseif has_words_before() then
             cmp.complete()
         else
@@ -80,6 +83,8 @@ M.config = function()
             cmp.select_prev_item()
         elseif luasnip.in_snippet() and luasnip.jumpable(-1) then
             luasnip.jump(-1)
+        elseif neogen.jumpable(true) then
+            neogen.jump_prev()
         else
             fallback()
         end
@@ -121,7 +126,7 @@ M.config = function()
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.abort(),
-            ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            ["<CR>"] = cmp.mapping.confirm(),
             ["<Tab>"] = move_down,
             ["<S-Tab>"] = move_up,
         },
@@ -135,7 +140,7 @@ M.config = function()
                 filetype = { "sql", "mssql", "plsql" },
             },
             { name = "treesitter", priority_weight = 86, max_item_count = 5 },
-            { name = "tags", priority_weight = 85, max_item_count = 5 },
+            { name = "tags", priority_weight = 86, max_item_count = 5 },
             {
                 name = "rg",
                 keyword_length = 3,

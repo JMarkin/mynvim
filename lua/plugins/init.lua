@@ -59,7 +59,7 @@ return packer.startup(function(use)
                 highlight = {
                     enabled = true, -- highlight yanked text
                     higroup = "ModesCopy", -- highlight group of yanked text
-                    timeout = 200, -- timeout for clearing the highlight
+                    timeout = 100, -- timeout for clearing the highlight
                 },
             })
         end,
@@ -99,9 +99,9 @@ return packer.startup(function(use)
             "anuvyklack/animation.nvim",
         },
         config = function()
-            vim.o.winwidth = 10
-            vim.o.winminwidth = 10
-            vim.o.equalalways = false
+            vim.opt.winwidth = 10
+            vim.opt.winminwidth = 5
+            vim.opt.equalalways = false
             require("windows").setup({
                 autowidth = {
                     winwidth = 5,
@@ -112,6 +112,13 @@ return packer.startup(function(use)
                 },
             })
         end,
+    })
+    use({
+        "nanozuki/tabby.nvim",
+        config = function()
+            require("plugins.tabline")
+        end,
+        event = "BufEnter",
     })
 
     use({ "rainbowhxch/beacon.nvim" })
@@ -294,6 +301,12 @@ return packer.startup(function(use)
     use({
         "williamboman/mason-lspconfig.nvim",
     })
+    use({
+        "j-hui/fidget.nvim",
+        config = function()
+            require("fidget").setup({})
+        end,
+    })
 
     use({
         "folke/trouble.nvim",
@@ -375,18 +388,16 @@ return packer.startup(function(use)
     --     end,
     -- })
 
-    --     use({
-    --         "kevinhwang91/nvim-ufo",
-    --         requires = "kevinhwang91/promise-async",
-    --         event = "BufReadPre",
-    --         after = "nvim-treesitter",
-    --         setup = function ()
-    --            require("plugins.ufo").setup()
-    --         end
-    --         config = function()
-    --             require("plugins.ufo").config()
-    --         end,
-    --     })
+    use({
+        "kevinhwang91/nvim-ufo",
+        requires = "kevinhwang91/promise-async",
+        event = "BufReadPost",
+        after = "nvim-treesitter",
+        setup = function() end,
+        config = function()
+            require("plugins.ufo").config()
+        end,
+    })
 
     --- Автокомлиты
 
@@ -515,7 +526,7 @@ return packer.startup(function(use)
                 user_default_options = {
                     RGB = true, -- #RGB hex codes
                     RRGGBB = true, -- #RRGGBB hex codes
-                    names = true, -- "Name" codes like Blue or blue
+                    names = false, -- "Name" codes like Blue or blue
                     RRGGBBAA = true, -- #RRGGBBAA hex codes
                     AARRGGBB = true, -- 0xAARRGGBB hex codes
                     rgb_fn = true, -- CSS rgb() and rgba() functions
@@ -613,6 +624,13 @@ return packer.startup(function(use)
     use({
         "danymat/neogen",
         requires = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require("neogen").setup({
+                enabled = true,
+                input_after_comment = true,
+                snippet_engine = "luasnip",
+            })
+        end,
     })
 
     -- превью строчки при :%d

@@ -10,35 +10,12 @@ if vim.fn.has("nvim-0.8") == 1 then
     navic = require("nvim-navic")
 end
 
-local lsp_formatting = function(bufnr)
-    vim.lsp.buf.format({
-        filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name == "null-ls"
-        end,
-        bufnr = bufnr,
-    })
-end
-
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
 local M = {}
 
 local on_attach = function(client, bufnr)
     if navic ~= nil then
         navic.attach(client, bufnr)
     end
-
-    -- if client.supports_method("textDocument/formatting") then
-    -- vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    -- vim.api.nvim_create_autocmd("BufWritePre", {
-    --     group = augroup,
-    --     buffer = bufnr,
-    --     callback = function()
-    --         lsp_formatting(bufnr)
-    --     end,
-    -- })
-    -- end
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -213,6 +190,7 @@ M.rust_analyzer = function()
     local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
     rust_tools.setup({
+        tools = {},
         server = opts,
         dap = {
             adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
@@ -392,11 +370,12 @@ M.config = function()
         underline = true,
         signs = true,
         virtual_text = false,
+        virtual_lines = { only_current_line = true },
         float = true,
         update_in_insert = false,
         severity_sort = true,
-        virtual_lines = false,
     })
+
     is_load = 1
 end
 

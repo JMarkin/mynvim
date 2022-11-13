@@ -1,11 +1,11 @@
 -- don't auto commenting new lines
-local disable_auto_comment = "DisableAutoComment"
-vim.api.nvim_create_augroup(disable_auto_comment, { clear = true })
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = disable_auto_comment,
-    pattern = { "*" },
-    command = "set fo-=c fo-=r fo-=o",
-})
+-- local disable_auto_comment = "DisableAutoComment"
+-- vim.api.nvim_create_augroup(disable_auto_comment, { clear = true })
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--     group = disable_auto_comment,
+--     pattern = { "*" },
+--     command = "set fo-=c fo-=r fo-=o",
+-- })
 
 -- Запоминает где nvim последний раз редактировал файл
 local last_change = "LastChange"

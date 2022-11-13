@@ -11,7 +11,6 @@ local diffview = lazy.require("diffview")
 local format = function()
     vim.lsp.buf.format({
         filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
             return client.name == "null-ls"
         end,
         async = true,
@@ -32,30 +31,10 @@ function maps(m)
 
     nnoremap("<space>bf", format, "silent", "Lang: lsp format")
 
-    nnoremap(
-        { "<space>l", "<space><right>", "<c-l>" },
-        ":lua require('smart-splits').move_cursor_right()<cr>",
-        "silent",
-        "right"
-    )
-    nnoremap(
-        { "<space>j", "<space><down>", "<c-j>" },
-        ":lua require('smart-splits').move_cursor_down()<cr>",
-        "silent",
-        "down"
-    )
-    nnoremap(
-        { "<space>k", "<space><up>", "<c-k>" },
-        ":lua require('smart-splits').move_cursor_up()<cr>",
-        "silent",
-        "top"
-    )
-    nnoremap(
-        { "<space>h", "<space><left>", "<c-h>" },
-        ":lua require('smart-splits').move_cursor_left()<cr>",
-        "silent",
-        "left"
-    )
+    nnoremap({ "<space><right>", "<c-l>" }, ":lua require('smart-splits').move_cursor_right()<cr>", "silent", "right")
+    nnoremap({ "<space><down>", "<c-j>" }, ":lua require('smart-splits').move_cursor_down()<cr>", "silent", "down")
+    nnoremap({ "<space><up>", "<c-k>" }, ":lua require('smart-splits').move_cursor_up()<cr>", "silent", "top")
+    nnoremap({ "<space><left>", "<c-h>" }, ":lua require('smart-splits').move_cursor_left()<cr>", "silent", "left")
 
     -- resizing splits
     nnoremap({ "<A-h>", "<space>bh" }, ':lua require("smart-splits").resize_left()<cr>', "silent", "Resize left")
@@ -144,12 +123,12 @@ function maps(m)
 
     -- lang
     m.nname("<leader>l", "Language features")
-    nnoremap("<leader>lD", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
+    nnoremap("<leader>ld", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
 
     nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
 
-    vnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
-    nnoremap("<leader>lR", require("plugins.renamer").rename, "silent", "Lang: rename")
+    vnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
+    nnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
 
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
     nnoremap("<leader>lp", "<cmd>lua require('zippy').insert_print()<CR>", "silent", "Lang: print variable")
@@ -180,18 +159,18 @@ function maps(m)
     nnoremap("<leader>bg", "<Plug>BookmarkMoveToLine", "Bookmark: MoveToLine")
 
     -- qf loclist
-    nnoremap("<leader>lo", "<cmd>lua require'qf'.open('l')<CR>", "Open location list")
-    nnoremap("<leader>lc", "<cmd>lua require'qf'.close('l')<CR>", " Close location list")
+    nnoremap("<space>lo", "<cmd>lua require'qf'.open('l')<CR>", "Open location list")
+    nnoremap("<space>lc", "<cmd>lua require'qf'.close('l')<CR>", " Close location list")
     nnoremap(
-        "<leader>ll",
+        "<space>ll",
         "<cmd>lua require'qf'.toggle('l', true)<CR>",
         "Toggle location list and stay in current window"
     )
 
-    nnoremap("<leader>co", "<cmd>lua require'qf'.open('c')<CR>", "Open quickfix list")
-    nnoremap("<leader>cc", "<cmd>lua require'qf'.close('c')<CR>", "Close quickfix list")
+    nnoremap("<space>co", "<cmd>lua require'qf'.open('c')<CR>", "Open quickfix list")
+    nnoremap("<space>cc", "<cmd>lua require'qf'.close('c')<CR>", "Close quickfix list")
     nnoremap(
-        "<leader>cl",
+        "<space>cl",
         "<cmd>lua require'qf'.toggle('c', true)<CR>",
         "Toggle quickfix list and stay in current window"
     )
@@ -232,6 +211,19 @@ function maps(m)
     m.nname("<leader>r", "PythonCopyReferences")
     nnoremap("<leader>rd", ":PythonCopyReferenceDotted<CR>")
     nnoremap("<leader>rp", ":PythonCopyReferencePytest<CR>")
+
+    tnoremap("<Esc>", "<C-\\><C-n>:bd!")
+
+    m.nname("<leader>t", "Tabs")
+    nnoremap("<leader>ta", ":$tabnew<CR>", "Tabs: new")
+    nnoremap("<leader>tc", ":tabclose<CR>", "Tabs: close")
+    nnoremap("<leader>to", ":tabonly<CR>", "Tabs: close other tabs")
+    nnoremap("<leader>tn", ":tabn<CR>", "Tabs: next")
+    nnoremap("<leader>tp", ":tabp<CR>", "Tabs: prev")
+    -- move current tab to previous position
+    nnoremap("<leader>tmp", ":-tabmove<CR>", "Tabs: move to prev")
+    -- move current tab to next position
+    nnoremap("<leader>tmn", ":+tabmove<CR>", "Tabs: move to next")
 end
 
 return maps
