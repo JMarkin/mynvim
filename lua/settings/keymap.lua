@@ -219,7 +219,7 @@ function maps(m)
     nnoremap("<leader>rd", ":PythonCopyReferenceDotted<CR>")
     nnoremap("<leader>rp", ":PythonCopyReferencePytest<CR>")
 
-    tnoremap("<Esc>", "<C-\\><C-n>:bd!")
+    tnoremap("<C-Esc>", "<C-\\><C-n>:bd!")
 
     m.nname("<leader>t", "Tabs")
     nnoremap("<leader>ta", ":$tabnew<CR>", "Tabs: new")

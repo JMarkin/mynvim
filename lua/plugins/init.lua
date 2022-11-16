@@ -110,12 +110,12 @@ return packer.startup(function(use)
             "anuvyklack/animation.nvim",
         },
         config = function()
-            vim.opt.winwidth = 10
-            vim.opt.winminwidth = 5
+            vim.opt.winwidth = 20
+            vim.opt.winminwidth = 15
             vim.opt.equalalways = false
             require("windows").setup({
                 autowidth = {
-                    winwidth = 5,
+                    winwidth = 15,
                 },
                 ignore = {
                     buftype = { "quickfix", },
