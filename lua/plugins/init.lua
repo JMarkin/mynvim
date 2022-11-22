@@ -132,8 +132,6 @@ return packer.startup(function(use)
         event = "BufEnter",
     })
 
-    use({ "rainbowhxch/beacon.nvim" })
-
     use({
         "nvim-lua/plenary.nvim",
     })

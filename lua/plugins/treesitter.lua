@@ -23,6 +23,7 @@ M.setup = function()
             "scss",
             "lua",
             "vim",
+            "sql",
         },
 
         highlight = {
