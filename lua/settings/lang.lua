@@ -1,5 +1,17 @@
 local g = vim.g
-local lspconfig = require("lspconfig")
+
+if vim.env.NVIM_MINI ~= nil then
+    return {}
+end
+
+local present, lspconfig = pcall(require, "lspconfig")
+if not present then
+    vim.notify("Cant initialize lang, lspconfig not found")
+    return {
+        config = function()
+        end
+    }
+end
 local lspconfig_configs = require("lspconfig.configs")
 local lspconfig_util = require("lspconfig.util")
 

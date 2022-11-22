@@ -51,13 +51,15 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 })
 
 -- lsp init
-local lsp_init = "LspInit"
-vim.api.nvim_create_augroup(lsp_init, { clear = true })
-vim.api.nvim_create_autocmd("BufReadPre", {
-    group = lsp_init,
-    pattern = { "*" },
-    callback = require("settings.lang").config,
-})
+if vim.env.NVIM_MINI == nil then
+    local lsp_init = "LspInit"
+    vim.api.nvim_create_augroup(lsp_init, { clear = true })
+    vim.api.nvim_create_autocmd("BufReadPre", {
+        group = lsp_init,
+        pattern = { "*" },
+        callback = require("settings.lang").config,
+    })
+end
 
 ---------Просмотр больших файлов
 local large_files = "LargeFiles"

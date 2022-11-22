@@ -17,6 +17,10 @@ packer.init({
     max_jobs = 16,
 })
 
+local is_not_mini = function ()
+    return vim.env.NVIM_MINI == nil
+end
+
 return packer.startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
@@ -29,8 +33,9 @@ return packer.startup(function(use)
     -- обноление cursorhold
     use("antoinemadec/FixCursorHold.nvim")
 
-    --- Украшения
+    use("romainl/vim-cool")
 
+    --- Украшения
     use({
         "stevearc/dressing.nvim",
         config = function()
@@ -47,16 +52,14 @@ return packer.startup(function(use)
     })
 
     use({
+        "MunifTanjim/nui.nvim",
+    })
+
+    use({
         "mvllow/modes.nvim",
         config = function()
             require("modes").setup({
-                set_cursor = false,
-                colors = {
-                    copy = "#f5c359",
-                    delete = "#c75c6a",
-                    insert = "#78ccc5",
-                    visual = "#9745be",
-                },
+                set_cursor=false,
                 line_opacity = 0.4,
             })
         end,
@@ -89,19 +92,20 @@ return packer.startup(function(use)
         end,
     })
 
-    -- use({
-    --     "folke/noice.nvim",
-    --     config = function()
-    --         require("plugins.noice")
-    --     end,
-    --     requires = {
-    --         "MunifTanjim/nui.nvim",
-    --         "rcarriga/nvim-notify",
-    --     },
-    --     after={"nvim-notify", "nvim-cmp"},
-    --     event = { "CmdlineEnter" },
-    --     keymap = "/",
-    -- })
+    use({
+        "folke/noice.nvim",
+        disable = true,
+        config = function()
+            require("plugins.noice")
+        end,
+        requires = {
+            "rcarriga/nvim-notify",
+        },
+        after = { "nvim-notify", "nvim-cmp" },
+        event = { "CmdlineEnter" },
+        keymap = "/",
+        cond = is_not_mini,
+    })
 
     use({
         "anuvyklack/windows.nvim",
@@ -110,15 +114,15 @@ return packer.startup(function(use)
             "anuvyklack/animation.nvim",
         },
         config = function()
-            vim.opt.winwidth = 20
-            vim.opt.winminwidth = 15
+            vim.opt.winwidth = 10
+            vim.opt.winminwidth = 5
             vim.opt.equalalways = false
             require("windows").setup({
                 autowidth = {
                     winwidth = 15,
                 },
                 ignore = {
-                    buftype = { "quickfix", },
+                    buftype = { "quickfix" },
                     filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })
@@ -166,9 +170,11 @@ return packer.startup(function(use)
 
     use({
         "lukas-reineke/indent-blankline.nvim",
+        cond = is_not_mini,
         config = function()
             require("plugins.indent")
         end,
+
     })
 
     --- вместо ESC просто jj
@@ -203,6 +209,7 @@ return packer.startup(function(use)
     use({
         "ellisonleao/glow.nvim",
         cmd = "Glow",
+        cond = is_not_mini,
     })
 
     -- Цвет тема
@@ -290,35 +297,63 @@ return packer.startup(function(use)
             })
         end,
     })
+    use({
+        "nvim-treesitter/nvim-treesitter-refactor",
+        after = "nvim-treesitter",
+    })
 
     -- Доп утился для языков
     use({
         "simrat39/rust-tools.nvim",
+        cond = is_not_mini,
     })
-    use("https://git.sr.ht/~p00f/clangd_extensions.nvim")
-    use("b0o/schemastore.nvim")
-    use("ranelpadon/python-copy-reference.vim")
+    use({
+        "https://git.sr.ht/~p00f/clangd_extensions.nvim",
+        cond = is_not_mini,
+    })
+    use({
+        "b0o/schemastore.nvim",
+        cond = is_not_mini,
+    })
+    use({
+        "ranelpadon/python-copy-reference.vim",
+        cond = is_not_mini,
+    })
     use({
         "PatschD/zippy.nvim",
         config = function()
             require("plugins.zippy")
         end,
+        cond = is_not_mini,
     })
     -- LSP
-    use("neovim/nvim-lspconfig")
-    use("williamboman/mason.nvim")
+    use({
+        "neovim/nvim-lspconfig",
+        cond = is_not_mini,
+    })
+    use({
+        "williamboman/mason.nvim",
+        cond = is_not_mini,
+    })
     use({
         "williamboman/mason-lspconfig.nvim",
+        cond = is_not_mini,
     })
     use({
         "j-hui/fidget.nvim",
+        cond = is_not_mini,
         config = function()
-            require("fidget").setup({})
+            require("fidget").setup({
+                sources = {
+                    ["null-ls"] = { ignore = true },
+                },
+            })
         end,
     })
 
     use({
         "folke/trouble.nvim",
+        cond = is_not_mini,
         config = function()
             require("trouble").setup({
                 auto_fold = false,
@@ -331,6 +366,7 @@ return packer.startup(function(use)
     if vim.fn.has("nvim-0.8") == 1 then
         use({
             "SmiteshP/nvim-navic",
+        cond = is_not_mini,
             requires = "neovim/nvim-lspconfig",
             config = function()
                 require("nvim-navic").setup({ highlight = true })
@@ -341,6 +377,7 @@ return packer.startup(function(use)
 
     use({
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        cond = is_not_mini,
         config = function()
             require("lsp_lines").setup()
         end,
@@ -348,6 +385,7 @@ return packer.startup(function(use)
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
+        cond = is_not_mini,
         requires = { "nvim-lua/plenary.nvim" },
         config = function()
             require("plugins.nullls").config()
@@ -363,6 +401,7 @@ return packer.startup(function(use)
     })
     use({
         "someone-stole-my-name/yaml-companion.nvim",
+        cond = is_not_mini,
         requires = {
             { "neovim/nvim-lspconfig" },
             { "nvim-lua/plenary.nvim" },
@@ -371,11 +410,13 @@ return packer.startup(function(use)
 
     use({
         "weilbith/nvim-code-action-menu",
+        cond = is_not_mini,
         cmd = "CodeActionMenu",
     })
 
     use({
         "filipdutescu/renamer.nvim",
+        cond = is_not_mini,
         branch = "master",
         requires = { { "nvim-lua/plenary.nvim" } },
         config = function()
@@ -385,6 +426,7 @@ return packer.startup(function(use)
 
     use({
         "rmagatti/goto-preview",
+        cond = is_not_mini,
         config = function()
             require("plugins.preview")
         end,
@@ -399,6 +441,7 @@ return packer.startup(function(use)
 
     use({
         "kevinhwang91/nvim-ufo",
+        cond = is_not_mini,
         requires = "kevinhwang91/promise-async",
         event = "BufReadPost",
         after = "nvim-treesitter",
@@ -476,6 +519,7 @@ return packer.startup(function(use)
     -- Навигация внутри файла по классам и функциям
     use({
         "simrat39/symbols-outline.nvim",
+        cond = is_not_mini,
         config = function()
             require("symbols-outline").setup({})
         end,
@@ -561,6 +605,7 @@ return packer.startup(function(use)
     })
     use({
         "s1n7ax/nvim-comment-frame",
+        cond = is_not_mini,
         after = {
             "nvim-treesitter",
         },
@@ -583,10 +628,12 @@ return packer.startup(function(use)
     -- Дебагер
     use({
         "mfussenegger/nvim-dap",
+        cond = is_not_mini,
         keymap = "<leader>d",
     })
     use({
         "rcarriga/nvim-dap-ui",
+        cond = is_not_mini,
         after = { "nvim-dap" },
         config = function()
             require("dapui").setup()
@@ -594,6 +641,7 @@ return packer.startup(function(use)
     })
     use({
         "theHamsta/nvim-dap-virtual-text",
+        cond = is_not_mini,
         config = function()
             require("nvim-dap-virtual-text").setup()
         end,
@@ -631,6 +679,7 @@ return packer.startup(function(use)
 
     use({
         "cshuaimin/ssr.nvim",
+        cond = is_not_mini,
         module = "ssr",
         -- Calling setup is optional.
         config = function()
@@ -650,6 +699,7 @@ return packer.startup(function(use)
     --- Генераци докстрингов и т.п.
     use({
         "danymat/neogen",
+        cond = is_not_mini,
         requires = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("neogen").setup({
@@ -707,10 +757,10 @@ return packer.startup(function(use)
         config = function()
             require("termwrapper").setup({
                 -- these are all of the defaults
-                open_autoinsert = false, -- autoinsert when opening
+                open_autoinsert = true, -- autoinsert when opening
                 toggle_autoinsert = true, -- autoinsert when toggling
                 autoclose = true, -- autoclose, (no [Process exited 0])
-                winenter_autoinsert = false, -- autoinsert when entering the window
+                winenter_autoinsert = true, -- autoinsert when entering the window
                 default_window_command = "belowright 13split", -- the default window command to run when none is specified,
                 -- opens a window in the bottom
                 open_new_toggle = true, -- open a new terminal if the toggle target does not exist
@@ -769,9 +819,11 @@ return packer.startup(function(use)
     use({
         "tpope/vim-dadbod",
         cmd = { "DB" },
+        cond = is_not_mini,
     })
     use({
         "kristijanhusak/vim-dadbod-ui",
+        cond = is_not_mini,
         requires = "tpope/vim-dadbod",
         setup = function()
             vim.g.db_ui_env_variable_url = "DATABASE_URL"
@@ -787,6 +839,7 @@ return packer.startup(function(use)
     use({
         "kristijanhusak/vim-dadbod-completion",
         after = { "vim-dadbod-ui", "nvim-cmp" },
+        cond = is_not_mini,
     })
 
     -- uncompiler
@@ -805,6 +858,7 @@ return packer.startup(function(use)
     -- tests
     use({
         "nvim-neotest/neotest",
+        cond = is_not_mini,
         requires = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
@@ -814,10 +868,12 @@ return packer.startup(function(use)
     use({
         "nvim-neotest/neotest-python",
         after = "neotest",
+        cond = is_not_mini,
     })
     use({
         "rouge8/neotest-rust",
         after = "neotest",
+        cond = is_not_mini,
     })
 
     -- trim

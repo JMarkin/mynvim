@@ -26,8 +26,8 @@ def f():
 def s():
     ...
 
-def f(val, ss, sncjllll):
-    print(val, ss, sncjllll)
+def f(val1, ss, sncjllll):
+    print(val1, ss, sncjllll)
 
 
 s = '^[1-9]123\n\t$'
