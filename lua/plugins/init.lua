@@ -122,7 +122,7 @@ return packer.startup(function(use)
                     winwidth = 15,
                 },
                 ignore = {
-                    buftype = { "quickfix" },
+                    buftype = { "quickfix", "nofile", },
                     filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })

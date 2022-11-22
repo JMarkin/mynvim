@@ -113,7 +113,9 @@ function maps(m)
     )
 
     ---go to
-    nnoremap("gd", "<cmd>:vsplit | lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
+    nnoremap("gdd", "<cmd>lua vim.lsp.buf.definition()<CR>", "GoTo: definition")
+    nnoremap("gdv", "<cmd>:vsplit | lua vim.lsp.buf.definition()<CR>", "GoTo: definition vertical")
+    nnoremap("gds", "<cmd>:split | lua vim.lsp.buf.definition()<CR>", "GoTo: definition horizontail")
     nnoremap(
         "gr",
         "<cmd>lua require('fzf-lua').lsp_references({ multiprocess=true,})<Cr>",
