@@ -154,8 +154,9 @@ return packer.startup(function(use)
         "declancm/cinnamon.nvim",
         config = function()
             require("cinnamon").setup({
-                extra_keymaps = true,
-                extended_keymaps = true,
+                default_keymaps = false,
+                extra_keymaps = false,
+                extended_keymaps = false,
             })
         end,
     })
@@ -538,7 +539,7 @@ return packer.startup(function(use)
         end,
     })
     use({
-        "sindrets/diffview.nvim",
+        "/projects/diffview.nvim",
         requires = "nvim-lua/plenary.nvim",
         config = function()
             require("diffview").setup({
