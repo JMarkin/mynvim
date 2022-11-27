@@ -17,7 +17,7 @@ packer.init({
     max_jobs = 16,
 })
 
-local is_not_mini = function ()
+local is_not_mini = function()
     return vim.env.NVIM_MINI == nil
 end
 
@@ -59,7 +59,7 @@ return packer.startup(function(use)
         "mvllow/modes.nvim",
         config = function()
             require("modes").setup({
-                set_cursor=false,
+                set_cursor = false,
                 line_opacity = 0.4,
             })
         end,
@@ -122,7 +122,7 @@ return packer.startup(function(use)
                     winwidth = 15,
                 },
                 ignore = {
-                    buftype = { "quickfix", "nofile", },
+                    buftype = { "quickfix", "nofile" },
                     filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })
@@ -175,7 +175,6 @@ return packer.startup(function(use)
         config = function()
             require("plugins.indent")
         end,
-
     })
 
     --- вместо ESC просто jj
@@ -367,7 +366,7 @@ return packer.startup(function(use)
     if vim.fn.has("nvim-0.8") == 1 then
         use({
             "SmiteshP/nvim-navic",
-        cond = is_not_mini,
+            cond = is_not_mini,
             requires = "neovim/nvim-lspconfig",
             config = function()
                 require("nvim-navic").setup({ highlight = true })
@@ -539,7 +538,7 @@ return packer.startup(function(use)
         end,
     })
     use({
-        "/projects/diffview.nvim",
+        "sindrets/diffview.nvim",
         requires = "nvim-lua/plenary.nvim",
         config = function()
             require("diffview").setup({
