@@ -36,6 +36,7 @@ return packer.startup(function(use)
     use("romainl/vim-cool")
 
     --- Украшения
+    use({ "nvim-tree/nvim-web-devicons" })
     use({
         "stevearc/dressing.nvim",
         config = function()
@@ -81,7 +82,7 @@ return packer.startup(function(use)
 
     use({
         "rcarriga/nvim-notify",
-        tag="v3.9.1",
+        tag = "v3.9.1",
         config = function()
             require("notify").setup({
                 timeout = 500,
@@ -225,7 +226,7 @@ return packer.startup(function(use)
     -- Информационная строка внизу
     use({
         "nvim-lualine/lualine.nvim",
-        requires = { "kyazdani42/nvim-web-devicons" },
+        requires = {},
         event = "BufReadPre",
         config = function()
             require("plugins.lualine")
