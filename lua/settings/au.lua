@@ -1,12 +1,3 @@
--- don't auto commenting new lines
--- local disable_auto_comment = "DisableAutoComment"
--- vim.api.nvim_create_augroup(disable_auto_comment, { clear = true })
--- vim.api.nvim_create_autocmd("BufEnter", {
---     group = disable_auto_comment,
---     pattern = { "*" },
---     command = "set fo-=c fo-=r fo-=o",
--- })
-
 -- Запоминает где nvim последний раз редактировал файл
 local last_change = "LastChange"
 vim.api.nvim_create_augroup(last_change, { clear = true })
@@ -132,4 +123,19 @@ vim.api.nvim_create_autocmd("VimResized", {
     pattern = "*",
     group = fzf,
     command = 'lua require("fzf-lua").redraw()',
+})
+
+-- fix lvimrc
+local lvimrc = "lvimrc"
+vim.api.nvim_create_augroup(lvimrc, { clear = true })
+local loaded = 0
+vim.api.nvim_create_autocmd("VimEnter", {
+    nested = true,
+    group = lvimrc,
+    callback = function()
+        if loaded == 0 then
+            require("config-local").source()
+            loaded = 1
+        end
+    end,
 })

@@ -148,7 +148,7 @@ M.config = function()
                 priority_weight = 84,
             },
             { name = "path", priority_weight = 82, keyword_length = 4 },
-            { name = "luasnip", priority_weight = 80 },
+            { name = "luasnip", priority_weight = 87 },
         },
         formatting = {
             format = function(entry, vim_item)

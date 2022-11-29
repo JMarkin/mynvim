@@ -81,11 +81,12 @@ return packer.startup(function(use)
 
     use({
         "rcarriga/nvim-notify",
+        tag="v3.9.1",
         config = function()
             require("notify").setup({
                 timeout = 500,
                 stages = "fade",
-                level = vim.log.levels.WARN,
+                level = vim.log.levels.INFO,
                 background_colour = "#000000",
             })
             vim.notify = require("notify")
@@ -195,10 +196,10 @@ return packer.startup(function(use)
         config = function()
             require("config-local").setup({
                 -- Default configuration (optional)
-                config_files = { ".vimrc.lua", ".vimrc", ".lvimrc" }, -- Config file patterns to load (lua supported)
+                config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
                 hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
-                autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-                commands_create = false, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+                autocommands_create = false, -- Create autocommands (VimEnter, DirectoryChanged)
+                commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
                 lookup_parents = true,
             })
