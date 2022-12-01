@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
         local size = vim.fn.getfsize(file)
         if size > max_file_size then
             vim.opt.eventignore:append({ "FileType" })
-            vim.opt_local.noswapfile = true
+            vim.opt_local.swapfile = false
             vim.opt_local.bufhidden = "unload"
             vim.opt_local.wrap = false
             vim.opt_local.syntax = "disable"
