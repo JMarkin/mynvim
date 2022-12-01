@@ -266,9 +266,9 @@ function maps(m)
     nnoremap("<space>w", require("nvim-window").pick, "silent", "Windows: pick")
 
     --save shortcut
-    nnoremap("<leader>w", ":w<CR>", "silent", "normal mode: save")
+    nnoremap({"<leader>w", "<leader>'"}, ":w<CR>", "silent", "normal mode: save")
     inoremap("<C-s>", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
-    vnoremap("<leader>w", "<Esc>:w<CR>", "visual mode: escape to normal and save")
+    vnoremap({"<leader>w", "<leader>'"}, "<Esc>:w<CR>", "visual mode: escape to normal and save")
 
     -- tests
     m.nname("t", "Tests")
