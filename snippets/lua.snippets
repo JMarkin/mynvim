@@ -44,3 +44,76 @@ snippet print
 	print("${1:string}")
 snippet im
 	import "${1:import file}"
+
+snippet nullls
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {}, {})
+
+snippet pylint
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({"pylint", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
+
+snippet flake8
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({"flake8", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
+
+snippet stylua
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {"stylua"})
+
+snippet rustfmt
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+	require("plugins.nullls").enable({}, {"rustfmt"})
+
+snippet neogen
+	require("neogen").setup({
+		enabled = true,
+	    input_after_comment = true,
+		snippet_engine = "luasnip",
+		languages = {
+			python = {
+				template = {
+					annotation_convention = "reST",
+				},
+			},
+		},
+	})
+
+snippet tags
+	require("gentags").enable()
+
+snippet tags_python
+	require("gentags").enable("python")
+
+snippet django
+	vim.filetype.add({
+		extension = {
+			html = "htmldjango",
+			htm = "htmldjango",
+		}
+	})
+
+snippet tests
+	require("neotest").setup({})
+
+snippet pytest
+	require("neotest").setup({
+	  adapters = {
+		require("neotest-python")({
+			dap = { justMyCode = false },
+			args = {"--log-level", "DEBUG"},
+			runner = "pytest",
+		})
+	  }
+	})
+
+snippet unittest
+	require("neotest").setup({
+	  adapters = {
+		require("neotest-python")({
+			dap = { justMyCode = false },
+			args = {"--log-level", "DEBUG"},
+			runner = "pytest",
+		})
+	  }
+	})
