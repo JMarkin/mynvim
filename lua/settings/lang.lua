@@ -8,8 +8,7 @@ local present, lspconfig = pcall(require, "lspconfig")
 if not present then
     vim.notify("Cant initialize lang, lspconfig not found")
     return {
-        config = function()
-        end
+        config = function() end,
     }
 end
 local lspconfig_configs = require("lspconfig.configs")
@@ -364,6 +363,18 @@ M.config = function()
     if is_load == 1 then
         return
     end
+
+    require("lsp_lines").setup()
+
+    vim.diagnostic.config({
+        underline = true,
+        signs = true,
+        virtual_text = false,
+        virtual_lines = { only_current_line = true },
+        float = true,
+        update_in_insert = false,
+        severity_sort = true,
+    })
     require("mason").setup()
     require("mason-lspconfig").setup()
     require("mason-lspconfig").setup_handlers({
@@ -376,16 +387,6 @@ M.config = function()
                 s_lsp()
             end
         end,
-    })
-
-    vim.diagnostic.config({
-        underline = true,
-        signs = true,
-        virtual_text = false,
-        virtual_lines = { only_current_line = true },
-        float = true,
-        update_in_insert = false,
-        severity_sort = true,
     })
 
     is_load = 1

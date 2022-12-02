@@ -380,9 +380,6 @@ return packer.startup(function(use)
     use({
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         cond = is_not_mini,
-        config = function()
-            require("lsp_lines").setup()
-        end,
     })
 
     use({
