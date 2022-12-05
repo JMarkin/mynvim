@@ -20,7 +20,7 @@ dashboard.section.buttons.val = {
     dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("r", "  Recent Files", "<cmd>lua require('plugins.fzflua').search_old_files()<cr>"),
     dashboard.button(
-        "t",
+        "s",
         "  Find Text",
         "<cmd>lua require('fzf-lua').grep_project({  multiprocess=true,continue_last_search = true })<Cr>"
     ),

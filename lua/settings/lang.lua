@@ -387,7 +387,6 @@ M.config = function()
         end,
     })
 
-    -- require("lsp_lines").setup()
 
     vim.diagnostic.config({
         underline = true,
