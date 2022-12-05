@@ -11,7 +11,7 @@ local diffview = lazy.require("diffview")
 local format = function()
     vim.lsp.buf.format({
         filter = function(client)
-            return client.name == "null-ls"
+            return client.name == "null-ls" or client.name == "rust_analyzer"
         end,
         async = true,
     })

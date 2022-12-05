@@ -15,7 +15,7 @@ setattr(A, "s", value)
 c.__setattr__(name, value)
 
 os.path.abspath(A)
-
+a: int  = 1
 if True or False:
     print(123)
 
@@ -26,7 +26,7 @@ def f():
 def s():
     ...
 
-def f(val1, ss, sncjllll):
+def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
 
 

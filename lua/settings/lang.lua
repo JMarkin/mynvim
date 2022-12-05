@@ -207,6 +207,16 @@ M.rust_analyzer = function()
             adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
     })
+
+    vim.diagnostic.config({
+        underline = true,
+        signs = true,
+        virtual_text = false,
+        virtual_lines = { only_current_line = true },
+        float = true,
+        update_in_insert = false,
+        severity_sort = true,
+    })
 end
 
 M.volar = function()
@@ -363,18 +373,6 @@ M.config = function()
     if is_load == 1 then
         return
     end
-
-    require("lsp_lines").setup()
-
-    vim.diagnostic.config({
-        underline = true,
-        signs = true,
-        virtual_text = false,
-        virtual_lines = { only_current_line = true },
-        float = true,
-        update_in_insert = false,
-        severity_sort = true,
-    })
     require("mason").setup()
     require("mason-lspconfig").setup()
     require("mason-lspconfig").setup_handlers({
@@ -387,6 +385,18 @@ M.config = function()
                 s_lsp()
             end
         end,
+    })
+
+    -- require("lsp_lines").setup()
+
+    vim.diagnostic.config({
+        underline = true,
+        signs = true,
+        virtual_text = false,
+        -- virtual_lines = { only_current_line = true },
+        float = true,
+        update_in_insert = false,
+        severity_sort = true,
     })
 
     is_load = 1

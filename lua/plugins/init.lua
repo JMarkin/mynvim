@@ -185,7 +185,7 @@ return packer.startup(function(use)
         event = "InsertEnter",
         config = function()
             require("better_escape").setup({
-                mapping = { "jj", "qq", ":w" },
+                mapping = { "jj", "qq" },
                 clear_empty_lines = true,
             })
         end,
@@ -376,11 +376,6 @@ return packer.startup(function(use)
             end,
         })
     end
-
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        cond = is_not_mini,
-    })
 
     use({
         "jose-elias-alvarez/null-ls.nvim",

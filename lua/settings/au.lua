@@ -139,3 +139,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
         end
     end,
 })
+
+-- diagnostic
+local diag = "diag"
+vim.api.nvim_create_augroup(diag, { clear = true })
+vim.api.nvim_create_autocmd("CursorHold", {
+    pattern = "*",
+    group = diag,
+    callback = function()
+        vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor" })
+    end,
+})
