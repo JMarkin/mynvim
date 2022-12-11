@@ -74,8 +74,8 @@ function maps(m)
     -- Half-window movements:
     vim.keymap.set({ "n", "x" }, "<C-u>", "<Cmd>lua Scroll('<C-u>', 1, 1)<CR>")
     vim.keymap.set({ "n", "x" }, "<C-d>", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>")
-    vim.keymap.set({ "n", "x" }, "J", "<Cmd>lua Scroll('<C-u>', 1, 1)<CR>")
-    vim.keymap.set({ "n", "x" }, "K", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>")
+    vim.keymap.set({ "n", "x" }, "K", "<Cmd>lua Scroll('<C-u>', 1, 1)<CR>")
+    vim.keymap.set({ "n", "x" }, "J", "<Cmd>lua Scroll('<C-d>', 1, 1)<CR>")
 
     -- Page movements:
     vim.keymap.set({ "n", "x" }, "<C-b>", "<Cmd>lua Scroll('<C-b>', 1, 1)<CR>")
@@ -226,32 +226,6 @@ function maps(m)
     nnoremap("<leader>bjj", "<Plug>BookmarkMoveDown", "Bookmark: MoveDown")
     nnoremap("<leader>bg", "<Plug>BookmarkMoveToLine", "Bookmark: MoveToLine")
 
-    -- qf loclist
-    nnoremap("<space>lo", "<cmd>lua require'qf'.open('l')<CR>", "Open location list")
-    nnoremap("<space>lc", "<cmd>lua require'qf'.close('l')<CR>", " Close location list")
-    nnoremap(
-        "<space>ll",
-        "<cmd>lua require'qf'.toggle('l', true)<CR>",
-        "Toggle location list and stay in current window"
-    )
-
-    nnoremap("<space>co", "<cmd>lua require'qf'.open('c')<CR>", "Open quickfix list")
-    nnoremap("<space>cc", "<cmd>lua require'qf'.close('c')<CR>", "Close quickfix list")
-    nnoremap(
-        "<space>cl",
-        "<cmd>lua require'qf'.toggle('c', true)<CR>",
-        "Toggle quickfix list and stay in current window"
-    )
-
-    nnoremap("]l", "<cmd>lua require'qf'.below('l')<CR>", "Go to next location list entry from cursor")
-    nnoremap("[l", "<cmd>lua require'qf'.above('l')<CR>", "Go to previous location list entry from cursor")
-
-    nnoremap("]q", "<cmd>lua require'qf'.below('c')<CR>", "Go to next quickfix entry from cursor")
-    nnoremap("[q", "<cmd>lua require'qf'.above('c')<CR>", "Go to previous quickfix entry from cursor")
-
-    nnoremap("]e", "<cmd>lua require'qf'.below('visible')<CR>", "Go to next entry from cursor in visible list")
-    nnoremap("[e", "<cmd>lua require'qf'.above('visible')<CR>", "Go to previous entry from cursor in visible list")
-
     -- todo
     vim.keymap.set("n", "]t", function()
         require("todo-comments").jump_next()
@@ -265,9 +239,9 @@ function maps(m)
     nnoremap("<space>w", require("nvim-window").pick, "silent", "Windows: pick")
 
     --save shortcut
-    nnoremap({"<leader>w", "<leader>'"}, ":w<CR>", "silent", "normal mode: save")
+    nnoremap({ "<leader>w", "<leader>'" }, ":w<CR>", "silent", "normal mode: save")
     inoremap("<C-s>", "<Esc>:w<CR>l", "silent", "insert mode: escape to normal and save")
-    vnoremap({"<leader>w", "<leader>'"}, "<Esc>:w<CR>", "visual mode: escape to normal and save")
+    vnoremap({ "<leader>w", "<leader>'" }, "<Esc>:w<CR>", "visual mode: escape to normal and save")
 
     -- tests
     m.nname("t", "Tests")
