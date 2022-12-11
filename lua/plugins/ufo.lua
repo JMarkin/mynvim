@@ -4,7 +4,7 @@ M.setup = function() end
 
 local ftMap = {
     vim = "treesitter",
-    python = "lsp",
+    python = "indent",
     lua = "lsp",
 }
 

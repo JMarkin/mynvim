@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 if vim.env.NVIM_MINI == nil then
     local lsp_init = "LspInit"
     vim.api.nvim_create_augroup(lsp_init, { clear = true })
-    vim.api.nvim_create_autocmd("BufReadPre", {
+    vim.api.nvim_create_autocmd("BufReadPost", {
         group = lsp_init,
         pattern = { "*" },
         callback = require("settings.lang").config,
@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
         local size = vim.fn.getfsize(file)
         if size > max_file_size then
             vim.opt.eventignore:append({ "FileType" })
-            vim.opt_local.noswapfile = true
+            vim.opt_local.swapfile = false
             vim.opt_local.bufhidden = "unload"
             vim.opt_local.wrap = false
             vim.opt_local.syntax = "disable"
@@ -137,5 +137,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
             require("config-local").source()
             loaded = 1
         end
+    end,
+})
+
+-- diagnostic
+local diag = "diag"
+vim.api.nvim_create_augroup(diag, { clear = true })
+vim.api.nvim_create_autocmd("CursorHold", {
+    pattern = "*",
+    group = diag,
+    callback = function()
+        vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor" })
     end,
 })

@@ -8,8 +8,7 @@ local present, lspconfig = pcall(require, "lspconfig")
 if not present then
     vim.notify("Cant initialize lang, lspconfig not found")
     return {
-        config = function()
-        end
+        config = function() end,
     }
 end
 local lspconfig_configs = require("lspconfig.configs")
@@ -208,6 +207,16 @@ M.rust_analyzer = function()
             adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
     })
+
+    vim.diagnostic.config({
+        underline = true,
+        signs = true,
+        virtual_text = false,
+        virtual_lines = { only_current_line = true },
+        float = true,
+        update_in_insert = false,
+        severity_sort = true,
+    })
 end
 
 M.volar = function()
@@ -378,11 +387,12 @@ M.config = function()
         end,
     })
 
+
     vim.diagnostic.config({
         underline = true,
         signs = true,
         virtual_text = false,
-        virtual_lines = { only_current_line = true },
+        -- virtual_lines = { only_current_line = true },
         float = true,
         update_in_insert = false,
         severity_sort = true,
