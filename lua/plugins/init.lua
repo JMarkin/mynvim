@@ -515,7 +515,7 @@ return packer.startup(function(use)
         "simrat39/symbols-outline.nvim",
         cond = is_not_mini,
         config = function()
-            require("symbols-outline").setup({})
+            require("plugins.symbols")
         end,
         cmd = "SymbolsOutline",
     })
