@@ -13,18 +13,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     callback = save_last_change,
 })
 
--- синхронизация между инстансами
-local sync_neovim = "SHADA"
-vim.api.nvim_create_augroup(sync_neovim, { clear = true })
-
-vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
-    group = sync_neovim,
-    pattern = { "*" },
-    callback = function()
-        vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
-    end,
-})
-
 --- сохранение fold
 local save_fold = "PersistentFold"
 vim.api.nvim_create_augroup(save_fold, { clear = true })
