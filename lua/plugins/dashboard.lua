@@ -24,6 +24,7 @@ dashboard.section.buttons.val = {
         "  Find Text",
         "<cmd>lua require('fzf-lua').grep_project({  multiprocess=true,continue_last_search = true })<Cr>"
     ),
+    dashboard.button("g", "  GIT", "<Cmd>LazyGit<CR>"),
     dashboard.button("c", "  Configuration", ":e $MYVIMRC<CR>"),
     dashboard.button("l", "  Local Configuration", ":e .lvimrc<CR>"),
     dashboard.button("u", "  Update Plugins", ":PackerSync<CR>"),
