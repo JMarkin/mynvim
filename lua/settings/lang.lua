@@ -4,29 +4,11 @@ if vim.env.NVIM_MINI ~= nil then
     return {}
 end
 
-local present, lspconfig = pcall(require, "lspconfig")
-if not present then
-    vim.notify("Cant initialize lang, lspconfig not found")
-    return {
-        config = function() end,
-    }
-end
-local lspconfig_configs = require("lspconfig.configs")
-local lspconfig_util = require("lspconfig.util")
-
-local navic = nil
-
-if vim.fn.has("nvim-0.8") == 1 then
-    vim.g.navic_silence = true
-    navic = require("nvim-navic")
-end
-
+vim.g.navic_silence = true
 local M = {}
 
 local on_attach = function(client, bufnr)
-    if navic ~= nil then
-        navic.attach(client, bufnr)
-    end
+    require("nvim-navic").attach(client, bufnr)
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -55,7 +37,7 @@ capabilities.textDocument.completion = {
 local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities
     opts.on_attach = on_attach
-    lspconfig[lsp_name].setup(opts)
+    require("lspconfig")[lsp_name].setup(opts)
 end
 
 M.yamlls = function()
@@ -207,19 +189,11 @@ M.rust_analyzer = function()
             adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
     })
-
-    vim.diagnostic.config({
-        underline = true,
-        signs = true,
-        virtual_text = false,
-        virtual_lines = { only_current_line = true },
-        float = true,
-        update_in_insert = false,
-        severity_sort = true,
-    })
 end
 
 M.volar = function()
+    local lspconfig_configs = require("lspconfig.configs")
+    local lspconfig_util = require("lspconfig.util")
     local function on_new_config(new_config, new_root_dir)
         local function get_typescript_server_path(root_dir)
             local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
@@ -371,7 +345,7 @@ local is_load = 0
 
 M.config = function()
     if is_load == 1 then
-        return
+        return is_load
     end
     require("mason").setup()
     require("mason-lspconfig").setup()
@@ -387,7 +361,6 @@ M.config = function()
         end,
     })
 
-
     vim.diagnostic.config({
         underline = true,
         signs = true,
@@ -399,6 +372,7 @@ M.config = function()
     })
 
     is_load = 1
+    return is_load
 end
 
 return M

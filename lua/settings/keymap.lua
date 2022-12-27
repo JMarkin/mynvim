@@ -18,7 +18,7 @@ local format = function()
 end
 
 function maps(m)
-    nnoremap("<leader>q", ":q<cr>", "Quit")
+    nnoremap("qq", ":q<cr>", "Quit")
 
     m.nname("<space>p", "Packer")
     nnoremap("<leader>ps", "<cmd>PackerSync<cr>", "Packer: sync")

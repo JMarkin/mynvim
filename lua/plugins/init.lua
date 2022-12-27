@@ -1,43 +1,23 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-        vim.cmd([[packadd packer.nvim]])
-        return true
-    end
-    return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-local packer = require("packer")
-
-packer.init({
-    max_jobs = 16,
-})
-
 local is_not_mini = function()
     return vim.env.NVIM_MINI == nil
 end
 
-return packer.startup(function(use)
-    -- Packer can manage itself
-    use("wbthomason/packer.nvim")
-
+require("lazy").setup({
     -- профилировщик оптимизатор neovim
-    use({
-        "lewis6991/impatient.nvim",
-    })
+    -- {
+    --     "lewis6991/impatient.nvim",
+    --     lazy = false,
+    --     priority = 1001,
+    -- },
 
     -- обноление cursorhold
-    use("antoinemadec/FixCursorHold.nvim")
+    "antoinemadec/FixCursorHold.nvim",
 
-    use("romainl/vim-cool")
+    "romainl/vim-cool",
 
     --- Украшения
-    use({ "nvim-tree/nvim-web-devicons" })
-    use({
+    "nvim-tree/nvim-web-devicons",
+    {
         "stevearc/dressing.nvim",
         config = function()
             require("dressing").setup({
@@ -50,13 +30,9 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
+    },
 
-    use({
-        "MunifTanjim/nui.nvim",
-    })
-
-    use({
+    {
         "mvllow/modes.nvim",
         config = function()
             require("modes").setup({
@@ -65,9 +41,9 @@ return packer.startup(function(use)
             })
         end,
         event = "ModeChanged",
-    })
+    },
 
-    use({
+    {
         "ibhagwan/smartyank.nvim",
         config = function()
             require("smartyank").setup({
@@ -78,11 +54,12 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
+    },
 
-    use({
+    {
         "rcarriga/nvim-notify",
-        tag = "v3.9.1",
+        lazy = false,
+        priority = 1000,
         config = function()
             require("notify").setup({
                 timeout = 500,
@@ -92,26 +69,11 @@ return packer.startup(function(use)
             })
             vim.notify = require("notify")
         end,
-    })
+    },
 
-    use({
-        "folke/noice.nvim",
-        disable = true,
-        config = function()
-            require("plugins.noice")
-        end,
-        requires = {
-            "rcarriga/nvim-notify",
-        },
-        after = { "nvim-notify", "nvim-cmp" },
-        event = { "CmdlineEnter" },
-        keymap = "/",
-        cond = is_not_mini,
-    })
-
-    use({
+    {
         "anuvyklack/windows.nvim",
-        requires = {
+        dependencies = {
             "anuvyklack/middleclass",
             "anuvyklack/animation.nvim",
         },
@@ -129,30 +91,28 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
-    use({
+        event = "BufAdd",
+    },
+    {
         "nanozuki/tabby.nvim",
         config = function()
             require("plugins.tabline")
         end,
-        event = "BufEnter",
-    })
+        event = "TabNew",
+    },
 
-    use({
-        "nvim-lua/plenary.nvim",
-    })
-
-    use({
+    {
         "b0o/incline.nvim",
-        setup = function()
+        init = function()
             vim.opt.laststatus = 3
         end,
         config = function()
             require("plugins.incline")
         end,
-    })
+        event = "BufReadPost",
+    },
 
-    use({
+    {
         "declancm/cinnamon.nvim",
         config = function()
             require("cinnamon").setup({
@@ -161,26 +121,26 @@ return packer.startup(function(use)
                 extended_keymaps = false,
             })
         end,
-    })
+    },
 
-    use({
+    {
         "goolord/alpha-nvim",
-        requires = { "kyazdani42/nvim-web-devicons" },
         config = function()
             require("plugins.dashboard")
         end,
-    })
+    },
 
-    use({
+    {
         "lukas-reineke/indent-blankline.nvim",
         cond = is_not_mini,
         config = function()
             require("plugins.indent")
         end,
-    })
+        event = "BufReadPost",
+    },
 
     --- вместо ESC просто jj
-    use({
+    {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
         config = function()
@@ -189,10 +149,10 @@ return packer.startup(function(use)
                 clear_empty_lines = true,
             })
         end,
-    })
+    },
 
     --- Локальный настройки для папки с помощью .lvimrc с хэшем
-    use({
+    {
         "klen/nvim-config-local",
         config = function()
             require("config-local").setup({
@@ -205,92 +165,80 @@ return packer.startup(function(use)
                 lookup_parents = true,
             })
         end,
-    })
+    },
 
     -- Markdown превью
-    use({
+    {
         "ellisonleao/glow.nvim",
         cmd = "Glow",
         cond = is_not_mini,
-    })
+    },
 
     -- Цвет тема
-    use({
+    {
         "JMarkin/nvim-highlite",
+        lazy = false,
+        priority = 1000,
         config = function()
             vim.opt.background = "dark"
             vim.cmd("colorscheme highlite")
         end,
-    })
+    },
 
     -- Информационная строка внизу
-    use({
+    {
         "nvim-lualine/lualine.nvim",
-        requires = {},
         event = "BufReadPre",
         config = function()
             require("plugins.lualine")
         end,
-        -- after = "noice.nvim",
-    })
+        -- dependencies = "noice.nvim",
+    },
 
     -- Файловый менеджер
-    use({
+    {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
-            "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
         },
-        setup = function()
+        init = function()
             require("plugins.filetree").setup()
         end,
         config = function()
             require("plugins.filetree").config()
         end,
         cmd = "Neotree",
-    })
+    },
 
     -- Подцветка синтаксиа
 
-    use({
+    {
         "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate",
-        config = function() end,
-    })
+        build = ":TSUpdate",
+        lazy = true,
+        dependencies = {
+            "windwp/nvim-ts-autotag",
+            "m-demare/hlargs.nvim",
+            "yioneko/nvim-yati",
+            "p00f/nvim-ts-rainbow",
+            "nvim-treesitter/nvim-treesitter-refactor",
+            {
+                "andymass/vim-matchup",
+                init = function()
+                    vim.g.matchup_transmute_enabled = 1
+                    vim.g.matchup_delim_noskips = 1
+                    vim.g.matchup_matchparen_deferred = 1
+                    vim.g.matchup_matchparen_hi_surround_always = 1
+                end,
+            },
+        },
+    },
 
-    use({
-        "windwp/nvim-ts-autotag",
-    })
-    use({
-        "m-demare/hlargs.nvim",
-    })
-
-    use({
-        "andymass/vim-matchup",
-        setup = function()
-            vim.g.matchup_transmute_enabled = 1
-            vim.g.matchup_delim_noskips = 1
-            vim.g.matchup_matchparen_deferred = 1
-            vim.g.matchup_matchparen_hi_surround_always = 1
-        end,
-    })
-
-    use({
-        "yioneko/nvim-yati",
-        after = "nvim-treesitter",
-    })
-
-    use({
-        "p00f/nvim-ts-rainbow",
-        after = "nvim-treesitter",
-    })
-
-    use({
+    {
         "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        after = "nvim-treesitter",
+        dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter" },
         config = function()
             require("todo-comments").setup({
                 -- your configuration comes here
@@ -298,50 +246,53 @@ return packer.startup(function(use)
                 -- refer to the configuration section below
             })
         end,
-    })
-    use({
-        "nvim-treesitter/nvim-treesitter-refactor",
-        after = "nvim-treesitter",
-    })
+        cond = is_not_mini,
+        event = "BufReadPost",
+    },
 
     -- Доп утился для языков
-    use({
+    {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
-    })
-    use({
-        "https://git.sr.ht/~p00f/clangd_extensions.nvim",
+    },
+    {
+        "clangd_extenstions",
+        url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
         cond = is_not_mini,
-    })
-    use({
+    },
+    {
         "b0o/schemastore.nvim",
         cond = is_not_mini,
-    })
-    use({
+    },
+    {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
-    })
-    use({
+    },
+    {
         "PatschD/zippy.nvim",
         config = function()
             require("plugins.zippy")
         end,
         cond = is_not_mini,
-    })
+        keys = "<leader>lp",
+    },
     -- LSP
-    use({
+    {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
-    })
-    use({
+        lazy = true,
+    },
+    {
         "williamboman/mason.nvim",
         cond = is_not_mini,
-    })
-    use({
+        lazy = true,
+    },
+    {
         "williamboman/mason-lspconfig.nvim",
         cond = is_not_mini,
-    })
-    use({
+        lazy = true,
+    },
+    {
         "j-hui/fidget.nvim",
         cond = is_not_mini,
         config = function()
@@ -351,10 +302,11 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
+    },
 
-    use({
+    {
         "folke/trouble.nvim",
+        lazy = true,
         cond = is_not_mini,
         config = function()
             require("trouble").setup({
@@ -363,177 +315,137 @@ return packer.startup(function(use)
             })
         end,
         cmd = "TroubleToggle",
-    })
+    },
 
-    if vim.fn.has("nvim-0.8") == 1 then
-        use({
-            "SmiteshP/nvim-navic",
-            cond = is_not_mini,
-            requires = "neovim/nvim-lspconfig",
-            config = function()
-                require("nvim-navic").setup({ highlight = true })
-                vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-            end,
-        })
-    end
+    {
+        "SmiteshP/nvim-navic",
+        lazy = true,
+        cond = is_not_mini,
+        dependencies = "neovim/nvim-lspconfig",
+        config = function()
+            require("nvim-navic").setup({ highlight = true })
+            vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+        end,
+    },
 
-    use({
+    {
         "jose-elias-alvarez/null-ls.nvim",
         cond = is_not_mini,
-        requires = { "nvim-lua/plenary.nvim" },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             require("plugins.nullls").config()
         end,
-    })
+    },
 
-    use({ "kevinhwang91/nvim-bqf", ft = "qf" })
-    use({
-        "https://gitlab.com/yorickpeterse/nvim-pqf.git",
+    { "kevinhwang91/nvim-bqf", ft = "qf" },
+    {
+        "pqf",
+        ft = "qf",
+        url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
         config = function()
             require("pqf").setup()
         end,
-    })
-    use({
+    },
+    {
         "someone-stole-my-name/yaml-companion.nvim",
+        lazy = true,
         cond = is_not_mini,
-        requires = {
+        dependencies = {
             { "neovim/nvim-lspconfig" },
             { "nvim-lua/plenary.nvim" },
         },
-    })
-
-    use({
+    },
+    {
         "weilbith/nvim-code-action-menu",
+        lazy = true,
         cond = is_not_mini,
         cmd = "CodeActionMenu",
-    })
-
-    use({
+    },
+    {
         "filipdutescu/renamer.nvim",
+        lazy = true,
         cond = is_not_mini,
         branch = "master",
-        requires = { { "nvim-lua/plenary.nvim" } },
+        dependencies = { { "nvim-lua/plenary.nvim" } },
         config = function()
             require("plugins.renamer").config()
         end,
-    })
-
-    use({
-        "rmagatti/goto-preview",
-        cond = is_not_mini,
-        config = function()
-            require("plugins.preview")
-        end,
-    })
-
-    -- use({
-    --     "ThePrimeagen/refactoring.nvim",
-    --     config = function()
-    --         require("refactoring").setup({})
-    --     end,
-    -- })
-
-    use({
+    },
+    {
         "kevinhwang91/nvim-ufo",
+        lazy = true,
         cond = is_not_mini,
-        requires = "kevinhwang91/promise-async",
+        dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
         event = "BufReadPost",
-        after = "nvim-treesitter",
-        setup = function() end,
         config = function()
             require("plugins.ufo").config()
         end,
-    })
-
+    },
     --- Автокомлиты
 
-    use({
-        "L3MON4D3/LuaSnip",
-        event = { "InsertEnter", "CmdlineEnter" },
-        keymap = "/",
-    })
-
-    use({
-        "lukas-reineke/cmp-under-comparator",
-        event = { "VimEnter" },
-    })
-    use({
+    {
         "hrsh7th/nvim-cmp",
-        after = { "cmp-under-comparator", "LuaSnip" },
+        dependencies = {
+            "L3MON4D3/LuaSnip",
+            "lukas-reineke/cmp-under-comparator",
+            "lukas-reineke/cmp-rg",
+            "hrsh7th/cmp-nvim-lsp",
+            "quangnguyen30192/cmp-nvim-tags",
+            "rcarriga/cmp-dap",
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp-document-symbol",
+        },
         config = function()
             require("plugins.cmp").config()
         end,
         event = { "InsertEnter", "CmdlineEnter" },
-        keymap = "/",
-    })
-    use({
-        "lukas-reineke/cmp-rg",
-        after = "nvim-cmp",
-    })
-    use({
-        "hrsh7th/cmp-nvim-lsp",
-        after = "nvim-cmp",
-    })
-    use({
-        "quangnguyen30192/cmp-nvim-tags",
-        after = "nvim-cmp",
-    })
-    use({
-        "rcarriga/cmp-dap",
-        after = "nvim-cmp",
-    })
-    use({
-        "saadparwaiz1/cmp_luasnip",
-        after = { "LuaSnip", "nvim-cmp" },
-    })
-    use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-    use({ "petertriho/cmp-git", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" })
-    use({ "ray-x/cmp-treesitter", after = "nvim-cmp" })
+        keys = "/",
+    },
 
-    use({
+    {
         "JMarkin/gentags.lua",
         config = function()
             require("gentags").setup()
         end,
-    })
-
+    },
     -- Табы
-    use({
+    {
         "Asheq/close-buffers.vim",
-    })
-    --
-    use({
+        event = "BufReadPost",
+    },
+    {
         "mrjones2014/smart-splits.nvim",
-    })
-
+    },
     -- Навигация внутри файла по классам и функциям
-    use({
+    {
         "simrat39/symbols-outline.nvim",
         cond = is_not_mini,
         config = function()
             require("plugins.symbols")
         end,
         cmd = "SymbolsOutline",
-    })
-
+    },
     --  Git
-    use("kdheepak/lazygit.nvim")
-    use({
+    {
+        "kdheepak/lazygit.nvim",
+        cmd = "LazyGit",
+    },
+    {
         "lewis6991/gitsigns.nvim",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
         },
         config = function()
             require("gitsigns").setup()
         end,
-    })
-    use({
+        event = "BufEnter *.*",
+    },
+    {
         "sindrets/diffview.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require("diffview").setup({
                 view = {
@@ -563,10 +475,9 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
-
+    },
     -- Colorize
-    use({
+    {
         "NvChad/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({
@@ -587,94 +498,75 @@ return packer.startup(function(use)
             })
         end,
         event = "BufReadPre",
-    })
-
+    },
     -- Комментирование
-    use({
+    {
         "numToStr/Comment.nvim",
         config = function()
             require("Comment").setup()
         end,
-        event = "BufReadPre",
-    })
-    use({
-        "s1n7ax/nvim-comment-frame",
-        cond = is_not_mini,
-        after = {
-            "nvim-treesitter",
-        },
-        config = function()
-            require("nvim-comment-frame").setup()
-        end,
-        event = "BufReadPre",
-    })
-
+        event = "BufReadPost",
+    },
     -- EasyMotion
-    use({
+    {
         "ggandor/leap.nvim",
-        requires = { "tpope/vim-repeat" },
+        dependencies = { "tpope/vim-repeat" },
         config = function()
             require("plugins.leap")
         end,
-        event = "BufReadPre",
-    })
-
+        event = "BufReadPost",
+    },
     -- Дебагер
-    use({
-        "mfussenegger/nvim-dap",
-        cond = is_not_mini,
-        keymap = "<leader>d",
-    })
-    use({
+
+    {
         "rcarriga/nvim-dap-ui",
         cond = is_not_mini,
-        after = { "nvim-dap" },
+        dependencies = {
+            {
+                "mfussenegger/nvim-dap",
+            },
+            {
+                "theHamsta/nvim-dap-virtual-text",
+                config = function()
+                    require("nvim-dap-virtual-text").setup()
+                end,
+                dependencies = "nvim-treesitter",
+            },
+            "ofirgall/goto-breakpoints.nvim",
+        },
         config = function()
             require("dapui").setup()
         end,
-    })
-    use({
-        "theHamsta/nvim-dap-virtual-text",
-        cond = is_not_mini,
-        config = function()
-            require("nvim-dap-virtual-text").setup()
-        end,
-        after = { "nvim-treesitter", "nvim-dap" },
-    })
-    use({ "ofirgall/goto-breakpoints.nvim", after = "nvim-dap" })
-    -- use({
+        keys = "<leader>d",
+    },
+
     --     "Weissle/persistent-breakpoints.nvim",
-    --     after = "nvim-dap",
+    --     dependencies = "nvim-dap",
     --     config = function()
-    --         require("persistent-breakpoints").setup({})
-    --         --- загрузка брекпоинтов
+    --         require("persistent-breakpoints").setup({},    --         --- загрузка брекпоинтов
     --         vim.api.nvim_create_autocmd(
     --             { "BufReadPost" },
     --             { callback = require("persistent-breakpoints.api").load_breakpoints }
     --         )
     --     end,
-    -- })
-
+    -- },
     -- editorconfig
-    use("gpanders/editorconfig.nvim")
+    "gpanders/editorconfig.nvim",
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
-    use({
+    {
         "ibhagwan/fzf-lua",
-        requires = {
+        dependencies = {
             "lotabout/skim",
-            "kyazdani42/nvim-web-devicons",
         },
         config = function()
             require("plugins.fzflua").setup()
         end,
         event = "VimEnter",
-    })
-
-    use({
+    },
+    {
         "cshuaimin/ssr.nvim",
         cond = is_not_mini,
-        module = "ssr",
         -- Calling setup is optional.
         config = function()
             require("ssr").setup({
@@ -688,13 +580,13 @@ return packer.startup(function(use)
                 },
             })
         end,
-    })
-
+        keys = "<leader>lR",
+    },
     --- Генераци докстрингов и т.п.
-    use({
+    {
         "danymat/neogen",
         cond = is_not_mini,
-        requires = "nvim-treesitter/nvim-treesitter",
+        dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("neogen").setup({
                 enabled = true,
@@ -702,69 +594,46 @@ return packer.startup(function(use)
                 snippet_engine = "luasnip",
             })
         end,
-    })
-
+        keys = "<leader>ld",
+    },
     -- превью строчки при :%d
-    use({
+    {
         "nacro90/numb.nvim",
         config = function()
             require("numb").setup()
         end,
         event = "CmdlineEnter",
-    })
-
+    },
     --nginx
-    use({
+    {
         "chr4/nginx.vim",
         ft = { "nginx" },
-    })
-
-    use({
+    },
+    {
         "chr4/sslsecure.vim",
         ft = { "nginx" },
-    })
+    },
     -- засейчка neovim
-    use({
+    {
         "dstein64/vim-startuptime",
         cmd = { "StartupTime" },
-    })
-
+    },
     -- sudo
-    use({
+    {
         "lambdalisue/suda.vim",
         cmd = { "SudaRead", "SudaWrite" },
-    })
-
+    },
     -- bookmark
-    use({
+    {
         "MattesGroeger/vim-bookmarks",
-        after = { "mapx" },
-        setup = function()
+        dependencies = { "mapx" },
+        init = function()
             require("plugins.bookmark").setup()
         end,
         keys = "<leader>b",
-    })
-
-    -- терминал
-    use({
-        "oberblastmeister/termwrapper.nvim",
-        config = function()
-            require("termwrapper").setup({
-                -- these are all of the defaults
-                open_autoinsert = true, -- autoinsert when opening
-                toggle_autoinsert = true, -- autoinsert when toggling
-                autoclose = true, -- autoclose, (no [Process exited 0])
-                winenter_autoinsert = true, -- autoinsert when entering the window
-                default_window_command = "belowright 13split", -- the default window command to run when none is specified,
-                -- opens a window in the bottom
-                open_new_toggle = true, -- open a new terminal if the toggle target does not exist
-                log = 1, -- 1 = warning, 2 = info, 3 = debug
-            })
-        end,
-    })
-
+    },
     -- Классная штука по отображению shortcut
-    use({
+    {
         "folke/which-key.nvim",
         config = function()
             require("which-key").setup({
@@ -776,21 +645,19 @@ return packer.startup(function(use)
             })
         end,
         event = "VimEnter",
-    })
-
+    },
     -- Удобный способ задания shortcut с интеграцией в which-key
-    use({
+    {
         "b0o/mapx.nvim",
-        as = "mapx",
-        after = { "which-key.nvim" },
+        name = "mapx",
+        dependencies = { "which-key.nvim" },
         config = function()
             local m = require("mapx").setup({ global = "force", whichkey = true })
             require("settings.keymap")(m)
         end,
-    })
-
+    },
     -- курсор следует за shift
-    use({
+    {
         "gbprod/stay-in-place.nvim",
         config = function()
             require("stay-in-place").setup({
@@ -798,28 +665,28 @@ return packer.startup(function(use)
                 preserve_visual_selection = true,
             })
         end,
-        event = "BufReadPre",
-    })
-
+        event = "BufReadPost",
+    },
     -- yaml
-    use({
+    {
         "cuducos/yaml.nvim",
         ft = { "yaml" }, -- optional
-        after = {
+        dependencies = {
             "nvim-treesitter",
         },
-    })
-    -- databases
-    use({
-        "tpope/vim-dadbod",
-        cmd = { "DB" },
-        cond = is_not_mini,
-    })
-    use({
+    }, -- databases
+
+    {
         "kristijanhusak/vim-dadbod-ui",
         cond = is_not_mini,
-        requires = "tpope/vim-dadbod",
-        setup = function()
+        dependencies = {
+            "tpope/vim-dadbod",
+            {
+                "kristijanhusak/vim-dadbod-completion",
+                dependencies = "nvim-cmp",
+            },
+        },
+        init = function()
             vim.g.db_ui_env_variable_url = "DATABASE_URL"
             vim.g.db_ui_env_variable_name = "DATABASE_NAME"
             vim.g.db_ui_dotenv_variable_prefix = "DB_"
@@ -829,56 +696,39 @@ return packer.startup(function(use)
             vim.g.db_ui_use_nerd_fonts = 1
         end,
         cmd = { "DB", "DBUI", "DBUIToggle", "DBUIFindBUffer", "DBUIRenameBuffer" },
-    })
-    use({
-        "kristijanhusak/vim-dadbod-completion",
-        after = { "vim-dadbod-ui", "nvim-cmp" },
-        cond = is_not_mini,
-    })
+    },
 
     -- uncompiler
-    use({
+    {
         "p00f/godbolt.nvim",
         config = function()
             require("godbolt").setup()
         end,
         cmd = { "Godbolt", "GodboltCompiler" },
-    })
-
-    use({
-        "https://gitlab.com/yorickpeterse/nvim-window",
-    })
-
+    },
+    {
+        "nvim-window",
+        url = "https://gitlab.com/yorickpeterse/nvim-window",
+        keys = "<space>w",
+    },
     -- tests
-    use({
+    {
         "nvim-neotest/neotest",
         cond = is_not_mini,
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim",
+            "nvim-neotest/neotest-python",
+            "rouge8/neotest-rust",
         },
-    })
-    use({
-        "nvim-neotest/neotest-python",
-        after = "neotest",
-        cond = is_not_mini,
-    })
-    use({
-        "rouge8/neotest-rust",
-        after = "neotest",
-        cond = is_not_mini,
-    })
-
+        keys = "t",
+    },
     -- trim
-    use({
+    {
         "zakharykaplan/nvim-retrail",
         config = function()
             require("retrail").setup()
         end,
-    })
-
-    if packer_bootstrap then
-        require("packer").sync()
-    end
-end)
+    },
+})

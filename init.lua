@@ -5,11 +5,20 @@ vim.g.snips_author = vim.env.AUTHOR or 'Jury Markin'
 vim.g.snips_email = vim.env.EMAIL or 'me@jmarkin.ru'
 vim.g.snips_github = vim.env.EMAIL or 'https://github.com/JMarkin'
 
-local present, _ = pcall(require, "impatient")
-if not present then
-    print("Impations not install run :PackerInstall")
-end
 vim.g.loaded_matchit = 1
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
+
 require("settings")
 require("plugins")
 require("plugins.treesitter").setup()

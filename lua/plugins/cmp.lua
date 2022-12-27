@@ -139,7 +139,6 @@ M.config = function()
                 priority_weight = 100,
                 filetype = { "sql", "mssql", "plsql" },
             },
-            { name = "treesitter", priority_weight = 86, max_item_count = 5 },
             { name = "tags", priority_weight = 86, max_item_count = 5 },
             {
                 name = "rg",
@@ -147,7 +146,6 @@ M.config = function()
                 max_item_count = 5,
                 priority_weight = 84,
             },
-            { name = "path", priority_weight = 82, keyword_length = 4 },
             { name = "luasnip", priority_weight = 87 },
         },
         formatting = {
@@ -172,13 +170,6 @@ M.config = function()
         sources = {
             { name = "dap" },
         },
-    })
-
-    -- Set configuration for specific filetype.
-    cmp.setup.filetype("gitcommit", {
-        sources = cmp.config.sources({
-            { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
-        }),
     })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).

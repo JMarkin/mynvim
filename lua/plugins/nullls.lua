@@ -155,7 +155,7 @@ M.enable = function(diagnostics, formatters, completions)
         )
     end
 
-    nullls.setup({ sources = sources, root_dir = u.root_pattern(".lvimrc", "Makefile", ".git") })
+    nullls.setup({ sources = sources, root_dir = u.root_pattern(".vimrc.lua", "Makefile", ".git") })
 end
 
 return M
