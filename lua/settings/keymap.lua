@@ -68,8 +68,6 @@ function maps(m)
 
     ---- Fold
     m.nname("z", "Fold")
-    nnoremap("zf", "<cmd>setl fdm&<CR>zf", "Create fold")
-    xnoremap("zf", "<cmd>setl fdm&<CR>zf", "Create fold")
 
     ---- Перемещения
 
