@@ -170,6 +170,7 @@ M.rust_analyzer = function()
                         enable = false,
                     },
                 },
+                inlayHints = { locationLinks = false },
             },
         },
         standalone = true,
