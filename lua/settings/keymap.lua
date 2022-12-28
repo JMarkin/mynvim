@@ -1,13 +1,5 @@
 local cmd = vim.cmd
 
-local MEM = {
-    diffview = 0,
-}
-
-local lazy = require("diffview.lazy")
-
-local diffview = lazy.require("diffview")
-
 local format = function()
     vim.lsp.buf.format({
         filter = function(client)
@@ -54,17 +46,8 @@ function maps(m)
     nnoremap("<space>e", "<cmd>TroubleToggle document_diagnostics<cr>", "Buffer Diagnostics")
     nnoremap("<space>T", "<Cmd>Ttoggle<CR>", "Terminal")
     nnoremap("<space>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
-    nnoremap("<space>D", function()
-        if MEM.diffview == 0 then
-            diffview.open()
-            MEM.diffview = 1
-        else
-            diffview.close()
-            MEM.diffview = 0
-        end
-    end, "Git: diff")
 
-    nnoremap("<space>r", require("smart-splits").start_resize_mode, "Resize mode")
+    nnoremap("<space>r", "<cmd>lua require('smart-splits').start_resize_mode()<cr>", "Resize mode")
 
     ---- Fold
     m.nname("z", "Fold")
@@ -236,7 +219,7 @@ function maps(m)
     end, { desc = "Previous todo comment" })
 
     -- windows
-    nnoremap("<space>w", require("nvim-window").pick, "silent", "Windows: pick")
+    nnoremap("<space>w", function() require("nvim-window").pick() end, "silent", "Windows: pick")
 
     --save shortcut
     nnoremap({ "<leader>w", "<leader>'" }, ":w<CR>", "silent", "normal mode: save")

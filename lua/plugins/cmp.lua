@@ -49,9 +49,7 @@ local menu_map = {
 
 local enabled = function()
     local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-    enabled = enabled or require("cmp_dap").is_dap_buffer()
     enabled = enabled and not require("plugins.renamer").show_renamer()
-
     return enabled
 end
 
@@ -62,15 +60,14 @@ M.config = function()
     vim.cmd([[set completeopt=menu,menuone,noselect]])
 
     local cmp = require("cmp")
-    local neogen = require("neogen")
 
     local move_down = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.in_snippet() and luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
-        elseif neogen.jumpable() then
-            neogen.jump_next()
+        elseif require("neogen").jumpable() then
+            require("neogen").jump_next()
         elseif has_words_before() then
             cmp.complete()
         else
@@ -163,12 +160,6 @@ M.config = function()
             completion = {
                 border = vim.g.floating_window_border_dark,
             },
-        },
-    })
-
-    require("cmp").setup.filetype({ "dap-repl", "dapui_watches" }, {
-        sources = {
-            { name = "dap" },
         },
     })
 

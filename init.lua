@@ -21,4 +21,3 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("settings")
 require("plugins")
-require("plugins.treesitter").setup()

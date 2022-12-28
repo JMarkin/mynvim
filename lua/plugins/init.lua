@@ -234,6 +234,9 @@ require("lazy").setup({
                 end,
             },
         },
+        config = function()
+            require("plugins.treesitter").setup()
+        end,
     },
 
     {
@@ -254,6 +257,14 @@ require("lazy").setup({
     {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
+    },
+    {
+        "someone-stole-my-name/yaml-companion.nvim",
+        cond = is_not_mini,
+        dependencies = {
+            { "neovim/nvim-lspconfig" },
+            { "nvim-lua/plenary.nvim" },
+        },
     },
     {
         "clangd_extenstions",
@@ -277,21 +288,31 @@ require("lazy").setup({
         keys = "<leader>lp",
     },
     -- LSP
-    {
-        "neovim/nvim-lspconfig",
-        cond = is_not_mini,
-        lazy = true,
-    },
+
     {
         "williamboman/mason.nvim",
         cond = is_not_mini,
-        lazy = true,
+        dependencies = {
+            {
+                "neovim/nvim-lspconfig",
+            },
+            {
+                "williamboman/mason-lspconfig.nvim",
+            },
+            {
+                "SmiteshP/nvim-navic",
+                config = function()
+                    require("nvim-navic").setup({ highlight = true })
+                    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+                end,
+            },
+        },
+        config = function()
+            require("settings.lang").config()
+        end,
+        event = "BufReadPre *.*",
     },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        cond = is_not_mini,
-        lazy = true,
-    },
+
     {
         "j-hui/fidget.nvim",
         cond = is_not_mini,
@@ -315,17 +336,6 @@ require("lazy").setup({
             })
         end,
         cmd = "TroubleToggle",
-    },
-
-    {
-        "SmiteshP/nvim-navic",
-        lazy = true,
-        cond = is_not_mini,
-        dependencies = "neovim/nvim-lspconfig",
-        config = function()
-            require("nvim-navic").setup({ highlight = true })
-            vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-        end,
     },
 
     {
@@ -360,15 +370,6 @@ require("lazy").setup({
         end,
     },
 
-    {
-        "someone-stole-my-name/yaml-companion.nvim",
-        lazy = true,
-        cond = is_not_mini,
-        dependencies = {
-            { "neovim/nvim-lspconfig" },
-            { "nvim-lua/plenary.nvim" },
-        },
-    },
     {
         "weilbith/nvim-code-action-menu",
         lazy = true,
@@ -405,7 +406,6 @@ require("lazy").setup({
             "lukas-reineke/cmp-rg",
             "hrsh7th/cmp-nvim-lsp",
             "quangnguyen30192/cmp-nvim-tags",
-            "rcarriga/cmp-dap",
             "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -421,6 +421,9 @@ require("lazy").setup({
 
     {
         "JMarkin/gentags.lua",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
         config = function()
             require("gentags").setup()
         end,
@@ -608,7 +611,7 @@ require("lazy").setup({
                 snippet_engine = "luasnip",
             })
         end,
-        keys = "<leader>ld",
+        event = "BufReadPost *.*",
     },
     -- превью строчки при :%d
     {
