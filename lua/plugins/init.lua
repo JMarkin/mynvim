@@ -337,15 +337,29 @@ require("lazy").setup({
         end,
     },
 
-    { "kevinhwang91/nvim-bqf", ft = "qf" },
     {
-        "pqf",
+        "kevinhwang91/nvim-bqf",
         ft = "qf",
-        url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
+        dependencies = {
+            "nvim-treesitter",
+            {
+                "junegunn/fzf",
+                lazy = true,
+            },
+            {
+                "pqf",
+                url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
+                config = true,
+            },
+        },
         config = function()
-            require("pqf").setup()
+            require("bqf").setup({
+                auto_enable = true,
+                auto_resize_height = true,
+            })
         end,
     },
+
     {
         "someone-stole-my-name/yaml-companion.nvim",
         lazy = true,
