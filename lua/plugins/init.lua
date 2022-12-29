@@ -285,7 +285,7 @@ require("lazy").setup({
             require("plugins.zippy")
         end,
         cond = is_not_mini,
-        keys = "<leader>lp",
+        event = "BufReadPost *.py,*.js",
     },
     -- LSP
 
@@ -378,13 +378,13 @@ require("lazy").setup({
     },
     {
         "filipdutescu/renamer.nvim",
-        lazy = true,
         cond = is_not_mini,
         branch = "master",
         dependencies = { { "nvim-lua/plenary.nvim" } },
         config = function()
             require("plugins.renamer").config()
         end,
+        event = "BufReadPost",
     },
     {
         "kevinhwang91/nvim-ufo",
@@ -739,7 +739,18 @@ require("lazy").setup({
             "nvim-neotest/neotest-python",
             "rouge8/neotest-rust",
         },
-        keys = "t",
+        config = function()
+            require("neotest").setup({
+                adapters = {
+                    require("neotest-python")({
+                        dap = { justMyCode = false },
+                        args = { "--log-level", "DEBUG" },
+                        runner = vim.g.python_test_runner or "pytest",
+                    }),
+                },
+            })
+        end,
+        event = "BufReadPost *.py,*.rs",
     },
     -- trim
     {

@@ -6,7 +6,7 @@ require("zippy").setup({
         print_function = "console.debug",
     },
     ["python"] = {
-        print_function = "logger.debug",
+        print_function = "print",
         language_format_behaviour = "none",
     },
 })
