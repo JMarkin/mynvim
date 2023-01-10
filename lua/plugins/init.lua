@@ -3,17 +3,14 @@ local is_not_mini = function()
 end
 
 require("lazy").setup({
-    -- профилировщик оптимизатор neovim
-    -- {
-    --     "lewis6991/impatient.nvim",
-    --     lazy = false,
-    --     priority = 1001,
-    -- },
 
     -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
 
-    "romainl/vim-cool",
+    {
+        "asiryk/auto-hlsearch.nvim",
+        config = true,
+    },
 
     --- Украшения
     "nvim-tree/nvim-web-devicons",
@@ -139,7 +136,7 @@ require("lazy").setup({
         event = "BufReadPost",
     },
 
-    --- вместо ESC просто jj
+    -- вместо ESC просто jj
     {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
@@ -222,7 +219,10 @@ require("lazy").setup({
             "windwp/nvim-ts-autotag",
             "m-demare/hlargs.nvim",
             "yioneko/nvim-yati",
-            "p00f/nvim-ts-rainbow",
+            {
+                "nvim-ts-rainbow",
+                url = "https://github.com/mrjones2014/nvim-ts-rainbow",
+            },
             "nvim-treesitter/nvim-treesitter-refactor",
             {
                 "andymass/vim-matchup",
@@ -257,6 +257,7 @@ require("lazy").setup({
     {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
+        lazy = true,
     },
     {
         "someone-stole-my-name/yaml-companion.nvim",
@@ -265,19 +266,23 @@ require("lazy").setup({
             { "neovim/nvim-lspconfig" },
             { "nvim-lua/plenary.nvim" },
         },
+        lazy = true,
     },
     {
         "clangd_extenstions",
         url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
         cond = is_not_mini,
+        lazy = true,
     },
     {
         "b0o/schemastore.nvim",
         cond = is_not_mini,
+        lazy = true,
     },
     {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
+        ft = { "python" },
     },
     {
         "PatschD/zippy.nvim",
@@ -285,7 +290,7 @@ require("lazy").setup({
             require("plugins.zippy")
         end,
         cond = is_not_mini,
-        event = "BufReadPost *.py,*.js",
+        ft = { "python", "javascript", "vue" },
     },
     -- LSP
 
@@ -396,7 +401,7 @@ require("lazy").setup({
             require("plugins.ufo").config()
         end,
     },
-    --- Автокомлиты
+    -- Автокомлиты
 
     {
         "hrsh7th/nvim-cmp",
@@ -493,7 +498,7 @@ require("lazy").setup({
             })
         end,
     },
-    -- Colorize
+    -- -- Colorize
     {
         "NvChad/nvim-colorizer.lua",
         config = function()
@@ -506,8 +511,8 @@ require("lazy").setup({
                     AARRGGBB = true, -- 0xAARRGGBB hex codes
                     rgb_fn = true, -- CSS rgb() and rgba() functions
                     hsl_fn = true, -- CSS hsl() and hsla() functions
-                    css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                    css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                    css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                    css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
                     -- Available modes for `mode`: foreground, background,  virtualtext
                     mode = "background", -- Set the display mode.
                     virtualtext = "■",
@@ -531,7 +536,8 @@ require("lazy").setup({
         config = function()
             require("plugins.leap")
         end,
-        event = "BufReadPost",
+        -- event = "BufReadPost",
+        keys = { "s", "S" },
     },
     -- Дебагер
 
@@ -567,8 +573,6 @@ require("lazy").setup({
     --         )
     --     end,
     -- },
-    -- editorconfig
-    "gpanders/editorconfig.nvim",
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     {
@@ -597,7 +601,7 @@ require("lazy").setup({
                 },
             })
         end,
-        keys = "<leader>lR",
+        event = "BufReadPost *.*",
     },
     --- Генераци докстрингов и т.п.
     {
@@ -661,7 +665,7 @@ require("lazy").setup({
                 },
             })
         end,
-        event = "VimEnter",
+        lazy = true,
     },
     -- Удобный способ задания shortcut с интеграцией в which-key
     {
@@ -691,7 +695,8 @@ require("lazy").setup({
         dependencies = {
             "nvim-treesitter",
         },
-    }, -- databases
+    },
+    -- databases
 
     {
         "kristijanhusak/vim-dadbod-ui",
@@ -726,7 +731,7 @@ require("lazy").setup({
     {
         "nvim-window",
         url = "https://gitlab.com/yorickpeterse/nvim-window",
-        keys = "<space>w",
+        event = "BufAdd",
     },
     -- tests
     {
@@ -750,7 +755,7 @@ require("lazy").setup({
                 },
             })
         end,
-        event = "BufReadPost *.py,*.rs",
+        ft = { "python", "rust" },
     },
     -- trim
     {

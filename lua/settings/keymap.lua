@@ -12,11 +12,6 @@ end
 function maps(m)
     nnoremap("qq", ":q<cr>", "Quit")
 
-    m.nname("<space>p", "Packer")
-    nnoremap("<leader>ps", "<cmd>PackerSync<cr>", "Packer: sync")
-    nnoremap("<leader>pc", "<cmd>PackerCompile<cr>", "Packer: compile")
-    nnoremap("<leader>pi", "<cmd>PackerInstall<cr>", "Packer: install")
-
     --------Основное управление буферами
     m.nname("<space>b", "Buffer")
 
@@ -121,7 +116,6 @@ function maps(m)
     nnoremap("<leader>sl", "<cmd>lua require('fzf-lua').loclist({ multiprocess=true})<Cr>", "Search: loclist")
     nnoremap("<leader>ss", "<cmd>lua require('fzf-lua').resume({ multiprocess=true})<Cr>", "Search: previous")
     nnoremap("<leader>sb", "<cmd>lua require('fzf-lua').buffers({ multiprocess=true})<Cr>", "Search: buffers")
-    nnoremap("<leader>sB", "<cmd>lua require('plugins.bookmark').search()<Cr>", "Search: bookmark")
     nnoremap("<leader>sf", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>", "Search: find files")
     nnoremap(
         "<leader>sg",
@@ -184,6 +178,10 @@ function maps(m)
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
     nnoremap("<leader>lp", "<cmd>lua require('zippy').insert_print()<CR>", "silent", "Lang: print variable")
 
+    m.nname("<leader>lc", "Copy")
+    nnoremap("<leader>lcd", ":PythonCopyReferenceDotted<CR>")
+    nnoremap("<leader>lcp", ":PythonCopyReferencePytest<CR>")
+
     -- DEBUG
     m.nname("<leader>d", "Debug")
     nnoremap("<leader>dt", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>", "silent")
@@ -200,7 +198,7 @@ function maps(m)
 
     nnoremap("<leader>bb", "<Plug>BookmarkToggle", "Bookmark: Toggle")
     nnoremap("<leader>bi", "<Plug>BookmarkAnnotate", "Bookmark: Annotate")
-    nnoremap("<leader>ba", "<Plug>BookmarkShowAll", "Bookmark: ShowAll")
+    nnoremap("<leader>ba", "<cmd>lua require('plugins.bookmark').search()<Cr>", "Bookmark: ShowAll")
     nnoremap("<leader>bj", "<Plug>BookmarkNext", "Bookmark: Next")
     nnoremap("<leader>bk", "<Plug>BookmarkPrev", "Bookmark: Prev")
     nnoremap("<leader>bc", "<Plug>BookmarkClear", "Bookmark: Clear")
@@ -219,7 +217,9 @@ function maps(m)
     end, { desc = "Previous todo comment" })
 
     -- windows
-    nnoremap("<space>w", function() require("nvim-window").pick() end, "silent", "Windows: pick")
+    nnoremap("<space>w", function()
+        require("nvim-window").pick()
+    end, "silent", "Windows: pick")
 
     --save shortcut
     nnoremap({ "<leader>w", "<leader>'" }, ":w<CR>", "silent", "normal mode: save")
@@ -232,10 +232,6 @@ function maps(m)
     nnoremap("ts", '<cmd>lua require("neotest").run.stop()<cr>', "Tests: stop nearest test")
     nnoremap("ta", '<cmd>lua require("neotest").run.attach()<cr>', "Tests: attach nearest test")
     nnoremap("tf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<cr>', "Tests: run current file")
-
-    m.nname("<leader>r", "PythonCopyReferences")
-    nnoremap("<leader>rd", ":PythonCopyReferenceDotted<CR>")
-    nnoremap("<leader>rp", ":PythonCopyReferencePytest<CR>")
 
     tnoremap("<C-Esc>", "<C-\\><C-n>:bd!")
 

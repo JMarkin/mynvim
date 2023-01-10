@@ -75,13 +75,13 @@ M.pylsp = function()
                         enabled = false,
                     },
                     yapf = {
-                        enabled = true,
+                        enabled = false,
                     },
                     mypy = {
                         enabled = false,
                     },
                     isort = {
-                        enabled = true,
+                        enabled = false,
                     },
                 },
             },
@@ -90,20 +90,20 @@ M.pylsp = function()
     setup_lsp("pylsp", opts)
 end
 
+M.jedi_language_server_is_load = 0
 M.jedi_language_server = function()
+    if M.jedi_language_server_is_load == 1 then
+        return 1
+    end
     g.pydocstring_formatter = "google"
     g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
 
     g.pydocstring_doq_path = "~/.pyenv/shims/doq"
 
     setup_lsp("jedi_language_server", {
-        initializationOptions = {
-            completion = {
-                disableSnippets = true,
-            },
-        },
         filetypes = { "python", "python.django", "django" },
     })
+    M.jedi_language_server_is_load = 1
 end
 
 M.sumneko_lua = function()
@@ -361,6 +361,10 @@ M.config = function()
             end
         end,
     })
+
+    if vim.fn.executable("jedi-language-server") == 1 then
+        M.jedi_language_server()
+    end
 
     vim.diagnostic.config({
         underline = true,

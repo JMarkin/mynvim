@@ -1,7 +1,6 @@
 import os
 from sys import audit
 
-
 class A:
     s: str = 'sad'
 
