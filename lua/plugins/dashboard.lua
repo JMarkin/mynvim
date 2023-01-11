@@ -4,16 +4,7 @@ if not status_ok then
 end
 
 local dashboard = require("alpha.themes.dashboard")
-dashboard.section.header.val = {
-    [[]],
-    [[]],
-    [[ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]],
-    [[ ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]],
-    [[ ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]],
-    [[ ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
-    [[ ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
-    [[ ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╚═╝     ╚═╝ ]],
-}
+dashboard.section.header.val = require("ascii").get_random_global()
 
 dashboard.section.buttons.val = {
     dashboard.button("f", "  Find File", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>"),

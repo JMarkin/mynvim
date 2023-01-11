@@ -7,10 +7,7 @@ require("lazy").setup({
     -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
 
-    {
-        "asiryk/auto-hlsearch.nvim",
-        config = true,
-    },
+    "romainl/vim-cool",
 
     --- Украшения
     "nvim-tree/nvim-web-devicons",
@@ -122,6 +119,12 @@ require("lazy").setup({
 
     {
         "goolord/alpha-nvim",
+        dependencies = {
+            {
+                "MaximilianLloyd/ascii.nvim",
+                dependencies = { "MunifTanjim/nui.nvim" },
+            },
+        },
         config = function()
             require("plugins.dashboard")
         end,
