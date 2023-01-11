@@ -118,7 +118,7 @@ local DEFAULT_INSTALL_EXEC = {
     stylua = { command = "cargo", args = { "install", "stylua" } },
     djhtml = { command = "pip", args = { "install", "djhtml" } },
     fixjson = { command = "npm", args = { "install", "-g", "fixjson" } },
-    ["nginx_beautifier"] = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
+    nginxbeautifier = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
     taplo = { command = "cargo", args = { "install", "taplo-cli", "--locked" } },
 }
 local EXEC_CONVERT = {
