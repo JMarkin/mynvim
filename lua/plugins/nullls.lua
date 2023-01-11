@@ -77,22 +77,89 @@ M.config = function()
     rawset(nullls.builtins.formatting, "docformatter", docformatter)
 end
 
+local DEFAULT_DIAGNOSTICS = {
+    "ruff",
+    "protolint",
+    "curlylint",
+    "sqlfluff",
+}
+local DEFAULT_FORMATTERS = {
+    "sqlfluff",
+    "ruff",
+    "yapf",
+    "yamlfmt",
+    "protolint",
+    "stylua",
+    "djhtml",
+    "fixjson",
+    "isort",
+    "nginx_beautifier",
+    "rome",
+    "taplo",
+    "docformatter",
+}
+
+local DEFAULT_COMPLETIONS = {}
+
+local DEFAULT_INSTALL_EXEC = {
+    ruff = { command = "pip", args = { "install", "ruff" } },
+    protolint = { command = "go", args = { "install", "github.com/yoheimuta/protolint/cmd/protolint@latest" } },
+    curlylint = { command = "pip", args = { "install", "curlylint" } },
+    spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
+    sqlfluff = { command = "pip", args = { "install", "sqlfluff" } },
+    rome = { command = "npm", args = { "install", "-g", "rome" } },
+    yapf = { command = "pip", args = { "install", "yapf" } },
+    isort = { command = "pip", args = { "install", "isort" } },
+    mypy = { command = "pip", args = { "install", "mypy" } },
+    pylint = { command = "pip", args = { "install", "pylint" } },
+    flake8 = { command = "pip", args = { "install", "flake8" } },
+    docformatter = { command = "pip", args = { "install", "docformatter" } },
+    yamlfmt = { command = "go", args = { "install", "github.com/google/yamlfmt/cmd/yamlfmt@latest" } },
+    stylua = { command = "cargo", args = { "install", "stylua" } },
+    djhtml = { command = "pip", args = { "install", "djhtml" } },
+    fixjson = { command = "npm", args = { "install", "-g", "fixjson" } },
+    ["nginx_beautifier"] = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
+    taplo = { command = "cargo", args = { "install", "taplo-cli", "--locked" } },
+}
+local EXEC_CONVERT = {
+    ["nginx_beautifier"] = "nginxbeautifier",
+}
+
+local Job = require("plenary.job")
+local function exec_install(exec)
+    exec = EXEC_CONVERT[exec] or exec
+    local function condition(tt)
+        if vim.fn.executable(exec) ~= 1 then
+            local shell = DEFAULT_INSTALL_EXEC[exec]
+            if shell ~= nil then
+                shell = vim.fn.map(shell, function(_, v)
+                    return v
+                end)
+                shell.on_exit = function(j, return_val)
+                    if return_val ~= 0 then
+                        vim.notify(exec .. " error" .. " " .. j:result(), vim.log.levels.WARN)
+                    end
+                end
+                local job = Job:new(shell)
+                vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
+                job:start()
+                return true
+            end
+            vim.notify(exec .. " not found, please install", vim.log.levels.WARN)
+            return false
+        end
+        return true
+    end
+    return condition
+end
+
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 M.enable = function(diagnostics, formatters, completions)
-    diagnostics = diagnostics or {
-        "flake8",
-        "djlint",
-        "protolint",
-    }
+    diagnostics = diagnostics or DEFAULT_DIAGNOSTICS
 
-    formatters = formatters or {
-        "isort",
-        "yapf",
-        "stylua",
-        "protolint",
-    }
+    formatters = formatters or DEFAULT_FORMATTERS
 
-    completions = completions or {}
+    completions = completions or DEFAULT_COMPLETIONS
 
     local sources = {}
 
@@ -106,6 +173,7 @@ M.enable = function(diagnostics, formatters, completions)
                     env = {
                         PYTHONPATH = vim.env.PYTHONPATH,
                     },
+                    condition = exec_install(diag),
                 })
             )
         else
@@ -116,6 +184,7 @@ M.enable = function(diagnostics, formatters, completions)
                     env = {
                         PYTHONPATH = vim.env.PYTHONPATH,
                     },
+                    condition = exec_install(diag),
                 })
             )
         end
@@ -130,6 +199,7 @@ M.enable = function(diagnostics, formatters, completions)
                     env = {
                         PYTHONPATH = vim.env.PYTHONPATH,
                     },
+                    condition = exec_install(fmt),
                 })
             )
         else
@@ -139,6 +209,7 @@ M.enable = function(diagnostics, formatters, completions)
                     env = {
                         PYTHONPATH = vim.env.PYTHONPATH,
                     },
+                    condition = exec_install(fmt),
                 })
             )
         end
@@ -151,6 +222,7 @@ M.enable = function(diagnostics, formatters, completions)
                 env = {
                     PYTHONPATH = vim.env.PYTHONPATH,
                 },
+                condition = exec_install(cmp),
             })
         )
     end

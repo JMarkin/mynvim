@@ -345,7 +345,7 @@ end
 local is_load = 0
 
 M.config = function()
-    if is_load == 1 then
+    if is_load == 1 or vim.g.disable_lsp then
         return is_load
     end
     require("mason").setup()
