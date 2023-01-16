@@ -18,6 +18,7 @@ opt.mouse = "a"
 g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
 opt.fileencoding = "utf-8"
+opt.encoding = "utf-8"
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 opt.guicursor = "a:block"
@@ -35,7 +36,7 @@ if vim.fn.has("nvim-0.8") ~= 1 then
 end
 
 -- fold
-opt.foldmethod="manual"
+opt.foldmethod = "manual"
 opt.foldcolumn = "1"
 opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 opt.foldlevelstart = 99
@@ -53,6 +54,5 @@ opt.shiftwidth = 4 -- shift 4 spaces when tab
 opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
-
 
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
