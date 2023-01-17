@@ -223,7 +223,7 @@ require("lazy").setup({
             "m-demare/hlargs.nvim",
             "yioneko/nvim-yati",
             {
-                "nvim-ts-rainbow",
+                name = "nvim-ts-rainbow",
                 url = "https://github.com/mrjones2014/nvim-ts-rainbow",
             },
             "nvim-treesitter/nvim-treesitter-refactor",
@@ -272,7 +272,7 @@ require("lazy").setup({
         lazy = true,
     },
     {
-        "clangd_extenstions",
+        name = "clangd_extenstions",
         url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
         cond = is_not_mini,
         lazy = true,
@@ -365,7 +365,7 @@ require("lazy").setup({
                 lazy = true,
             },
             {
-                "pqf",
+                name = "pqf",
                 url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
                 config = true,
             },
@@ -491,7 +491,7 @@ require("lazy").setup({
                     merge_tool = {
                         -- Config for conflicted files in diff views during a merge or rebase.
                         layout = "diff3_mixed",
-                        disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
+                        disable_diagnostics = true,
                     },
                     file_history = {
                         -- Config for changed files in file history views.
@@ -732,7 +732,7 @@ require("lazy").setup({
         cmd = { "Godbolt", "GodboltCompiler" },
     },
     {
-        "nvim-window",
+        name = "nvim-window",
         url = "https://gitlab.com/yorickpeterse/nvim-window",
         event = "BufAdd",
     },
