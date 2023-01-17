@@ -767,4 +767,22 @@ require("lazy").setup({
             require("retrail").setup()
         end,
     },
+    {
+        "emileferreira/nvim-strict",
+        config = function()
+            require("strict").setup({
+                excluded_filetypes = { "text", "markdown", "html" },
+                todos = {
+                    highlight = false,
+                },
+                overlong_lines = {
+                    length_limit = 120,
+                },
+                deep_nesting = {
+                    highlight = false,
+                },
+            })
+        end,
+        event = "BufReadPost",
+    },
 })
