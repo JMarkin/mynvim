@@ -1,119 +1,119 @@
 snippet #!
-	#!/usr/bin/env lua
-	$1
+    #!/usr/bin/env lua
+    $1
 snippet local
-	local ${1:x} = ${0:1}
+    local ${1:x} = ${0:1}
 snippet fun
-	function ${1:fname}(${2:...})
-		${0:-- body}
-	end
+    function ${1:fname}(${2:...})
+        ${0:-- body}
+    end
 snippet for
-	for ${1:i}=${2:1},${3:10} do
-		${0:print(i)}
-	end
+    for ${1:i}=${2:1},${3:10} do
+        ${0:print(i)}
+    end
 snippet forp
-	for ${1:i},${2:v} in pairs(${3:table_name}) do
-		${0:-- body}
-	end
+    for ${1:i},${2:v} in pairs(${3:table_name}) do
+        ${0:-- body}
+    end
 snippet fori
-	for ${1:i},${2:v} in ipairs(${3:table_name}) do
-		${0:-- body}
-	end
+    for ${1:i},${2:v} in ipairs(${3:table_name}) do
+        ${0:-- body}
+    end
 snippet if
-	if ${1:condition} then
-		${2:-- body}
-	end
+    if ${1:condition} then
+        ${2:-- body}
+    end
 snippet ife
-	if ${1:condition} then
-		${2:-- if condition}
-	else
-		${0:-- else}
-	end
+    if ${1:condition} then
+        ${2:-- if condition}
+    else
+        ${0:-- else}
+    end
 snippet elif
-	elseif ${1:condition} then
-		${0:--body}
+    elseif ${1:condition} then
+        ${0:--body}
 snippet repeat
-	repeat
-		${1:--body}
-	until ${0:condition}
+    repeat
+        ${1:--body}
+    until ${0:condition}
 snippet while
-	while ${1:condition} do
-		${0:--body}
-	end
+    while ${1:condition} do
+        ${0:--body}
+    end
 snippet print
-	print("${1:string}")
+    print("${1:string}")
 snippet im
-	import "${1:import file}"
+    import "${1:import file}"
 
 snippet nullls
-	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-	require("plugins.nullls").enable({}, {}, {})
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    require("plugins.nullls").enable(nil, nil, nil)
 
 snippet pylint
-	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-	require("plugins.nullls").enable({"pylint", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    require("plugins.nullls").enable({"pylint", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
 
 snippet flake8
-	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-	require("plugins.nullls").enable({"flake8", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    require("plugins.nullls").enable({"flake8", "mypy", "bandit", "djlint"}, {"isort", "yapf", "docformatter"})
 
 snippet stylua
-	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-	require("plugins.nullls").enable({}, {"stylua"})
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    require("plugins.nullls").enable(nil, {"stylua"})
 
 snippet rustfmt
-	-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-	require("plugins.nullls").enable({}, {"rustfmt"})
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    require("plugins.nullls").enable(nil, {"rustfmt"})
 
 snippet neogen
-	require("neogen").setup({
-		enabled = true,
-	    input_after_comment = true,
-		snippet_engine = "luasnip",
-		languages = {
-			python = {
-				template = {
-					annotation_convention = "reST",
-				},
-			},
-		},
-	})
+    require("neogen").setup({
+        enabled = true,
+        input_after_comment = true,
+        snippet_engine = "luasnip",
+        languages = {
+            python = {
+                template = {
+                    annotation_convention = "reST",
+                },
+            },
+        },
+    })
 
 snippet tags
-	require("gentags").enable()
+    require("gentags").enable()
 
 snippet tags_python
-	require("gentags").enable("python")
+    require("gentags").enable("python")
 
 snippet django
-	vim.filetype.add({
-		extension = {
-			html = "htmldjango",
-			htm = "htmldjango",
-		}
-	})
+    vim.filetype.add({
+        extension = {
+            html = "htmldjango",
+            htm = "htmldjango",
+        }
+    })
 
 snippet tests
-	require("neotest").setup({})
+    require("neotest").setup({})
 
 snippet pytest
-	require("neotest").setup({
-	  adapters = {
-		require("neotest-python")({
-			dap = { justMyCode = false },
-			args = {"--log-level", "DEBUG"},
-			runner = "pytest",
-		})
-	  }
-	})
+    require("neotest").setup({
+      adapters = {
+        require("neotest-python")({
+            dap = { justMyCode = false },
+            args = {"--log-level", "DEBUG"},
+            runner = "pytest",
+        })
+      }
+    })
 
 snippet unittest
-	require("neotest").setup({
-	  adapters = {
-		require("neotest-python")({
-			dap = { justMyCode = false },
-			args = {"--log-level", "DEBUG"},
-			runner = "pytest",
-		})
-	  }
-	})
+    require("neotest").setup({
+      adapters = {
+        require("neotest-python")({
+            dap = { justMyCode = false },
+            args = {"--log-level", "DEBUG"},
+            runner = "pytest",
+        })
+      }
+    })

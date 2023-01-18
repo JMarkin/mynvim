@@ -19,7 +19,9 @@ M.config = function()
         name = "bandit",
         meta = {
             url = "https://github.com/PyCQA/bandit",
-            description = "Bandit is a tool designed to find common security issues in Python code. To do this Bandit processes each file, builds an AST from it, and runs appropriate plugins against the AST nodes. Once Bandit has finished scanning all the files it generates a report.",
+            description = [[Bandit is a tool designed to find common security issues in Python code. To do this Bandit
+            processes each file, builds an AST from it, and runs appropriate plugins against the AST nodes. Once Bandit
+            has finished scanning all the files it generates a report.]],
         },
         method = DIAGNOSTICS,
         filetypes = { "python" },
@@ -99,6 +101,19 @@ local DEFAULT_FORMATTERS = {
     "docformatter",
 }
 
+nullls.builtins.diagnostics.ruff = nullls.builtins.diagnostics.ruff.with({
+    extra_args = { "--line-length", "120" },
+})
+nullls.builtins.formatting.ruff = nullls.builtins.formatting.ruff.with({
+    extra_args = { "--line-length", "120" },
+})
+nullls.builtins.diagnostics.djlint = nullls.builtins.diagnostics.djlint.with({
+    filetypes = { "jinja.html", "htmldjango" },
+})
+nullls.builtins.formatting.djlint = nullls.builtins.formatting.djlint.with({
+    filetypes = { "jinja.html", "htmldjango" },
+})
+
 local DEFAULT_COMPLETIONS = {}
 
 local DEFAULT_INSTALL_EXEC = {
@@ -164,55 +179,28 @@ M.enable = function(diagnostics, formatters, completions)
     local sources = {}
 
     for _, diag in ipairs(diagnostics) do
-        if diag == "djlint" then
-            table.insert(
-                sources,
-                nullls.builtins.diagnostics[diag].with({
-                    method = DIAGNOSTICS,
-                    filetypes = { "jinja.html", "htmldjango" },
-                    env = {
-                        PYTHONPATH = vim.env.PYTHONPATH,
-                    },
-                    condition = exec_install(diag),
-                })
-            )
-        else
-            table.insert(
-                sources,
-                nullls.builtins.diagnostics[diag].with({
-                    method = DIAGNOSTICS,
-                    env = {
-                        PYTHONPATH = vim.env.PYTHONPATH,
-                    },
-                    condition = exec_install(diag),
-                })
-            )
-        end
+        table.insert(
+            sources,
+            nullls.builtins.diagnostics[diag].with({
+                method = DIAGNOSTICS,
+                env = {
+                    PYTHONPATH = vim.env.PYTHONPATH,
+                },
+                condition = exec_install(diag),
+            })
+        )
     end
 
     for _, fmt in ipairs(formatters) do
-        if fmt == "djlint" then
-            table.insert(
-                sources,
-                nullls.builtins.formatting[fmt].with({
-                    filetypes = { "jinja.html", "htmldjango" },
-                    env = {
-                        PYTHONPATH = vim.env.PYTHONPATH,
-                    },
-                    condition = exec_install(fmt),
-                })
-            )
-        else
-            table.insert(
-                sources,
-                nullls.builtins.formatting[fmt].with({
-                    env = {
-                        PYTHONPATH = vim.env.PYTHONPATH,
-                    },
-                    condition = exec_install(fmt),
-                })
-            )
-        end
+        table.insert(
+            sources,
+            nullls.builtins.formatting[fmt].with({
+                env = {
+                    PYTHONPATH = vim.env.PYTHONPATH,
+                },
+                condition = exec_install(fmt),
+            })
+        )
     end
 
     for _, cmp in ipairs(completions) do

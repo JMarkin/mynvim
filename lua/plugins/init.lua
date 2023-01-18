@@ -771,12 +771,13 @@ require("lazy").setup({
         "emileferreira/nvim-strict",
         config = function()
             require("strict").setup({
-                excluded_filetypes = { "text", "markdown", "html" },
+                excluded_filetypes = { "text", "markdown", "html", "make" },
                 todos = {
                     highlight = false,
                 },
                 overlong_lines = {
                     length_limit = 120,
+                    split_on_save = false,
                 },
                 deep_nesting = {
                     highlight = false,

@@ -111,7 +111,8 @@ M.sumneko_lua = function()
         settings = {
             Lua = {
                 runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of
+                    -- Neovim)
                     version = "LuaJIT",
                     -- Setup your lua path
                     path = vim.env.LUAJIT,
@@ -345,7 +346,7 @@ end
 local is_load = 0
 
 M.config = function()
-    if is_load == 1 or vim.g.disable_lsp then
+    if is_load == 1 or vim.g.disable_lsp == 1 then
         return is_load
     end
     require("mason").setup()
