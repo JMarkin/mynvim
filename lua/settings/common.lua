@@ -19,8 +19,7 @@ g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
 opt.fileencoding = "utf-8"
 opt.encoding = "utf-8"
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+
 opt.guicursor = "a:block"
 opt.wrap = true
 opt.hidden = true

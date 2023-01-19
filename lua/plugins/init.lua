@@ -66,7 +66,49 @@ require("lazy").setup({
     },
 
     {
+        "folke/noice.nvim",
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    progress = {
+                        enabled = true,
+                        -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
+                        -- See the section on formatting for more details on how to customize.
+                        --- @type NoiceFormat|string
+                        format = "lsp_progress",
+                        --- @type NoiceFormat|string
+                        format_done = "lsp_progress_done",
+                        throttle = 1000 / 30, -- frequency to update lsp progress message
+                        view = "mini",
+                    },
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = false, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = true, -- add a border to hover docs and signature help
+                },
+            })
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+            "hrsh7th/nvim-cmp",
+        },
+        event = { "InsertEnter", "CmdlineEnter" },
+        keys = "/",
+    },
+    {
         "anuvyklack/windows.nvim",
+        enabled = false,
         dependencies = {
             "anuvyklack/middleclass",
             "anuvyklack/animation.nvim",
@@ -80,8 +122,8 @@ require("lazy").setup({
                     winwidth = 15,
                 },
                 ignore = {
-                    buftype = { "quickfix", "nofile" },
-                    filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
+                    buftype = { "netrw", "quickfix", "nofile" },
+                    filetype = { "netrw", "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })
         end,
@@ -192,24 +234,14 @@ require("lazy").setup({
         config = function()
             require("plugins.lualine")
         end,
-        -- dependencies = "noice.nvim",
     },
 
     -- Файловый менеджер
     {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-        },
-        init = function()
-            require("plugins.filetree").setup()
-        end,
+        "prichrd/netrw.nvim",
         config = function()
-            require("plugins.filetree").config()
+            require("plugins.netrw")
         end,
-        cmd = "Neotree",
     },
 
     -- Подцветка синтаксиа
@@ -322,18 +354,6 @@ require("lazy").setup({
     },
 
     {
-        "j-hui/fidget.nvim",
-        cond = is_not_mini,
-        config = function()
-            require("fidget").setup({
-                sources = {
-                    ["null-ls"] = { ignore = true },
-                },
-            })
-        end,
-    },
-
-    {
         "folke/trouble.nvim",
         lazy = true,
         cond = is_not_mini,
@@ -416,7 +436,6 @@ require("lazy").setup({
             "quangnguyen30192/cmp-nvim-tags",
             "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp-document-symbol",
         },

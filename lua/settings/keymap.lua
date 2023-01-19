@@ -34,7 +34,7 @@ function maps(m)
     nnoremap("<c-s>", "i<space><right><esc>")
 
     ---------Тогл Инструментов
-    nnoremap("<space>f", "<Cmd>Neotree filesystem<CR>", "Neotree: filesystem")
+    nnoremap("<space>f", "<Cmd>Lexplore<CR>", "FileTree")
     nnoremap("<space>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
     nnoremap("<space>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
     nnoremap("<space>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", "All Diagnostics")

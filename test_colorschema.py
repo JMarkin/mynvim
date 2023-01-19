@@ -8,7 +8,6 @@ class A:
         self.a = '%123'
         self.variable = varible
 
-
 c = A()
 setattr(A, "s", value)
 c.__setattr__(name, value)

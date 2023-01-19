@@ -128,7 +128,6 @@ M.config = function()
             ["<S-Tab>"] = move_up,
         },
         sources = {
-            { name = "nvim_lsp_signature_help", priority_weight = 120 },
             { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
             {
                 name = "vim-dadbod-completion",
