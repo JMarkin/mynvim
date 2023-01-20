@@ -101,7 +101,6 @@ require("lazy").setup({
         dependencies = {
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
-            "hrsh7th/nvim-cmp",
         },
         event = { "InsertEnter", "CmdlineEnter" },
         keys = "/",
@@ -435,15 +434,13 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             "quangnguyen30192/cmp-nvim-tags",
             "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-nvim-lsp-document-symbol",
+            "danymat/neogen",
         },
+        cond = is_not_mini,
         config = function()
             require("plugins.cmp").config()
         end,
-        event = { "InsertEnter", "CmdlineEnter" },
-        keys = "/",
+        event = { "InsertEnter" },
     },
 
     {

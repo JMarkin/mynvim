@@ -57,6 +57,8 @@ M.config = function()
     local luasnip = require("luasnip")
     require("luasnip.loaders.from_snipmate").lazy_load()
 
+    local neogen = require("neogen")
+
     vim.cmd([[set completeopt=menu,menuone,noselect]])
 
     local cmp = require("cmp")
@@ -66,8 +68,8 @@ M.config = function()
             cmp.select_next_item()
         elseif luasnip.in_snippet() and luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
-        elseif require("neogen").jumpable() then
-            require("neogen").jump_next()
+        elseif neogen.jumpable() then
+            neogen.jump_next()
         elseif has_words_before() then
             cmp.complete()
         else
@@ -160,24 +162,6 @@ M.config = function()
                 border = vim.g.floating_window_border_dark,
             },
         },
-    })
-
-    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    require("cmp").setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = "nvim_lsp_document_symbol" },
-        }, {
-            { name = "buffer" },
-        }),
-    })
-
-    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = "cmdline", keyword_pattern = [[\!\@<!\w*]] },
-        }),
     })
 end
 
