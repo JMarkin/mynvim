@@ -107,7 +107,7 @@ require("lazy").setup({
     },
     {
         "anuvyklack/windows.nvim",
-        enabled = false,
+        enabled = true,
         dependencies = {
             "anuvyklack/middleclass",
             "anuvyklack/animation.nvim",
@@ -118,11 +118,11 @@ require("lazy").setup({
             vim.opt.equalalways = false
             require("windows").setup({
                 autowidth = {
-                    winwidth = 15,
+                    winwidth = 7,
                 },
                 ignore = {
-                    buftype = { "netrw", "quickfix", "nofile" },
-                    filetype = { "netrw", "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
+                    buftype = { "quickfix", "nofile" },
+                    filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
                 },
             })
         end,

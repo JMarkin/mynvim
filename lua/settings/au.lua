@@ -90,10 +90,17 @@ vim.api.nvim_create_augroup(ft_width, { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = ft_width,
     pattern = { "python", "lua" },
-    callback = function(opts)
+    callback = function(_)
         local max_line = vim.g.python_max_line or 120
         vim.opt_local.textwidth = max_line
         vim.opt_local.colorcolumn = "+1"
+    end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+    group = ft_width,
+    pattern = { "netrw" },
+    callback = function(_)
+        vim.opt_local.textwidth = 15
     end,
 })
 
