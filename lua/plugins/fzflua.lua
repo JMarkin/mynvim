@@ -26,8 +26,12 @@ M.setup = function()
             ["--height"] = "100%",
             ["--layout"] = "reverse",
         },
+        files = {
+            rg_opts = "--color=never --files --no-ignore --hidden --follow -g '!.git'",
+            fd_opts = "--color=never --type f --no-ignore --hidden --follow --exclude .git",
+        },
     })
-    require('fzf-lua').config.globals.fzf_opts['--border'] = nil
+    require("fzf-lua").config.globals.fzf_opts["--border"] = nil
 end
 
 M.search_old_files = function()

@@ -1,5 +1,4 @@
 import os
-from sys import audit
 
 class A:
     s: str = 'sad'
@@ -16,6 +15,8 @@ os.path.abspath(A)
 a: int  = 1
 if True or False:
     print(123)
+
+a,b, c = "1","2", "3"
 
 def f():
     ...
@@ -48,7 +49,7 @@ def a():
     def f():
 
         def c():
-            v = {
+            {
 
             }
             print(1)
