@@ -247,6 +247,7 @@ require("lazy").setup({
     {
         "nvim-tree/nvim-tree.lua",
         tag = "nightly",
+        cmd = "NvimTreeOpen",
         setup = function()
             vim.g.loaded_netrw = 1
             vim.g.loaded_netrwPlugin = 1
@@ -440,10 +441,6 @@ require("lazy").setup({
         dependencies = {
             "nvim-treesitter",
             {
-                "junegunn/fzf",
-                lazy = true,
-            },
-            {
                 name = "pqf",
                 url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
                 config = true,
@@ -548,6 +545,7 @@ require("lazy").setup({
     {
         "sindrets/diffview.nvim",
         dependencies = "nvim-lua/plenary.nvim",
+        lazy = true,
         config = function()
             require("diffview").setup({
                 view = {
@@ -657,13 +655,13 @@ require("lazy").setup({
     --- поиски по файлам проверкам и т.п. fzf вобщем
     {
         "ibhagwan/fzf-lua",
+        lazy = true,
         dependencies = {
             "lotabout/skim",
         },
         config = function()
             require("plugins.fzflua").setup()
         end,
-        event = "VimEnter",
     },
     {
         "cshuaimin/ssr.nvim",
@@ -843,24 +841,5 @@ require("lazy").setup({
         config = function()
             require("retrail").setup()
         end,
-    },
-    {
-        "emileferreira/nvim-strict",
-        config = function()
-            require("strict").setup({
-                excluded_filetypes = { "text", "markdown", "html", "make" },
-                todos = {
-                    highlight = false,
-                },
-                overlong_lines = {
-                    length_limit = 120,
-                    split_on_save = false,
-                },
-                deep_nesting = {
-                    highlight = false,
-                },
-            })
-        end,
-        event = "BufReadPost",
     },
 })
