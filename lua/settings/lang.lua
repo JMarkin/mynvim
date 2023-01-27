@@ -355,7 +355,7 @@ M.config = function()
         function(server_name)
             local s_lsp = M[server_name]
             if s_lsp == nil or s_lsp == "" then
-                vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
+                -- vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
                 setup_lsp(server_name, {})
             else
                 s_lsp()

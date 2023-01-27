@@ -56,12 +56,12 @@ require("lazy").setup({
         priority = 1000,
         config = function()
             require("notify").setup({
+                max_width = 80,
                 timeout = 500,
-                stages = "fade",
+                stages = "static",
                 level = vim.log.levels.INFO,
                 background_colour = "#000000",
             })
-            vim.notify = require("notify")
         end,
     },
 
@@ -72,16 +72,11 @@ require("lazy").setup({
                 lsp = {
                     progress = {
                         enabled = true,
-                        -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-                        -- See the section on formatting for more details on how to customize.
-                        --- @type NoiceFormat|string
                         format = "lsp_progress",
-                        --- @type NoiceFormat|string
                         format_done = "lsp_progress_done",
-                        throttle = 1000 / 30, -- frequency to update lsp progress message
+                        throttle = 1000 / 30,
                         view = "mini",
                     },
-                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
                     override = {
                         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                         ["vim.lsp.util.stylize_markdown"] = true,
@@ -321,6 +316,7 @@ require("lazy").setup({
             "nvim-treesitter/nvim-treesitter-refactor",
             {
                 "andymass/vim-matchup",
+                enabled = false,
                 init = function()
                     vim.g.matchup_transmute_enabled = 1
                     vim.g.matchup_delim_noskips = 1
@@ -378,14 +374,6 @@ require("lazy").setup({
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
         ft = { "python" },
-    },
-    {
-        "PatschD/zippy.nvim",
-        config = function()
-            require("plugins.zippy")
-        end,
-        cond = is_not_mini,
-        ft = { "python", "javascript", "vue" },
     },
     -- LSP
 
@@ -694,14 +682,6 @@ require("lazy").setup({
             })
         end,
         event = "BufReadPost *.*",
-    },
-    -- превью строчки при :%d
-    {
-        "nacro90/numb.nvim",
-        config = function()
-            require("numb").setup()
-        end,
-        event = "CmdlineEnter",
     },
     --nginx
     {

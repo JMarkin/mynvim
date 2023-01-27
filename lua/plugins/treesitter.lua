@@ -49,7 +49,7 @@ M.setup = function()
             enable = false,
         },
         matchup = {
-            enable = true,
+            enable = false,
             include_match_words = true,
         },
         refactor = {
