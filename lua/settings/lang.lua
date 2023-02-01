@@ -4,11 +4,9 @@ if vim.env.NVIM_MINI ~= nil then
     return {}
 end
 
-vim.g.navic_silence = true
 local M = {}
 
 local on_attach = function(client, bufnr)
-    require("nvim-navic").attach(client, bufnr)
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -36,7 +34,7 @@ capabilities.textDocument.completion = {
 
 local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities
-    opts.on_attach = on_attach
+    -- opts.on_attach = on_attach
     require("lspconfig")[lsp_name].setup(opts)
 end
 
@@ -376,6 +374,8 @@ M.config = function()
         update_in_insert = false,
         severity_sort = true,
     })
+
+    require("lspsaga").setup({})
 
     is_load = 1
     return is_load

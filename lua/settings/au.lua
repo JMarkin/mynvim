@@ -2,7 +2,7 @@
 local sync_neovim = "SHADA"
 vim.api.nvim_create_augroup(sync_neovim, { clear = true })
 
-vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
+vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
     group = sync_neovim,
     pattern = { "*" },
     callback = function()
@@ -143,6 +143,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
     pattern = "*.*",
     group = diag,
     callback = function()
-        vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor" })
+        vim.diagnostic.open_float(nil, { focusable = true, scope = "cursor" })
     end,
 })

@@ -97,31 +97,8 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
         },
-        event = { "InsertEnter", "CmdlineEnter" },
+        event = { "InsertEnter", "CmdlineEnter", "BufReadPost" },
         keys = "/",
-    },
-    {
-        "anuvyklack/windows.nvim",
-        enabled = true,
-        dependencies = {
-            "anuvyklack/middleclass",
-            "anuvyklack/animation.nvim",
-        },
-        config = function()
-            vim.opt.winwidth = 10
-            vim.opt.winminwidth = 5
-            vim.opt.equalalways = false
-            require("windows").setup({
-                autowidth = {
-                    winwidth = 7,
-                },
-                ignore = {
-                    buftype = { "quickfix", "nofile" },
-                    filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Outline" },
-                },
-            })
-        end,
-        event = "BufAdd",
     },
     {
         "nanozuki/tabby.nvim",
@@ -388,11 +365,9 @@ require("lazy").setup({
                 "williamboman/mason-lspconfig.nvim",
             },
             {
-                "SmiteshP/nvim-navic",
-                config = function()
-                    require("nvim-navic").setup({ highlight = true })
-                    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-                end,
+                "glepnir/lspsaga.nvim",
+                cond = is_not_mini,
+                dependencies = { { "nvim-tree/nvim-web-devicons" } },
             },
         },
         config = function()
@@ -441,23 +416,6 @@ require("lazy").setup({
             })
         end,
     },
-
-    {
-        "weilbith/nvim-code-action-menu",
-        lazy = true,
-        cond = is_not_mini,
-        cmd = "CodeActionMenu",
-    },
-    {
-        "filipdutescu/renamer.nvim",
-        cond = is_not_mini,
-        branch = "master",
-        dependencies = { { "nvim-lua/plenary.nvim" } },
-        config = function()
-            require("plugins.renamer").config()
-        end,
-        event = "BufReadPost",
-    },
     {
         "kevinhwang91/nvim-ufo",
         lazy = true,
@@ -504,15 +462,6 @@ require("lazy").setup({
     },
     {
         "mrjones2014/smart-splits.nvim",
-    },
-    -- Навигация внутри файла по классам и функциям
-    {
-        "simrat39/symbols-outline.nvim",
-        cond = is_not_mini,
-        config = function()
-            require("plugins.symbols")
-        end,
-        cmd = "SymbolsOutline",
     },
 
     --  Git
@@ -650,24 +599,6 @@ require("lazy").setup({
         config = function()
             require("plugins.fzflua").setup()
         end,
-    },
-    {
-        "cshuaimin/ssr.nvim",
-        cond = is_not_mini,
-        -- Calling setup is optional.
-        config = function()
-            require("ssr").setup({
-                min_width = 50,
-                min_height = 5,
-                keymaps = {
-                    close = "q",
-                    next_match = "n",
-                    prev_match = "N",
-                    replace_all = "<leader>RA",
-                },
-            })
-        end,
-        event = "BufReadPost *.*",
     },
     --- Генераци докстрингов и т.п.
     {

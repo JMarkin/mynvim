@@ -49,11 +49,11 @@ function maps(m)
 
     ---------Тогл Инструментов
     nnoremap("<space>f", "<Cmd>NvimTreeOpen<CR>", "FileTree")
-    nnoremap("<space>t", "<Cmd>SymbolsOutline<CR>", "Tagbar")
+    nnoremap("<space>t", "<Cmd>Lspsaga outline<CR>", "Tagbar")
     nnoremap("<space>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Git: blame")
     nnoremap("<space>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", "All Diagnostics")
     nnoremap("<space>e", "<cmd>TroubleToggle document_diagnostics<cr>", "Buffer Diagnostics")
-    nnoremap("<space>T", "<Cmd>Ttoggle<CR>", "Terminal")
+    nnoremap("<space>T", "<Cmd>Lspsaga term_toggle<CR>", "Terminal")
     nnoremap("<space>G", "<Cmd>LazyGit<CR>", "Git: lazygit")
 
     nnoremap("<space>r", "<cmd>lua require('smart-splits').start_resize_mode()<cr>", "Resize mode")
@@ -160,36 +160,31 @@ function maps(m)
     )
 
     ---go to
-    nnoremap("gdd", "<cmd>lua Scroll('definition')<CR>", "GoTo: definition")
-    nnoremap("gdv", "<cmd>:vsplit | lua Scroll('definition')<CR>", "GoTo: definition vertical")
-    nnoremap("gds", "<cmd>:split | lua Scroll('definition')<CR>", "GoTo: definition horizontail")
-    nnoremap("gDD", "<cmd>lua Scroll('declaration')<CR>", "GoTo: declaration")
-    nnoremap("gDv", "<cmd>:vsplit | lua Scroll('declaration')<CR>", "GoTo: declaration vertical")
-    nnoremap("gDs", "<cmd>:split | lua Scroll('declaration')<CR>", "GoTo: declaration horizontail")
+    nnoremap("gt", "<cmd>Lspsaga peek_definition<cr>", "GoTo: definition float")
+    nnoremap("gdd", "<cmd>Lspsaga goto_definition<cr>", "GoTo: definition")
+    nnoremap("gdv", "<cmd>:vsplit | Lspsaga goto_definition<CR>", "GoTo: definition vertical")
+    nnoremap("gds", "<cmd>:split | Lspsaga goto_definition<CR>", "GoTo: definition horizontail")
     nnoremap(
         "gr",
         "<cmd>lua require('fzf-lua').lsp_references({ multiprocess=true,})<Cr>",
         "silent",
         "GoTo: references"
     )
+    nnoremap("gh", "<cmd>Lspsaga lsp_finder<CR>", "Lsp: Finder")
 
     -- lang
     m.nname("<leader>l", "Language features")
+    nnoremap("<leader>lk", "<cmd>Lspsaga hover_doc<CR>", "silent", "lang: hover doc")
     nnoremap("<leader>ld", "<cmd>Neogen<cr>", "silent", "Lang: generete docs")
 
-    nnoremap("<leader>la", "<cmd>CodeActionMenu<cr>", "silent", "Lang: code action")
+    nnoremap("<leader>la", "<cmd>Lspsaga code_action<cr>", "silent", "Lang: code action")
 
-    vnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
-    nnoremap("<leader>lr", require("plugins.renamer").rename, "silent", "Lang: rename")
-
-    local ssr_rename = function()
-        require("ssr").open()
-    end
-    vnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
-    nnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
-    xnoremap("<leader>lR", ssr_rename, "silent", "Lang: rename ssr")
+    nnoremap("<leader>lr", "<cmd>Lspsaga rename<CR>", "silent", "Lang: rename")
+    nnoremap("<leader>lR", "<cmd>Lspsaga rename ++project<CR>", "silent", "Lang: rename project")
 
     nnoremap("<leader>lf", format, "silent", "Lang: lsp format")
+    nnoremap("<Leader>li", "<cmd>Lspsaga incoming_calls<CR>")
+    nnoremap("<Leader>lo", "<cmd>Lspsaga outgoing_calls<CR>")
 
     m.nname("<leader>lc", "Copy")
     nnoremap("<leader>lcd", ":PythonCopyReferenceDotted<CR>")
@@ -258,6 +253,17 @@ function maps(m)
     nnoremap("<leader>tmp", ":-tabmove<CR>", "Tabs: move to prev")
     -- move current tab to next position
     nnoremap("<leader>tmn", ":+tabmove<CR>", "Tabs: move to next")
+
+    nnoremap("[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+    nnoremap("]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+
+    -- Diagnostic jump with filters such as only jumping to an error
+    nnoremap("[E", function()
+        require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+    end)
+    nnoremap("]E", function()
+        require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+    end)
 end
 
 return maps
