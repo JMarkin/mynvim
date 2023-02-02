@@ -375,8 +375,7 @@ M.config = function()
         severity_sort = true,
     })
 
-    require("lspsaga").setup({})
-
+    require("plugins.lspsaga")
     is_load = 1
     return is_load
 end

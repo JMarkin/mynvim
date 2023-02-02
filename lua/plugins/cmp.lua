@@ -49,7 +49,6 @@ local menu_map = {
 
 local enabled = function()
     local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-    enabled = enabled and not require("plugins.renamer").show_renamer()
     return enabled
 end
 

@@ -24,6 +24,8 @@ M.setup = function()
             "lua",
             "vim",
             "sql",
+            "markdown",
+            "markdown_inline",
         },
 
         highlight = {
