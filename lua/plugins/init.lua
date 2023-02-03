@@ -462,6 +462,11 @@ require("lazy").setup({
     },
     {
         "mrjones2014/smart-splits.nvim",
+        config = function()
+            require("smart-splits").setup({
+                tmux_integration = false,
+            })
+        end,
     },
 
     --  Git
@@ -751,6 +756,31 @@ require("lazy").setup({
         "zakharykaplan/nvim-retrail",
         config = function()
             require("retrail").setup()
+        end,
+    },
+
+    {
+        "nvim-zh/colorful-winsep.nvim",
+        config = function()
+            require("colorful-winsep").setup()
+        end,
+        event = "BufAdd",
+    },
+    {
+        "rainbowhxch/beacon.nvim",
+        config = function()
+            require("beacon").setup({
+                enable = true,
+                size = 40,
+                fade = true,
+                minimal_jump = 10,
+                show_jumps = true,
+                focus_gained = false,
+                shrink = true,
+                timeout = 500,
+                ignore_buffers = {},
+                ignore_filetypes = {},
+            })
         end,
     },
 })
