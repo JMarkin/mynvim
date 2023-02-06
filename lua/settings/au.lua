@@ -1,14 +1,14 @@
 -- синхронизация между инстансами
-local sync_neovim = "SHADA"
-vim.api.nvim_create_augroup(sync_neovim, { clear = true })
-
-vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
-    group = sync_neovim,
-    pattern = { "*" },
-    callback = function()
-        vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
-    end,
-})
+-- local sync_neovim = "SHADA"
+-- vim.api.nvim_create_augroup(sync_neovim, { clear = true })
+--
+-- vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
+--     group = sync_neovim,
+--     pattern = { "*" },
+--     callback = function()
+--         vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
+--     end,
+-- })
 -- Запоминает где nvim последний раз редактировал файл
 local last_change = "LastChange"
 vim.api.nvim_create_augroup(last_change, { clear = true })
@@ -105,8 +105,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 --matchup custom
-local matchup_words = "MatchUpWords"
-vim.api.nvim_create_augroup(matchup_words, { clear = true })
+-- local matchup_words = "MatchUpWords"
+-- vim.api.nvim_create_augroup(matchup_words, { clear = true })
 -- vim.api.nvim_create_autocmd("FileType", {
 --     group = matchup_words,
 --     pattern = {"css", "javascript", "typescript", "cpp", "c"},
