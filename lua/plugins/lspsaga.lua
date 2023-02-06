@@ -16,7 +16,7 @@ require("lspsaga").setup({
         close = "<Esc>",
     },
     rename = {
-        quit = "<ESC>",
+        quit = "<C-c>",
         exec = "<CR>",
         mark = "x",
         confirm = "<CR>",
