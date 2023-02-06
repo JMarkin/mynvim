@@ -3,6 +3,7 @@ local M = {}
 M.setup = function()
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
+            "regex",
             "c",
             "rust",
             "cpp",
@@ -26,6 +27,7 @@ M.setup = function()
             "sql",
             "markdown",
             "markdown_inline",
+            "json",
         },
 
         highlight = {

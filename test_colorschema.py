@@ -1,5 +1,6 @@
 import os
 
+
 class A:
     s: str = 'sad'
 
@@ -7,23 +8,27 @@ class A:
         self.a = '%123'
         self.variable = varible
 
+
 c = A()
 setattr(A, "s", value)
 c.__setattr__(name, value)
 
 os.path.abspath(A)
-a: int  = 1
+a: int = 1
 if True or False:
     print(123)
 
-a,b, c = "1","2", "3"
+a, b, c = "1", "2", "3"
+
 
 def f():
     ...
 
+
 @f
 def s():
     ...
+
 
 def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
@@ -32,8 +37,6 @@ def f(val1: str, ss, sncjllll):
 s = '^[1-9]123\n\t$'
 
 s = '<h>asd</h>'
-
-
 """
 ss
 """
@@ -49,9 +52,7 @@ def a():
     def f():
 
         def c():
-            {
-
-            }
+            {}
             print(1)
 
         return c

@@ -272,6 +272,13 @@ require("lazy").setup({
                         close_window = true,
                     },
                 },
+                view = {
+                    mappings = {
+                        list = {
+                            { key = "<C-s>", action = "split" },
+                        },
+                    },
+                },
             })
         end,
     },

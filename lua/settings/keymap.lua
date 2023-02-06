@@ -10,7 +10,7 @@ local format = function()
 end
 
 function maps(m)
-    nnoremap("<leader>q", ":q<cr>", "Quit")
+    nnoremap({ "<leader>q", "<space>q" }, ":q<cr>", "Quit")
 
     --------Основное управление буферами
     m.nname("<space>b", "Buffer")
