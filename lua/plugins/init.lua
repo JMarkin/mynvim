@@ -122,11 +122,7 @@ require("lazy").setup({
     {
         "declancm/cinnamon.nvim",
         config = function()
-            require("cinnamon").setup({
-                default_keymaps = false,
-                extra_keymaps = false,
-                extended_keymaps = false,
-            })
+            require("plugins.scroll")
         end,
     },
 
@@ -225,61 +221,7 @@ require("lazy").setup({
             vim.g.loaded_netrwPlugin = 1
         end,
         config = function()
-            require("nvim-tree").setup({
-                disable_netrw = false,
-                modified = {
-                    enable = true,
-                    show_on_dirs = true,
-                    show_on_open_dirs = true,
-                },
-                diagnostics = {
-                    enable = true,
-                },
-                actions = {
-                    use_system_clipboard = true,
-                    change_dir = {
-                        enable = true,
-                        global = false,
-                        restrict_above_cwd = false,
-                    },
-                    expand_all = {
-                        max_folder_discovery = 300,
-                        exclude = {},
-                    },
-                    file_popup = {
-                        open_win_config = {
-                            col = 1,
-                            row = 1,
-                            relative = "cursor",
-                            border = "shadow",
-                            style = "minimal",
-                        },
-                    },
-                    open_file = {
-                        quit_on_open = true,
-                        resize_window = true,
-                        window_picker = {
-                            enable = true,
-                            picker = "default",
-                            chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-                            exclude = {
-                                filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-                                buftype = { "nofile", "terminal", "help" },
-                            },
-                        },
-                    },
-                    remove_file = {
-                        close_window = true,
-                    },
-                },
-                view = {
-                    mappings = {
-                        list = {
-                            { key = "<C-s>", action = "split" },
-                        },
-                    },
-                },
-            })
+            require("plugins.nvimtree")
         end,
     },
 
@@ -318,11 +260,7 @@ require("lazy").setup({
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter" },
         config = function()
-            require("todo-comments").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            })
+            require("plugins.todos")
         end,
         cond = is_not_mini,
         event = "BufReadPost",
@@ -358,6 +296,10 @@ require("lazy").setup({
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
         ft = { "python" },
+        config = function()
+            vim.keymap.set("n", "<leader>lcd", ":PythonCopyReferenceDotted<CR>")
+            vim.keymap.set("n", "<leader>lcp", ":PythonCopyReferencePytest<CR>")
+        end,
     },
     -- LSP
 
@@ -366,7 +308,7 @@ require("lazy").setup({
         cond = is_not_mini,
         dependencies = { { "nvim-tree/nvim-web-devicons" } },
         event = "BufReadPre *.*",
-        cmd = "Lspsaga"
+        cmd = "Lspsaga",
     },
     {
         "williamboman/mason.nvim",
@@ -467,17 +409,18 @@ require("lazy").setup({
             require("gentags").setup()
         end,
     },
-    -- Табы
+
     {
         "Asheq/close-buffers.vim",
-        event = "BufReadPost",
+        event = "BufAdd",
+        config = function()
+            require("plugins.buffers")
+        end,
     },
     {
         "mrjones2014/smart-splits.nvim",
         config = function()
-            require("smart-splits").setup({
-                tmux_integration = false,
-            })
+            require("plugins.splits")
         end,
     },
 
@@ -494,7 +437,7 @@ require("lazy").setup({
         config = function()
             require("gitsigns").setup()
         end,
-        event = "BufEnter *.*",
+        cmd = "Gitsigns",
     },
     {
         "sindrets/diffview.nvim",
@@ -598,21 +541,10 @@ require("lazy").setup({
             "ofirgall/goto-breakpoints.nvim",
         },
         config = function()
-            require("dapui").setup()
+            require("plugins.debug").config()
         end,
         keys = "<leader>d",
     },
-
-    --     "Weissle/persistent-breakpoints.nvim",
-    --     dependencies = "nvim-dap",
-    --     config = function()
-    --         require("persistent-breakpoints").setup({},    --         --- загрузка брекпоинтов
-    --         vim.api.nvim_create_autocmd(
-    --             { "BufReadPost" },
-    --             { callback = require("persistent-breakpoints.api").load_breakpoints }
-    --         )
-    --     end,
-    -- },
 
     --- поиски по файлам проверкам и т.п. fzf вобщем
     {
@@ -623,6 +555,7 @@ require("lazy").setup({
         },
         config = function()
             require("plugins.fzflua").setup()
+            require("plugins.fzflua").keymaps()
         end,
     },
     --- Генераци докстрингов и т.п.
@@ -631,13 +564,9 @@ require("lazy").setup({
         cond = is_not_mini,
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
-            require("neogen").setup({
-                enabled = true,
-                input_after_comment = true,
-                snippet_engine = "luasnip",
-            })
+            require("plugins.neogen")
         end,
-        event = "BufReadPost *.*",
+        cmd = "Neogen",
     },
     --nginx
     {
@@ -661,7 +590,7 @@ require("lazy").setup({
     -- bookmark
     {
         "MattesGroeger/vim-bookmarks",
-        dependencies = { "mapx" },
+        dependencies = { "ibhagwan/fzf-lua" },
         init = function()
             require("plugins.bookmark").setup()
         end,
@@ -681,17 +610,6 @@ require("lazy").setup({
                 },
             })
         end,
-        lazy = true,
-    },
-    -- Удобный способ задания shortcut с интеграцией в which-key
-    {
-        "b0o/mapx.nvim",
-        name = "mapx",
-        dependencies = { "which-key.nvim" },
-        config = function()
-            local m = require("mapx").setup({ global = "force", whichkey = true })
-            require("settings.keymap")(m)
-        end,
     },
     -- курсор следует за shift
     {
@@ -702,7 +620,7 @@ require("lazy").setup({
                 preserve_visual_selection = true,
             })
         end,
-        event = "BufReadPost",
+        event = "ModeChanged",
     },
     -- yaml
     {
@@ -713,7 +631,6 @@ require("lazy").setup({
         },
     },
     -- databases
-
     {
         "kristijanhusak/vim-dadbod-ui",
         cond = is_not_mini,
@@ -748,6 +665,9 @@ require("lazy").setup({
         name = "nvim-window",
         url = "https://gitlab.com/yorickpeterse/nvim-window",
         event = "BufAdd",
+        config = function()
+            require("plugins.windows")
+        end,
     },
     -- tests
     {
@@ -761,16 +681,7 @@ require("lazy").setup({
             "rouge8/neotest-rust",
         },
         config = function()
-            require("neotest").setup({
-                adapters = {
-                    require("neotest-python")({
-                        dap = { justMyCode = false },
-                        args = { "--log-level", "DEBUG" },
-                        runner = vim.g.python_test_runner or "pytest",
-                    }),
-                    require("neotest-rust")({}),
-                },
-            })
+            require("plugins.tests")
         end,
         ft = { "python", "rust" },
     },
@@ -781,7 +692,6 @@ require("lazy").setup({
             require("retrail").setup()
         end,
     },
-
     {
         "nvim-zh/colorful-winsep.nvim",
         config = function()
@@ -798,12 +708,26 @@ require("lazy").setup({
                 fade = true,
                 minimal_jump = 10,
                 show_jumps = true,
-                focus_gained = false,
+                focus_gained = true,
                 shrink = true,
                 timeout = 500,
                 ignore_buffers = {},
                 ignore_filetypes = {},
             })
+        end,
+    },
+    {
+        "samjwill/nvim-unception",
+        dependencies = {
+            {
+                "numToStr/FTerm.nvim",
+                config = function()
+                    require("plugins.term")
+                end,
+            },
+        },
+        init = function()
+            vim.g.unception_open_buffer_in_new_tab = true
         end,
     },
 })

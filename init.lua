@@ -19,5 +19,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+local default_vim_keymap_set = vim.keymap.set
+
+vim.keymap.set = function(mode, lhs, rhs, opts)
+    if type(lhs) == "table" then
+        for _, key in ipairs(lhs) do
+            default_vim_keymap_set(mode, key, rhs, opts)
+        end
+    else
+        default_vim_keymap_set(mode, lhs, rhs, opts)
+    end
+end
+
 require("settings")
 require("plugins")

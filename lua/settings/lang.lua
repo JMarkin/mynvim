@@ -6,8 +6,7 @@ end
 
 local M = {}
 
-local on_attach = function(client, bufnr)
-end
+local on_attach = function(client, bufnr) end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
@@ -119,16 +118,7 @@ M.sumneko_lua = function()
                     -- Get the language server to recognize the `vim` global
                     globals = {
                         "vim",
-                        "nnoremap",
                         "require",
-                        "map",
-                        "vmap",
-                        "nmap",
-                        "tnoremap",
-                        "xnoremap",
-                        "inoremap",
-                        "vnoremap",
-                        "packer_plugins",
                     },
                 },
                 workspace = {

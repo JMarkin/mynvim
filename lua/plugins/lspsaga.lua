@@ -38,3 +38,32 @@ require("lspsaga").setup({
         enable = false,
     },
 })
+
+vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { desc = "Lsp: Finder" })
+vim.keymap.set("n", "gt", "<cmd>Lspsaga peek_definition<cr>", { desc = "GoTo: definition float" })
+vim.keymap.set("n", "gdd", "<cmd>Lspsaga goto_definition<cr>", { desc = "GoTo: definition" })
+vim.keymap.set("n", "gdv", "<cmd>:vsplit | Lspsaga goto_definition<CR>", { desc = "GoTo: definition vertical" })
+vim.keymap.set("n", "gds", "<cmd>:split | Lspsaga goto_definition<CR>", { desc = "GoTo: definition horizontail" })
+
+vim.keymap.set("n", "<leader>lk", "<cmd>Lspsaga hover_doc<CR>", { silent = true, desc = "Lang: hover doc" })
+
+vim.keymap.set("n", "<leader>la", "<cmd>Lspsaga code_action<cr>", { silent = true, desc = "Lang: code action" })
+
+vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<CR>", { silent = true, desc = "Lang: rename" })
+vim.keymap.set("n", "<leader>lR", "<cmd>Lspsaga rename ++project<CR>", { silent = true, desc = "Lang: rename project" })
+
+vim.keymap.set("n", "<Leader>li", "<cmd>Lspsaga incoming_calls<CR>", { desc = "Lang: Incomming calls" })
+vim.keymap.set("n", "<Leader>lo", "<cmd>Lspsaga outgoing_calls<CR>", { desc = "Lang: Outgoing calls" })
+
+vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { desc = "Jump: prev diag" })
+vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { desc = "Jump: next diag" })
+
+-- Diagnostic jump with filters such as only jumping to an error
+vim.keymap.set("n", "[E", function()
+    require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = "Jump: prev Error" })
+vim.keymap.set("n", "]E", function()
+    require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = "Jump: next Error" })
+
+vim.keymap.set("n", "<space>t", "<Cmd>Lspsaga outline<CR>", { desc = "Tagbar" })

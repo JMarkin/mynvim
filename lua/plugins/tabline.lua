@@ -43,3 +43,13 @@ require("tabby.tabline").set(function(line)
         hl = theme.fill,
     }
 end)
+
+vim.keymap.set("n", "<leader>ta", ":$tabnew<CR>", { desc = "Tabs: new" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "Tabs: close" })
+vim.keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
+vim.keymap.set("n", "<leader>tn", ":tabn<CR>", { desc = "Tabs: next" })
+vim.keymap.set("n", "<leader>tp", ":tabp<CR>", { desc = "Tabs: prev" })
+-- move current tab to previous position
+vim.keymap.set("n", "<leader>tmp", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
+-- move current tab to next position
+vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next" })
