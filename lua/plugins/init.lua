@@ -566,6 +566,14 @@ require("lazy").setup({
         -- event = "BufReadPost",
         keys = { "s", "S" },
     },
+    {
+        "ggandor/flit.nvim",
+        dependencies = { "ggandor/leap.nvim" },
+        config = function()
+            require("flit").setup({})
+        end,
+        keys = { "f", "F", "t", "T" },
+    },
     -- Дебагер
 
     {
@@ -658,6 +666,8 @@ require("lazy").setup({
     {
         "folke/which-key.nvim",
         config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
             require("which-key").setup({
                 plugins = {
                     presets = {
@@ -753,6 +763,7 @@ require("lazy").setup({
                         args = { "--log-level", "DEBUG" },
                         runner = vim.g.python_test_runner or "pytest",
                     }),
+                    require("neotest-rust")({}),
                 },
             })
         end,

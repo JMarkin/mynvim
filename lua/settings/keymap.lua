@@ -78,8 +78,8 @@ function maps(m)
     -- EXTRA_KEYMAPS:
 
     -- Start/end of file and line number movements:
-    vim.keymap.set({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg')<CR>")
-    vim.keymap.set({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1)<CR>")
+    -- vim.keymap.set({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg')<CR>")
+    -- vim.keymap.set({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1)<CR>")
 
     -- Paragraph movements:
     vim.keymap.set({ "n", "x" }, "{", "<Cmd>lua Scroll('{')<CR>")

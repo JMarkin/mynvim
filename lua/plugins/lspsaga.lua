@@ -34,4 +34,7 @@ require("lspsaga").setup({
             expand_collapse = "u",
         },
     },
+    lightbulb = {
+        enable = false,
+    },
 })
