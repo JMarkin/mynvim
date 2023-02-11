@@ -362,6 +362,13 @@ require("lazy").setup({
     -- LSP
 
     {
+        "glepnir/lspsaga.nvim",
+        cond = is_not_mini,
+        dependencies = { { "nvim-tree/nvim-web-devicons" } },
+        event = "BufReadPre *.*",
+        cmd = "Lspsaga"
+    },
+    {
         "williamboman/mason.nvim",
         cond = is_not_mini,
         dependencies = {
@@ -373,8 +380,6 @@ require("lazy").setup({
             },
             {
                 "glepnir/lspsaga.nvim",
-                cond = is_not_mini,
-                dependencies = { { "nvim-tree/nvim-web-devicons" } },
             },
         },
         config = function()
