@@ -23,7 +23,7 @@ require("lspsaga").setup({
         in_select = true,
     },
     callhierarchy = {
-        show_detail = false,
+        show_detail = true,
         keys = {
             edit = "e",
             vsplit = "<C-v>",

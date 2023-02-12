@@ -1,7 +1,7 @@
 import os
 
 
-class A:
+class TestClass:
     s: str = 'sad'
 
     def __init__(self, varible):
@@ -9,11 +9,11 @@ class A:
         self.variable = varible
 
 
-c = A()
-setattr(A, "s", value)
+c = TestClass()
+setattr(TestClass, "s", value)
 c.__setattr__(name, value)
 
-os.path.abspath(A)
+os.path.abspath(TestClass)
 a: int = 1
 if True or False:
     print(123)

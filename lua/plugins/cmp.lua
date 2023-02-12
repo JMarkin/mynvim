@@ -45,6 +45,7 @@ local menu_map = {
     rg = "[RG]",
     treesitter = "[TS]",
     spell = "[SP]",
+    omni = "[Omni]",
 }
 
 local enabled = function()
@@ -88,6 +89,26 @@ M.config = function()
         end
     end, { "i", "s" })
 
+    local sources = {}
+
+    if vim.g.disable_lsp then
+        table.insert(sources, { name = "omni", max_item_count = 20 })
+    else
+        table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
+    end
+
+    table.insert(sources, {
+        name = "vim-dadbod-completion",
+        max_item_count = 20,
+        filetype = { "sql", "mssql", "plsql" },
+    })
+    table.insert(sources, {
+        name = "rg",
+        keyword_length = 3,
+        max_item_count = 5,
+    })
+    table.insert(sources, { name = "luasnip", keyword_length = 3, max_item_count = 5 })
+
     cmp.setup({
         performance = {
             debounce = 60,
@@ -128,23 +149,7 @@ M.config = function()
             ["<Tab>"] = move_down,
             ["<S-Tab>"] = move_up,
         },
-        sources = {
-            { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
-            {
-                name = "vim-dadbod-completion",
-                max_item_count = 20,
-                priority_weight = 100,
-                filetype = { "sql", "mssql", "plsql" },
-            },
-            { name = "tags", priority_weight = 86, max_item_count = 5 },
-            {
-                name = "rg",
-                keyword_length = 3,
-                max_item_count = 5,
-                priority_weight = 84,
-            },
-            { name = "luasnip", priority_weight = 87 },
-        },
+        sources = sources,
         formatting = {
             format = function(entry, vim_item)
                 vim_item.menu = menu_map[entry.source.name] or string.format("[%s]", entry.source.name)

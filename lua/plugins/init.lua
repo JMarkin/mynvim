@@ -389,7 +389,7 @@ require("lazy").setup({
             "lukas-reineke/cmp-under-comparator",
             "lukas-reineke/cmp-rg",
             "hrsh7th/cmp-nvim-lsp",
-            "quangnguyen30192/cmp-nvim-tags",
+            "hrsh7th/cmp-omni",
             "saadparwaiz1/cmp_luasnip",
             "danymat/neogen",
         },
