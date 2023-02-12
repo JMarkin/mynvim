@@ -40,7 +40,7 @@ require("lspsaga").setup({
 })
 
 vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { desc = "Lsp: Finder" })
-vim.keymap.set("n", "gt", "<cmd>Lspsaga peek_definition<cr>", { desc = "GoTo: definition float" })
+vim.keymap.set("n", "ge", "<cmd>Lspsaga peek_definition<cr>", { desc = "GoTo: definition float" })
 vim.keymap.set("n", "gdd", "<cmd>Lspsaga goto_definition<cr>", { desc = "GoTo: definition" })
 vim.keymap.set("n", "gdv", "<cmd>:vsplit | Lspsaga goto_definition<CR>", { desc = "GoTo: definition vertical" })
 vim.keymap.set("n", "gds", "<cmd>:split | Lspsaga goto_definition<CR>", { desc = "GoTo: definition horizontail" })
