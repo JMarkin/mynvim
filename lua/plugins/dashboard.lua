@@ -15,7 +15,7 @@ dashboard.section.buttons.val = {
         "  Find Text",
         "<cmd>lua require('fzf-lua').grep_project({  multiprocess=true,continue_last_search = true })<Cr>"
     ),
-    dashboard.button("g", "  GIT", "<Cmd>LazyGit<CR>"),
+    dashboard.button("g", "  GIT", "<Cmd>Git<CR>"),
     dashboard.button("c", "  Local Configuration", ":e .vimrc.lua<CR>"),
     dashboard.button("l", "  Lazy.nvim", ":Lazy<CR>"),
     dashboard.button("q", "  Quit Neovim", ":qa!<CR>"),

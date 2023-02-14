@@ -32,6 +32,10 @@ vim.keymap.set("n", "<A-g>", function()
     gitui:toggle()
 end)
 
+vim.api.nvim_create_user_command("Git", function()
+    gitui:toggle()
+end, { bang = true })
+
 local btop = fterm:new({
     ft = "fterm_btop",
     cmd = "btop",
