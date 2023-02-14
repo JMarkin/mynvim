@@ -426,10 +426,6 @@ require("lazy").setup({
 
     --  Git
     {
-        "kdheepak/lazygit.nvim",
-        cmd = "LazyGit",
-    },
-    {
         "lewis6991/gitsigns.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -554,8 +550,7 @@ require("lazy").setup({
             "lotabout/skim",
         },
         config = function()
-            require("plugins.fzflua").setup()
-            require("plugins.fzflua").keymaps()
+            require("plugins.fzflua")
         end,
     },
     --- Генераци докстрингов и т.п.

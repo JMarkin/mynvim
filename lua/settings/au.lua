@@ -1,14 +1,14 @@
 -- синхронизация между инстансами
--- local sync_neovim = "SHADA"
--- vim.api.nvim_create_augroup(sync_neovim, { clear = true })
---
--- vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
---     group = sync_neovim,
---     pattern = { "*" },
---     callback = function()
---         vim.cmd([[if exists(':rshada') | rshada | wshada | endif]])
---     end,
--- })
+local sync_neovim = "SHADA"
+vim.api.nvim_create_augroup(sync_neovim, { clear = true })
+
+vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
+    group = sync_neovim,
+    pattern = { "*" },
+    callback = function()
+        vim.cmd([[if exists(':rshada /tmp/shada') | rshada /tmp/shada | wshada /tmp/shada | endif]])
+    end,
+})
 -- Запоминает где nvim последний раз редактировал файл
 local last_change = "LastChange"
 vim.api.nvim_create_augroup(last_change, { clear = true })

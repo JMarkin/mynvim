@@ -34,6 +34,15 @@ require("lspsaga").setup({
             expand_collapse = "u",
         },
     },
+    symbol_in_winbar = {
+        enable = true,
+        separator = " ",
+        hide_keyword = true,
+        show_file = true,
+        folder_level = 2,
+        respect_root = true,
+        color_mode = true,
+    },
     lightbulb = {
         enable = false,
     },

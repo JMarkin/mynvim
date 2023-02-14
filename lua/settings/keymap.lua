@@ -4,7 +4,6 @@ vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" }
 vim.keymap.set({ "n" }, "<space>f", "<Cmd>NvimTreeOpen<CR>", { desc = "FileTree" })
 vim.keymap.set({ "n" }, "<space>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", { desc = "All Diagnostics" })
 vim.keymap.set({ "n" }, "<space>e", "<cmd>TroubleToggle document_diagnostics<cr>", { desc = "Buffer Diagnostics" })
-vim.keymap.set({ "n" }, "<space>G", "<Cmd>LazyGit<CR>", { desc = "Git: lazygit" })
 vim.keymap.set({ "n" }, "<space>B", "<Cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "Git: blame" })
 
 -- Visual

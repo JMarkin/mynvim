@@ -9,7 +9,7 @@ dashboard.section.header.val = require("ascii").get_random_global()
 dashboard.section.buttons.val = {
     dashboard.button("f", "  Find File", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>"),
     dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
-    dashboard.button("r", "  Recent Files", "<cmd>lua require('plugins.fzflua').search_old_files()<cr>"),
+    dashboard.button("r", "  Recent Files", '<cmd> lua require("fzf-lua").oldfiles({ multiprocess = true,})<cr>'),
     dashboard.button(
         "s",
         "  Find Text",
