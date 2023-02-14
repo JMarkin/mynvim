@@ -719,6 +719,8 @@ require("lazy").setup({
                 config = function()
                     require("plugins.term")
                 end,
+                cmd = { "Git" },
+                keys = { "<A-g>", "<A-b>", "<A-t>" },
             },
         },
         init = function()

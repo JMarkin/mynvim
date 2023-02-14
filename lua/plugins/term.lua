@@ -9,42 +9,49 @@ fterm.setup({
 })
 vim.keymap.set("n", "<A-t>", fterm.toggle, { desc = "Fterm: toggle" })
 vim.keymap.set("t", "<A-t>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', { desc = "Fterm: toggle" })
-vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
 
 vim.api.nvim_create_autocmd("User", {
     pattern = "UnceptionEditRequestReceived",
     callback = function()
-        print("Hello world!")
         fterm.toggle()
     end,
 })
 
-local gitui = fterm:new({
-    ft = "fterm_gitui",
-    cmd = "gitui",
-    dimensions = {
-        height = 0.9,
-        width = 0.9,
-    },
-})
+local gitui = nil
+local gitui_init = function()
+    if gitui ~= nil then
+        gitui:toggle()
+    else
+        gitui = fterm:new({
+            ft = "fterm_gitui",
+            cmd = "gitui",
+            dimensions = {
+                height = 0.9,
+                width = 0.9,
+            },
+        })
+        gitui:toggle()
+    end
+end
 
-vim.keymap.set("n", "<A-g>", function()
-    gitui:toggle()
-end)
+vim.keymap.set("n", "<A-g>", gitui_init, { desc = "Git" })
 
-vim.api.nvim_create_user_command("Git", function()
-    gitui:toggle()
-end, { bang = true })
+vim.api.nvim_create_user_command("Git", gitui_init, { bang = true })
 
-local btop = fterm:new({
-    ft = "fterm_btop",
-    cmd = "btop",
-    dimensions = {
-        height = 0.9,
-        width = 0.9,
-    },
-})
+local btop = nil
 
 vim.keymap.set("n", "<A-b>", function()
-    btop:toggle()
+    if btop ~= nil then
+        btop:toggle()
+    else
+        btop = fterm:new({
+            ft = "fterm_btop",
+            cmd = "btop",
+            dimensions = {
+                height = 0.9,
+                width = 0.9,
+            },
+        })
+        btop:toggle()
+    end
 end)
