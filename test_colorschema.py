@@ -1,5 +1,9 @@
 import os
 
+#dldldld
+"""asd
+zxc
+"""
 
 class TestClass:
     s: str = 'sad'
@@ -20,6 +24,7 @@ if True or False:
 
 a, b, c = "1", "2", "3"
 
+c: int = 1
 
 def f():
     ...

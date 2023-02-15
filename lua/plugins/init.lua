@@ -438,7 +438,7 @@ require("lazy").setup({
     {
         "sindrets/diffview.nvim",
         dependencies = "nvim-lua/plenary.nvim",
-        lazy = true,
+        cmd = {"DiffviewOpen"},
         config = function()
             require("diffview").setup({
                 view = {
