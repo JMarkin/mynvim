@@ -22,6 +22,7 @@ require("fzf-lua").setup({
         ["--info"] = "inline",
         ["--height"] = "100%",
         ["--layout"] = "reverse",
+        ["--no-separator"] = false,
     },
     files = {
         rg_opts = "--color=never --files --no-ignore --hidden --follow -g '!.git'",
