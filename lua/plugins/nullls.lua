@@ -215,6 +215,8 @@ M.enable = function(diagnostics, formatters, completions)
         )
     end
 
+    table.insert(sources, nullls.builtins.code_actions.gitsigns)
+
     nullls.setup({ sources = sources, temp_dir = "/tmp", root_dir = u.root_pattern(".vimrc.lua", "Makefile", ".git") })
 end
 

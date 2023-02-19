@@ -431,14 +431,14 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
         },
         config = function()
-            require("gitsigns").setup()
+            require("plugins.gitsign")
         end,
-        cmd = "Gitsigns",
+        event = "BufReadPost *.*",
     },
     {
         "sindrets/diffview.nvim",
         dependencies = "nvim-lua/plenary.nvim",
-        cmd = {"DiffviewOpen"},
+        cmd = { "DiffviewOpen" },
         config = function()
             require("diffview").setup({
                 view = {
