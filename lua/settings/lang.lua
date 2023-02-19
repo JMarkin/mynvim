@@ -6,7 +6,23 @@ end
 
 local M = {}
 
-local on_attach = function(client, bufnr) end
+local on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = true,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                border = "rounded",
+                source = "always",
+                prefix = " ",
+                scope = "cursor",
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end,
+    })
+end
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
@@ -33,7 +49,7 @@ capabilities.textDocument.completion = {
 
 local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities
-    -- opts.on_attach = on_attach
+    opts.on_attach = on_attach
     require("lspconfig")[lsp_name].setup(opts)
 end
 
