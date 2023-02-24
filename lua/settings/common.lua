@@ -19,7 +19,7 @@ g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
 opt.fileencoding = "utf-8"
 opt.encoding = "utf-8"
-
+opt.pumheight = 20
 opt.guicursor = "a:block"
 opt.wrap = true
 opt.hidden = true
@@ -55,3 +55,6 @@ opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 
 vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
+
+-- completions
+opt.completeopt = "menu,menuone,noselect"

@@ -64,34 +64,11 @@ require("lazy").setup({
             })
         end,
     },
-
     {
         "folke/noice.nvim",
+        enabled = true,
         config = function()
-            require("noice").setup({
-                lsp = {
-                    progress = {
-                        enabled = true,
-                        format = "lsp_progress",
-                        format_done = "lsp_progress_done",
-                        throttle = 1000 / 30,
-                        view = "mini",
-                    },
-                    override = {
-                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                        ["vim.lsp.util.stylize_markdown"] = true,
-                        ["cmp.entry.get_documentation"] = true,
-                    },
-                },
-                -- you can enable a preset for easier configuration
-                presets = {
-                    bottom_search = false, -- use a classic bottom cmdline for search
-                    command_palette = true, -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = true, -- add a border to hover docs and signature help
-                },
-            })
+            require("plugins.noice")
         end,
         dependencies = {
             "MunifTanjim/nui.nvim",
@@ -389,15 +366,17 @@ require("lazy").setup({
             "lukas-reineke/cmp-under-comparator",
             "lukas-reineke/cmp-rg",
             "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-omni",
             "saadparwaiz1/cmp_luasnip",
             "danymat/neogen",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-buffer",
         },
         cond = is_not_mini,
         config = function()
             require("plugins.cmp").config()
         end,
-        event = { "InsertEnter" },
+        keys = { ":", "/" },
+        event = { "InsertEnter", "CmdlineEnter" },
     },
 
     {
@@ -620,6 +599,7 @@ require("lazy").setup({
     -- databases
     {
         "kristijanhusak/vim-dadbod-ui",
+        enabled = true,
         cond = is_not_mini,
         dependencies = {
             "tpope/vim-dadbod",
@@ -629,15 +609,17 @@ require("lazy").setup({
             },
         },
         init = function()
-            vim.g.db_ui_env_variable_url = "DATABASE_URL"
-            vim.g.db_ui_env_variable_name = "DATABASE_NAME"
-            vim.g.db_ui_dotenv_variable_prefix = "DB_"
             vim.g.db_ui_execute_on_save = 0
             vim.g.db_ui_win_position = "right"
             vim.g.db_ui_show_database_icon = 1
             vim.g.db_ui_use_nerd_fonts = 1
         end,
-        cmd = { "DB", "DBUI", "DBUIToggle", "DBUIFindBUffer", "DBUIRenameBuffer" },
+        ft = { "sql", "mssql", "plsql" },
+    },
+    {
+        "vim-scripts/dbext.vim",
+        enabled = false,
+        ft = { "sql", "mssql", "plsql" },
     },
 
     -- uncompiler
@@ -718,5 +700,11 @@ require("lazy").setup({
         init = function()
             vim.g.unception_open_buffer_in_new_tab = true
         end,
+    },
+    {
+        "m4xshen/autoclose.nvim",
+        config = function()
+            require("autoclose").setup()
+        end
     },
 })
