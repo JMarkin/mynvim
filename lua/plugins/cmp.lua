@@ -46,6 +46,8 @@ local menu_map = {
     treesitter = "[TS]",
     spell = "[SP]",
     omni = "[Omni]",
+    noice_popupmenu = "[Native]",
+    ["vim-dadbod-completion"] = "[DB]",
 }
 
 local enabled = function()
@@ -58,8 +60,6 @@ M.config = function()
     require("luasnip.loaders.from_snipmate").lazy_load()
 
     local neogen = require("neogen")
-
-    vim.cmd([[set completeopt=menu,menuone,noselect]])
 
     local cmp = require("cmp")
 
@@ -91,9 +91,7 @@ M.config = function()
 
     local sources = {}
 
-    if vim.g.disable_lsp then
-        table.insert(sources, { name = "omni", max_item_count = 20 })
-    else
+    if not vim.g.disable_lsp then
         table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
     end
 
@@ -164,7 +162,28 @@ M.config = function()
             },
             completion = {
                 border = vim.g.floating_window_border_dark,
+                pumheight = 0,
             },
+        },
+    })
+
+    cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = "path" },
+        }, {
+            {
+                name = "cmdline",
+                option = {
+                    ignore_cmds = { "Man", "!" },
+                },
+            },
+        }),
+    })
+    cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+            { name = "buffer" },
         },
     })
 end

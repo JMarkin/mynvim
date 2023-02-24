@@ -113,6 +113,12 @@ nullls.builtins.diagnostics.djlint = nullls.builtins.diagnostics.djlint.with({
 nullls.builtins.formatting.djlint = nullls.builtins.formatting.djlint.with({
     filetypes = { "jinja.html", "htmldjango" },
 })
+nullls.builtins.diagnostics.sqlfluff = nullls.builtins.diagnostics.sqlfluff.with({
+    extra_args = { "--dialect", "postgres" },
+})
+nullls.builtins.formatting.sqlfluff = nullls.builtins.formatting.sqlfluff.with({
+    extra_args = { "--dialect", "postgres" },
+})
 
 local DEFAULT_COMPLETIONS = {}
 
