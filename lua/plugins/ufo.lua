@@ -5,7 +5,6 @@ M.setup = function() end
 local ftMap = {
     vim = "treesitter",
     python = "indent",
-    lua = "lsp",
 }
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
