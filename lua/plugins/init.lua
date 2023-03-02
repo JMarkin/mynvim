@@ -57,7 +57,7 @@ require("lazy").setup({
         config = function()
             require("notify").setup({
                 max_width = 80,
-                timeout = 500,
+                timeout = 1000,
                 stages = "static",
                 level = vim.log.levels.INFO,
                 background_colour = "#000000",
@@ -156,8 +156,9 @@ require("lazy").setup({
     -- Markdown превью
     {
         "ellisonleao/glow.nvim",
-        cmd = "Glow",
         cond = is_not_mini,
+        config = true,
+        cmd = "Glow",
     },
 
     -- Цвет тема
@@ -350,6 +351,7 @@ require("lazy").setup({
     {
         "kevinhwang91/nvim-ufo",
         lazy = true,
+        enabled = true,
         cond = is_not_mini,
         dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
         event = "BufReadPost",
@@ -368,15 +370,13 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             "saadparwaiz1/cmp_luasnip",
             "danymat/neogen",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-buffer",
+            "quangnguyen30192/cmp-nvim-tags",
         },
         cond = is_not_mini,
         config = function()
             require("plugins.cmp").config()
         end,
-        keys = { ":", "/" },
-        event = { "InsertEnter", "CmdlineEnter" },
+        event = { "InsertEnter" },
     },
 
     {
@@ -700,11 +700,5 @@ require("lazy").setup({
         init = function()
             vim.g.unception_open_buffer_in_new_tab = true
         end,
-    },
-    {
-        "m4xshen/autoclose.nvim",
-        config = function()
-            require("autoclose").setup()
-        end
     },
 })

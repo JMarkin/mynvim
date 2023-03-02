@@ -7,6 +7,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 vim.cmd("set cc=")
 opt.updatetime = 100
 opt.scrolloff = 15
+opt.ttyfast = true
 opt.spell = false
 opt.spelllang = { "en", "ru" } -- Словари рус eng
 opt.number = true
@@ -21,14 +22,13 @@ opt.fileencoding = "utf-8"
 opt.encoding = "utf-8"
 opt.pumheight = 20
 opt.guicursor = "a:block"
-opt.wrap = true
+opt.wrap = false
 opt.hidden = true
 opt.syntax = "enable"
 opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
 opt.bs = "indent,eol,start"
-opt.tags = {}
 if vim.fn.has("nvim-0.8") ~= 1 then
     g.do_filetype_lua = 1
     g.did_load_filetypes = 0
@@ -58,3 +58,4 @@ vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
 
 -- completions
 opt.completeopt = "menu,menuone,noselect"
+opt.tags = { "tags", ".git/tags" }
