@@ -35,5 +35,6 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
     end
 end
 
+require("custom")
 require("settings")
 require("plugins")

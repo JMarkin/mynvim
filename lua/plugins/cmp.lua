@@ -95,6 +95,8 @@ M.config = function()
         table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
     end
 
+    table.insert(sources, { name = "tags", max_item_count = 20 })
+
     table.insert(sources, {
         name = "vim-dadbod-completion",
         max_item_count = 20,
@@ -167,25 +169,6 @@ M.config = function()
         },
     })
 
-    cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = "path" },
-        }, {
-            {
-                name = "cmdline",
-                option = {
-                    ignore_cmds = { "Man", "!" },
-                },
-            },
-        }),
-    })
-    cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            { name = "buffer" },
-        },
-    })
 end
 
 return M
