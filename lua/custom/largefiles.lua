@@ -45,17 +45,24 @@ local EVENTS = {
     "SearchWrapped",
     "Syntax",
     "TextChanged",
-    "TextYankPost",
     "User",
     "WinEnter",
-    "CmdwinLeave",
+    "WinNew",
     "WinScrolled",
     "WinResized",
-    "BufEnter",
-    "BufWritePost",
-    "BufWritePre",
+    "OptionSet",
+    "DirChanged",
     "TabEnter",
     "TabLeave",
+    "ColorScheme",
+    "ColorSchemePre",
+    "CmdwinLeave",
+    "BufEnter",
+    "BufReadPost",
+    "BufWinEnter",
+    "BufWritePost",
+    "BufWritePre",
+    "BufWipeout",
 }
 
 function optimize_buffer()
@@ -63,6 +70,7 @@ function optimize_buffer()
     if file == nil or #file == 0 then
         if disable_filetype then
             vim.opt.eventignore:remove(EVENTS)
+            vim.cmd([[TSToggle all]])
         end
         return
     end
@@ -88,6 +96,7 @@ function optimize_buffer()
         vim.opt_local.spell = false
         vim.opt_local.hlsearch = false
         vim.opt_local.incsearch = false
+        vim.cmd([[TSToggle all]])
 
         if size > max_file_size_readonly then
             vim.opt_local.buftype = "nowrite"
@@ -96,8 +105,11 @@ function optimize_buffer()
         end
         disable_filetype = true
     else
-        vim.opt.eventignore:remove(EVENTS)
-        disable_filetype = false
+        if disable_filetype then
+            vim.opt.eventignore:remove(EVENTS)
+            disable_filetype = false
+            vim.cmd([[TSToggle all]])
+        end
     end
 end
 

@@ -27,17 +27,6 @@ require("lazy").setup({
     },
 
     {
-        "mvllow/modes.nvim",
-        config = function()
-            require("modes").setup({
-                set_cursor = false,
-                line_opacity = 0.4,
-            })
-        end,
-        event = "ModeChanged",
-    },
-
-    {
         "ibhagwan/smartyank.nvim",
         config = function()
             require("smartyank").setup({
@@ -164,6 +153,7 @@ require("lazy").setup({
     -- Цвет тема
     {
         "JMarkin/nvim-highlite",
+        enabled = true,
         lazy = false,
         priority = 1000,
         config = function()
@@ -215,12 +205,12 @@ require("lazy").setup({
             "yioneko/nvim-yati",
             {
                 name = "nvim-ts-rainbow",
-                url = "https://github.com/mrjones2014/nvim-ts-rainbow",
+                url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
             },
             "nvim-treesitter/nvim-treesitter-refactor",
             {
                 "andymass/vim-matchup",
-                enabled = false,
+                enabled = true,
                 init = function()
                     vim.g.matchup_transmute_enabled = 1
                     vim.g.matchup_delim_noskips = 1
@@ -670,6 +660,9 @@ require("lazy").setup({
     },
     {
         "rainbowhxch/beacon.nvim",
+        cond = function ()
+            return not vim.g.neovide
+        end,
         config = function()
             require("beacon").setup({
                 enable = true,

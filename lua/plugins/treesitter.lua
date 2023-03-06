@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+    local rainbow = require("ts-rainbow")
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
             "regex",
@@ -48,6 +49,11 @@ M.setup = function()
             enable = true,
             extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
             max_file_lines = 1500, -- Do not enable for files with more than n lines, int
+            query = {
+                "rainbow-parens",
+                html = "rainbow-tags",
+            },
+            strategy = rainbow.strategy.global,
         },
         incremental_selection = {
             enable = true,

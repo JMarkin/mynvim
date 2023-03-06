@@ -5,6 +5,10 @@ import os
 zxc
 """
 
+#TODO: 123
+#FIXME: 11
+
+
 class TestClass:
     s: str = 'sad'
 
@@ -25,6 +29,7 @@ if True or False:
 a, b, c = "1", "2", "3"
 
 c: int = 1
+
 
 def f():
     ...
@@ -63,4 +68,3 @@ def a():
         return c
 
     return f
-
