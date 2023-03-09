@@ -26,6 +26,7 @@ WORKDIR /home/kron
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv && \
     cd ~/.pyenv && \
-    src/configure && make -C src && \
-    ~/.cargo/bin/cargo install vivid
+    src/configure && make -C src
+    
+RUN ~/.cargo/bin/cargo install vivid
 
