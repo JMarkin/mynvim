@@ -1,12 +1,14 @@
-FROM python:3.11-alpine
+FROM alpine:3.17
 
 
 RUN apk update && \
     apk add --no-cache bash sudo git curl fish nodejs bat exa gitui btop openssh openssh-client-common ripgrep skim fd rustup go build-base cmake \
-    libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli openssl openssl-dev && \
+    libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
+    dpkg-dev dpkg gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev  \
+    make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
+    openssl openssl-dev && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-    apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
-    pip install pynvim
+    apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
 
 RUN adduser -s /usr/bin/fish -D kron && \
@@ -20,10 +22,23 @@ RUN adduser -s /usr/bin/fish -D kron && \
     chown -R kron /home/kron
 
 USER kron
-WORKDIR /home/kron
+ENV HOME=/home/kron
+WORKDIR $HOME
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv && \
-    cd ~/.pyenv && \
-    src/configure && make -C src
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+# Set-up necessary Env vars for PyEnv
+ENV PYENV_ROOT $HOME/.pyenv
+ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+
+ENV PYTHON_VERSION 3.10.10
+
+# Install pyenv
+RUN set -ex \
+    && curl https://pyenv.run | bash \
+    && pyenv update \
+    && pyenv install $PYTHON_VERSION \
+    && pyenv global $PYTHON_VERSION \
+    && pyenv rehash
+
+VOLUME $HOME
