@@ -9,7 +9,11 @@ dashboard.section.header.val = require("ascii").get_random_global()
 dashboard.section.buttons.val = {
     dashboard.button("f", "  Find File", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>"),
     dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
-    dashboard.button("r", "  Recent Files", '<cmd> lua require("fzf-lua").oldfiles({ multiprocess = true,})<cr>'),
+    dashboard.button(
+        "r",
+        "  Recent Files",
+        '<cmd> lua require("fzf-lua").oldfiles({ multiprocess = true, cwd_only=true })<cr>'
+    ),
     dashboard.button(
         "s",
         "  Find Text",
@@ -20,18 +24,6 @@ dashboard.section.buttons.val = {
     dashboard.button("l", "  Lazy.nvim", ":Lazy<CR>"),
     dashboard.button("q", "  Quit Neovim", ":qa!<CR>"),
 }
-
-local footer = function()
-    local version = " " .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
-    if packer_plugins == nil then
-        return version
-    else
-        local total_plugins = "   " .. #vim.tbl_keys(packer_plugins) .. " Plugins"
-        return version .. total_plugins
-    end
-end
-
-dashboard.section.footer.val = footer()
 
 dashboard.section.footer.opts.hl = "AlphaFooter"
 dashboard.section.header.opts.hl = "AlphaHeader"

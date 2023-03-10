@@ -69,7 +69,7 @@ M.setup = function()
             enable = false,
         },
         matchup = {
-            enable = false,
+            enable = true,
             include_match_words = true,
         },
         refactor = {

@@ -29,11 +29,14 @@ opt.syntax = "enable"
 opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
+opt.autochdir = false
 opt.bs = "indent,eol,start"
 if vim.fn.has("nvim-0.8") ~= 1 then
     g.do_filetype_lua = 1
     g.did_load_filetypes = 0
 end
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- fold
 opt.foldmethod = "manual"

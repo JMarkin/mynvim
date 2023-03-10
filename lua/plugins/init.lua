@@ -175,6 +175,10 @@ require("lazy").setup({
     {
         "prichrd/netrw.nvim",
         enabled = false,
+        setup = function()
+            vim.g.loaded_netrw = 0
+            vim.g.loaded_netrwPlugin = 1
+        end,
         config = function()
             require("plugins.netrw")
         end,
@@ -184,10 +188,7 @@ require("lazy").setup({
         "nvim-tree/nvim-tree.lua",
         tag = "nightly",
         cmd = "NvimTreeOpen",
-        setup = function()
-            vim.g.loaded_netrw = 1
-            vim.g.loaded_netrwPlugin = 1
-        end,
+
         config = function()
             require("plugins.nvimtree")
         end,
