@@ -6,7 +6,7 @@ RUN apk update && \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
-    openssl openssl-dev && \
+    openssl readline-dev && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
     apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
