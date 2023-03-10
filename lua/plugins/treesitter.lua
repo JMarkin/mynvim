@@ -4,6 +4,7 @@ M.setup = function()
     local rainbow = require("ts-rainbow")
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
+            "regex",
             "rust",
             "cpp",
             "cuda",

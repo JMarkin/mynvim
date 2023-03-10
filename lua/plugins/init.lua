@@ -188,7 +188,6 @@ require("lazy").setup({
         "nvim-tree/nvim-tree.lua",
         tag = "nightly",
         cmd = "NvimTreeOpen",
-
         config = function()
             require("plugins.nvimtree")
         end,
@@ -196,6 +195,14 @@ require("lazy").setup({
 
     -- Подцветка синтаксиа
 
+    {
+        "wgwoods/vim-systemd-syntax",
+        ft = "systemd",
+    },
+    {
+        "MTDL9/vim-log-highlighting",
+        ft = "log",
+    },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -661,7 +668,7 @@ require("lazy").setup({
     },
     {
         "rainbowhxch/beacon.nvim",
-        cond = function ()
+        cond = function()
             return not vim.g.neovide
         end,
         config = function()

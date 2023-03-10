@@ -1,6 +1,18 @@
 vim.filetype.add({
     extension = {
         dockerfile = "dockerfile",
+        automount = "systemd",
+        mount = "systemd",
+        path = "systemd",
+        service = "systemd",
+        socket = "systemd",
+        swap = "systemd",
+        target = "systemd",
+        timer = "systemd",
+        log = "log",
+        LOG = "log",
+        _log = "log",
+        _LOG = "log",
     },
     pattern = {
         ["*%.snip"] = "vim",
