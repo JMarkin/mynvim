@@ -6,7 +6,7 @@ RUN apk update && \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
-    openssl readline-dev && \
+    openssl readline-dev rsync && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
     apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
@@ -14,12 +14,7 @@ RUN apk update && \
 RUN adduser -s /usr/bin/fish -D kron && \
     mkdir -p /etc/sudoers.d && \
     echo "kron ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/kron && \
-    chmod 0440 /etc/sudoers.d/kron && \
-    cd /home/kron && \
-    git config --global --add safe.directory '*' && \
-    git clone https://github.com/JMarkin/dotfiles.git . && \
-    git submodule update --init --recursive --remote && \
-    chown -R kron /home/kron
+    chmod 0440 /etc/sudoers.d/kron
 
 USER kron
 ENV HOME=/home/kron
@@ -40,5 +35,14 @@ RUN set -ex \
     && pyenv install $PYTHON_VERSION \
     && pyenv global $PYTHON_VERSION \
     && pyenv rehash
+
+RUN cd /tmp && \
+    git clone https://github.com/JMarkin/dotfiles.git && \
+    cd dotfiles && git checkout 560f09c976f4cd9c9c3bcdc9b60535a448d83ceb && cd .. && \
+    rm -rf dotfiles/.git && \
+    rsync -a -P dotfiles/ ~/ && \
+    rm -rf dotfiles
+
+COPY . $HOME/.config/nvim
 
 VOLUME $HOME
