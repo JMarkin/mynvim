@@ -58,8 +58,6 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 
-vim.cmd([[xnoremap <expr> p 'pgv"' . v:register . 'y']])
-
 -- completions
 opt.completeopt = "menu,menuone,noselect"
 opt.tags = { "tags", ".git/tags" }
