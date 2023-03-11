@@ -152,13 +152,12 @@ require("lazy").setup({
 
     -- Цвет тема
     {
-        "JMarkin/nvim-highlite",
+        "Iron-E/nvim-highlite",
         enabled = true,
         lazy = false,
         priority = 1000,
         config = function()
-            vim.opt.background = "dark"
-            vim.cmd("colorscheme highlite")
+            require("settings.colorscheme")
         end,
     },
 
