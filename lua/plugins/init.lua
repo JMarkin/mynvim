@@ -368,6 +368,14 @@ require("lazy").setup({
             "saadparwaiz1/cmp_luasnip",
             "danymat/neogen",
             "quangnguyen30192/cmp-nvim-tags",
+            {
+                "doxnit/cmp-luasnip-choice",
+                config = function()
+                    require("cmp_luasnip_choice").setup({
+                        auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+                    })
+                end,
+            },
         },
         cond = is_not_mini,
         config = function()

@@ -10,6 +10,7 @@
   "cinnamon.nvim": { "branch": "master", "commit": "c406ffda3a0302f32c23b24ab756ea20467d6578" },
   "clangd_extenstions": { "branch": "main", "commit": "722ee39d4c1b309bef4a6c2da1749c3e3358757f" },
   "close-buffers.vim": { "branch": "master", "commit": "0b29fbc483344e2ebec96a28070698d72a8a767c" },
+  "cmp-luasnip-choice": { "branch": "master", "commit": "97a367851bc17984b56164b5427a53919aed873a" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
   "cmp-nvim-tags": { "branch": "main", "commit": "de630ce773d249ab5739405a3428a5a29d7e0076" },
   "cmp-rg": { "branch": "master", "commit": "1cad8eb315643d0df13c37401c03d7986f891011" },
