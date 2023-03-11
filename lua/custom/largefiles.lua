@@ -70,7 +70,6 @@ function optimize_buffer()
     if file == nil or #file == 0 then
         if disable_filetype then
             vim.opt.eventignore:remove(EVENTS)
-            vim.cmd([[TSToggle all]])
         end
         return
     end
@@ -96,7 +95,6 @@ function optimize_buffer()
         vim.opt_local.spell = false
         vim.opt_local.hlsearch = false
         vim.opt_local.incsearch = false
-        vim.cmd([[TSToggle all]])
 
         if size > max_file_size_readonly then
             vim.opt_local.buftype = "nowrite"
@@ -108,7 +106,6 @@ function optimize_buffer()
         if disable_filetype then
             vim.opt.eventignore:remove(EVENTS)
             disable_filetype = false
-            vim.cmd([[TSToggle all]])
         end
     end
 end
