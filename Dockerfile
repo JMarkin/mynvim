@@ -44,10 +44,6 @@ RUN cd /tmp && \
     rm -rf dotfiles
 
 
-RUN fish -c "fish_update_completions && \
-    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher && \
-    fisher update"
-
 COPY --chown=kron . $HOME/.config/nvim
 
 VOLUME $HOME
