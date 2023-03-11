@@ -108,6 +108,7 @@ M.config = function()
         max_item_count = 5,
     })
     table.insert(sources, { name = "luasnip", keyword_length = 3, max_item_count = 5 })
+    table.insert(sources, { name = "luasnip_choice" })
 
     cmp.setup({
         performance = {
