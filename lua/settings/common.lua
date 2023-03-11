@@ -19,6 +19,7 @@ opt.splitbelow = true -- horizontal split вниз
 opt.mouse = "a"
 g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
+opt.background = "dark"
 opt.fileencoding = "utf-8"
 opt.encoding = "utf-8"
 opt.pumheight = 20

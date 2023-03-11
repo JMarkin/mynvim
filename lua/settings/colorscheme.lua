@@ -1,6 +1,3 @@
-vim.opt.background = "dark"
-vim.cmd("colorscheme highlite")
-
 local highlite = require("highlite")
 
 local black = { "#202020", 235, "black" }
@@ -39,28 +36,28 @@ local purple = { "#cf55f0", 171, "magenta" }
 local purple_light = { "#af60af", 133, "darkmagenta" }
 
 local group = {
-	Error = {fg = red_dark, bold = true},
-	ErrorMsg = {fg = red, bold = true},
-	ModeMsg = {fg = yellow},
-	Question = {fg = orange_light, underline = true},
-	Todo = {fg = cyan, bold = true},
-	WarningMsg = {fg = orange, bold = true},
+    Error = { fg = red_dark, bold = true },
+    ErrorMsg = { fg = red, bold = true },
+    ModeMsg = { fg = yellow },
+    Question = { fg = orange_light, underline = true },
+    Todo = { fg = cyan, bold = true },
+    WarningMsg = { fg = orange, bold = true },
 
-    DiagnosticError = { link = "Error" },
-    DiagnosticFloatingError = { link = "ErrorMsg" },
-    DiagnosticSignError = { link = "DiagnosticFloatingError" },
+    DiagnosticError = "Error",
+    DiagnosticFloatingError = "ErrorMsg",
+    DiagnosticSignError = "DiagnosticFloatingError",
 
     DiagnosticWarn = { fg = orange, bold = true },
-    DiagnosticFloatingWarn = { link = "WarningMsg" },
-    DiagnosticSignWarn = { link = "DiagnosticFloatingWarn" },
+    DiagnosticFloatingWarn = "WarningMsg",
+    DiagnosticSignWarn = "DiagnosticFloatingWarn",
 
     DiagnosticHint = { fg = magenta, bold = true },
     DiagnosticFloatingHint = { fg = magenta, italic = true },
-    DiagnosticSignHint = { link = "DiagnosticFloatingHint" },
+    DiagnosticSignHint = "DiagnosticFloatingHint",
 
     DiagnosticInfo = { fg = pink_light, bold = true },
     DiagnosticFloatingInfo = { fg = pink_light, italic = true },
-    DiagnosticSignInfo = { link = "DiagnosticFloatingInfo" },
+    DiagnosticSignInfo = "DiagnosticFloatingInfo",
 
     DiagnosticUnderlineError = { undercurl = true, sp = red },
     DiagnosticUnderlineHint = { undercurl = true, sp = magenta },
@@ -72,9 +69,9 @@ local group = {
     DiagnosticVirtualTextInfo = { fg = pink_light, bold = true, italic = true },
     DiagnosticVirtualTextHint = { fg = magenta, bold = true, italic = true },
 
-    ["@annotation"] = { link = "Label" },
+    ["@annotation"] = "Label",
     ["@attribute"] = { fg = purple },
-    ["@field"] = { link = "ParamIdentifier" },
+    ["@field"] = "ParamIdentifier",
     ["@string.regex"] = { link = "String", bold = true, undercurl = true },
     ["@text.strong"] = { link = "String", bold = true }, -- For text to be represented with strong.
     ["@text.emphasis"] = { link = "String", italic = true }, -- For text to be represented with emphasis.
@@ -88,34 +85,42 @@ local group = {
     rainbowcol6 = { fg = cyan },
     rainbowcol7 = { fg = purple },
 
-    DiffviewNormal = { link = "Normal" },
-    DiffviewNonText = { link = "NonText" },
-    DiffviewCursorLine = { link = "CursorLine" },
-    DiffviewWinSeparator = { link = "WinSeparator" },
-    DiffviewSignColumn = { link = "Normal" },
-    DiffviewStatusLine = { link = "StatusLine" },
-    DiffviewStatusLineNC = { link = "StatusLineNC" },
-    DiffviewEndOfBuffer = { link = "EndOfBuffer" },
-    DiffviewFilePanelRootPath = { link = "DiffviewFilePanelTitle" },
-    DiffviewFilePanelFileName = { link = "Normal" },
-    DiffviewFilePanelPath = { link = "Comment" },
+    DiffviewNormal = "Normal",
+    DiffviewNonText = "NonText",
+    DiffviewCursorLine = "CursorLine",
+    DiffviewWinSeparator = "WinSeparator",
+    DiffviewSignColumn = "Normal",
+    DiffviewStatusLine = "StatusLine",
+    DiffviewStatusLineNC = "StatusLineNC",
+    DiffviewEndOfBuffer = "EndOfBuffer",
+    DiffviewFilePanelRootPath = "DiffviewFilePanelTitle",
+    DiffviewFilePanelFileName = "Normal",
+    DiffviewFilePanelPath = "Comment",
     DiffviewFilePanelInsertions = { fg = teal },
     DiffviewFilePanelDeletions = { fg = red },
-    DiffviewFilePanelConflicts = { link = "DiagnosticSignWarn" },
-    DiffviewFolderName = { link = "Directory" },
-    DiffviewFolderSign = { link = "PreProc" },
-    DiffviewReference = { link = "Function" },
-    DiffviewStatusAdded = { link = "diffAdded" },
-    DiffviewStatusUntracked = { link = "diffAdded" },
-    DiffviewStatusModified = { link = "diffChanged" },
-    DiffviewStatusRenamed = { link = "diffChanged" },
-    DiffviewStatusCopied = { link = "diffChanged" },
-    DiffviewStatusTypeChange = { link = "diffChanged" },
-    DiffviewStatusUnmerged = { link = "diffChanged" },
-    DiffviewStatusUnknown = { link = "diffRemoved" },
-    DiffviewStatusDeleted = { link = "diffRemoved" },
-    DiffviewStatusBroken = { link = "diffRemoved" },
-    DiffviewStatusIgnored = { link = "Comment" },
+    DiffviewFilePanelConflicts = "DiagnosticSignWarn",
+    DiffviewFolderName = "Directory",
+    DiffviewFolderSign = "PreProc",
+    DiffviewReference = "Function",
+    DiffviewStatusAdded = "diffAdded",
+    DiffviewStatusUntracked = "diffAdded",
+    DiffviewStatusModified = "diffChanged",
+    DiffviewStatusRenamed = "diffChanged",
+    DiffviewStatusCopied = "diffChanged",
+    DiffviewStatusTypeChange = "diffChanged",
+    DiffviewStatusUnmerged = "diffChanged",
+    DiffviewStatusUnknown = "diffRemoved",
+    DiffviewStatusDeleted = "diffRemoved",
+    DiffviewStatusBroken = "diffRemoved",
+    DiffviewStatusIgnored = "Comment",
 }
 
-highlite.highlight_all(group)
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        highlite.highlight_all(group)
+    end,
+    group = vim.api.nvim_create_augroup("config", { clear = true }),
+    pattern = "highlite",
+})
+
+vim.cmd("colorscheme highlite")

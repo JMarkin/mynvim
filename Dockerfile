@@ -38,11 +38,16 @@ RUN set -ex \
 
 RUN cd /tmp && \
     git clone https://github.com/JMarkin/dotfiles.git && \
-    cd dotfiles && git checkout 560f09c976f4cd9c9c3bcdc9b60535a448d83ceb && cd .. && \
+    cd dotfiles && git checkout 1a91c0df9339f29fe0ae247ec6a188c134525647 && cd .. && \
     rm -rf dotfiles/.git && \
     rsync -a -P dotfiles/ ~/ && \
     rm -rf dotfiles
 
-COPY . $HOME/.config/nvim
+
+RUN fish -c "fish_update_completions && \
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher && \
+    fisher update"
+
+COPY --chown=kron . $HOME/.config/nvim
 
 VOLUME $HOME
