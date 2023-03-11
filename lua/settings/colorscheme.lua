@@ -39,6 +39,13 @@ local purple = { "#cf55f0", 171, "magenta" }
 local purple_light = { "#af60af", 133, "darkmagenta" }
 
 local group = {
+	Error = {fg = red_dark, bold = true},
+	ErrorMsg = {fg = red, bold = true},
+	ModeMsg = {fg = yellow},
+	Question = {fg = orange_light, underline = true},
+	Todo = {fg = cyan, bold = true},
+	WarningMsg = {fg = orange, bold = true},
+
     DiagnosticError = { link = "Error" },
     DiagnosticFloatingError = { link = "ErrorMsg" },
     DiagnosticSignError = { link = "DiagnosticFloatingError" },

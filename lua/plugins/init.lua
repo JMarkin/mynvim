@@ -241,6 +241,17 @@ require("lazy").setup({
         event = "BufReadPost",
     },
 
+    {
+        "mvllow/modes.nvim",
+        config = function()
+            require("modes").setup({
+                line_opacity = 0.30,
+                set_cursor = false,
+            })
+        end,
+        event = "BufReadPost",
+    },
+
     -- Доп утился для языков
     {
         "simrat39/rust-tools.nvim",
