@@ -708,7 +708,7 @@ require("lazy").setup({
         "samjwill/nvim-unception",
         dependencies = {
             {
-                "numToStr/FTerm.nvim",
+                "akinsho/toggleterm.nvim",
                 config = function()
                     require("plugins.term")
                 end,
