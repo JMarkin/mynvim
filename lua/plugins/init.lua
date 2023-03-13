@@ -87,6 +87,7 @@ require("lazy").setup({
 
     {
         "declancm/cinnamon.nvim",
+        enabled=false,
         config = function()
             require("plugins.scroll")
         end,
@@ -153,7 +154,7 @@ require("lazy").setup({
     -- Цвет тема
     {
         "Iron-E/nvim-highlite",
-        enabled = false,
+        enabled = true,
         lazy = false,
         priority = 1000,
         config = function()
@@ -162,7 +163,7 @@ require("lazy").setup({
     },
     {
         "olimorris/onedarkpro.nvim",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000, -- Ensure it loads first
         config = function()
@@ -323,6 +324,7 @@ require("lazy").setup({
             require("settings.lang").config()
         end,
         event = "BufReadPre *.*",
+        ft = { "dockerfile" },
     },
 
     {
