@@ -134,7 +134,7 @@ require("lazy").setup({
                 -- Default configuration (optional)
                 config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
                 hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
-                autocommands_create = false, -- Create autocommands (VimEnter, DirectoryChanged)
+                autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
                 commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
                 silent = false, -- Disable plugin messages (Config loaded/ignored)
                 lookup_parents = true,
@@ -153,11 +153,20 @@ require("lazy").setup({
     -- Цвет тема
     {
         "Iron-E/nvim-highlite",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000,
         config = function()
-            require("settings.colorscheme")
+            require("colorscheme.highlite")
+        end,
+    },
+    {
+        "olimorris/onedarkpro.nvim",
+        enabled = true,
+        lazy = false,
+        priority = 1000, -- Ensure it loads first
+        config = function()
+            require("colorscheme.onedark")
         end,
     },
 
@@ -386,6 +395,9 @@ require("lazy").setup({
                         auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
                     })
                 end,
+            },
+            {
+                "hrsh7th/cmp-omni",
             },
         },
         cond = is_not_mini,

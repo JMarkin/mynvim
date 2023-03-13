@@ -77,18 +77,3 @@ vim.api.nvim_create_autocmd("VimResized", {
     group = fzf,
     command = 'lua require("fzf-lua").redraw()',
 })
-
--- fix lvimrc
-local lvimrc = "lvimrc"
-vim.api.nvim_create_augroup(lvimrc, { clear = true })
-local loaded = 0
-vim.api.nvim_create_autocmd("VimEnter", {
-    nested = true,
-    group = lvimrc,
-    callback = function()
-        if loaded == 0 then
-            require("config-local").source()
-            loaded = 1
-        end
-    end,
-})

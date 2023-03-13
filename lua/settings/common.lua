@@ -26,7 +26,6 @@ opt.pumheight = 20
 opt.guicursor = "a:block"
 opt.wrap = false
 opt.hidden = true
-opt.syntax = "enable"
 opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
@@ -50,6 +49,7 @@ opt.foldenable = true
 -- Табы и отступы
 -----------------------------------------------------------
 vim.cmd([[
+syntax on
 filetype plugin on
 filetype indent plugin on
 ]])

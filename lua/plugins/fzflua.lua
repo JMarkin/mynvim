@@ -6,7 +6,7 @@ require("fzf-lua").setup({
     winopts = {
         width = 0.9,
         preview = {
-            default = "builtin",
+            default = "bat",
             layout = "vertical",
             title_align = "center",
         },
@@ -89,3 +89,4 @@ end, { desc = "Search: command_history" })
 vim.keymap.set("n", "gr", function()
     require("fzf-lua").lsp_references({ multiprocess = true })
 end, { silent = true, desc = "GoTo: references" })
+

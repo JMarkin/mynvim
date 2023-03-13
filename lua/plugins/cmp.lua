@@ -93,9 +93,12 @@ M.config = function()
 
     if not vim.g.disable_lsp then
         table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
+    else
+        vim.opt.omnifunc = "syntaxcomplete#Complete"
+        table.insert(sources, { name = "omni", max_item_count = 20 })
     end
 
-    table.insert(sources, { name = "tags", max_item_count = 20 })
+    table.insert(sources, { name = "tags", max_item_count = 19 })
 
     table.insert(sources, {
         name = "vim-dadbod-completion",
@@ -116,7 +119,7 @@ M.config = function()
             throttle = 30,
             fetching_timeout = 100,
         },
-        preselect = cmp.PreselectMode.None,
+        preselect = cmp.PreselectMode.Item,
         sorting = {
             comparators = {
                 cmp.config.compare.offset,
@@ -169,7 +172,6 @@ M.config = function()
             },
         },
     })
-
 end
 
 return M
