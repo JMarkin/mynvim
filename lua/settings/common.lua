@@ -37,6 +37,7 @@ if vim.fn.has("nvim-0.8") ~= 1 then
 end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+opt.scrollback = 2000
 
 -- fold
 opt.foldmethod = "manual"
