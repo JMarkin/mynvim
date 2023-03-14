@@ -205,13 +205,14 @@ require("lazy").setup({
     -- Подцветка синтаксиа
 
     {
-        "wgwoods/vim-systemd-syntax",
-        ft = "systemd",
+        "sheerun/vim-polyglot",
+        event = "BufReadPost",
+        init = function()
+            local lang = require("colorscheme.lang")
+            vim.g.polyglot_disabled = lang.treesitter_installed
+        end,
     },
-    {
-        "MTDL9/vim-log-highlighting",
-        ft = "log",
-    },
+
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -591,10 +592,6 @@ require("lazy").setup({
         cmd = "Neogen",
     },
     --nginx
-    {
-        "chr4/nginx.vim",
-        ft = { "nginx" },
-    },
     {
         "chr4/sslsecure.vim",
         ft = { "nginx" },
