@@ -1,26 +1,4 @@
-local colors = require("colorscheme.colors")
-local configure_group = require("colorscheme.group")
-
-local _colors = {}
-
-for k, v in pairs(colors) do
-    _colors[k] = v[1]
-end
-_colors.green = _colors.green_dark
-
-local group = configure_group(_colors)
-local _group = {}
-for k, v in pairs(group) do
-    v["bold"] = nil
-    v["italic"] = nil
-    v["undercurl"] = nil
-    v["underline"] = nil
-    v["sp"] = nil
-    _group[k] = v
-end
-
 require("onedarkpro").setup({
-    colors = _colors, -- Override default colors or create your own
     filetypes = { -- Override which filetype highlight groups are loaded
         html = true,
         java = true,
@@ -73,7 +51,6 @@ require("onedarkpro").setup({
         vim_ultest = true,
         which_key = true,
     },
-    highlights = _group, -- Override default highlight groups or create your own
     styles = { -- For example, to apply bold and italic, use "bold,italic"
         types = "NONE", -- Style that is applied to types
         methods = "NONE", -- Style that is applied to methods
@@ -93,7 +70,7 @@ require("onedarkpro").setup({
         cursorline = true, -- Use cursorline highlighting?
         transparency = true, -- Use a transparent background?
         terminal_colors = true, -- Use the theme's colors for Neovim's :terminal?
-        highlight_inactive_windows = false, -- When the window is out of focus, change the normal background?
+        highlight_inactive_windows = true, -- When the window is out of focus, change the normal background?
     },
 })
 vim.cmd("colorscheme onedark")

@@ -54,11 +54,6 @@ local function setup_lsp(lsp_name, opts)
     require("lspconfig")[lsp_name].setup(opts)
 end
 
-M.yamlls = function()
-    local cfg = require("yaml-companion").setup({})
-    setup_lsp("yamlls", cfg)
-end
-
 M.pylsp = function()
     g.pydocstring_formatter = "google"
     g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
