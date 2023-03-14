@@ -206,7 +206,7 @@ require("lazy").setup({
 
     {
         "sheerun/vim-polyglot",
-        event = "BufReadPost",
+        event = "VimEnter",
         init = function()
             local lang = require("colorscheme.lang")
             vim.g.polyglot_disabled = lang.treesitter_installed
@@ -405,20 +405,17 @@ require("lazy").setup({
             "L3MON4D3/LuaSnip",
             "lukas-reineke/cmp-under-comparator",
             "lukas-reineke/cmp-rg",
-            "hrsh7th/cmp-nvim-lsp",
             "saadparwaiz1/cmp_luasnip",
             "danymat/neogen",
             "quangnguyen30192/cmp-nvim-tags",
+            "ray-x/cmp-treesitter",
             {
-                "doxnit/cmp-luasnip-choice",
-                config = function()
-                    require("cmp_luasnip_choice").setup({
-                        auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
-                    })
-                end,
+                "hrsh7th/cmp-nvim-lsp",
+                cond = not vim.g.disable_lsp,
             },
             {
                 "hrsh7th/cmp-omni",
+                cond = vim.g.disable_lsp,
             },
         },
         cond = is_not_mini,
@@ -430,6 +427,8 @@ require("lazy").setup({
 
     {
         "JMarkin/gentags.lua",
+        lazy = true,
+        cond = vim.fn.executable("ctags") == 1,
         dependencies = {
             "nvim-lua/plenary.nvim",
         },

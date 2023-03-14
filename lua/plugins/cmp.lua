@@ -95,11 +95,11 @@ M.config = function()
         table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
     else
         vim.opt.omnifunc = "syntaxcomplete#Complete"
-        table.insert(sources, { name = "omni", max_item_count = 20 })
+        table.insert(sources, { name = "omni", max_item_count = 7 })
     end
 
-    table.insert(sources, { name = "tags", max_item_count = 19 })
-
+    table.insert(sources, { name = "tags", max_item_count = 7 })
+    table.insert(sources, { name = "treesitter", max_item_count = 7 })
     table.insert(sources, {
         name = "vim-dadbod-completion",
         max_item_count = 20,
@@ -107,11 +107,10 @@ M.config = function()
     })
     table.insert(sources, {
         name = "rg",
-        keyword_length = 3,
+        keyword_length = 2,
         max_item_count = 5,
     })
-    table.insert(sources, { name = "luasnip", keyword_length = 3, max_item_count = 5 })
-    table.insert(sources, { name = "luasnip_choice" })
+    table.insert(sources, { name = "luasnip", keyword_length = 2, max_item_count = 5 })
 
     cmp.setup({
         performance = {
