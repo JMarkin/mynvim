@@ -1,5 +1,7 @@
 local M = {}
 
+local syntax_langs = require("colorscheme.lang")
+
 M.setup = function()
     local rainbow = require("ts-rainbow")
 
@@ -9,35 +11,7 @@ M.setup = function()
     end
 
     require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-            "regex",
-            "rust",
-            "cpp",
-            "cuda",
-            "python",
-            "typescript",
-            "javascript",
-            "jsdoc",
-            "yaml",
-            "toml",
-            "proto",
-            "http",
-            "scss",
-            "make",
-            "cmake",
-            "fish",
-            "go",
-            "html",
-            "css",
-            "bash",
-            "dockerfile",
-            "vue",
-            "scss",
-            "sql",
-            "markdown",
-            "markdown_inline",
-            "json",
-        },
+        ensure_installed = syntax_langs.treesitter_installed,
 
         autotag = {
             enable = true,

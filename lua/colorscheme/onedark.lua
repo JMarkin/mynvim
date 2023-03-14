@@ -42,7 +42,7 @@ require("onedarkpro").setup({
         nvim_ts_rainbow = true,
         op_nvim = true,
         packer = false,
-        polygot = false,
+        polygot = true,
         startify = false,
         telescope = false,
         toggleterm = true,
