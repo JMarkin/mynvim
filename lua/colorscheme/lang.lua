@@ -30,4 +30,16 @@ M.treesitter_installed = {
     "json",
 }
 
+M.polyglot_disabled = {
+    "vim",
+    "lua",
+    "help",
+    "c",
+    "query",
+}
+
+for _, value in ipairs(M.treesitter_installed) do
+    table.insert(M.polyglot_disabled, value)
+end
+
 return M
