@@ -87,7 +87,7 @@ require("lazy").setup({
 
     {
         "declancm/cinnamon.nvim",
-        enabled=false,
+        enabled = false,
         config = function()
             require("plugins.scroll")
         end,
@@ -154,7 +154,7 @@ require("lazy").setup({
     -- Цвет тема
     {
         "Iron-E/nvim-highlite",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000,
         config = function()
@@ -163,7 +163,7 @@ require("lazy").setup({
     },
     {
         "olimorris/onedarkpro.nvim",
-        enabled = false,
+        enabled = true,
         lazy = false,
         priority = 1000, -- Ensure it loads first
         config = function()
@@ -240,6 +240,33 @@ require("lazy").setup({
             require("plugins.treesitter").setup()
         end,
     },
+    {
+        "nvim-treesitter/playground",
+        dependencies = { "nvim-treesitter" },
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                playground = {
+                    enable = true,
+                    disable = {},
+                    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                    persist_queries = false, -- Whether the query persists across vim sessions
+                    keybindings = {
+                        toggle_query_editor = "o",
+                        toggle_hl_groups = "i",
+                        toggle_injected_languages = "t",
+                        toggle_anonymous_nodes = "a",
+                        toggle_language_display = "I",
+                        focus_language = "f",
+                        unfocus_language = "F",
+                        update = "R",
+                        goto_node = "<cr>",
+                        show_help = "?",
+                    },
+                },
+            })
+        end,
+        cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
+    },
 
     {
         "folke/todo-comments.nvim",
@@ -266,15 +293,6 @@ require("lazy").setup({
     {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
-        lazy = true,
-    },
-    {
-        "someone-stole-my-name/yaml-companion.nvim",
-        cond = is_not_mini,
-        dependencies = {
-            { "neovim/nvim-lspconfig" },
-            { "nvim-lua/plenary.nvim" },
-        },
         lazy = true,
     },
     {

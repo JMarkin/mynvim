@@ -34,8 +34,15 @@ return function(colors)
         DiagnosticVirtualTextHint = { fg = colors.magenta, bold = true, italic = true, style = "bold,italic" },
 
         ["@annotation"] = { link = "Label" },
+        ["@variable"] = { fg = colors.gray_light },
+        ["@variable.javascript"] = { link = "@variable" },
+        ["@variable.typescript"] = { link = "@variable" },
+        ["@variable.lua"] = { link = "@variable" },
         ["@attribute"] = { fg = colors.purple },
-        ["@field"] = { link = "ParamIdentifier" },
+        ["@field"] = { link = "@variable", style = "undercurl", undercurl = true },
+        ["@field.yaml"] = { link = "@field" },
+        ["@field.rust"] = { link = "@field" },
+        ["@field.lua"] = { link = "@field" },
         ["@string.regex"] = { link = "String", bold = true, undercurl = true, style = "bold,undercurl" },
         ["@text.strong"] = { link = "String", bold = true, style = "bold" }, -- For text to be represented with strong.
         ["@text.emphasis"] = { link = "String", italic = true, style = "italic" }, -- For text to be represented with emphasis.
