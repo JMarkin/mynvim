@@ -268,6 +268,14 @@ require("lazy").setup({
         end,
         cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
     },
+    {
+        "Wansmer/treesj",
+        keys = { "<space>m", "<space>j", "<space>s" },
+        dependencies = { "nvim-treesitter" },
+        config = function()
+            require("treesj").setup({})
+        end,
+    },
 
     {
         "folke/todo-comments.nvim",
