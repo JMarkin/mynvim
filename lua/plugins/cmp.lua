@@ -34,20 +34,21 @@ local kind_icons = {
 }
 
 local menu_map = {
-    gh_issues = "[Issues]",
-    buffer = "[Buf]",
-    nvim_lsp = "[LSP]",
-    nvim_lua = "[API]",
-    path = "[Path]",
-    luasnip = "[Snip]",
-    tmux = "[Tmux]",
-    look = "[Look]",
-    rg = "[RG]",
-    treesitter = "[TS]",
-    spell = "[SP]",
-    omni = "[Omni]",
-    noice_popupmenu = "[Native]",
-    ["vim-dadbod-completion"] = "[DB]",
+    gh_issues = "ISSUE",
+    buffer = "BUF",
+    nvim_lsp = "LSP",
+    nvim_lua = "API",
+    path = "PATH",
+    luasnip = "SNIP",
+    tmux = "TX",
+    look = "LK",
+    rg = "RG",
+    treesitter = "TS",
+    spell = "SP",
+    omni = "Omni",
+    noice_popupmenu = "Native",
+    ["vim-dadbod-completion"] = "DB",
+    tags = "TG",
 }
 
 local enabled = function()
@@ -154,10 +155,12 @@ M.config = function()
         },
         sources = sources,
         formatting = {
+            fields = { "kind", "abbr", "menu" },
             format = function(entry, vim_item)
-                vim_item.menu = menu_map[entry.source.name] or string.format("[%s]", entry.source.name)
+                vim_item.menu =
+                    string.format("%-8s [%s]", vim_item.kind, menu_map[entry.source.name] or entry.source.name)
 
-                vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+                vim_item.kind = kind_icons[vim_item.kind]
                 return vim_item
             end,
         },
@@ -168,6 +171,8 @@ M.config = function()
             completion = {
                 border = vim.g.floating_window_border_dark,
                 pumheight = 0,
+                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                col_offset = -3,
             },
         },
     })

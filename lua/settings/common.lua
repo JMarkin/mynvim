@@ -50,7 +50,7 @@ opt.foldenable = true
 -- Табы и отступы
 -----------------------------------------------------------
 vim.cmd([[
-syntax on
+syntax off
 filetype plugin on
 filetype indent plugin on
 ]])
