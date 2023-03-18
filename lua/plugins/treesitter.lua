@@ -4,22 +4,23 @@ local syntax_langs = require("colorscheme.lang")
 
 M.setup = function()
     local rainbow = require("ts-rainbow")
-
-    local syntax = false
-    if vim.g.disable_lsp then
-        syntax = true
-    end
-
+    local queries = require("nvim-treesitter.query")
+    require("nvim-treesitter.install").prefer_git = true
     require("nvim-treesitter.configs").setup({
         ensure_installed = syntax_langs.treesitter_installed,
-
         autotag = {
             enable = true,
         },
-
         highlight = {
             enable = true,
-            additional_vim_regex_highlighting = true,
+            additional_vim_regex_highlighting = false,
+            is_supported = function(lang)
+                local s = queries.has_highlights(lang)
+                if not s then
+                    vim.bo.syntax = "ON"
+                end
+                return s
+            end,
             disable = function(_, buf)
                 local max_filesize = 100 * 1024 -- 100 KB
                 local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))

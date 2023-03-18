@@ -209,7 +209,6 @@ require("lazy").setup({
         event = "VimEnter",
         init = function()
             local lang = require("colorscheme.lang")
-            vim.g.polyglot_disabled = { "autoindent" }
             vim.g.polyglot_disabled = lang.polyglot_disabled
         end,
     },
@@ -723,6 +722,7 @@ require("lazy").setup({
     },
     {
         "rainbowhxch/beacon.nvim",
+        event = "BufReadPost",
         cond = function()
             return not vim.g.neovide
         end,
@@ -789,4 +789,13 @@ require("lazy").setup({
             },
         },
     },
+    {
+        "altermo/npairs-integrate-upair",
+        dependencies = { "windwp/nvim-autopairs", "altermo/ultimate-autopair.nvim" },
+        event = { "InsertEnter", "CmdlineEnter" },
+        config = function()
+            require("npairs-int-upair").setup({})
+        end,
+    },
+    { "cpea2506/relative-toggle.nvim" },
 })

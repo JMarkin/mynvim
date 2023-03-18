@@ -99,6 +99,7 @@ local DEFAULT_FORMATTERS = {
     "rome",
     "taplo",
     "docformatter",
+    "prettierd",
 }
 
 nullls.builtins.diagnostics.ruff = nullls.builtins.diagnostics.ruff.with({
@@ -141,6 +142,7 @@ local DEFAULT_INSTALL_EXEC = {
     fixjson = { command = "npm", args = { "install", "-g", "fixjson" } },
     nginxbeautifier = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
     taplo = { command = "cargo", args = { "install", "taplo-cli", "--locked" } },
+    prettierd = { command = "npm", args = { "install", "-g", "@fsouza/prettierd" } },
 }
 local EXEC_CONVERT = {
     ["nginx_beautifier"] = "nginxbeautifier",
