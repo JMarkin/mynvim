@@ -17,7 +17,7 @@ vim.keymap.set(
 vim.keymap.set({"n"}, { "<space><up>", "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
 vim.keymap.set(
     {"n"},
-    { "<space><right>", "<C-l>" },
+    { "<space><right>", "<C-h>" },
     require("smart-splits").move_cursor_right,
     { silent = true, desc = "right" }
 )
