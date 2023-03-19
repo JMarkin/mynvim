@@ -207,6 +207,7 @@ require("lazy").setup({
     {
         "sheerun/vim-polyglot",
         event = "VimEnter",
+        enabled = false,
         init = function()
             local lang = require("colorscheme.lang")
             vim.g.polyglot_disabled = lang.polyglot_disabled
@@ -798,4 +799,11 @@ require("lazy").setup({
         end,
     },
     { "cpea2506/relative-toggle.nvim" },
+    {
+        "ahmedkhalf/project.nvim",
+        event = "VimEnter",
+        config = function()
+            require("plugins.project").setup()
+        end,
+    },
 })

@@ -30,6 +30,10 @@ M.treesitter_installed = {
     "markdown_inline",
     "json",
     "ini",
+    "cuda",
+    "gitignore",
+    "git_rebase",
+    "graphql",
 }
 
 M.polyglot_disabled = {
