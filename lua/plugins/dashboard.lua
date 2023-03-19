@@ -7,6 +7,7 @@ local dashboard = require("alpha.themes.dashboard")
 dashboard.section.header.val = require("ascii").get_random_global()
 
 dashboard.section.buttons.val = {
+    dashboard.button("p", "  Projects", "<cmd>lua require('plugins.project').search()<Cr>"),
     dashboard.button("f", "  Find File", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>"),
     dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button(

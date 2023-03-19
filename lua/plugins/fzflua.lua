@@ -90,3 +90,5 @@ vim.keymap.set("n", "gr", function()
     require("fzf-lua").lsp_references({ multiprocess = true })
 end, { silent = true, desc = "GoTo: references" })
 
+vim.keymap.set("n", "<leader>sP", require("plugins.project").search, { silent = true, desc = "Search: project" })
+vim.keymap.set("n", "<leader>sB", require("plugins.bookmark").search, { silent = true, desc = "Search: bookmarks" })

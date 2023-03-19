@@ -1,5 +1,11 @@
 require("nvim-tree").setup({
     disable_netrw = true,
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
+    update_focused_file = {
+        enable = true,
+        update_root = true,
+    },
     modified = {
         enable = true,
         show_on_dirs = true,
@@ -7,6 +13,13 @@ require("nvim-tree").setup({
     },
     diagnostics = {
         enable = true,
+    },
+    renderer = {
+        group_empty = true,
+        highlight_git = true,
+        add_trailing = true,
+        highlight_opened_files = "all",
+        highlight_modified = "none",
     },
     actions = {
         use_system_clipboard = true,
