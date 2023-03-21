@@ -36,19 +36,4 @@ M.treesitter_installed = {
     "graphql",
 }
 
-M.polyglot_disabled = {
-    "vim",
-    "lua",
-    "help",
-    "c",
-    "query",
-}
-
-M.tree_lang_map = { vim = true, lua = true, help = true, c = true, query = true }
-
-for _, value in ipairs(M.treesitter_installed) do
-    table.insert(M.polyglot_disabled, value)
-    M.tree_lang_map[value] = true
-end
-
 return M

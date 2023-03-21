@@ -14,13 +14,6 @@ M.setup = function()
         highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
-            is_supported = function(lang)
-                local s = queries.has_highlights(lang)
-                if not s then
-                    vim.bo.syntax = "ON"
-                end
-                return s
-            end,
             disable = function(_, buf)
                 local max_filesize = 100 * 1024 -- 100 KB
                 local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
