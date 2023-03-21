@@ -137,7 +137,7 @@ require("lazy").setup({
                 hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
                 autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
                 commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-                silent = false, -- Disable plugin messages (Config loaded/ignored)
+                silent = true, -- Disable plugin messages (Config loaded/ignored)
                 lookup_parents = true,
             })
         end,
@@ -195,7 +195,6 @@ require("lazy").setup({
 
     {
         "nvim-tree/nvim-tree.lua",
-        tag = "nightly",
         cmd = "NvimTreeOpen",
         config = function()
             require("plugins.nvimtree")
@@ -204,15 +203,21 @@ require("lazy").setup({
 
     -- Подцветка синтаксиа
 
-    {
-        "sheerun/vim-polyglot",
-        event = "VimEnter",
-        enabled = false,
-        init = function()
-            local lang = require("colorscheme.lang")
-            vim.g.polyglot_disabled = lang.polyglot_disabled
-        end,
-    },
+    { "pearofducks/ansible-vim", ft = "yaml.ansible" },
+    { "mityu/vim-applescript", ft = "applescript" },
+    { "isobit/vim-caddyfile", ft = "caddyfile" },
+    { "chrisbra/csv.vim", ft = "csv" },
+    { "tikhomirov/vim-glsl", ft = "glsl" },
+    { "jparise/vim-graphql", ft = "graphql" },
+    { "CH-DanReif/haproxy.vim", ft = "haproxy" },
+    { "towolf/vim-helm", ft = "helm" },
+    { "sophacles/vim-bundle-mako", ft = "mako" },
+    { "chr4/nginx.vim", ft = "nginx" },
+    { "marshallward/vim-restructuredtext", ft = "rst" },
+    { "vim-scripts/svg.vim", ft = "svg" },
+    { "wgwoods/vim-systemd-syntax", ft = "systemd" },
+    { "amadeus/vim-xml", ft = "xml" },
+    { "MTDL9/vim-log-highlighting", ft = "log" },
 
     {
         "nvim-treesitter/nvim-treesitter",
@@ -240,6 +245,22 @@ require("lazy").setup({
         },
         config = function()
             require("plugins.treesitter").setup()
+        end,
+    },
+    {
+        "kylechui/nvim-surround",
+        event = "VeryLazy",
+        dependencies = {
+            "nvim-treesitter",
+            {
+                "nvim-treesitter/nvim-treesitter-textobjects",
+                dependencies = { "nvim-treesitter" },
+            },
+        },
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
         end,
     },
     {
@@ -271,7 +292,11 @@ require("lazy").setup({
     },
     {
         "Wansmer/treesj",
-        keys = { "<space>m", "<space>j", "<space>s" },
+        keys = {
+            "<space>m",
+            "<space>j",
+            "<space>s",
+        },
         dependencies = { "nvim-treesitter" },
         config = function()
             require("treesj").setup({})

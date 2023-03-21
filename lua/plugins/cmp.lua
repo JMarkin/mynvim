@@ -92,9 +92,12 @@ M.config = function()
 
     local sources = {}
 
+    local preselect = cmp.PreselectMode.None
+
     if not vim.g.disable_lsp then
         table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
     else
+        preselect = cmp.PreselectMode.Item
         vim.opt.omnifunc = "syntaxcomplete#Complete"
         table.insert(sources, { name = "omni", max_item_count = 7 })
     end
@@ -119,7 +122,7 @@ M.config = function()
             throttle = 30,
             fetching_timeout = 100,
         },
-        preselect = cmp.PreselectMode.Item,
+        preselect = preselect,
         sorting = {
             comparators = {
                 cmp.config.compare.offset,
