@@ -68,4 +68,11 @@ if vim.g.neovide then
     require("settings.neovide")
 end
 
-vim.g.root_pattern = { ".vimrc.lua", "Makefile", ".git", ".venv", "_darcs", ".hg", ".bzr", ".svn", "package.json" }
+vim.g.root_pattern = {
+    ".vimrc.lua",
+    "Makefile",
+    "pyproject.toml",
+    ".git",
+    ".venv",
+    "package.json",
+}

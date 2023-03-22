@@ -36,7 +36,6 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "<C-r>", api.fs.rename_sub, opts("Rename: Omit Filename"))
     vim.keymap.set("n", "e", api.fs.rename_basename, opts("Rename: Basename"))
 
-
     vim.keymap.set("n", "m", api.marks.toggle, opts("Toggle Bookmark"))
     vim.keymap.set("n", "bmv", api.marks.bulk.move, opts("Move Bookmarked"))
 
@@ -64,11 +63,11 @@ end
 require("nvim-tree").setup({
     on_attach = on_attach,
     disable_netrw = true,
-    sync_root_with_cwd = true,
-    respect_buf_cwd = true,
+    sync_root_with_cwd = false,
+    respect_buf_cwd = false,
     update_focused_file = {
         enable = true,
-        update_root = true,
+        update_root = false,
     },
     modified = {
         enable = true,

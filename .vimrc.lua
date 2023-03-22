@@ -1,5 +1,7 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-require("plugins.nullls").enable(nil, nil, nil)
+if vim.env.NVIM_MINI == nil then
+    require("plugins.nullls").enable(nil, nil, nil)
+end
 vim.g.db = "postgresql://postgres:postgres@localhost:5432/postgres"
 
 if vim.fn.executable("ctags") == 1 then
