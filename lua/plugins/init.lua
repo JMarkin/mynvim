@@ -452,7 +452,6 @@ require("lazy").setup({
                 cond = vim.g.disable_lsp,
             },
         },
-        cond = is_not_mini,
         config = function()
             require("plugins.cmp").config()
         end,
