@@ -7,6 +7,16 @@ return function(colors)
         Todo = { fg = colors.cyan, bold = true, style = "bold" },
         WarningMsg = { fg = colors.orange, bold = true, style = "bold" },
 
+        FoldColumn = { fg = colors.gray_darker, bold = true },
+        Folded = { fg = colors.purple_light, italic = true },
+
+        DiffAdd = { fg = colors.green_dark },
+        diffAdded = { link = "DiffAdd" },
+        DiffChange = {},
+        DiffDelete = { fg = colors.red },
+        DiffText = { fg = colors.yellow },
+        diffRemoved = { link = "DiffDelete" },
+
         DiagnosticError = { link = "Error" },
         DiagnosticFloatingError = { link = "ErrorMsg" },
         DiagnosticSignError = { link = "DiagnosticFloatingError" },
