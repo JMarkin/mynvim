@@ -174,10 +174,20 @@ require("lazy").setup({
     -- Информационная строка внизу
     {
         "nvim-lualine/lualine.nvim",
+        enabled = false,
         event = "BufReadPre",
         config = function()
             require("plugins.lualine")
         end,
+    },
+    {
+        "NTBBloodbath/galaxyline.nvim",
+        enabled = true,
+        event = "BufReadPre",
+        config = function()
+            require("plugins.galaxyline")
+        end,
+        dependencies = { "nvim-web-devicons" },
     },
 
     -- Файловый менеджер
@@ -354,6 +364,7 @@ require("lazy").setup({
 
     {
         "glepnir/lspsaga.nvim",
+        enabled = true,
         cond = is_not_mini,
         dependencies = { { "nvim-tree/nvim-web-devicons" } },
         event = "BufReadPre *.*",
@@ -606,12 +617,14 @@ require("lazy").setup({
     {
         "ibhagwan/fzf-lua",
         lazy = true,
+        event = "BufReadPre",
         dependencies = {
             "lotabout/skim",
         },
         config = function()
             require("plugins.fzflua")
         end,
+        keys = "<leader>s",
     },
     --- Генераци докстрингов и т.п.
     {

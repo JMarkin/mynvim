@@ -1,60 +1,47 @@
-local get_icon_color = require("nvim-web-devicons").get_icon_color
-local get_buf_option = vim.api.nvim_buf_get_option
+local function get_diagnostic_label(props)
+    local icons = { error = "", warn = "", info = "", hint = "" }
+    local label = {}
 
-local colors = require("colorscheme.colors")
-
-local diagnostic_map = {}
-diagnostic_map[vim.diagnostic.severity.ERROR] = { "", guifg = colors.red[1] }
-diagnostic_map[vim.diagnostic.severity.WARN] = { "", guifg = colors.orange[1] }
-diagnostic_map[vim.diagnostic.severity.INFO] = { "", guifg = colors.cyan[1] }
-diagnostic_map[vim.diagnostic.severity.HINT] = { "", guifg = colors.ice[1] }
-
-local function get_highest_diagnostic_severity(diagnostics)
-    local highest_severity = 100
-    for _, diagnostic in ipairs(diagnostics) do
-        local severity = diagnostic.severity
-        if severity < highest_severity then
-            highest_severity = severity
+    for severity, icon in pairs(icons) do
+        local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+        if n > 0 then
+            table.insert(label, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
         end
     end
-    return highest_severity
-end
-
-local function get_status(bufnr, filename)
-    local diagnostics = vim.diagnostic.get(bufnr)
-    if vim.tbl_count(diagnostics) > 0 then
-        local highest_severity = get_highest_diagnostic_severity(diagnostics)
-        return diagnostic_map[highest_severity] or { "﫠", guifg = colors.gray[1] }
-    else
-        local filetype_icon, color = get_icon_color(filename)
-        return { filetype_icon, guifg = color }
+    if #label > 0 then
+        table.insert(label, { "| " })
     end
+    return label
+end
+local function get_git_diff(props)
+    local icons = { removed = "", changed = "", added = "" }
+    local labels = {}
+    local signs = vim.api.nvim_buf_get_var(props.buf, "gitsigns_status_dict")
+    -- local signs = vim.b.gitsigns_status_dict
+    for name, icon in pairs(icons) do
+        if tonumber(signs[name]) and signs[name] > 0 then
+            table.insert(labels, { icon .. " " .. signs[name] .. " ", group = "Diff" .. name })
+        end
+    end
+    if #labels > 0 then
+        table.insert(labels, { "| " })
+    end
+    return labels
 end
 
 require("incline").setup({
-    debounce_threshold = { falling = 150, rising = 30 },
     render = function(props)
-        local bufname = vim.api.nvim_buf_get_name(props.buf)
-        local filename = vim.fn.fnamemodify(bufname, ":p:.")
-        local status = get_status(props.buf, filename)
-        local modified = get_buf_option(props.buf, "modified") and "*" or ""
-        return {
-            status,
+        local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+        local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+        local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
+
+        local buffer = {
+            { get_diagnostic_label(props) },
+            { get_git_diff(props) },
+            { ft_icon, guifg = ft_color },
             { " " },
-            { modified, guifg = "grey" },
-            { filename },
-            { " " },
+            { filename, gui = modified },
         }
+        return buffer
     end,
-    hide = {
-        cursorline = true,
-    },
-    window = {
-        margin = {
-            vertical = 2,
-        },
-        -- placement = {
-        --     vertical = "bottom",
-        -- },
-    },
 })
