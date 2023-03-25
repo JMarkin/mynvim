@@ -4,7 +4,6 @@ local syntax_langs = require("colorscheme.lang")
 
 M.setup = function()
     local rainbow = require("ts-rainbow")
-    local queries = require("nvim-treesitter.query")
     require("nvim-treesitter.install").prefer_git = true
     require("nvim-treesitter.configs").setup({
         ensure_installed = syntax_langs.treesitter_installed,
@@ -94,6 +93,12 @@ M.setup = function()
             },
         },
     })
+end
+
+M.ts_install = function()
+    require("nvim-treesitter")
+    local cmd = "TSUpdateSync " .. table.concat(syntax_langs.treesitter_installed, " ")
+    vim.cmd(cmd)
 end
 
 return M

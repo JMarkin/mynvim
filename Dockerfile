@@ -2,13 +2,14 @@ FROM alpine:3.17
 
 
 RUN apk update && \
-    apk add --no-cache bash sudo git curl fish nodejs bat exa gitui btop openssh openssh-client-common ripgrep skim fd rustup go build-base cmake \
+    apk add --no-cache bash sudo git curl fish nodejs bat exa lazygit btop openssh openssh-client-common ripgrep skim fd rustup go build-base cmake \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
-    openssl readline-dev rsync && \
+    openssl readline-dev rsync tmux musl-dev && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-    apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
+    apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
+    apk add ---no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
 
 RUN adduser -s /usr/bin/fish -D kron && \
@@ -19,8 +20,6 @@ RUN adduser -s /usr/bin/fish -D kron && \
 USER kron
 ENV HOME=/home/kron
 WORKDIR $HOME
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # Set-up necessary Env vars for PyEnv
 ENV PYENV_ROOT $HOME/.pyenv
@@ -38,12 +37,19 @@ RUN set -ex \
 
 RUN cd /tmp && \
     git clone https://github.com/JMarkin/dotfiles.git && \
-    cd dotfiles && git checkout 1a91c0df9339f29fe0ae247ec6a188c134525647 && cd .. && \
+    cd dotfiles && git checkout fa632d212da8fc2984e33f92c6931aa7a043ebb9 && cd .. && \
     rm -rf dotfiles/.git && \
     rsync -a -P dotfiles/ ~/ && \
     rm -rf dotfiles
 
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
+    ~/.tmux/plugins/tpm/bin/install_plugins
 
 COPY --chown=kron . $HOME/.config/nvim
+
+RUN nvim --headless "+Lazy! sync" +qa
+RUN nvim --headless "+lua require('plugins.treesitter').ts_install()" +qa
+
+ENV SHELL /usr/bin/fish
 
 VOLUME $HOME
