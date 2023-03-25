@@ -47,8 +47,8 @@ toggleterm.setup({
 
 local Terminal = require("toggleterm.terminal").Terminal
 
-local gitui = Terminal:new({
-    cmd = "gitui",
+local lazygit = Terminal:new({
+    cmd = "lazygit",
     hidden = true,
     direction = "float",
     on_open = function(term)
@@ -59,13 +59,13 @@ local gitui = Terminal:new({
     end,
 })
 
-local function gitui_toggle()
-    gitui:toggle()
+local function lazygit_toggle()
+    lazygit:toggle()
 end
 
-vim.keymap.set({ "n" }, "<A-g>", gitui_toggle, { desc = "Git", noremap = true, silent = true })
+vim.keymap.set({ "n" }, "<A-g>", lazygit_toggle, { desc = "Git", noremap = true, silent = true })
 
-vim.api.nvim_create_user_command("Git", gitui_toggle, { bang = true })
+vim.api.nvim_create_user_command("Git", lazygit_toggle, { bang = true })
 
 local btop = Terminal:new({
     cmd = "btop",
