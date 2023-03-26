@@ -324,6 +324,7 @@ require("lazy").setup({
     },
     {
         "kylechui/nvim-surround",
+        enabled = false,
         event = "VeryLazy",
         dependencies = {
             "nvim-treesitter",
