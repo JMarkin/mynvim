@@ -59,6 +59,7 @@ opt.shiftwidth = 4 -- shift 4 spaces when tab
 opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
+opt.colorcolumn = "+1"
 
 -- completions
 opt.completeopt = "menu,menuone,noselect"
