@@ -324,7 +324,7 @@ require("lazy").setup({
     },
     {
         "kylechui/nvim-surround",
-        enabled = false,
+        enabled = true,
         event = "VeryLazy",
         dependencies = {
             "nvim-treesitter",
@@ -910,5 +910,23 @@ require("lazy").setup({
         config = function()
             require("plugins.project").setup()
         end,
+    },
+    {
+        "wikitopian/hardmode",
+        init = function()
+            vim.g.HardMode_level = "wannabe"
+            vim.g.HardMode_hardmodeMsg = "Don''t use this!"
+
+            vim.api.nvim_create_autocmd({ "VimEnter", "BufNewFile", "BufReadPost" }, {
+                pattern = "*",
+                command = "call HardMode()",
+                desc = "HARD MODE",
+            })
+        end,
+        event = { "VimEnter", "BufNewFile", "BufReadPost" },
+    },
+    {
+        "chrisgrieser/nvim-spider",
+        lazy = true,
     },
 })
