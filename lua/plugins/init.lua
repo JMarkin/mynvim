@@ -228,31 +228,42 @@ require("lazy").setup({
     },
     {
         "olimorris/onedarkpro.nvim",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000, -- Ensure it loads first
         config = function()
             require("colorscheme.onedark")
         end,
     },
+    {
+        "ofirgall/ofirkai.nvim",
+        enabled = true,
+        lazy = false,
+        priority = 1000, -- Ensure it loads first
+        config = function()
+            require("ofirkai").setup({})
+            -- Requires `WhiteBorder` to show the title.
+            require("dressing").setup({
+                input = {
+                    win_options = {
+                        winhighlight = require("ofirkai.plugins.dressing").winhighlight,
+                    },
+                },
+            })
+            require("notify").setup({
+                background_colour = require("ofirkai").scheme.ui_bg,
+            })
+        end,
+    },
 
     -- Информационная строка внизу
     {
         "nvim-lualine/lualine.nvim",
-        enabled = false,
+        enabled = true,
         event = "BufReadPre",
         config = function()
             require("plugins.lualine")
         end,
-    },
-    {
-        "NTBBloodbath/galaxyline.nvim",
-        enabled = true,
-        event = "BufReadPre",
-        config = function()
-            require("plugins.galaxyline")
-        end,
-        dependencies = { "nvim-web-devicons" },
     },
 
     -- Файловый менеджер
@@ -913,6 +924,7 @@ require("lazy").setup({
     },
     {
         "wikitopian/hardmode",
+        enabled = false,
         init = function()
             vim.g.HardMode_level = "wannabe"
             vim.g.HardMode_hardmodeMsg = "Don''t use this!"

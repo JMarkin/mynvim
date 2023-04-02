@@ -1,9 +1,6 @@
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
------------------------------------------------------------
--- Главные
------------------------------------------------------------
 vim.cmd("set cc=")
 opt.updatetime = 100
 opt.scrolloff = 15
@@ -46,9 +43,6 @@ opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrea
 opt.foldlevelstart = 99
 opt.foldenable = true
 
------------------------------------------------------------
--- Табы и отступы
------------------------------------------------------------
 vim.cmd([[
 syntax on
 filetype plugin on

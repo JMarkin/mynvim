@@ -30,6 +30,7 @@ local function get_git_diff(props)
 end
 
 require("incline").setup({
+    debounce_threshold = { falling = 150, rising = 30 },
     render = function(props)
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
@@ -44,4 +45,12 @@ require("incline").setup({
         }
         return buffer
     end,
+    hide = {
+        cursorline = true,
+    },
+    window = {
+        margin = {
+            vertical = 2,
+        },
+    },
 })
