@@ -4,7 +4,7 @@ lualine.setup({
     extensions = { "quickfix", "nvim-tree", "fzf", "symbols-outline", "nvim-dap-ui", "toggleterm" },
     options = {
         disabled_filetypes = { "Trouble", "Vista", "dashboard" },
-        theme = "auto",
+        theme = require('ofirkai.statuslines.lualine').theme,
     },
     sections = {
         lualine_a = { "mode" },
@@ -14,8 +14,8 @@ lualine.setup({
             { "diagnostics", sources = { "nvim_diagnostic" } },
         },
         lualine_c = {
-            "filesize",
             { "filename", path = 1 },
+            "filesize",
         },
         lualine_x = {
             "encoding",

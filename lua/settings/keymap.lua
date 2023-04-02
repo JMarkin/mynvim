@@ -34,3 +34,8 @@ end, { desc = "Spider-b" })
 vim.keymap.set({ "n", "o", "x" }, "ge", function()
     require("spider").motion("ge")
 end, { desc = "Spider-ge" })
+
+vim.keymap.set("n", "J", "6j")
+vim.keymap.set("n", "K", "6k")
+vim.keymap.set("n", "H", "6h")
+vim.keymap.set("n", "L", "6l")
