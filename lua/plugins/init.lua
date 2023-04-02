@@ -186,8 +186,9 @@ require("lazy").setup({
         event = "InsertEnter",
         config = function()
             require("better_escape").setup({
-                mapping = { "jj", "qq" },
+                mapping = { "jj", "qq", "jk" },
                 clear_empty_lines = true,
+                keys = "<Esc>",
             })
         end,
     },
@@ -914,7 +915,18 @@ require("lazy").setup({
             require("npairs-int-upair").setup({})
         end,
     },
-    { "cpea2506/relative-toggle.nvim" },
+    {
+        "cpea2506/relative-toggle.nvim",
+        config = function()
+            require("relative-toggle").setup({
+                pattern = "*",
+                events = {
+                    on = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter", "CmdlineLeave" },
+                    off = { "BufLeave", "FocusLost", "InsertEnter", "WinLeave", "CmdlineEnter" },
+                },
+            })
+        end,
+    },
     {
         "ahmedkhalf/project.nvim",
         event = "VimEnter",

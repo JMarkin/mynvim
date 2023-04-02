@@ -6,7 +6,7 @@ RUN apk update && \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
-    openssl readline-dev rsync tmux musl-dev && \
+    openssl readline-dev rsync tmux musl-dev delta && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
     apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
     apk add ---no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
@@ -37,7 +37,7 @@ RUN set -ex \
 
 RUN cd /tmp && \
     git clone https://github.com/JMarkin/dotfiles.git && \
-    cd dotfiles && git checkout fa632d212da8fc2984e33f92c6931aa7a043ebb9 && cd .. && \
+    cd dotfiles && git checkout 03f8ae2e3ab35ef432da832c1f419c09a96d2d25 && cd .. && \
     rm -rf dotfiles/.git && \
     rsync -a -P dotfiles/ ~/ && \
     rm -rf dotfiles

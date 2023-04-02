@@ -87,6 +87,9 @@ function optimize_buffer()
         end
     end
     if disable then
+        if vim.opt.eventignore == nil then
+            vim.opt.eventignore = {}
+        end
         vim.opt.eventignore:append(EVENTS)
         vim.opt_local.swapfile = false
         vim.opt_local.bufhidden = "unload"
@@ -101,6 +104,7 @@ function optimize_buffer()
             vim.opt_local.undolevels = -1
             vim.opt_local.undofile = false
         end
+
         disable_filetype = true
     else
         if disable_filetype then

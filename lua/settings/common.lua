@@ -9,7 +9,6 @@ opt.spell = false
 opt.spelllang = { "en", "ru" } -- Словари рус eng
 opt.number = true
 opt.guifont = "JetBrainsMonoNL Nerd Font Mono:h13"
-opt.relativenumber = false
 opt.undofile = true -- Возможность отката назад
 opt.splitright = true -- vertical split вправо
 opt.splitbelow = true -- horizontal split вниз
@@ -21,20 +20,18 @@ opt.fileencoding = "utf-8"
 opt.encoding = "utf-8"
 opt.pumheight = 20
 opt.guicursor = "a:block"
-opt.wrap = false
+opt.wrap = true
 opt.hidden = true
 opt.showmatch = false
 opt.hlsearch = true
 opt.linebreak = true
 opt.autochdir = false
 opt.bs = "indent,eol,start"
-if vim.fn.has("nvim-0.8") ~= 1 then
-    g.do_filetype_lua = 1
-    g.did_load_filetypes = 0
-end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 opt.scrollback = 2000
+opt.synmaxcol = 1000
+opt.shortmess = "fFIlqx"
 
 -- fold
 opt.foldmethod = "manual"
