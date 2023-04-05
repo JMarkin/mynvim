@@ -1,13 +1,16 @@
 local M = {}
 
-M.setup = function()
-    vim.g.bookmark_highlight_lines = 1
-    vim.g.bookmark_save_per_working_dir = 1
-    vim.g.bookmark_auto_save = 1
-    vim.g.bookmark_manage_per_buffer = 1
-    vim.g.bookmark_no_default_key_mappings = 1
+M.plugin = {
+    "MattesGroeger/vim-bookmarks",
+    dependencies = { "ibhagwan/fzf-lua" },
+    init = function()
+        vim.g.bookmark_highlight_lines = 1
+        vim.g.bookmark_save_per_working_dir = 1
+        vim.g.bookmark_auto_save = 1
+        vim.g.bookmark_manage_per_buffer = 1
+        vim.g.bookmark_no_default_key_mappings = 1
 
-    vim.cmd([[
+        vim.cmd([[
         function! g:BMWorkDirFileLocation()
             let filename = 'bookmarks'
             let location = ''
@@ -42,8 +45,9 @@ M.setup = function()
             endif
         endfunction
     ]])
-end
-
+    end,
+    keys = "<leader>b",
+}
 M.search = function()
     vim.cmd([[
         cgetexpr bm#location_list()

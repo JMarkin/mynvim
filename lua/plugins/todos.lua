@@ -1,9 +1,23 @@
-require("todo-comments").setup({})
+local M = {}
 
-vim.keymap.set("n", "]t", function()
-    require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
+local is_not_mini = require("custom.funcs").is_not_mini
 
-vim.keymap.set("n", "[t", function()
-    require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
+M.plugin = {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter" },
+    config = function()
+        require("todo-comments").setup({})
+
+        vim.keymap.set("n", "]t", function()
+            require("todo-comments").jump_next()
+        end, { desc = "Next todo comment" })
+
+        vim.keymap.set("n", "[t", function()
+            require("todo-comments").jump_prev()
+        end, { desc = "Previous todo comment" })
+    end,
+    cond = is_not_mini,
+    event = "BufReadPost",
+}
+
+return M

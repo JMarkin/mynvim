@@ -1,34 +1,61 @@
-local status_ok, alpha = pcall(require, "alpha")
-if not status_ok then
-    return
-end
+local M = {}
 
-local dashboard = require("alpha.themes.dashboard")
-dashboard.section.header.val = require("ascii").get_random_global()
+M.plugin = {
+    "glepnir/dashboard-nvim",
+    event = "VimEnter",
+    config = function()
+        require("dashboard.theme.header").generate_header = function(config)
+            if not vim.bo[config.bufnr].modifiable then
+                vim.bo[config.bufnr].modifiable = true
+            end
+            if not config.command then
+                local header = require("ascii").get_random_global()
+                vim.api.nvim_buf_set_lines(config.bufnr, 0, -1, false, require("dashboard.utils").center_align(header))
 
-dashboard.section.buttons.val = {
-    dashboard.button("p", "  Projects", "<cmd>lua require('plugins.project').search()<Cr>"),
-    dashboard.button("f", "  Find File", "<cmd>lua require('fzf-lua').files({ multiprocess=true,})<Cr>"),
-    dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
-    dashboard.button(
-        "r",
-        "  Recent Files",
-        '<cmd> lua require("fzf-lua").oldfiles({ multiprocess = true, cwd_only=true })<cr>'
-    ),
-    dashboard.button(
-        "s",
-        "  Find Text",
-        "<cmd>lua require('fzf-lua').grep_project({  multiprocess=true,continue_last_search = true })<Cr>"
-    ),
-    dashboard.button("g", "  GIT", "<Cmd>Git<CR>"),
-    dashboard.button("c", "  Local Configuration", ":e .vimrc.lua<CR>"),
-    dashboard.button("l", "  Lazy.nvim", ":Lazy<CR>"),
-    dashboard.button("q", "  Quit Neovim", ":qa!<CR>"),
+                for i, _ in ipairs(header) do
+                    vim.api.nvim_buf_add_highlight(config.bufnr, 0, "DashboardHeader", i - 1, 0, -1)
+                end
+                return
+            end
+        end
+        require("dashboard").setup({
+            theme = "hyper",
+            config = {
+                project = { enable = true, limit = 8, icon = " ", label = "", action = ":FzfLua files cwd=" },
+                shortcut = {
+                    { desc = " Update", group = "@property", action = "Lazy update", key = "u" },
+                    {
+                        icon = " ",
+                        icon_hl = "@variable",
+                        desc = "Files",
+                        group = "Label",
+                        action = "lua require('fzf-lua').files({ multiprocess=true,})",
+                        key = "f",
+                    },
+                    {
+                        icon = " ",
+                        desc = "Recent Files",
+                        group = "DiagnosticHint",
+                        action = "lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })",
+                        key = "r",
+                    },
+                    {
+                        desc = "  Local Configuration",
+                        group = "Number",
+                        action = ":e .vimrc.lua",
+                        key = "c",
+                    },
+                },
+            },
+        })
+    end,
+    dependencies = {
+        { "nvim-web-devicons" },
+        {
+            "MaximilianLloyd/ascii.nvim",
+            dependencies = { "MunifTanjim/nui.nvim" },
+        },
+    },
 }
 
-dashboard.section.footer.opts.hl = "AlphaFooter"
-dashboard.section.header.opts.hl = "AlphaHeader"
-dashboard.section.buttons.opts.hl = "AlphaButton"
-
-dashboard.opts.opts.noautocmd = true
-alpha.setup(dashboard.opts)
+return M

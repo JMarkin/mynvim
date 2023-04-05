@@ -38,8 +38,4 @@ M.attach_python_debugger = function(options)
     require("dapui").open()
 end
 
-M.config = function()
-    require("dapui").setup()
-end
-
 return M

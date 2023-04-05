@@ -1,6 +1,6 @@
 local M = {}
 
-M.setup = function() end
+local is_not_mini = require("custom.funcs").is_not_mini
 
 local ftMap = {
     vim = "treesitter",
@@ -35,14 +35,20 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     return newVirtText
 end
 
-M.config = function()
-    require("ufo").setup({
+M.plugin = {
+    "kevinhwang91/nvim-ufo",
+    lazy = true,
+    enabled = true,
+    cond = is_not_mini,
+    dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
+    event = "BufReadPost",
+    config = {
         fold_virt_text_handler = handler,
         enable_get_fold_virt_text = true,
         provider_selector = function(_, filetype, _)
             return ftMap[filetype] or { "lsp", "indent" }
         end,
-    })
-end
+    },
+}
 
 return M
