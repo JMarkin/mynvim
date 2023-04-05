@@ -1,6 +1,4 @@
-local is_not_mini = function()
-    return vim.env.NVIM_MINI == nil
-end
+local is_not_mini = require("custom.funcs").is_not_mini
 
 require("lazy").setup({
 
@@ -13,200 +11,68 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     {
         "stevearc/dressing.nvim",
-        config = function()
-            require("dressing").setup({
-                input = {
-                    override = function(conf)
-                        conf.col = -1
-                        conf.row = 0
-                        return conf
-                    end,
-                },
-            })
-        end,
+        config = {
+            input = {
+                override = function(conf)
+                    conf.col = -1
+                    conf.row = 0
+                    return conf
+                end,
+            },
+        },
     },
 
     {
         "ibhagwan/smartyank.nvim",
-        config = function()
-            require("smartyank").setup({
-                highlight = {
-                    enabled = true, -- highlight yanked text
-                    higroup = "ModesCopy", -- highlight group of yanked text
-                    timeout = 100, -- timeout for clearing the highlight
-                },
-            })
-        end,
+        config = {
+            highlight = {
+                enabled = true, -- highlight yanked text
+                higroup = "ModesCopy", -- highlight group of yanked text
+                timeout = 100, -- timeout for clearing the highlight
+            },
+        },
     },
 
     {
         "rcarriga/nvim-notify",
         lazy = false,
         priority = 1000,
-        config = function()
-            require("notify").setup({
-                max_width = 80,
-                timeout = 1000,
-                stages = "static",
-                level = vim.log.levels.INFO,
-                background_colour = "#000000",
-            })
-        end,
-    },
-    {
-        "folke/noice.nvim",
-        enabled = true,
-        config = function()
-            require("plugins.noice")
-        end,
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-        },
-        event = { "InsertEnter", "CmdlineEnter", "BufReadPost" },
-        keys = "/",
-    },
-    {
-        "nanozuki/tabby.nvim",
-        config = function()
-            require("plugins.tabline")
-        end,
-        event = "TabNew",
-    },
-
-    {
-        "b0o/incline.nvim",
-        init = function()
-            vim.opt.laststatus = 3
-        end,
-        config = function()
-            require("plugins.incline")
-        end,
-        event = "BufReadPost",
-    },
-
-    {
-        "declancm/cinnamon.nvim",
-        enabled = false,
-        config = function()
-            require("plugins.scroll")
-        end,
-    },
-
-    {
-        "goolord/alpha-nvim",
-        enabled = false,
-        dependencies = {
-            {
-                "MaximilianLloyd/ascii.nvim",
-                dependencies = { "MunifTanjim/nui.nvim" },
-            },
-        },
-        config = function()
-            require("plugins.dashboard")
-        end,
-    },
-
-    {
-        "glepnir/dashboard-nvim",
-        event = "VimEnter",
-        config = function()
-            require("dashboard.theme.header").generate_header = function(config)
-                if not vim.bo[config.bufnr].modifiable then
-                    vim.bo[config.bufnr].modifiable = true
-                end
-                if not config.command then
-                    local header = require("ascii").get_random_global()
-                    vim.api.nvim_buf_set_lines(
-                        config.bufnr,
-                        0,
-                        -1,
-                        false,
-                        require("dashboard.utils").center_align(header)
-                    )
-
-                    for i, _ in ipairs(header) do
-                        vim.api.nvim_buf_add_highlight(config.bufnr, 0, "DashboardHeader", i - 1, 0, -1)
-                    end
-                    return
-                end
-            end
-            require("dashboard").setup({
-                theme = "hyper",
-                config = {
-                    project = { enable = true, limit = 8, icon = " ", label = "", action = ":FzfLua files cwd=" },
-                    shortcut = {
-                        { desc = " Update", group = "@property", action = "Lazy update", key = "u" },
-                        {
-                            icon = " ",
-                            icon_hl = "@variable",
-                            desc = "Files",
-                            group = "Label",
-                            action = "lua require('fzf-lua').files({ multiprocess=true,})",
-                            key = "f",
-                        },
-                        {
-                            icon = " ",
-                            desc = "Recent Files",
-                            group = "DiagnosticHint",
-                            action = "lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })",
-                            key = "r",
-                        },
-                        {
-                            desc = "  Local Configuration",
-                            group = "Number",
-                            action = ":e .vimrc.lua",
-                            key = "c",
-                        },
-                    },
-                },
-            })
-        end,
-        dependencies = {
-            { "nvim-web-devicons" },
-            {
-                "MaximilianLloyd/ascii.nvim",
-                dependencies = { "MunifTanjim/nui.nvim" },
-            },
+        config = {
+            max_width = 80,
+            timeout = 1000,
+            stages = "static",
+            level = vim.log.levels.INFO,
+            background_colour = "#000000",
         },
     },
-
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        cond = is_not_mini,
-        config = function()
-            require("plugins.indent")
-        end,
-        event = "BufReadPost",
-    },
-
+    require("plugins.noice").plugin,
+    require("plugins.tabline").plugin,
+    require("plugins.incline").plugin,
+    require("plugins.dashboard").plugin,
+    require("plugins.indent").plugin,
     -- вместо ESC просто jj
     {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
-        config = function()
-            require("better_escape").setup({
-                mapping = { "jj", "qq", "jk" },
-                clear_empty_lines = true,
-                keys = "<Esc>",
-            })
-        end,
+        config = {
+            mapping = { "jj", "qq", "jk" },
+            clear_empty_lines = true,
+            keys = "<Esc>",
+        },
     },
 
     --- Локальный настройки для папки с помощью .lvimrc с хэшем
     {
         "klen/nvim-config-local",
-        config = function()
-            require("config-local").setup({
-                -- Default configuration (optional)
-                config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
-                hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
-                autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-                commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-                silent = true, -- Disable plugin messages (Config loaded/ignored)
-                lookup_parents = true,
-            })
-        end,
+        config = {
+            -- Default configuration (optional)
+            config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
+            hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
+            autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
+            commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+            silent = true, -- Disable plugin messages (Config loaded/ignored)
+            lookup_parents = true,
+        },
     },
 
     -- Markdown превью
@@ -258,35 +124,11 @@ require("lazy").setup({
     },
 
     -- Информационная строка внизу
-    {
-        "nvim-lualine/lualine.nvim",
-        enabled = true,
-        event = "BufReadPre",
-        config = function()
-            require("plugins.lualine")
-        end,
-    },
+    require("plugins.lualine").plugin,
 
     -- Файловый менеджер
-    {
-        "prichrd/netrw.nvim",
-        enabled = false,
-        setup = function()
-            vim.g.loaded_netrw = 0
-            vim.g.loaded_netrwPlugin = 1
-        end,
-        config = function()
-            require("plugins.netrw")
-        end,
-    },
 
-    {
-        "nvim-tree/nvim-tree.lua",
-        cmd = "NvimTreeOpen",
-        config = function()
-            require("plugins.nvimtree")
-        end,
-    },
+    require("plugins.nvimtree").plugin,
 
     -- Подцветка синтаксиа
 
@@ -306,34 +148,7 @@ require("lazy").setup({
     { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
 
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        lazy = true,
-        dependencies = {
-            "windwp/nvim-ts-autotag",
-            "m-demare/hlargs.nvim",
-            "yioneko/nvim-yati",
-            {
-                name = "nvim-ts-rainbow",
-                url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
-            },
-            "nvim-treesitter/nvim-treesitter-refactor",
-            {
-                "andymass/vim-matchup",
-                enabled = true,
-                init = function()
-                    vim.g.matchup_transmute_enabled = 1
-                    vim.g.matchup_delim_noskips = 1
-                    vim.g.matchup_matchparen_deferred = 1
-                    vim.g.matchup_matchparen_hi_surround_always = 1
-                end,
-            },
-        },
-        config = function()
-            require("plugins.treesitter").setup()
-        end,
-    },
+    require("plugins.treesitter").plugin,
     {
         "kylechui/nvim-surround",
         enabled = true,
@@ -345,39 +160,9 @@ require("lazy").setup({
                 dependencies = { "nvim-treesitter" },
             },
         },
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end,
+        config = {},
     },
-    {
-        "nvim-treesitter/playground",
-        dependencies = { "nvim-treesitter" },
-        config = function()
-            require("nvim-treesitter.configs").setup({
-                playground = {
-                    enable = true,
-                    disable = {},
-                    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-                    persist_queries = false, -- Whether the query persists across vim sessions
-                    keybindings = {
-                        toggle_query_editor = "o",
-                        toggle_hl_groups = "i",
-                        toggle_injected_languages = "t",
-                        toggle_anonymous_nodes = "a",
-                        toggle_language_display = "I",
-                        focus_language = "f",
-                        unfocus_language = "F",
-                        update = "R",
-                        goto_node = "<cr>",
-                        show_help = "?",
-                    },
-                },
-            })
-        end,
-        cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
-    },
+
     {
         "Wansmer/treesj",
         keys = {
@@ -386,29 +171,15 @@ require("lazy").setup({
             "<space>s",
         },
         dependencies = { "nvim-treesitter" },
-        config = function()
-            require("treesj").setup({})
-        end,
+        config = {},
     },
-
-    {
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter" },
-        config = function()
-            require("plugins.todos")
-        end,
-        cond = is_not_mini,
-        event = "BufReadPost",
-    },
-
+    require("plugins.todos").plugin,
     {
         "mvllow/modes.nvim",
-        config = function()
-            require("modes").setup({
-                line_opacity = 0.30,
-                set_cursor = false,
-            })
-        end,
+        config = {
+            line_opacity = 0.30,
+            set_cursor = false,
+        },
         event = "BufReadPost",
     },
 
@@ -441,14 +212,6 @@ require("lazy").setup({
     -- LSP
 
     {
-        "glepnir/lspsaga.nvim",
-        enabled = true,
-        cond = is_not_mini,
-        dependencies = { { "nvim-tree/nvim-web-devicons" } },
-        event = "BufReadPre *.*",
-        cmd = "Lspsaga",
-    },
-    {
         "williamboman/mason.nvim",
         cond = is_not_mini,
         dependencies = {
@@ -460,6 +223,7 @@ require("lazy").setup({
             },
             {
                 "glepnir/lspsaga.nvim",
+                dependencies = { "nvim-tree/nvim-web-devicons" },
             },
         },
         config = function()
@@ -473,23 +237,14 @@ require("lazy").setup({
         "folke/trouble.nvim",
         lazy = true,
         cond = is_not_mini,
-        config = function()
-            require("trouble").setup({
-                auto_fold = false,
-                auto_close = true,
-            })
-        end,
+        config = {
+            auto_fold = false,
+            auto_close = true,
+        },
         cmd = "TroubleToggle",
     },
 
-    {
-        "jose-elias-alvarez/null-ls.nvim",
-        cond = is_not_mini,
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("plugins.nullls").config()
-        end,
-    },
+    require("plugins.nullls").plugin,
 
     {
         "kevinhwang91/nvim-bqf",
@@ -502,51 +257,14 @@ require("lazy").setup({
                 config = true,
             },
         },
-        config = function()
-            require("bqf").setup({
-                auto_enable = true,
-                auto_resize_height = true,
-            })
-        end,
-    },
-    {
-        "kevinhwang91/nvim-ufo",
-        lazy = true,
-        enabled = true,
-        cond = is_not_mini,
-        dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
-        event = "BufReadPost",
-        config = function()
-            require("plugins.ufo").config()
-        end,
-    },
-    -- Автокомлиты
-
-    {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            "L3MON4D3/LuaSnip",
-            "lukas-reineke/cmp-under-comparator",
-            "lukas-reineke/cmp-rg",
-            "saadparwaiz1/cmp_luasnip",
-            "danymat/neogen",
-            "quangnguyen30192/cmp-nvim-tags",
-            "ray-x/cmp-treesitter",
-            {
-                "hrsh7th/cmp-nvim-lsp",
-                cond = not vim.g.disable_lsp,
-            },
-            {
-                "hrsh7th/cmp-omni",
-                cond = vim.g.disable_lsp,
-            },
+        config = {
+            auto_enable = true,
+            auto_resize_height = true,
         },
-        config = function()
-            require("plugins.cmp").config()
-        end,
-        event = { "InsertEnter" },
     },
-
+    require("plugins.ufo").plugin,
+    -- Автокомлиты
+    require("plugins.cmp").plugin,
     {
         "JMarkin/gentags.lua",
         lazy = true,
@@ -554,121 +272,50 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        config = function()
-            require("gentags").setup()
-        end,
+        config = {},
     },
-
-    {
-        "Asheq/close-buffers.vim",
-        event = "BufAdd",
-        config = function()
-            require("plugins.buffers")
-        end,
-    },
-    {
-        "mrjones2014/smart-splits.nvim",
-        config = function()
-            require("plugins.splits")
-        end,
-    },
+    require("plugins.buffers").plugin,
+    require("plugins.splits").plugin,
 
     --  Git
-    {
-        "lewis6991/gitsigns.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        config = function()
-            require("plugins.gitsign")
-        end,
-        event = "BufReadPost *.*",
-    },
-    {
-        "sindrets/diffview.nvim",
-        dependencies = "nvim-lua/plenary.nvim",
-        cmd = { "DiffviewOpen" },
-        config = function()
-            require("diffview").setup({
-                view = {
-                    -- Configure the layout and behavior of different types of views.
-                    -- Available layouts:
-                    --  'diff1_plain'
-                    --    |'diff2_horizontal'
-                    --    |'diff2_vertical'
-                    --    |'diff3_horizontal'
-                    --    |'diff3_vertical'
-                    --    |'diff3_mixed'
-                    --    |'diff4_mixed'
-                    -- For more info, see ':h diffview-config-view.x.layout'.
-                    default = {
-                        -- Config for changed files, and staged files in diff views.
-                        layout = "diff2_horizontal",
-                    },
-                    merge_tool = {
-                        -- Config for conflicted files in diff views during a merge or rebase.
-                        layout = "diff3_mixed",
-                        disable_diagnostics = true,
-                    },
-                    file_history = {
-                        -- Config for changed files in file history views.
-                        layout = "diff2_horizontal",
-                    },
-                },
-            })
-        end,
-    },
+    require("plugins.gitsign").plugin,
+    require("plugins.diffview").plugin,
     -- -- Colorize
     {
         "NvChad/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup({
-                user_default_options = {
-                    RGB = true, -- #RGB hex codes
-                    RRGGBB = true, -- #RRGGBB hex codes
-                    names = false, -- "Name" codes like Blue or blue
-                    RRGGBBAA = true, -- #RRGGBBAA hex codes
-                    AARRGGBB = true, -- 0xAARRGGBB hex codes
-                    rgb_fn = true, -- CSS rgb() and rgba() functions
-                    hsl_fn = true, -- CSS hsl() and hsla() functions
-                    css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                    css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-                    -- Available modes for `mode`: foreground, background,  virtualtext
-                    mode = "background", -- Set the display mode.
-                    virtualtext = "■",
-                },
-            })
-        end,
+        config = {
+            user_default_options = {
+                RGB = true, -- #RGB hex codes
+                RRGGBB = true, -- #RRGGBB hex codes
+                names = false, -- "Name" codes like Blue or blue
+                RRGGBBAA = true, -- #RRGGBBAA hex codes
+                AARRGGBB = true, -- 0xAARRGGBB hex codes
+                rgb_fn = true, -- CSS rgb() and rgba() functions
+                hsl_fn = true, -- CSS hsl() and hsla() functions
+                css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                -- Available modes for `mode`: foreground, background,  virtualtext
+                mode = "background", -- Set the display mode.
+                virtualtext = "■",
+            },
+        },
         event = "BufReadPre",
     },
     -- Комментирование
     {
         "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end,
+        config = {},
         event = "BufReadPost",
     },
     -- EasyMotion
-    {
-        "ggandor/leap.nvim",
-        dependencies = { "tpope/vim-repeat" },
-        config = function()
-            require("plugins.leap")
-        end,
-        -- event = "BufReadPost",
-        keys = { "s", "S" },
-    },
+    require("plugins.leap").plugin,
     {
         "ggandor/flit.nvim",
         dependencies = { "ggandor/leap.nvim" },
-        config = function()
-            require("flit").setup({})
-        end,
+        config = {},
         keys = { "f", "F", "t", "T" },
     },
     -- Дебагер
-
     {
         "rcarriga/nvim-dap-ui",
         cond = is_not_mini,
@@ -678,16 +325,12 @@ require("lazy").setup({
             },
             {
                 "theHamsta/nvim-dap-virtual-text",
-                config = function()
-                    require("nvim-dap-virtual-text").setup()
-                end,
+                config = {},
                 dependencies = "nvim-treesitter",
             },
             "ofirgall/goto-breakpoints.nvim",
         },
-        config = function()
-            require("plugins.debug").config()
-        end,
+        config = {},
         keys = "<leader>d",
     },
 
@@ -731,17 +374,11 @@ require("lazy").setup({
         cmd = { "SudaRead", "SudaWrite" },
     },
     -- bookmark
-    {
-        "MattesGroeger/vim-bookmarks",
-        dependencies = { "ibhagwan/fzf-lua" },
-        init = function()
-            require("plugins.bookmark").setup()
-        end,
-        keys = "<leader>b",
-    },
+    require("plugins.bookmark").plugin,
     -- Классная штука по отображению shortcut
     {
         "folke/which-key.nvim",
+        event = "VeryLazy",
         dependencies = { "Wansmer/langmapper.nvim" },
         config = function()
             require("plugins.whichkey")
@@ -906,6 +543,7 @@ require("lazy").setup({
                 end,
             },
         },
+        event = "VeryLazy",
     },
     {
         "altermo/npairs-integrate-upair",

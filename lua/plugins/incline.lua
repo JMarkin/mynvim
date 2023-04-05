@@ -29,30 +29,44 @@ local function get_git_diff(props)
     return labels
 end
 
-require("incline").setup({
-    debounce_threshold = { falling = 150, rising = 30 },
-    render = function(props)
-        local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-        local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,undercurl,italic" or "bold"
-        local st_diag, diag = pcall(get_diagnostic_label, props)
-        local st_git, git = pcall(get_git_diff, props)
+local M = {}
 
-        local buffer = {
-            { st_diag and diag or "" },
-            { st_git and git or "" },
-            { ft_icon, guifg = ft_color },
-            { " " },
-            { filename, gui = modified },
-        }
-        return buffer
+M.plugin = {
+    "b0o/incline.nvim",
+    init = function()
+        vim.opt.laststatus = 3
     end,
-    hide = {
-        cursorline = true,
-    },
-    window = {
-        margin = {
-            vertical = 2,
-        },
-    },
-})
+    config = function()
+        require("incline").setup({
+            debounce_threshold = { falling = 150, rising = 30 },
+            render = function(props)
+                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+                local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+                local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,undercurl,italic"
+                    or "bold"
+                local st_diag, diag = pcall(get_diagnostic_label, props)
+                local st_git, git = pcall(get_git_diff, props)
+
+                local buffer = {
+                    { st_diag and diag or "" },
+                    { st_git and git or "" },
+                    { ft_icon, guifg = ft_color },
+                    { " " },
+                    { filename, gui = modified },
+                }
+                return buffer
+            end,
+            hide = {
+                cursorline = true,
+            },
+            window = {
+                margin = {
+                    vertical = 2,
+                },
+            },
+        })
+    end,
+    event = "BufReadPost",
+}
+
+return M
