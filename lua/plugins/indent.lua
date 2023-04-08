@@ -8,7 +8,7 @@ local is_not_mini = require("custom.funcs").is_not_mini
 M.plugin = {
     "lukas-reineke/indent-blankline.nvim",
     cond = is_not_mini,
-    config = {
+    opts = {
         space_char_blankline = " ",
         show_current_context = true,
         show_current_context_start = true,
