@@ -11,7 +11,7 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     {
         "stevearc/dressing.nvim",
-        config = {
+        opts = {
             input = {
                 override = function(conf)
                     conf.col = -1
@@ -24,7 +24,7 @@ require("lazy").setup({
 
     {
         "ibhagwan/smartyank.nvim",
-        config = {
+        opts = {
             highlight = {
                 enabled = true, -- highlight yanked text
                 higroup = "ModesCopy", -- highlight group of yanked text
@@ -37,7 +37,7 @@ require("lazy").setup({
         "rcarriga/nvim-notify",
         lazy = false,
         priority = 1000,
-        config = {
+        opts = {
             max_width = 80,
             timeout = 1000,
             stages = "static",
@@ -54,7 +54,7 @@ require("lazy").setup({
     {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
-        config = {
+        opts = {
             mapping = { "jj", "qq", "jk" },
             clear_empty_lines = true,
             keys = "<Esc>",
@@ -64,7 +64,7 @@ require("lazy").setup({
     --- Локальный настройки для папки с помощью .lvimrc с хэшем
     {
         "klen/nvim-config-local",
-        config = {
+        opts = {
             -- Default configuration (optional)
             config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
             hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
@@ -160,7 +160,7 @@ require("lazy").setup({
                 dependencies = { "nvim-treesitter" },
             },
         },
-        config = {},
+        opts = {},
     },
 
     {
@@ -171,12 +171,12 @@ require("lazy").setup({
             "<space>s",
         },
         dependencies = { "nvim-treesitter" },
-        config = {},
+        opts = {},
     },
     require("plugins.todos").plugin,
     {
         "mvllow/modes.nvim",
-        config = {
+        opts = {
             line_opacity = 0.30,
             set_cursor = false,
         },
@@ -237,7 +237,7 @@ require("lazy").setup({
         "folke/trouble.nvim",
         lazy = true,
         cond = is_not_mini,
-        config = {
+        opts = {
             auto_fold = false,
             auto_close = true,
         },
@@ -257,7 +257,7 @@ require("lazy").setup({
                 config = true,
             },
         },
-        config = {
+        opts = {
             auto_enable = true,
             auto_resize_height = true,
         },
@@ -272,7 +272,7 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        config = {},
+        opts = {},
     },
     require("plugins.buffers").plugin,
     require("plugins.splits").plugin,
@@ -283,7 +283,7 @@ require("lazy").setup({
     -- -- Colorize
     {
         "NvChad/nvim-colorizer.lua",
-        config = {
+        opts = {
             user_default_options = {
                 RGB = true, -- #RGB hex codes
                 RRGGBB = true, -- #RRGGBB hex codes
@@ -304,7 +304,7 @@ require("lazy").setup({
     -- Комментирование
     {
         "numToStr/Comment.nvim",
-        config = {},
+        opts = {},
         event = "BufReadPost",
     },
     -- EasyMotion
@@ -312,7 +312,7 @@ require("lazy").setup({
     {
         "ggandor/flit.nvim",
         dependencies = { "ggandor/leap.nvim" },
-        config = {},
+        opts = {},
         keys = { "f", "F", "t", "T" },
     },
     -- Дебагер
@@ -325,12 +325,12 @@ require("lazy").setup({
             },
             {
                 "theHamsta/nvim-dap-virtual-text",
-                config = {},
+                opts = {},
                 dependencies = "nvim-treesitter",
             },
             "ofirgall/goto-breakpoints.nvim",
         },
-        config = {},
+        opts = {},
         keys = "<leader>d",
     },
 
