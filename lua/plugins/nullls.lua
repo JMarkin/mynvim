@@ -6,6 +6,8 @@ M.plugin = {
     "jose-elias-alvarez/null-ls.nvim",
     cond = is_not_mini,
     dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = true,
+    event = "BufReadPre",
     config = function()
         local nullls = require("null-ls")
 
@@ -97,6 +99,8 @@ M.plugin = {
             factory = h.formatter_factory,
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
+
+        M.enable(nil, nil, nil)
     end,
 }
 
@@ -185,8 +189,6 @@ M.enable = function(diagnostics, formatters, completions)
 
     local nullls = require("null-ls")
 
-    local DIAGNOSTICS = require("null-ls.methods").internal.DIAGNOSTICS_ON_SAVE
-
     diagnostics = diagnostics or DEFAULT_DIAGNOSTICS
 
     formatters = formatters or DEFAULT_FORMATTERS
@@ -196,45 +198,48 @@ M.enable = function(diagnostics, formatters, completions)
     local sources = {}
 
     for _, diag in ipairs(diagnostics) do
-        table.insert(
-            sources,
-            nullls.builtins.diagnostics[diag].with({
-                method = DIAGNOSTICS,
-                env = {
-                    PYTHONPATH = vim.env.PYTHONPATH,
+        if type(diag) ~= "table" then
+            diag = {
+                name = diag,
+                with = {
+                    condition = exec_install(diag),
                 },
-                condition = exec_install(diag),
-            })
-        )
+            }
+        end
+        table.insert(sources, nullls.builtins.diagnostics[diag.name].with(diag.with))
     end
 
     for _, fmt in ipairs(formatters) do
-        table.insert(
-            sources,
-            nullls.builtins.formatting[fmt].with({
-                env = {
-                    PYTHONPATH = vim.env.PYTHONPATH,
+        if type(fmt) ~= "table" then
+            fmt = {
+                name = fmt,
+                with = {
+                    condition = exec_install(fmt),
                 },
-                condition = exec_install(fmt),
-            })
-        )
+            }
+        end
+        table.insert(sources, nullls.builtins.formatting[fmt.name].with(fmt.with))
     end
 
     for _, cmp in ipairs(completions) do
-        table.insert(
-            sources,
-            nullls.builtins.completion[cmp].with({
-                env = {
-                    PYTHONPATH = vim.env.PYTHONPATH,
-                },
-                condition = exec_install(cmp),
-            })
-        )
+        if type(cmp) ~= "table" then
+            cmp = {
+                name = cmp,
+                with = {},
+            }
+        end
+        table.insert(sources, nullls.builtins.completion[cmp.name].with(cmp.with))
     end
 
     table.insert(sources, nullls.builtins.code_actions.gitsigns)
 
-    nullls.setup({ sources = sources, temp_dir = "/tmp", root_dir = u.root_pattern(unpack(vim.g.root_pattern)) })
+    nullls.setup({
+        log_level = "error",
+        sources = sources,
+        temp_dir = "/tmp",
+        update_in_insert = false,
+        root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
+    })
 end
 
 return M

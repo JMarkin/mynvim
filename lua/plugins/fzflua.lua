@@ -59,7 +59,11 @@ vim.keymap.set("n", "<leader>sf", function()
 end, { desc = "Search: find files" })
 
 vim.keymap.set("n", "<leader>sg", function()
-    require("fzf-lua").grep_project({ multiprocess = true, continue_last_search = true })
+    require("fzf-lua").live_grep_native({ multiprocess = true, continue_last_search = true })
+end, { desc = "Search: project" })
+
+vim.keymap.set("v", "<leader>sg", function()
+    require("fzf-lua").grep_visual({ multiprocess = true, continue_last_search = true })
 end, { desc = "Search: project" })
 
 vim.keymap.set("n", "<leader>s/", function()
@@ -67,12 +71,19 @@ vim.keymap.set("n", "<leader>s/", function()
 end, { desc = "Search: current buffer" })
 
 vim.keymap.set("n", "<leader>st", function()
-    require("fzf-lua").tags({ multiprocess = true, ctags_file = vim.opt.tags._value })
+    require("fzf-lua").tags_live_grep({ multiprocess = true })
+end, { desc = "Search: tags" })
+vim.keymap.set("v", "<leader>st", function()
+    require("fzf-lua").tags_grep_visual({ multiprocess = true })
 end, { desc = "Search: tags" })
 
 vim.keymap.set("n", "<leader>sd", function()
     require("fzf-lua").lsp_definitions({ multiprocess = true })
 end, { desc = "Search: Definitions" })
+
+vim.keymap.set("n", "<leader>sS", function()
+    require("fzf-lua").lsp_live_workspace_symbols({ multiprocess = true })
+end, { desc = "Search: Symbols" })
 
 vim.keymap.set("n", "<leader>sc", function()
     require("fzf-lua").commands({ multiprocess = true })
@@ -87,7 +98,7 @@ vim.keymap.set("n", "<leader>sch", function()
 end, { desc = "Search: command_history" })
 
 vim.keymap.set("n", "gr", function()
-    require("fzf-lua").lsp_references({ multiprocess = true })
+    require("fzf-lua").lsp_references({ multiprocess = true, ignore_current_line = true })
 end, { silent = true, desc = "GoTo: references" })
 
 vim.keymap.set("n", "<leader>sP", require("plugins.project").search, { silent = true, desc = "Search: project" })
