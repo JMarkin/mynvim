@@ -8,8 +8,8 @@ RUN apk update && \
     make ncurses-dev openssl-dev patch util-linux-dev zlib-dev bzip2-dev sqlite-dev xz-dev \
     openssl readline-dev rsync tmux musl-dev delta && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-    apk add ---no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
-    apk add ---no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
+    apk add --no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
+    apk add --no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
 
 RUN adduser -s /usr/bin/fish -D kron && \
