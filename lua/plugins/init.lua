@@ -177,7 +177,7 @@ require("lazy").setup({
     {
         "mvllow/modes.nvim",
         opts = {
-            line_opacity = 0.30,
+            line_opacity = 0.25,
             set_cursor = false,
         },
         event = "BufReadPost",
