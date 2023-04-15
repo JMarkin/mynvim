@@ -41,7 +41,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     desc = "Load view on entering buffer",
 })
 
-
 --matchup custom
 -- local matchup_words = "MatchUpWords"
 -- vim.api.nvim_create_augroup(matchup_words, { clear = true })
@@ -57,4 +56,31 @@ vim.api.nvim_create_autocmd("VimResized", {
     pattern = "*",
     group = fzf,
     command = 'lua require("fzf-lua").redraw()',
+})
+
+local enable_syntax = "ENABLE_SYNTAX"
+vim.api.nvim_create_augroup(enable_syntax, { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {
+        "mako",
+        "yaml.ansible",
+        "applescript",
+        "caddyfile",
+        "csv",
+        "glsl",
+        "graphql",
+        "haproxy",
+        "helm",
+        "mako",
+        "nginx",
+        "rst",
+        "svg",
+        "systemd",
+        "xml",
+        "log",
+    },
+    group = enable_syntax,
+    callback = function()
+        vim.opt.omnifunc = "syntaxcomplete#Complete"
+    end,
 })

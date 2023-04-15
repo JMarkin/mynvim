@@ -99,8 +99,6 @@ M.plugin = {
             factory = h.formatter_factory,
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
-
-        M.enable(nil, nil, nil)
     end,
 }
 
@@ -203,6 +201,7 @@ M.enable = function(diagnostics, formatters, completions)
                 name = diag,
                 with = {
                     condition = exec_install(diag),
+                    method = nullls.methods.DIAGNOSTICS_ON_SAVE,
                 },
             }
         end
