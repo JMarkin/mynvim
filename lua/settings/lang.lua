@@ -378,6 +378,7 @@ M.config = function()
     })
 
     require("plugins.lspsaga")
+
     is_load = 1
     return is_load
 end

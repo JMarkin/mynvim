@@ -21,7 +21,7 @@ M.plugin = {
         require("dashboard").setup({
             theme = "hyper",
             config = {
-                project = { enable = true, limit = 8, icon = " ", label = "", action = ":FzfLua files cwd=" },
+                project = { enable = false, limit = 8, icon = " ", label = "", action = ":FzfLua files cwd=" },
                 shortcut = {
                     { desc = " Update", group = "@property", action = "Lazy update", key = "u" },
                     {

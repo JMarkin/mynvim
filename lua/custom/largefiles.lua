@@ -75,6 +75,8 @@ function optimize_buffer()
     end
     local size = vim.fn.getfsize(file)
     local disable = false
+    local big_line = false
+
     if size > max_file_size then
         vim.notify("BIG FILE SIZE " .. size, vim.log.levels.WARN)
         disable = true
@@ -83,9 +85,17 @@ function optimize_buffer()
         local _m = maxline(file)
         if _m > vim.opt.synmaxcol._value then
             vim.notify("BIG FILE COLUMNS " .. _m, vim.log.levels.WARN)
-            disable = true
+            big_line = true
         end
     end
+
+    if disable or big_line then
+        vim.opt_local.wrap = false
+        vim.opt_local.spell = false
+        vim.opt_local.hlsearch = false
+        vim.opt_local.incsearch = false
+    end
+
     if disable then
         if vim.opt.eventignore == nil then
             vim.opt.eventignore = {}
@@ -94,10 +104,6 @@ function optimize_buffer()
         vim.opt_local.swapfile = false
         vim.opt_local.bufhidden = "unload"
         vim.opt_local.syntax = "disable"
-        vim.opt_local.wrap = false
-        vim.opt_local.spell = false
-        vim.opt_local.hlsearch = false
-        vim.opt_local.incsearch = false
 
         if size > max_file_size_readonly then
             vim.opt_local.buftype = "nowrite"
