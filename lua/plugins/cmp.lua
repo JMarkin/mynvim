@@ -66,7 +66,6 @@ M.plugin = {
         "danymat/neogen",
         "quangnguyen30192/cmp-nvim-tags",
         "ray-x/cmp-treesitter",
-        "buschco/nvim-cmp-ts-tag-close",
         {
             "hrsh7th/cmp-nvim-lsp",
             cond = not vim.g.disable_lsp,
@@ -110,16 +109,13 @@ M.plugin = {
             end
         end, { "i", "s" })
 
-        local sources = {
-            { name = "nvim-cmp-ts-tag-close" },
-        }
+        local sources = {}
 
-        local preselect = cmp.PreselectMode.None
+        local preselect = cmp.PreselectMode.Item
 
         if not vim.g.disable_lsp then
             table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
         else
-            preselect = cmp.PreselectMode.Item
             vim.opt.omnifunc = "syntaxcomplete#Complete"
             table.insert(sources, { name = "omni", max_item_count = 7 })
         end

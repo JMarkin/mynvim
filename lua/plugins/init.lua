@@ -5,21 +5,25 @@ require("lazy").setup({
     -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
 
-    "romainl/vim-cool",
+    {
+        "romainl/vim-cool",
+        enabled = false,
+    },
 
     --- Украшения
     "nvim-tree/nvim-web-devicons",
     {
         "stevearc/dressing.nvim",
-        opts = {
-            input = {
-                override = function(conf)
-                    conf.col = -1
-                    conf.row = 0
-                    return conf
-                end,
-            },
-        },
+        -- opts = {
+        --     input = {
+        --         insert_only = false,
+        --         override = function(conf)
+        --             conf.col = -1
+        --             conf.row = 0
+        --             return conf
+        --         end,
+        --     },
+        -- },
     },
 
     {
@@ -31,21 +35,25 @@ require("lazy").setup({
                 timeout = 100, -- timeout for clearing the highlight
             },
         },
+        event = "BufReadPost",
     },
 
     {
         "rcarriga/nvim-notify",
-        lazy = false,
-        priority = 1000,
-        opts = {
-            max_width = 80,
-            timeout = 1000,
-            stages = "static",
-            level = vim.log.levels.INFO,
-            background_colour = "#000000",
-        },
+        -- lazy = false,
+        -- priority = 1000,
+        -- opts = {
+        --     max_width = 80,
+        --     timeout = 1000,
+        --     stages = "static",
+        --     level = vim.log.levels.INFO,
+        --     background_colour = "#000000",
+        -- },
     },
+    -- командная строчка
     require("plugins.noice").plugin,
+    require("plugins.wilder").plugin,
+
     require("plugins.tabline").plugin,
     require("plugins.incline").plugin,
     require("plugins.dashboard").plugin,
@@ -107,6 +115,14 @@ require("lazy").setup({
         enabled = true,
         lazy = false,
         priority = 1000, -- Ensure it loads first
+        dependencies = {
+            {
+                "rcarriga/nvim-notify",
+            },
+            {
+                "stevearc/dressing.nvim",
+            },
+        },
         config = function()
             require("ofirkai").setup({})
             -- Requires `WhiteBorder` to show the title.
@@ -115,10 +131,20 @@ require("lazy").setup({
                     win_options = {
                         winhighlight = require("ofirkai.plugins.dressing").winhighlight,
                     },
+                    insert_only = false,
+                    override = function(conf)
+                        conf.col = -1
+                        conf.row = 0
+                        return conf
+                    end,
                 },
             })
             require("notify").setup({
                 background_colour = require("ofirkai").scheme.ui_bg,
+                max_width = 80,
+                timeout = 1000,
+                stages = "static",
+                level = vim.log.levels.INFO,
             })
         end,
     },
@@ -239,7 +265,8 @@ require("lazy").setup({
         cond = is_not_mini,
         opts = {
             auto_fold = false,
-            auto_close = true,
+            auto_close = false,
+            auto_preview = false,
         },
         cmd = "TroubleToggle",
     },
@@ -376,23 +403,14 @@ require("lazy").setup({
     -- bookmark
     require("plugins.bookmark").plugin,
     -- Классная штука по отображению shortcut
-    {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        dependencies = { "Wansmer/langmapper.nvim" },
-        config = function()
-            require("plugins.whichkey")
-        end,
-    },
+    require("plugins.whichkey").plugin,
     -- курсор следует за shift
     {
         "gbprod/stay-in-place.nvim",
-        config = function()
-            require("stay-in-place").setup({
-                set_keymaps = true,
-                preserve_visual_selection = true,
-            })
-        end,
+        opts = {
+            set_keymaps = true,
+            preserve_visual_selection = true,
+        },
         event = "ModeChanged",
     },
     -- yaml
@@ -495,6 +513,7 @@ require("lazy").setup({
                 ignore_filetypes = {},
             })
         end,
+        event = "BufReadPost",
     },
     {
         "willothy/flatten.nvim",
@@ -544,13 +563,15 @@ require("lazy").setup({
             },
         },
         event = "VeryLazy",
+        cmd = { "Git" },
+        keys = { "<A-g>", "<A-b>", "<A-t>" },
     },
     {
         "altermo/npairs-integrate-upair",
         dependencies = { "windwp/nvim-autopairs", "altermo/ultimate-autopair.nvim" },
         event = { "InsertEnter", "CmdlineEnter" },
         config = function()
-            require("npairs-int-upair").setup({})
+            require("npairs-int-upair").setup({ map = "u" })
         end,
     },
     {
@@ -564,9 +585,11 @@ require("lazy").setup({
                 },
             })
         end,
+        event = "BufEnter",
     },
     {
         "ahmedkhalf/project.nvim",
+        enabled = false,
         event = "VimEnter",
         config = function()
             require("plugins.project").setup()
@@ -590,5 +613,6 @@ require("lazy").setup({
     {
         "chrisgrieser/nvim-spider",
         lazy = true,
+        enabled = false,
     },
 })

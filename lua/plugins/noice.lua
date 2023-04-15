@@ -1,7 +1,7 @@
 local M = {}
 M.plugin = {
     "folke/noice.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
         popupmenu = {
             enabled = true,
