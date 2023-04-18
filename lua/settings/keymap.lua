@@ -1,6 +1,5 @@
 vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
 
-vim.keymap.set({ "n" }, "<space>f", "<Cmd>NvimTreeOpen<CR>", { desc = "FileTree" })
 vim.keymap.set({ "n" }, "<space>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", { desc = "All Diagnostics" })
 vim.keymap.set({ "n" }, "<space>e", "<cmd>TroubleToggle document_diagnostics<cr>", { desc = "Buffer Diagnostics" })
 

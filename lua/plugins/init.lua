@@ -155,6 +155,7 @@ require("lazy").setup({
     -- Файловый менеджер
 
     require("plugins.nvimtree").plugin,
+    require("plugins.ranger").plugin,
 
     -- Подцветка синтаксиа
 
