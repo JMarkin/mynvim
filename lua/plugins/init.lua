@@ -465,21 +465,7 @@ require("lazy").setup({
         end,
     },
     -- tests
-    {
-        "nvim-neotest/neotest",
-        cond = is_not_mini,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "antoinemadec/FixCursorHold.nvim",
-            "nvim-neotest/neotest-python",
-            "rouge8/neotest-rust",
-        },
-        config = function()
-            require("plugins.tests")
-        end,
-        ft = { "python", "rust" },
-    },
+    require("plugins.tests").plugin,
     -- trim
     {
         "zakharykaplan/nvim-retrail",
