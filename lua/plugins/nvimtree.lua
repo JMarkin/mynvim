@@ -1,5 +1,60 @@
+local function float_preview(prev_win, node)
+    local buf, win
+    buf = vim.api.nvim_create_buf(false, true)
+
+    vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
+
+    local width = vim.api.nvim_get_option("columns")
+
+    local opts = {
+        style = "minimal",
+        relative = "win",
+        width = 150,
+        height = 10,
+        bufpos = { vim.fn.line(".") - 1, vim.fn.col(".") + 30 },
+        border = "rounded",
+        focusable = false,
+    }
+
+    win = vim.api.nvim_open_win(buf, true, opts)
+
+    vim.api.nvim_command("terminal cat " .. node.absolute_path)
+    vim.api.nvim_set_current_win(prev_win)
+
+    return win
+end
+
+local float_win = nil
+
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
+
+    vim.api.nvim_create_autocmd({"BufLeave", "CmdlineEnter"}, {
+        buffer = bufnr,
+        callback = function()
+            if float_win ~= nil then
+                vim.api.nvim_win_close(float_win, { true })
+                float_win = nil
+            end
+        end,
+    })
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local win = vim.api.nvim_get_current_win()
+            local node = api.tree.get_node_under_cursor()
+            if float_win ~= nil then
+                vim.api.nvim_win_close(float_win, { true })
+                float_win = nil
+            end
+
+            if node.type ~= "file" then
+                return
+            end
+
+            float_win = float_preview(win, node)
+        end,
+    })
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -65,7 +120,11 @@ local M = {}
 
 M.plugin = {
     "nvim-tree/nvim-tree.lua",
+    enabled = true,
     cmd = "NvimTreeOpen",
+    init = function()
+        vim.keymap.set({ "n" }, { "<space>f", "<A-f>" }, "<Cmd>NvimTreeOpen<CR>", { desc = "FileTree" })
+    end,
     config = function()
         require("nvim-tree").setup({
             on_attach = on_attach,
