@@ -4,7 +4,9 @@ if not ok then
     return
 end
 
-lspsaga.setup({
+local ok_ofirkai, ofirkai_design = pcall(require, "ofirkai.design")
+
+local opts = {
     finder = {
         jump_to = "p",
         edit = { "o", "<CR>" },
@@ -72,7 +74,19 @@ lspsaga.setup({
             go_action = "g",
         },
     },
-})
+}
+
+if ok_ofirkai then
+    local scheme = ofirkai_design.scheme
+    opts.ui = {
+        colors = {
+            normal_bg = scheme.ui_bg,
+            title_bg = scheme.mid_orange,
+        },
+    }
+end
+
+lspsaga.setup(opts)
 
 vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { desc = "Lsp: Finder" })
 vim.keymap.set("n", "ge", "<cmd>Lspsaga peek_definition<cr>", { desc = "GoTo: definition float" })
