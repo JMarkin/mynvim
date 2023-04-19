@@ -6,7 +6,7 @@ local max_file_size = 5242880 -- 5MB
 local max_file_size_readonly = 10485760 -- 10MB
 local disable_filetype = false
 
-function file_exists(file)
+local function file_exists(file)
     local f = io.open(file, "rb")
     if f then
         f:close()
@@ -14,7 +14,7 @@ function file_exists(file)
     return f ~= nil
 end
 
-function maxline(file)
+local function maxline(file)
     if not file_exists(file) then
         return 0
     end

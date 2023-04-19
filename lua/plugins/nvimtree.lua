@@ -1,9 +1,12 @@
 local float_win = nil
+local float_buf = nil
 
 local function close_float()
     if float_win ~= nil then
-        vim.api.nvim_win_close(float_win, { true })
+        pcall(vim.api.nvim_win_close, float_win, { force = true })
+        pcall(vim.api.nvim_buf_delete, float_buf, { force = true })
         float_win = nil
+        float_buf = nil
     end
 end
 
@@ -34,17 +37,24 @@ local function float_preview(prev_win, node)
         close_float()
     end
 
-    return win
+    return win, buf
+end
+
+local function float_close_decorator(func)
+    return function()
+        close_float()
+        func()
+    end
 end
 
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
-    vim.api.nvim_create_autocmd({ "BufLeavePre", "CmdlineEnter" }, {
-        buffer = bufnr,
+    vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter" }, {
+        pattern = { "*" },
         callback = close_float,
     })
-    vim.api.nvim_create_autocmd("CursorHold", {
+    vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", "BufWinEnter" }, {
         buffer = bufnr,
         callback = function()
             local win = vim.api.nvim_get_current_win()
@@ -55,7 +65,7 @@ local function on_attach(bufnr)
                 return
             end
 
-            float_win = float_preview(win, node)
+            float_win, float_buf = float_preview(win, node)
         end,
     })
 
@@ -69,14 +79,14 @@ local function on_attach(bufnr)
     vim.keymap.set("n", ".", api.tree.change_root_to_node, opts("CD"))
     vim.keymap.set("n", "-", api.tree.change_root_to_parent, opts("Up"))
 
-    vim.keymap.set("n", "<C-t>", api.node.open.tab, opts("Open: New Tab"))
-    vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts("Open: Vertical Split"))
-    vim.keymap.set("n", "<C-s>", api.node.open.horizontal, opts("Open: Horizontal Split"))
-    vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
-    vim.keymap.set("n", "<Tab>", api.node.open.edit, opts("Open"))
-    vim.keymap.set("n", "<S-Tab>", api.node.open.preview, opts("Open Preview"))
-    vim.keymap.set("n", "o", api.node.open.edit, opts("Open"))
-    vim.keymap.set("n", "O", api.node.open.no_window_picker, opts("Open: No Window Picker"))
+    vim.keymap.set("n", "<C-t>", float_close_decorator(api.node.open.tab), opts("Open: New Tab"))
+    vim.keymap.set("n", "<C-v>", float_close_decorator(api.node.open.vertical), opts("Open: Vertical Split"))
+    vim.keymap.set("n", "<C-s>", float_close_decorator(api.node.open.horizontal), opts("Open: Horizontal Split"))
+    vim.keymap.set("n", "<CR>", float_close_decorator(api.node.open.edit), opts("Open"))
+    vim.keymap.set("n", "<Tab>", float_close_decorator(api.node.open.preview), opts("Open"))
+    vim.keymap.set("n", "o", float_close_decorator(api.node.open.edit), opts("Open"))
+    vim.keymap.set("n", "O", float_close_decorator(api.node.open.no_window_picker), opts("Open: No Window Picker"))
+    vim.keymap.set("n", "q", float_close_decorator(api.tree.close), opts("Close"))
 
     vim.keymap.set("n", "c", api.fs.copy.node, opts("Copy"))
     vim.keymap.set("n", "x", api.fs.cut, opts("Cut"))
@@ -84,14 +94,13 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
     vim.keymap.set("n", "gy", api.fs.copy.absolute_path, opts("Copy Absolute Path"))
 
-    vim.keymap.set("n", "a", api.fs.create, opts("Create"))
+    vim.keymap.set("n", "a", float_close_decorator(api.fs.create), opts("Create"))
     vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
-    vim.keymap.set("n", "q", api.tree.close, opts("Close"))
     vim.keymap.set("n", "<BS>", api.node.navigate.parent_close, opts("Close Directory"))
     vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
     vim.keymap.set("n", "S", api.tree.search_node, opts("Search"))
-    vim.keymap.set("n", "d", api.fs.remove, opts("Delete"))
-    vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
+    vim.keymap.set("n", "d", float_close_decorator(api.fs.remove), opts("Delete"))
+    vim.keymap.set("n", "r", float_close_decorator(api.fs.rename), opts("Rename"))
     vim.keymap.set("n", "<C-r>", api.fs.rename_sub, opts("Rename: Omit Filename"))
     vim.keymap.set("n", "e", api.fs.rename_basename, opts("Rename: Basename"))
 
