@@ -13,7 +13,7 @@ M.plugin = {
         "yioneko/nvim-yati",
         {
             name = "nvim-ts-rainbow",
-            enabled = false,
+            enabled = true,
             url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
         },
         "nvim-treesitter/nvim-treesitter-refactor",
@@ -43,12 +43,11 @@ M.plugin = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
                 disable = function(_, buf)
-                    local disable, big_line = is_large_file(buf)
-                    return big_line or disable
+                    return not vim.b.large_buf
                 end,
             },
             rainbow = {
-                enable = false,
+                enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = 1500, -- Do not enable for files with more than n lines, int
                 query = {

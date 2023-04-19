@@ -118,10 +118,8 @@ local DEFAULT_FORMATTERS = {
     "djhtml",
     "isort",
     "nginx_beautifier",
-    "rome",
     "taplo",
     "docformatter",
-    "prettierd",
 }
 
 local DEFAULT_COMPLETIONS = {}

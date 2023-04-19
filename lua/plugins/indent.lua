@@ -16,6 +16,7 @@ M.plugin = {
         show_first_indent_level = false,
     },
     event = "BufReadPost",
+    cmd = { "IndentBlanklineEnable", "IndentBlanklineDisable" },
 }
 
 return M

@@ -98,13 +98,32 @@ local function is_large_file(buf)
     return disable, big_line
 end
 
-function optimize_buffer()
-    local disable, big_line = is_large_file(nil)
+local function optimize_buffer(args)
+    local disable, big_line = is_large_file(args.buf)
     if disable or big_line then
+        vim.b.large_buf = true
         vim.opt_local.wrap = false
         vim.opt_local.spell = false
         vim.opt_local.hlsearch = false
         vim.opt_local.incsearch = false
+        vim.opt_local.foldmethod = "manual"
+
+        for _, mod in pairs(require("nvim-treesitter.configs").available_modules()) do
+            vim.api.nvim_command("TSBufDisable " .. mod)
+        end
+        vim.api.nvim_command("IndentBlanklineDisable")
+        vim.api.nvim_command("UfoDisable")
+        vim.api.nvim_command("NoMatchParen")
+        vim.api.nvim_create_autocmd({ "BufUnload" }, {
+            buffer = args.buf,
+            callback = function()
+                if not vim.g.indent_blankline_enabled then
+                    vim.api.nvim_command("IndentBlanklineEnable")
+                end
+                vim.api.nvim_command("UfoEnable")
+                vim.api.nvim_command("DoMatchParen")
+            end,
+        })
     end
 
     if disable then
@@ -129,14 +148,34 @@ function optimize_buffer()
             disable_filetype = false
         end
     end
+
+    if disable or big_line then
+        vim.b.large_buf = true
+        vim.opt_local.wrap = false
+        vim.opt_local.spell = false
+        vim.opt_local.hlsearch = false
+        vim.opt_local.incsearch = false
+        vim.opt_local.foldmethod = "manual"
+
+        for _, mod in pairs(require("nvim-treesitter.configs").available_modules()) do
+            vim.api.nvim_command("TSBufDisable " .. mod)
+        end
+        vim.api.nvim_command("IndentBlanklineDisable")
+        -- vim.api.nvim_command("UfoDisable")
+        vim.api.nvim_command("NoMatchParen")
+    else
+        if not vim.g.indent_blankline_enabled then
+            vim.api.nvim_command("IndentBlanklineEnable")
+            -- vim.api.nvim_command("UfoEnable")
+            vim.api.nvim_command("DoMatchParen")
+        end
+    end
 end
 
 vim.api.nvim_create_autocmd("BufReadPre", {
     group = large_files,
     pattern = { "*" },
-    callback = function()
-        optimize_buffer()
-    end,
+    callback = optimize_buffer,
 })
 
 return {
