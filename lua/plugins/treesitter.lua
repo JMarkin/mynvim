@@ -1,6 +1,7 @@
 local M = {}
 
 local syntax_langs = require("colorscheme.lang")
+local is_large_file = require("custom.largefiles").is_large_file
 
 M.plugin = {
     "nvim-treesitter/nvim-treesitter",
@@ -12,6 +13,7 @@ M.plugin = {
         "yioneko/nvim-yati",
         {
             name = "nvim-ts-rainbow",
+            enabled = false,
             url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
         },
         "nvim-treesitter/nvim-treesitter-refactor",
@@ -23,11 +25,14 @@ M.plugin = {
                 vim.g.matchup_delim_noskips = 1
                 vim.g.matchup_matchparen_deferred = 1
                 vim.g.matchup_matchparen_hi_surround_always = 1
+                vim.g.matchup_matchparen_nomode = "i"
+                vim.g.matchup_matchparen_deferred_show_delay = 1000
+                vim.g.matchup_matchparen_deferred_hide_delay = 1000
+                vim.g.matchup_matchparen_timeout = 100
             end,
         },
     },
     config = function()
-        local rainbow = require("ts-rainbow")
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup({
             ensure_installed = syntax_langs.treesitter_installed,
@@ -38,22 +43,18 @@ M.plugin = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
                 disable = function(_, buf)
-                    local max_filesize = 100 * 1024 -- 100 KB
-                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    if ok and stats and stats.size > max_filesize then
-                        return true
-                    end
+                    local disable, big_line = is_large_file(buf)
+                    return big_line or disable
                 end,
             },
             rainbow = {
-                enable = true,
+                enable = false,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = 1500, -- Do not enable for files with more than n lines, int
                 query = {
                     "rainbow-parens",
                     html = "rainbow-tags",
                 },
-                strategy = rainbow.strategy.global,
             },
             incremental_selection = {
                 enable = true,

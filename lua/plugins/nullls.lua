@@ -116,7 +116,6 @@ local DEFAULT_FORMATTERS = {
     "protolint",
     "stylua",
     "djhtml",
-    "fixjson",
     "isort",
     "nginx_beautifier",
     "rome",

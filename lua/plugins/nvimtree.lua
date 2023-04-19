@@ -1,15 +1,24 @@
+local float_win = nil
+
+local function close_float()
+    if float_win ~= nil then
+        vim.api.nvim_win_close(float_win, { true })
+        float_win = nil
+    end
+end
+
 local function float_preview(prev_win, node)
     local buf, win
     buf = vim.api.nvim_create_buf(false, true)
 
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
+    vim.api.nvim_buf_set_option(buf, "bufhidden", "delete")
 
     local width = vim.api.nvim_get_option("columns")
 
     local opts = {
         style = "minimal",
         relative = "win",
-        width = 150,
+        width = math.ceil(width / 2),
         height = 10,
         bufpos = { vim.fn.line(".") - 1, vim.fn.col(".") + 30 },
         border = "rounded",
@@ -19,34 +28,28 @@ local function float_preview(prev_win, node)
     win = vim.api.nvim_open_win(buf, true, opts)
 
     vim.api.nvim_command("terminal cat " .. node.absolute_path)
-    vim.api.nvim_set_current_win(prev_win)
+    local ok, _ = pcall(vim.api.nvim_set_current_win, prev_win)
+
+    if not ok then
+        close_float()
+    end
 
     return win
 end
 
-local float_win = nil
-
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
-    vim.api.nvim_create_autocmd({"BufLeave", "CmdlineEnter"}, {
+    vim.api.nvim_create_autocmd({ "BufLeavePre", "CmdlineEnter" }, {
         buffer = bufnr,
-        callback = function()
-            if float_win ~= nil then
-                vim.api.nvim_win_close(float_win, { true })
-                float_win = nil
-            end
-        end,
+        callback = close_float,
     })
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
         callback = function()
             local win = vim.api.nvim_get_current_win()
             local node = api.tree.get_node_under_cursor()
-            if float_win ~= nil then
-                vim.api.nvim_win_close(float_win, { true })
-                float_win = nil
-            end
+            close_float()
 
             if node.type ~= "file" then
                 return
