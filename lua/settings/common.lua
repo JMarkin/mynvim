@@ -30,7 +30,7 @@ opt.bs = "indent,eol,start"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 opt.scrollback = 2000
-opt.synmaxcol = 1000
+opt.synmaxcol = 300
 opt.shortmess = "fFIlqx"
 
 -- fold

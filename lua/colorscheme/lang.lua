@@ -27,7 +27,7 @@ M.treesitter_installed = {
     "sql",
     "markdown",
     "markdown_inline",
-    "json",
+    "jsonc",
     "ini",
     "gitignore",
     "git_rebase",

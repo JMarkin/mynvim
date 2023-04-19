@@ -2,7 +2,7 @@
 local sync_neovim = "SHADA"
 vim.api.nvim_create_augroup(sync_neovim, { clear = true })
 
-vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost" }, {
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
     group = sync_neovim,
     pattern = { "*" },
     callback = function()

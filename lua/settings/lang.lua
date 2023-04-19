@@ -51,7 +51,17 @@ capabilities.textDocument.completion = {
 local function setup_lsp(lsp_name, opts)
     opts.capabilities = capabilities
     opts.on_attach = on_attach
-    require("lspconfig")[lsp_name].setup(opts)
+    local lsp = require("lspconfig")
+    local conf = lsp[lsp_name]
+
+    conf.setup(opts)
+
+    local try_add = conf.manager.try_add
+    conf.manager.try_add = function(bufnr)
+        if not vim.b.large_buf then
+            return try_add(bufnr)
+        end
+    end
 end
 
 M.pylsp = function()
