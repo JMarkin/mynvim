@@ -255,6 +255,10 @@ require("lazy").setup({
                 "glepnir/lspsaga.nvim",
                 dependencies = { "nvim-tree/nvim-web-devicons" },
             },
+            {
+                "j-hui/fidget.nvim",
+                opts = {},
+            },
         },
         config = function()
             require("settings.lang").config()
