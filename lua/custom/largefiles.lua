@@ -65,8 +65,14 @@ local EVENTS = {
     "BufWipeout",
 }
 
-function optimize_buffer()
-    local file = vim.fn.expand("%:p")
+local function is_large_file(buf)
+    local file
+    if buf == nil then
+        file = vim.fn.expand("%:p")
+    else
+        file = vim.fn.expand(string.format("#%s:p", buf))
+    end
+
     if file == nil or #file == 0 then
         if disable_filetype then
             vim.opt.eventignore:remove(EVENTS)
@@ -78,17 +84,22 @@ function optimize_buffer()
     local big_line = false
 
     if size > max_file_size then
-        vim.notify("BIG FILE SIZE " .. size, vim.log.levels.WARN)
+        vim.notify("BIG FILE SIZE " .. size, vim.log.levels.INFO)
         disable = true
     end
     if not disable then
         local _m = maxline(file)
         if _m > vim.opt.synmaxcol._value then
-            vim.notify("BIG FILE COLUMNS " .. _m, vim.log.levels.WARN)
+            vim.notify("BIG FILE COLUMNS " .. _m, vim.log.levels.INFO)
             big_line = true
         end
     end
 
+    return disable, big_line
+end
+
+function optimize_buffer()
+    local disable, big_line = is_large_file(nil)
     if disable or big_line then
         vim.opt_local.wrap = false
         vim.opt_local.spell = false
@@ -127,3 +138,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
         optimize_buffer()
     end,
 })
+
+return {
+    is_large_file = is_large_file,
+}

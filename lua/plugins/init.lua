@@ -40,6 +40,9 @@ require("lazy").setup({
 
     {
         "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+        end,
         -- lazy = false,
         -- priority = 1000,
         -- opts = {
