@@ -1,5 +1,6 @@
 vim.g.cursorhold_updatetime = 100
 
+vim.g.python3_host_prog = vim.env.PYTHON3
 vim.g.snips_author = vim.env.AUTHOR or "Jury Markin"
 vim.g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
 vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
