@@ -1,4 +1,4 @@
-FROM jmarkin/neovim
+FROM ghcr.io/jmarkin/mynvim-neovim:master
 
 ENV PYTHON_VERSION 3.10.11
 
