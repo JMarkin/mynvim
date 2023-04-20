@@ -1,7 +1,38 @@
 local M = {}
 
-local syntax_langs = require("colorscheme.lang")
-local is_large_file = require("custom.largefiles").is_large_file
+local syntax_langs = {
+    "regex",
+    "rust",
+    "cpp",
+    "cuda",
+    "python",
+    "typescript",
+    "javascript",
+    "jsdoc",
+    "yaml",
+    "toml",
+    "proto",
+    "http",
+    "make",
+    "cmake",
+    "fish",
+    "go",
+    "html",
+    "htmldjango",
+    "css",
+    "bash",
+    "dockerfile",
+    "vue",
+    "scss",
+    "sql",
+    "markdown",
+    "markdown_inline",
+    "jsonc",
+    "ini",
+    "gitignore",
+    "git_rebase",
+    "graphql",
+}
 
 M.plugin = {
     "nvim-treesitter/nvim-treesitter",
