@@ -350,6 +350,7 @@ require("lazy").setup({
         opts = {},
         keys = { "f", "F", "t", "T" },
     },
+    require("plugins.spider").plugin,
     -- Дебагер
     {
         "rcarriga/nvim-dap-ui",
@@ -554,9 +555,5 @@ require("lazy").setup({
         end,
         event = { "VimEnter", "BufNewFile", "BufReadPost" },
     },
-    {
-        "chrisgrieser/nvim-spider",
-        lazy = true,
-        enabled = false,
-    },
+
 })
