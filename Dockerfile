@@ -1,15 +1,14 @@
-FROM alpine:3.17
+FROM FROM ghcr.io/jmarkin/mynvim-neovim:master
 
 ENV PYTHON_VERSION 3.10.11
 
 RUN apk update && \
-    apk add --no-cache bash sudo git curl fish nodejs bat exa lazygit btop openssh openssh-client-common ripgrep skim fd rustup go build-base cmake \
+    apk add --no-cache alpine-sdk build-base bash sudo git curl fish nodejs bat exa lazygit btop openssh openssh-client-common ripgrep skim fd rustup go build-base cmake \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses ncurses-dev openssl openssl-dev patch util-linux-dev zlib-dev bzip2 bzip2-dev sqlite-dev xz-dev \
     readline readline-dev rsync tmux musl-dev delta && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-    apk add --no-cache neovim --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
     apk add --no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
 
