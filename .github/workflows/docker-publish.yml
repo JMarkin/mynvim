@@ -21,6 +21,9 @@ jobs:
           file: ./Neovim.dockerfile
           tags: jmarkin/neovim:latest
           outputs: type=docker,dest=/tmp/neovim.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -48,6 +51,11 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
