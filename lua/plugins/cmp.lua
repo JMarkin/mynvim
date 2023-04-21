@@ -64,8 +64,18 @@ M.plugin = {
         "lukas-reineke/cmp-rg",
         "saadparwaiz1/cmp_luasnip",
         "danymat/neogen",
+        "hrsh7th/cmp-nvim-lua",
         "quangnguyen30192/cmp-nvim-tags",
-        "ray-x/cmp-treesitter",
+        {
+            "tzachar/cmp-fuzzy-path",
+            dependencies = {
+                "tzachar/fuzzy.nvim",
+                dependencies = {
+                    "romgrk/fzy-lua-native",
+                    build = "make",
+                },
+            },
+        },
         {
             "hrsh7th/cmp-nvim-lsp",
             cond = not vim.g.disable_lsp,
@@ -109,7 +119,10 @@ M.plugin = {
             end
         end, { "i", "s" })
 
-        local sources = {}
+        local sources = {
+            { name = "nvim_lua" },
+            { name = "fuzzy_path" },
+        }
 
         local preselect = cmp.PreselectMode.Item
 
@@ -121,7 +134,6 @@ M.plugin = {
         end
 
         table.insert(sources, { name = "tags", max_item_count = 7 })
-        table.insert(sources, { name = "treesitter", max_item_count = 7 })
         table.insert(sources, {
             name = "vim-dadbod-completion",
             max_item_count = 20,
