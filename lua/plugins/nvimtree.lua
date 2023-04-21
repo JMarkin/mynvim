@@ -14,7 +14,7 @@ local function float_preview(prev_win, node)
     local buf, win
     buf = vim.api.nvim_create_buf(false, true)
 
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "delete")
+    vim.api.nvim_buf_set_option(buf, "bufhidden", "unload")
 
     local width = vim.api.nvim_get_option("columns")
 
@@ -50,7 +50,7 @@ end
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter" }, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter", "User CloseNvimFloatPrev" }, {
         pattern = { "*" },
         callback = close_float,
     })
@@ -84,6 +84,7 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "<C-s>", float_close_decorator(api.node.open.horizontal), opts("Open: Horizontal Split"))
     vim.keymap.set("n", "<CR>", float_close_decorator(api.node.open.edit), opts("Open"))
     vim.keymap.set("n", "<Tab>", float_close_decorator(api.node.open.preview), opts("Open"))
+    vim.keymap.set("n", "<S-Tab>", api.node.navigate.parent_close, opts("Close Directory"))
     vim.keymap.set("n", "o", float_close_decorator(api.node.open.edit), opts("Open"))
     vim.keymap.set("n", "O", float_close_decorator(api.node.open.no_window_picker), opts("Open: No Window Picker"))
     vim.keymap.set("n", "q", float_close_decorator(api.tree.close), opts("Close"))
