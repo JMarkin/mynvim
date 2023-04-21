@@ -5,7 +5,17 @@ M.plugin = {
     enabled = true,
     keys = { "/", "?", ":" },
     build = ":UpdateRemotePlugins",
-    dependencies = { "sharkdp/fd", "nixprime/cpsm", "romgrk/fzy-lua-native" },
+    dependencies = {
+        "sharkdp/fd",
+        {
+            "nixprime/cpsm",
+            build = "PY3=ON bash install.sh",
+        },
+        {
+            "romgrk/fzy-lua-native",
+            build = "make",
+        },
+    },
     config = function()
         local wilder = require("wilder")
         wilder.setup({ modes = { ":", "/", "?" } })
