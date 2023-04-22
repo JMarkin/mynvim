@@ -14,7 +14,6 @@ M.plugin = {
             extensions = { "quickfix", "nvim-tree", "fzf", "symbols-outline", "nvim-dap-ui", "toggleterm" },
             options = {
                 disabled_filetypes = { "Trouble", "Vista", "dashboard" },
-                theme = require("ofirkai.statuslines.lualine").theme,
             },
             sections = {
                 lualine_a = { "mode" },

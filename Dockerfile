@@ -7,7 +7,7 @@ RUN apk update && \
     libtool pkgconf coreutils unzip gettext-tiny-dev starship shadow perl tree-sitter tree-sitter-cli \
     dpkg-dev dpkg gcc gdbm-dev libc-dev libffi libffi-dev libnsl-dev libtirpc-dev  \
     make ncurses ncurses-dev openssl openssl-dev patch util-linux-dev zlib-dev bzip2 bzip2-dev sqlite-dev xz-dev \
-    readline readline-dev rsync tmux musl-dev delta && \
+    readline readline-dev rsync tmux musl-dev delta boost-dev && \
     apk add --no-cache vivid --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
     apk add --no-cache rust cargo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 

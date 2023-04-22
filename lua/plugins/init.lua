@@ -14,16 +14,16 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     {
         "stevearc/dressing.nvim",
-        -- opts = {
-        --     input = {
-        --         insert_only = false,
-        --         override = function(conf)
-        --             conf.col = -1
-        --             conf.row = 0
-        --             return conf
-        --         end,
-        --     },
-        -- },
+        opts = {
+            input = {
+                insert_only = false,
+                override = function(conf)
+                    conf.col = -1
+                    conf.row = 0
+                    return conf
+                end,
+            },
+        },
     },
 
     {
@@ -43,15 +43,15 @@ require("lazy").setup({
         config = function()
             vim.notify = require("notify")
         end,
-        -- lazy = false,
-        -- priority = 1000,
-        -- opts = {
-        --     max_width = 80,
-        --     timeout = 1000,
-        --     stages = "static",
-        --     level = vim.log.levels.INFO,
-        --     background_colour = "#000000",
-        -- },
+        lazy = false,
+        priority = 1000,
+        opts = {
+            max_width = 80,
+            timeout = 1000,
+            stages = "static",
+            level = vim.log.levels.INFO,
+            background_colour = "#000000",
+        },
     },
     -- командная строчка
     require("plugins.noice").plugin,
@@ -97,7 +97,7 @@ require("lazy").setup({
     -- Цвет тема
     {
         "Iron-E/nvim-highlite",
-        enabled = false,
+        enabled = true,
         lazy = false,
         priority = 1000,
         config = function()
@@ -115,7 +115,7 @@ require("lazy").setup({
     },
     {
         "ofirgall/ofirkai.nvim",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000, -- Ensure it loads first
         dependencies = {
