@@ -132,9 +132,6 @@ local function optimize_buffer(args)
         vim.opt_local.incsearch = false
         vim.opt_local.foldmethod = "manual"
 
-        for _, mod in pairs(require("nvim-treesitter.configs").available_modules()) do
-            vim.api.nvim_command("TSBufDisable " .. mod)
-        end
         vim.api.nvim_command("IndentBlanklineDisable")
         pcall(vim.api.nvim_command, "UfoDisable")
     else

@@ -97,7 +97,7 @@ require("lazy").setup({
     -- Цвет тема
     {
         "Iron-E/nvim-highlite",
-        enabled = true,
+        enabled = false,
         lazy = false,
         priority = 1000,
         config = function()
@@ -115,7 +115,7 @@ require("lazy").setup({
     },
     {
         "ofirgall/ofirkai.nvim",
-        enabled = false,
+        enabled = true,
         lazy = false,
         priority = 1000, -- Ensure it loads first
         dependencies = {
@@ -555,5 +555,4 @@ require("lazy").setup({
         end,
         event = { "VimEnter", "BufNewFile", "BufReadPost" },
     },
-
 })
