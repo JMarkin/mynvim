@@ -32,7 +32,12 @@ local syntax_langs = {
     "gitignore",
     "git_rebase",
     "graphql",
+    "query",
 }
+
+local is_disable = function(_lang, _buf)
+    return vim.b.large_buf
+end
 
 M.plugin = {
     "nvim-treesitter/nvim-treesitter",
@@ -48,6 +53,7 @@ M.plugin = {
             url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
         },
         "nvim-treesitter/nvim-treesitter-refactor",
+        "nvim-treesitter/playground",
         {
             "andymass/vim-matchup",
             enabled = true,
@@ -67,15 +73,32 @@ M.plugin = {
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup({
             ensure_installed = syntax_langs.treesitter_installed,
+            playground = {
+                enable = true,
+                updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                persist_queries = false, -- Whether the query persists across vim sessions
+                keybindings = {
+                    toggle_query_editor = "o",
+                    toggle_hl_groups = "i",
+                    toggle_injected_languages = "t",
+                    toggle_anonymous_nodes = "a",
+                    toggle_language_display = "I",
+                    focus_language = "f",
+                    unfocus_language = "F",
+                    update = "R",
+                    goto_node = "<cr>",
+                    show_help = "?",
+                },
+                disable = is_disable,
+            },
             autotag = {
                 enable = true,
+                disable = is_disable,
             },
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
-                disable = function(_, buf)
-                    return not vim.b.large_buf
-                end,
+                disable = is_disable,
             },
             rainbow = {
                 enable = true,
@@ -85,6 +108,7 @@ M.plugin = {
                     "rainbow-parens",
                     html = "rainbow-tags",
                 },
+                disable = is_disable,
             },
             incremental_selection = {
                 enable = true,
@@ -94,14 +118,19 @@ M.plugin = {
                     scope_incremental = "<tab>",
                     node_decremental = "<s-tab>",
                 },
+                disable = is_disable,
             },
-            yati = { enable = true },
+            yati = {
+                enable = true,
+                disable = is_disable,
+            },
             indent = {
                 enable = false,
             },
             matchup = {
                 enable = true,
                 include_match_words = true,
+                disable = is_disable,
             },
             refactor = {
                 highlight_definitions = {
@@ -126,6 +155,7 @@ M.plugin = {
                         goto_previous_usage = "<a-#>",
                     },
                 },
+                disable = is_disable,
             },
         })
 
@@ -147,6 +177,7 @@ M.plugin = {
                     lua = {},
                 },
             },
+            disable = is_disable,
         })
     end,
 }
