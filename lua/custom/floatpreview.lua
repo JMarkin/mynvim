@@ -1,20 +1,23 @@
-local float_win = nil
-local float_buf = nil
-
-local M = {}
+local M = {
+    buf = nil,
+    win = nil,
+    path = nil,
+}
 
 local function close_float()
-    if float_win ~= nil then
-        pcall(vim.api.nvim_win_close, float_win, { force = true })
-        pcall(vim.api.nvim_buf_delete, float_buf, { force = true })
-        float_win = nil
-        float_buf = nil
+    if M.path ~= nil then
+        pcall(vim.api.nvim_win_close, M.win, { force = true })
+        pcall(vim.api.nvim_buf_delete, M.buf, { force = true })
+        M.win = nil
+        M.buf = nil
+        M.path = nil
     end
 end
 
 M.close_float = close_float
 
 local function float_preview(prev_win, path)
+    M.path = path
     local buf, win
     buf = vim.api.nvim_create_buf(false, true)
 
@@ -43,7 +46,7 @@ local function float_preview(prev_win, path)
         close_float()
     end
 
-    float_win, float_buf = win, buf
+    M.win, M.buf = win, buf
 end
 M.float_preview = float_preview
 
