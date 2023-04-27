@@ -1,5 +1,6 @@
 local M = {}
 
+local is_not_mini = require("custom.funcs").is_not_mini
 M.plugin = {
     "nvim-neotest/neotest",
     cond = is_not_mini,

@@ -1,71 +1,26 @@
-local float_win = nil
-local float_buf = nil
+local float_preview = require("custom.floatpreview")
 
-local function close_float()
-    if float_win ~= nil then
-        pcall(vim.api.nvim_win_close, float_win, { force = true })
-        pcall(vim.api.nvim_buf_delete, float_buf, { force = true })
-        float_win = nil
-        float_buf = nil
-    end
-end
-
-local function float_preview(prev_win, node)
-    local buf, win
-    buf = vim.api.nvim_create_buf(false, true)
-
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "unload")
-
-    local width = vim.api.nvim_get_option("columns")
-
-    local opts = {
-        style = "minimal",
-        relative = "win",
-        width = math.ceil(width / 2),
-        height = 10,
-        bufpos = { vim.fn.line(".") - 1, vim.fn.col(".") + 30 },
-        border = "rounded",
-        focusable = false,
-    }
-
-    win = vim.api.nvim_open_win(buf, true, opts)
-
-    vim.api.nvim_command("terminal cat " .. node.absolute_path)
-    local ok, _ = pcall(vim.api.nvim_set_current_win, prev_win)
-
-    if not ok then
-        close_float()
-    end
-
-    return win, buf
-end
-
-local function float_close_decorator(func)
-    return function()
-        close_float()
-        func()
-    end
-end
+local float_close_decorator = float_preview.float_close_decorator
 
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
     vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter", "User CloseNvimFloatPrev" }, {
         pattern = { "*" },
-        callback = close_float,
+        callback = float_preview.close_float,
     })
     vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", "BufWinEnter" }, {
         buffer = bufnr,
         callback = function()
             local win = vim.api.nvim_get_current_win()
             local node = api.tree.get_node_under_cursor()
-            close_float()
+            float_preview.close_float()
 
             if node.type ~= "file" then
                 return
             end
 
-            float_win, float_buf = float_preview(win, node)
+            float_preview.float_preview(win, node.absolute_path)
         end,
     })
 
