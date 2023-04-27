@@ -87,6 +87,24 @@ M.term = function()
     end
 
     vim.keymap.set({ "n" }, "<A-b>", btop_toggle, { desc = "Btop", noremap = true, silent = true })
+
+    local ipython = Terminal:new({
+        cmd = "ipython",
+        hidden = true,
+        direction = "float",
+        on_open = function(term)
+            vim.cmd("startinsert!")
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<A-i>", "<cmd>close<CR>", { noremap = true, silent = true })
+            vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<A-i>", "<cmd>close<CR>", { noremap = true, silent = true })
+        end,
+    })
+
+    local function ipython_toggle()
+        ipython:toggle()
+    end
+
+    vim.keymap.set({ "n" }, "<A-i>", ipython_toggle, { desc = "Ipython", noremap = true, silent = true })
 end
 
 M.plugin = {
@@ -96,7 +114,7 @@ M.plugin = {
             "akinsho/toggleterm.nvim",
             config = M.term,
             cmd = { "Git" },
-            keys = { "<A-g>", "<A-b>", "<A-t>" },
+            keys = { "<A-g>", "<A-b>", "<A-t>", "<A-i>" },
         },
     },
     init = function()

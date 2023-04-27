@@ -14,6 +14,9 @@ local function on_attach(bufnr)
         callback = function()
             local win = vim.api.nvim_get_current_win()
             local node = api.tree.get_node_under_cursor()
+            if node.absolute_path == float_preview.path then
+                return
+            end
             float_preview.close_float()
 
             if node.type ~= "file" then
