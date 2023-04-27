@@ -67,6 +67,9 @@ M.plugin = {
         "hrsh7th/cmp-nvim-lua",
         "quangnguyen30192/cmp-nvim-tags",
         {
+            "JMarkin/cmp-diag-codes",
+        },
+        {
             "tzachar/cmp-fuzzy-path",
             dependencies = {
                 "tzachar/fuzzy.nvim",
@@ -121,22 +124,22 @@ M.plugin = {
 
         local sources = {
             { name = "nvim_lua" },
-            { name = "fuzzy_path" },
+            { name = "fuzzy_path", keyword_length = 3 },
+            { name = "diag-codes" },
         }
 
         local preselect = cmp.PreselectMode.Item
 
         if not vim.g.disable_lsp then
-            table.insert(sources, { name = "nvim_lsp", max_item_count = 20 })
+            table.insert(sources, { name = "nvim_lsp" })
         else
             vim.opt.omnifunc = "syntaxcomplete#Complete"
-            table.insert(sources, { name = "omni", max_item_count = 7 })
+            table.insert(sources, { name = "omni" })
         end
 
         table.insert(sources, { name = "tags", max_item_count = 7 })
         table.insert(sources, {
             name = "vim-dadbod-completion",
-            max_item_count = 20,
             filetype = { "sql", "mssql", "plsql" },
         })
         table.insert(sources, {

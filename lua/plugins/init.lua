@@ -215,6 +215,20 @@ require("lazy").setup({
 
     -- Доп утился для языков
     {
+        "geg2102/nvim-python-repl",
+        config = function()
+            require("nvim-python-repl").setup({
+                execute_on_send = false,
+                vsplit = false,
+                spawn_command = {
+                    python = "ipython",
+                    scala = "sbt console",
+                    lua = "ilua",
+                },
+            })
+        end,
+    },
+    {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
         lazy = true,
@@ -269,7 +283,7 @@ require("lazy").setup({
 
     {
         "folke/trouble.nvim",
-        lazy = false,
+        lazy = true,
         cond = is_not_mini,
         opts = {
             auto_fold = false,
