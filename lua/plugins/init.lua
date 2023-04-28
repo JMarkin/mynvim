@@ -535,6 +535,7 @@ require("lazy").setup({
     },
     {
         "cpea2506/relative-toggle.nvim",
+        enabled = false,
         config = function()
             require("relative-toggle").setup({
                 pattern = "*",
