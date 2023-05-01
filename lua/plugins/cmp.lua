@@ -137,7 +137,13 @@ M.plugin = {
             table.insert(sources, { name = "omni" })
         end
 
-        table.insert(sources, { name = "tags", max_item_count = 7 })
+        table.insert(
+            sources,
+            { name = "tags", max_item_count = 7, option = {
+                complete_defer = 100,
+            }
+ }
+        )
         table.insert(sources, {
             name = "vim-dadbod-completion",
             filetype = { "sql", "mssql", "plsql" },

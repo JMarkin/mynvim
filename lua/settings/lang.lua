@@ -16,6 +16,7 @@ local diag_opts = {
 }
 
 local on_attach = function(client, bufnr)
+    vim.bo.tagfunc = nil
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
         callback = function()
