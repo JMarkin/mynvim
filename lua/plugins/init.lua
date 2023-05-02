@@ -273,6 +273,21 @@ require("lazy").setup({
                 "j-hui/fidget.nvim",
                 opts = {},
             },
+            {
+                "VidocqH/lsp-lens.nvim",
+                opts = {
+                    sections = {
+                        definition = true,
+                        references = true,
+                        implementation = true,
+                    },
+                    ignore_filetype = {
+                        "prisma",
+                        "markdown",
+                        "json",
+                    },
+                },
+            },
         },
         config = function()
             require("settings.lang").config()
