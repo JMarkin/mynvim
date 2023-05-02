@@ -5,11 +5,6 @@ require("lazy").setup({
     -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
 
-    {
-        "romainl/vim-cool",
-        enabled = false,
-    },
-
     --- Украшения
     "nvim-tree/nvim-web-devicons",
     {
@@ -149,6 +144,25 @@ require("lazy").setup({
                 stages = "static",
                 level = vim.log.levels.INFO,
             })
+            local links = {
+                ["@lsp.type.namespace"] = "@namespace",
+                ["@lsp.type.type"] = "@type",
+                ["@lsp.type.class"] = "@type",
+                ["@lsp.type.enum"] = "@type",
+                ["@lsp.type.interface"] = "@type",
+                ["@lsp.type.struct"] = "@structure",
+                ["@lsp.type.parameter"] = "@parameter",
+                ["@lsp.type.variable"] = "@variable",
+                ["@lsp.type.property"] = "@property",
+                ["@lsp.type.enumMember"] = "@constant",
+                ["@lsp.type.function"] = "@function",
+                ["@lsp.type.method"] = "@method",
+                ["@lsp.type.macro"] = "@macro",
+                ["@lsp.type.decorator"] = "@function",
+            }
+            for newgroup, oldgroup in pairs(links) do
+                vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
+            end
         end,
     },
 
@@ -481,7 +495,9 @@ require("lazy").setup({
     },
     {
         "vim-scripts/dbext.vim",
-        enabled = false,
+        cond = function()
+            return vim.g.disable_lsp
+        end,
         ft = { "sql", "mssql", "plsql" },
     },
 
@@ -547,42 +563,5 @@ require("lazy").setup({
         config = function()
             require("npairs-int-upair").setup({ map = "u" })
         end,
-    },
-    {
-        "cpea2506/relative-toggle.nvim",
-        enabled = false,
-        config = function()
-            require("relative-toggle").setup({
-                pattern = "*",
-                events = {
-                    on = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter", "CmdlineLeave" },
-                    off = { "BufLeave", "FocusLost", "InsertEnter", "WinLeave", "CmdlineEnter" },
-                },
-            })
-        end,
-        event = "BufEnter",
-    },
-    {
-        "ahmedkhalf/project.nvim",
-        enabled = false,
-        event = "VimEnter",
-        config = function()
-            require("plugins.project").setup()
-        end,
-    },
-    {
-        "wikitopian/hardmode",
-        enabled = false,
-        init = function()
-            vim.g.HardMode_level = "wannabe"
-            vim.g.HardMode_hardmodeMsg = "Don''t use this!"
-
-            vim.api.nvim_create_autocmd({ "VimEnter", "BufNewFile", "BufReadPost" }, {
-                pattern = "*",
-                command = "call HardMode()",
-                desc = "HARD MODE",
-            })
-        end,
-        event = { "VimEnter", "BufNewFile", "BufReadPost" },
     },
 })
