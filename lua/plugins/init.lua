@@ -310,17 +310,7 @@ require("lazy").setup({
         ft = { "dockerfile" },
     },
 
-    {
-        "folke/trouble.nvim",
-        lazy = true,
-        cond = is_not_mini,
-        opts = {
-            auto_fold = false,
-            auto_close = true,
-            auto_preview = false,
-        },
-        cmd = "TroubleToggle",
-    },
+    require("plugins.diaglist").plugin,
 
     require("plugins.nullls").plugin,
 

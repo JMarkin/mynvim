@@ -68,6 +68,8 @@ M.plugin = {
         "quangnguyen30192/cmp-nvim-tags",
         {
             "JMarkin/cmp-diag-codes",
+            -- dev = true,
+            -- dir = "/projects/cmp-diag-codes",
         },
         {
             "tzachar/cmp-fuzzy-path",
@@ -125,7 +127,7 @@ M.plugin = {
         local sources = {
             { name = "nvim_lua" },
             { name = "fuzzy_path", keyword_length = 3 },
-            { name = "diag-codes" },
+            { name = "diag-codes", in_comment = true },
         }
 
         local preselect = cmp.PreselectMode.Item
@@ -141,8 +143,7 @@ M.plugin = {
             sources,
             { name = "tags", max_item_count = 7, option = {
                 complete_defer = 100,
-            }
- }
+            } }
         )
         table.insert(sources, {
             name = "vim-dadbod-completion",

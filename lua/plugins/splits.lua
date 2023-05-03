@@ -57,6 +57,11 @@ M.plugin = {
             { silent = true, desc = "Resize right" }
         )
 
+        vim.keymap.set("n", "<space><space>h", require("smart-splits").swap_buf_left)
+        vim.keymap.set("n", "<space><space>j", require("smart-splits").swap_buf_down)
+        vim.keymap.set("n", "<space><space>k", require("smart-splits").swap_buf_up)
+        vim.keymap.set("n", "<space><space>l", require("smart-splits").swap_buf_right)
+
         vim.keymap.set({ "n" }, "<space>r", require("smart-splits").start_resize_mode, { desc = "Resize mode" })
     end,
 }

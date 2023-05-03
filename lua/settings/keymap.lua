@@ -1,8 +1,5 @@
 vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
 
-vim.keymap.set({ "n" }, "<space>E", "<cmd>FzfLua diagnostics_workspace<cr>", { desc = "All Diagnostics" })
-vim.keymap.set({ "n" }, "<space>e", "<cmd>FzfLua diagnostics_document<cr>", { desc = "Buffer Diagnostics" })
-
 -- Visual
 vim.keymap.set({ "n" }, "<C-A>", "ggVG", { desc = "Visual all" })
 vim.keymap.set({ "n" }, "o", "o<Esc>", { desc = "Add line under" })
