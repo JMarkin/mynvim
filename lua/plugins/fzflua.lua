@@ -59,7 +59,7 @@ vim.keymap.set("n", "<leader>sf", function()
 end, { desc = "Search: find files" })
 
 vim.keymap.set("n", "<leader>sg", function()
-    require("fzf-lua").live_grep_native({ multiprocess = true, continue_last_search = true })
+    require("fzf-lua").grep_project({ multiprocess = true, continue_last_search = true })
 end, { desc = "Search: project" })
 
 vim.keymap.set("v", "<leader>sg", function()
