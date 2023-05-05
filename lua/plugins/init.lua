@@ -179,7 +179,19 @@ require("lazy").setup({
     { "pearofducks/ansible-vim", ft = "yaml.ansible" },
     { "mityu/vim-applescript", ft = "applescript" },
     { "isobit/vim-caddyfile", ft = "caddyfile" },
-    { "chrisbra/csv.vim", ft = "csv" },
+    {
+        "chrisbra/csv.vim",
+        ft = "csv",
+        init = function()
+            vim.g.csv_no_progress = 1
+            vim.g.csv_strict_columns = 1
+            vim.g.csv_start = 1
+            vim.g.csv_end = 100
+            vim.g.csv_nomap_up = 1
+            vim.g.csv_nomap_down = 1
+            vim.g.csv_default_delim = ";"
+        end,
+    },
     { "tikhomirov/vim-glsl", ft = "glsl" },
     { "jparise/vim-graphql", ft = "graphql" },
     { "CH-DanReif/haproxy.vim", ft = "haproxy" },
