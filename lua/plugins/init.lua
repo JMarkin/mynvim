@@ -172,7 +172,6 @@ require("lazy").setup({
     -- Файловый менеджер
 
     require("plugins.nvimtree").plugin,
-    require("plugins.ranger").plugin,
 
     -- Подцветка синтаксиа
 
@@ -396,25 +395,7 @@ require("lazy").setup({
         keys = { "f", "F", "t", "T" },
     },
     require("plugins.spider").plugin,
-    -- Дебагер
-    {
-        "rcarriga/nvim-dap-ui",
-        cond = is_not_mini,
-        dependencies = {
-            {
-                "mfussenegger/nvim-dap",
-            },
-            {
-                "theHamsta/nvim-dap-virtual-text",
-                opts = {},
-                dependencies = "nvim-treesitter",
-            },
-            "ofirgall/goto-breakpoints.nvim",
-        },
-        opts = {},
-        keys = "<leader>d",
-    },
-
+    require("plugins.debug").plugin,
     --- поиски по файлам проверкам и т.п. fzf вобщем
     {
         "ibhagwan/fzf-lua",
@@ -537,7 +518,6 @@ require("lazy").setup({
     },
     {
         "rainbowhxch/beacon.nvim",
-        event = "BufReadPost",
         cond = function()
             return not vim.g.neovide
         end,
@@ -558,12 +538,5 @@ require("lazy").setup({
         event = "BufReadPost",
     },
     require("plugins.term").plugin,
-    {
-        "altermo/npairs-integrate-upair",
-        dependencies = { "windwp/nvim-autopairs", "altermo/ultimate-autopair.nvim" },
-        event = { "InsertEnter", "CmdlineEnter" },
-        config = function()
-            require("npairs-int-upair").setup({ map = "u" })
-        end,
-    },
+    require("plugins.pairs").plugin,
 })

@@ -53,6 +53,7 @@ local menu_map = {
 
 local enabled = function()
     local enabled = vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+    enabled = enabled or require("cmp_dap").is_dap_buffer()
     return enabled
 end
 
@@ -71,16 +72,7 @@ M.plugin = {
             -- dev = true,
             -- dir = "/projects/cmp-diag-codes",
         },
-        {
-            "tzachar/cmp-fuzzy-path",
-            dependencies = {
-                "tzachar/fuzzy.nvim",
-                dependencies = {
-                    "romgrk/fzy-lua-native",
-                    build = "make",
-                },
-            },
-        },
+        { "hrsh7th/cmp-path" },
         {
             "hrsh7th/cmp-nvim-lsp",
             cond = not vim.g.disable_lsp,
@@ -89,6 +81,7 @@ M.plugin = {
             "hrsh7th/cmp-omni",
             cond = vim.g.disable_lsp,
         },
+        "rcarriga/cmp-dap",
     },
     config = function()
         local luasnip = require("luasnip")
@@ -126,7 +119,7 @@ M.plugin = {
 
         local sources = {
             { name = "nvim_lua" },
-            { name = "fuzzy_path", keyword_length = 3 },
+            { name = "path", keyword_length = 3 },
             { name = "diag-codes", in_comment = true },
         }
 
@@ -139,12 +132,15 @@ M.plugin = {
             table.insert(sources, { name = "omni" })
         end
 
-        table.insert(
-            sources,
-            { name = "tags", max_item_count = 7, option = {
+        table.insert(sources, {
+            name = "tags",
+            max_item_count = 7,
+            option = {
                 complete_defer = 100,
-            } }
-        )
+                exact_match = true,
+                current_buffer_only = true,
+            },
+        })
         table.insert(sources, {
             name = "vim-dadbod-completion",
             filetype = { "sql", "mssql", "plsql" },
@@ -217,6 +213,12 @@ M.plugin = {
                     winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
                     col_offset = -3,
                 },
+            },
+        })
+
+        require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+            sources = {
+                { name = "dap" },
             },
         })
     end,

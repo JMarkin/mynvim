@@ -33,6 +33,7 @@ local syntax_langs = {
     "git_rebase",
     "graphql",
     "query",
+    "dap_repl",
 }
 
 local is_disable = function(_lang, _buf)
