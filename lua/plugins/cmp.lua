@@ -59,6 +59,7 @@ end
 
 M.plugin = {
     "hrsh7th/nvim-cmp",
+    commit = "1cad30fcffa282c0a9199c524c821eadc24bf939",
     dependencies = {
         "L3MON4D3/LuaSnip",
         "lukas-reineke/cmp-under-comparator",
