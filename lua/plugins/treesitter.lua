@@ -33,7 +33,6 @@ local syntax_langs = {
     "git_rebase",
     "graphql",
     "query",
-    "dap_repl",
 }
 
 local is_disable = function(_lang, _buf)
@@ -45,7 +44,6 @@ M.plugin = {
     build = ":TSUpdate",
     lazy = true,
     dependencies = {
-        "windwp/nvim-ts-autotag",
         "m-demare/hlargs.nvim",
         "yioneko/nvim-yati",
         {
@@ -73,7 +71,7 @@ M.plugin = {
     config = function()
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup({
-            ensure_installed = syntax_langs.treesitter_installed,
+            ensure_installed = syntax_langs,
             playground = {
                 enable = true,
                 updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
@@ -93,7 +91,7 @@ M.plugin = {
                 disable = is_disable,
             },
             autotag = {
-                enable = true,
+                enable = false,
                 disable = is_disable,
             },
             highlight = {

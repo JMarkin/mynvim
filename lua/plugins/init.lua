@@ -204,19 +204,7 @@ require("lazy").setup({
     { "MTDL9/vim-log-highlighting", ft = "log" },
 
     require("plugins.treesitter").plugin,
-    {
-        "kylechui/nvim-surround",
-        enabled = true,
-        event = "VeryLazy",
-        dependencies = {
-            "nvim-treesitter",
-            {
-                "nvim-treesitter/nvim-treesitter-textobjects",
-                dependencies = { "nvim-treesitter" },
-            },
-        },
-        opts = {},
-    },
+    require("plugins.surround").plugin,
 
     {
         "Wansmer/treesj",
@@ -239,20 +227,6 @@ require("lazy").setup({
     },
 
     -- Доп утился для языков
-    {
-        "geg2102/nvim-python-repl",
-        config = function()
-            require("nvim-python-repl").setup({
-                execute_on_send = false,
-                vsplit = false,
-                spawn_command = {
-                    python = "ipython",
-                    scala = "sbt console",
-                    lua = "ilua",
-                },
-            })
-        end,
-    },
     {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
