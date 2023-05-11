@@ -45,10 +45,11 @@ local menu_map = {
     rg = "RG",
     treesitter = "TS",
     spell = "SP",
-    omni = "Omni",
-    noice_popupmenu = "Native",
+    omni = "OMNI",
+    noice_popupmenu = "N",
     ["vim-dadbod-completion"] = "DB",
     tags = "TG",
+    ["diag-codes"] = "DC",
 }
 
 local enabled = function()
@@ -59,7 +60,6 @@ end
 
 M.plugin = {
     "hrsh7th/nvim-cmp",
-    commit = "1cad30fcffa282c0a9199c524c821eadc24bf939",
     dependencies = {
         "L3MON4D3/LuaSnip",
         "lukas-reineke/cmp-under-comparator",
@@ -176,7 +176,7 @@ M.plugin = {
                 entries = "custom",
             },
             experimental = {
-                ghost_text = true,
+                ghost_text = { hl_group = "@text.note" },
             },
             enabled = enabled,
             snippet = {
