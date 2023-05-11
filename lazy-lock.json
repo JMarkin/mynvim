@@ -99,6 +99,7 @@
   "todo-comments.nvim": { "branch": "main", "commit": "8febc60a76feefd8203077ef78b6a262ea1a41f9" },
   "toggleterm.nvim": { "branch": "main", "commit": "68fdf851c2b7901a7065ff129b77d3483419ddce" },
   "treesj": { "branch": "main", "commit": "b1e2976c2d7ba922371cc7f3ab08b75136c27231" },
+  "ts-node-action": { "branch": "master", "commit": "0440eaa24e2334aa593b38ab4e42c8efa8dd187b" },
   "ultimate-autopair.nvim": { "branch": "main", "commit": "25d63719434b31b64f971dbf1fb12cf1c19d3faa" },
   "vim-applescript": { "branch": "master", "commit": "a39af8fc7e4caf581366e2917d558f6232e4db36" },
   "vim-bookmarks": { "branch": "master", "commit": "9cc5fa7ecc23b052bd524d07c85356c64b92aeef" },
