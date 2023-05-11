@@ -5,7 +5,14 @@ local is_not_mini = require("custom.funcs").is_not_mini
 M.plugin = {
     "jose-elias-alvarez/null-ls.nvim",
     cond = is_not_mini,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        {
+            "CKolkey/ts-node-action",
+            dependencies = { "nvim-treesitter" },
+            opts = {},
+        },
+    },
     lazy = true,
     event = "BufReadPre",
     config = function()
@@ -99,6 +106,8 @@ M.plugin = {
             factory = h.formatter_factory,
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
+
+        require("plugins.nullls").enable(nil, nil, nil)
     end,
 }
 
@@ -149,8 +158,14 @@ local EXEC_CONVERT = {
     ["nginx_beautifier"] = "nginxbeautifier",
 }
 
+local enabled = false
+
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 M.enable = function(diagnostics, formatters, completions)
+    if enabled then
+        return
+    end
+    enabled = true
     local u = require("null-ls.utils")
 
     local Job = require("plenary.job")
@@ -228,6 +243,7 @@ M.enable = function(diagnostics, formatters, completions)
     end
 
     table.insert(sources, nullls.builtins.code_actions.gitsigns)
+    table.insert(sources, nullls.builtins.code_actions.ts_node_action)
 
     nullls.setup({
         log_level = "error",
