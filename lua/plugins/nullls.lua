@@ -128,7 +128,6 @@ local DEFAULT_FORMATTERS = {
     "isort",
     "nginx_beautifier",
     "taplo",
-    "docformatter",
 }
 
 local DEFAULT_COMPLETIONS = {}
