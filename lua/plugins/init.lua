@@ -274,6 +274,7 @@ require("lazy").setup({
             },
             {
                 "VidocqH/lsp-lens.nvim",
+                enabled = false,
                 opts = {
                     sections = {
                         definition = true,

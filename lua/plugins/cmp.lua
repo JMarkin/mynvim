@@ -124,7 +124,7 @@ M.plugin = {
             { name = "diag-codes", in_comment = true },
         }
 
-        local preselect = cmp.PreselectMode.Item
+        local preselect = cmp.PreselectMode.None
 
         if not vim.g.disable_lsp then
             table.insert(sources, { name = "nvim_lsp" })

@@ -66,12 +66,13 @@ local opts = {
         max_width = 0.7,
         custom_fix = nil,
         custom_msg = nil,
-        text_hl_follow = false,
+        text_hl_follow = true,
         border_follow = true,
         keys = {
             exec_action = "o",
             quit = "q",
             go_action = "g",
+            expand_or_jump = "<CR>",
         },
     },
 }
@@ -95,6 +96,19 @@ vim.keymap.set("n", "gdv", "<cmd>:vsplit | Lspsaga goto_definition<CR>", { desc 
 vim.keymap.set("n", "gds", "<cmd>:split | Lspsaga goto_definition<CR>", { desc = "GoTo: definition horizontail" })
 
 vim.keymap.set("n", "<leader>lk", "<cmd>Lspsaga hover_doc<CR>", { silent = true, desc = "Lang: hover doc" })
+vim.keymap.set(
+    "n",
+    "<leader>le",
+    "<cmd>Lspsaga show_buf_diagnostics<CR>",
+    { silent = true, desc = "Lang: show buf disagnostic" }
+)
+
+vim.keymap.set(
+    "n",
+    "<leader>lE",
+    "<cmd>Lspsaga show_workspace_diagnostics<CR>",
+    { silent = true, desc = "Lang: show workspace disagnostic" }
+)
 
 vim.keymap.set("n", "<leader>la", "<cmd>Lspsaga code_action<cr>", { silent = true, desc = "Lang: code action" })
 
