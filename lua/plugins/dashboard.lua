@@ -18,34 +18,38 @@ M.plugin = {
                 return
             end
         end
+
+        local shortcuts = {
+            { desc = " Update", group = "@property", action = "Lazy update", key = "u" },
+            {
+                icon = " ",
+                icon_hl = "@variable",
+                desc = "Files",
+                group = "Label",
+                action = "lua require('fzf-lua').files({ multiprocess=true,})",
+                key = "f",
+            },
+            {
+                icon = " ",
+                desc = "Recent Files",
+                group = "DiagnosticHint",
+                action = "lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })",
+                key = "r",
+            },
+            {
+                desc = "  Local Configuration",
+                group = "Number",
+                action = ":e .vimrc.lua",
+                key = "c",
+            },
+        }
         require("dashboard").setup({
-            theme = "hyper",
+            theme = "doom",
             config = {
                 project = { enable = false, limit = 8, icon = " ", label = "", action = ":FzfLua files cwd=" },
-                shortcut = {
-                    { desc = " Update", group = "@property", action = "Lazy update", key = "u" },
-                    {
-                        icon = " ",
-                        icon_hl = "@variable",
-                        desc = "Files",
-                        group = "Label",
-                        action = "lua require('fzf-lua').files({ multiprocess=true,})",
-                        key = "f",
-                    },
-                    {
-                        icon = " ",
-                        desc = "Recent Files",
-                        group = "DiagnosticHint",
-                        action = "lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })",
-                        key = "r",
-                    },
-                    {
-                        desc = "  Local Configuration",
-                        group = "Number",
-                        action = ":e .vimrc.lua",
-                        key = "c",
-                    },
-                },
+                shortcut = shortcuts,
+                center = shortcuts,
+                footer = {},
             },
         })
     end,
