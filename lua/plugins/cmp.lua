@@ -71,7 +71,7 @@ M.plugin = {
         {
             "JMarkin/cmp-diag-codes",
             -- dev = true,
-            -- dir = "/projects/cmp-diag-codes",
+            -- dir = "~/projects/cmp-diag-codes",
         },
         { "hrsh7th/cmp-path" },
         {
