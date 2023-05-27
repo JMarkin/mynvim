@@ -23,6 +23,7 @@ require("lazy").setup({
 
     {
         "ibhagwan/smartyank.nvim",
+        event = "VimEnter",
         opts = {
             highlight = {
                 enabled = true, -- highlight yanked text
@@ -30,7 +31,6 @@ require("lazy").setup({
                 timeout = 100, -- timeout for clearing the highlight
             },
         },
-        event = "BufReadPost",
     },
 
     {
@@ -223,7 +223,7 @@ require("lazy").setup({
             line_opacity = 0.25,
             set_cursor = false,
         },
-        event = "BufReadPost",
+        event = "VimEnter",
     },
 
     -- Доп утился для языков

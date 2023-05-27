@@ -79,6 +79,10 @@ M.plugin = {
             cond = not vim.g.disable_lsp,
         },
         {
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            cond = not vim.g.disable_lsp,
+        },
+        {
             "hrsh7th/cmp-omni",
             cond = vim.g.disable_lsp,
         },
@@ -128,6 +132,7 @@ M.plugin = {
 
         if not vim.g.disable_lsp then
             table.insert(sources, { name = "nvim_lsp" })
+            table.insert(sources, { name = "nvim_lsp_signature_help", priority = 200 })
         else
             vim.opt.omnifunc = "syntaxcomplete#Complete"
             table.insert(sources, { name = "omni" })
