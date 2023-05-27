@@ -3,7 +3,7 @@ local M = {}
 M.plugin = {
     "nvim-lualine/lualine.nvim",
     enabled = true,
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufAdd" },
     -- dependencies = {
     --     "folke/noice.nvim"
     -- },

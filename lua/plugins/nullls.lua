@@ -107,7 +107,9 @@ M.plugin = {
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
 
-        require("plugins.nullls").enable(nil, nil, nil)
+        vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
+            M.enable(nil, nil, nil)
+        end, {})
     end,
 }
 
@@ -140,6 +142,7 @@ local DEFAULT_INSTALL_EXEC = {
     sqlfluff = { command = "pip", args = { "install", "sqlfluff" } },
     rome = { command = "npm", args = { "install", "-g", "rome" } },
     yapf = { command = "pip", args = { "install", "yapf" } },
+    black = { command = "pip", args = { "install", "black" } },
     isort = { command = "pip", args = { "install", "isort" } },
     mypy = { command = "pip", args = { "install", "mypy" } },
     pylint = { command = "pip", args = { "install", "pylint" } },
@@ -157,14 +160,15 @@ local EXEC_CONVERT = {
     ["nginx_beautifier"] = "nginxbeautifier",
 }
 
-local enabled = false
+-- local enabled = false
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 M.enable = function(diagnostics, formatters, completions)
-    if enabled then
-        return
-    end
-    enabled = true
+    -- if enabled then
+    --     return
+    -- end
+    -- print(string.format("%s %s %s", #diagnostics, #formatters, #completions))
+    -- enabled = true
     local u = require("null-ls.utils")
 
     local Job = require("plenary.job")
@@ -243,6 +247,7 @@ M.enable = function(diagnostics, formatters, completions)
 
     table.insert(sources, nullls.builtins.code_actions.gitsigns)
     table.insert(sources, nullls.builtins.code_actions.ts_node_action)
+    table.insert(sources, nullls.builtins.code_actions.refactoring)
 
     nullls.setup({
         log_level = "error",
