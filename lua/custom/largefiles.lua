@@ -99,6 +99,8 @@ local function is_large_file(buf)
     return disable, big_line, size
 end
 
+local is_disabled = false
+
 local function optimize_buffer(args)
     local disable, big_line, size = is_large_file(args.buf)
 
@@ -126,6 +128,7 @@ local function optimize_buffer(args)
     end
 
     if disable or big_line then
+        is_disabled = true
         vim.opt_local.wrap = false
         vim.opt_local.spell = false
         vim.opt_local.hlsearch = false
@@ -135,7 +138,7 @@ local function optimize_buffer(args)
         vim.api.nvim_command("IndentBlanklineDisable")
         pcall(vim.api.nvim_command, "UfoDisable")
     else
-        if not vim.g.indent_blankline_enabled then
+        if is_disabled then
             vim.api.nvim_command("IndentBlanklineEnable")
             pcall(vim.api.nvim_command, "UfoEnable")
         end
