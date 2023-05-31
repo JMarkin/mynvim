@@ -130,6 +130,7 @@ local DEFAULT_FORMATTERS = {
     "isort",
     "nginx_beautifier",
     "taplo",
+    "fixjson",
 }
 
 local DEFAULT_COMPLETIONS = {}
@@ -254,6 +255,7 @@ M.enable = function(diagnostics, formatters, completions)
         sources = sources,
         temp_dir = "/tmp",
         update_in_insert = false,
+        on_attach = require("settings.lang").on_attach,
         root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
     })
 end

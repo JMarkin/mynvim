@@ -16,6 +16,14 @@ local diag_opts = {
 }
 
 local on_attach = function(client, bufnr)
+    if vim.b.large_buf then
+        local clients = vim.lsp.buf_get_clients(bufnr)
+        for client_id, _ in pairs(clients) do
+            vim.lsp.buf_detach_client(bufnr, client_id)
+        end
+        return
+    end
+
     vim.bo.tagfunc = nil
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
@@ -24,6 +32,8 @@ local on_attach = function(client, bufnr)
         end,
     })
 end
+
+M.on_attach = on_attach
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -110,23 +120,13 @@ M.pylsp = function()
     setup_lsp("pylsp", opts)
 end
 
-M.jedi_language_server_is_load = 0
 M.jedi_language_server = function()
-    if M.jedi_language_server_is_load == 1 then
-        return 1
-    end
-    g.pydocstring_formatter = "google"
-    g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
-
-    g.pydocstring_doq_path = "~/.pyenv/shims/doq"
-
     setup_lsp("jedi_language_server", {
         filetypes = { "python", "python.django", "django" },
     })
-    M.jedi_language_server_is_load = 1
 end
 
-M.sumneko_lua = function()
+M.lua_ls = function()
     local opts = {
         settings = {
             Lua = {
@@ -154,7 +154,7 @@ M.sumneko_lua = function()
             },
         },
     }
-    setup_lsp("sumneko_lua", opts)
+    setup_lsp("lua_ls", opts)
 end
 
 M.rust_analyzer = function()
@@ -338,11 +338,26 @@ M.clangd = function()
 end
 
 M.jsonls = function()
-    require("lspconfig").jsonls.setup({
+    setup_lsp("jsonls", {
         settings = {
             json = {
                 schemas = require("schemastore").json.schemas(),
                 validate = { enable = true },
+            },
+        },
+    })
+end
+
+M.yamlls = function()
+    setup_lsp("yamlls", {
+        settings = {
+            yaml = {
+                schemaStore = {
+                    -- You must disable built-in schemaStore support if you want to use
+                    -- this plugin and its advanced options like `ignore`.
+                    enable = false,
+                },
+                schemas = require("schemastore").yaml.schemas(),
             },
         },
     })
@@ -361,7 +376,25 @@ M.config = function()
         return is_load
     end
     require("mason").setup()
-    require("mason-lspconfig").setup()
+    require("mason-lspconfig").setup({
+        ensure_installed = {
+            "lua_ls",
+            "rust_analyzer",
+            "jsonls",
+            "yamlls",
+            "html",
+            "marksman",
+            "taplo",
+            "volar",
+            "vimls",
+            "bashls",
+            "clangd",
+            "cssls",
+            "dockerls",
+            "gopls",
+            "jedi_language_server@0.39.0",
+        },
+    })
     require("mason-lspconfig").setup_handlers({
         function(server_name)
             local s_lsp = M[server_name]
@@ -373,10 +406,6 @@ M.config = function()
             end
         end,
     })
-
-    if vim.fn.executable("jedi-language-server") == 1 then
-        M.jedi_language_server()
-    end
 
     vim.diagnostic.config({
         underline = true,

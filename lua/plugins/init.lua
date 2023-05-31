@@ -294,6 +294,7 @@ require("lazy").setup({
         end,
         event = "BufReadPre *.*",
         ft = { "dockerfile" },
+        cmd = "Mason",
     },
 
     require("plugins.diaglist").plugin,
