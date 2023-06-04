@@ -202,6 +202,16 @@ require("lazy").setup({
     { "wgwoods/vim-systemd-syntax", ft = "systemd" },
     { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
+    {
+        "winston0410/range-highlight.nvim",
+        dependencies = {
+            "winston0410/cmd-parser.nvim",
+        },
+        config = function()
+            require("range-highlight").setup({})
+        end,
+        event = { "CmdlineEnter" },
+    },
 
     require("plugins.treesitter").plugin,
     require("plugins.surround").plugin,
@@ -514,5 +524,23 @@ require("lazy").setup({
         event = "BufReadPost",
     },
     require("plugins.term").plugin,
+
+    {
+        "willothy/flatten.nvim",
+        config = true,
+        opts = {
+            callbacks = {
+                pre_open = function(bufnr, winnr, filetype)
+                    pcall(require, "tabby")
+                end,
+            },
+            window = {
+                open = "tab",
+            },
+        },
+        lazy = false,
+        priority = 1001,
+    },
+
     require("plugins.pairs").plugin,
 })

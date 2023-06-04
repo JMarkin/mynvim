@@ -11,6 +11,7 @@ M.plugin = {
     config = function()
         require("npairs-int-upair").setup({ map = "u" })
         local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        ---@diagnostic disable-next-line: different-requires
         local cmp = require("cmp")
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,

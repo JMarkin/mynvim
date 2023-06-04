@@ -4,7 +4,6 @@ M.term = function()
     local toggleterm = require("toggleterm")
 
     toggleterm.setup({
-        -- size can be a number or function which is passed the current terminal
         size = function(term)
             if term.direction == "horizontal" then
                 return 15
@@ -26,7 +25,6 @@ M.term = function()
         close_on_exit = true, -- close the terminal window when the process exits
         shell = vim.o.shell, -- change the default shell
         auto_scroll = false, -- automatically scroll to the bottom on terminal output
-        -- This field is only relevant if direction is set to 'float'
         float_opts = {
             border = "curved",
             winblend = 3,
@@ -104,22 +102,14 @@ M.term = function()
         ipython:toggle()
     end
 
-    vim.keymap.set({ "n" }, "<A-i>", ipython_toggle, { desc = "Ipython", noremap = true, silent = true })
+    vim.keymap.set({ "n" }, "<A-i>", ipython_toggle, { desc = "IPython", noremap = true, silent = true })
 end
 
 M.plugin = {
-    "samjwill/nvim-unception",
-    dependencies = {
-        {
-            "akinsho/toggleterm.nvim",
-            config = M.term,
-            cmd = { "Git" },
-            keys = { "<A-g>", "<A-b>", "<A-t>", "<A-i>" },
-        },
-    },
-    init = function()
-        vim.g.unception_open_buffer_in_new_tab = true
-    end,
+    "akinsho/toggleterm.nvim",
+    config = M.term,
+    cmd = { "Git" },
+    keys = { "<A-g>", "<A-b>", "<A-t>", "<A-i>" },
 }
 
 return M

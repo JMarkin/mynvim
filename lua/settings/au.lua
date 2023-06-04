@@ -41,6 +41,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     desc = "Load view on entering buffer",
 })
 
+
 --matchup custom
 -- local matchup_words = "MatchUpWords"
 -- vim.api.nvim_create_augroup(matchup_words, { clear = true })
