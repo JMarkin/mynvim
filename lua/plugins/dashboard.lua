@@ -1,7 +1,7 @@
 local M = {}
 
 M.plugin = {
-    "glepnir/dashboard-nvim",
+    "nvimdev/dashboard-nvim",
     event = "VimEnter",
     config = function()
         require("dashboard.theme.header").generate_header = function(config)
@@ -43,6 +43,7 @@ M.plugin = {
                 key = "c",
             },
         }
+        vim.o.showtabline = 1
         require("dashboard").setup({
             theme = "doom",
             config = {
@@ -50,6 +51,10 @@ M.plugin = {
                 shortcut = shortcuts,
                 center = shortcuts,
                 footer = {},
+            },
+            hide = {
+                statusline = true,
+                tabline = false,
             },
         })
     end,

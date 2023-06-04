@@ -51,7 +51,7 @@ vim.keymap.set("n", "<leader>ss", function()
 end, { desc = "Search: previous" })
 
 vim.keymap.set("n", "<leader>sb", function()
-    require("fzf-lua").buffers({ multiprocess = true })
+    require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
 end, { desc = "Search: buffers" })
 
 vim.keymap.set("n", "<leader>sf", function()
@@ -98,7 +98,7 @@ vim.keymap.set("n", "<leader>sch", function()
 end, { desc = "Search: command_history" })
 
 vim.keymap.set("n", "gr", function()
-    require("fzf-lua").lsp_references({ multiprocess = true, ignore_current_line = true })
+    require("fzf-lua").lsp_finder({ multiprocess = true, ignore_current_line = true })
 end, { silent = true, desc = "GoTo: references" })
 
 vim.keymap.set("n", "<leader>sP", require("plugins.project").search, { silent = true, desc = "Search: project" })

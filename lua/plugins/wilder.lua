@@ -18,7 +18,7 @@ M.plugin = {
     },
     config = function()
         local wilder = require("wilder")
-        wilder.setup({ modes = { ":", "/", "?" } })
+        wilder.setup({ modes = { ":", "/", "?" }, num_workers = 4 })
 
         wilder.set_option("pipeline", {
             wilder.branch(
@@ -49,6 +49,7 @@ M.plugin = {
                     pattern = wilder.python_fuzzy_pattern({
                         start_at_boundary = 0,
                     }),
+                    engine = "re2",
                 })
             ),
         })
@@ -74,6 +75,7 @@ M.plugin = {
                 " ",
                 wilder.popupmenu_scrollbar(),
             },
+            max_height = '20%'
         }))
 
         local wildmenu_renderer = wilder.wildmenu_renderer({
