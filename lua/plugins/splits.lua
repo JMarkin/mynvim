@@ -7,52 +7,32 @@ M.plugin = {
             tmux_integration = false,
         })
 
+        vim.keymap.set({ "n" }, { "<C-l>" }, require("smart-splits").move_cursor_left, { silent = true, desc = "left" })
+        vim.keymap.set({ "n" }, { "<C-j>" }, require("smart-splits").move_cursor_down, { silent = true, desc = "down" })
+        vim.keymap.set({ "n" }, { "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
         vim.keymap.set(
             { "n" },
-            { "<space><left>", "<C-l>" },
-            require("smart-splits").move_cursor_left,
-            { silent = true, desc = "left" }
-        )
-        vim.keymap.set(
-            { "n" },
-            { "<space><down>", "<C-j>" },
-            require("smart-splits").move_cursor_down,
-            { silent = true, desc = "down" }
-        )
-        vim.keymap.set(
-            { "n" },
-            { "<space><up>", "<C-k>" },
-            require("smart-splits").move_cursor_up,
-            { silent = true, desc = "top" }
-        )
-        vim.keymap.set(
-            { "n" },
-            { "<space><right>", "<C-h>" },
+            { "<C-h>" },
             require("smart-splits").move_cursor_right,
             { silent = true, desc = "right" }
         )
 
         vim.keymap.set(
             { "n" },
-            { "<space>h", "<A-left>", "<A-h>" },
+            { "<A-h>" },
             require("smart-splits").resize_left,
             { silent = true, desc = "Resize left" }
         )
         vim.keymap.set(
             { "n" },
-            { "<space>j", "<A-down>", "<A-j>" },
+            { "<A-j>" },
             require("smart-splits").resize_down,
             { silent = true, desc = "Resize down" }
         )
+        vim.keymap.set({ "n" }, { "<A-k>" }, require("smart-splits").resize_up, { silent = true, desc = "Resize up" })
         vim.keymap.set(
             { "n" },
-            { "<space>k", "<A-up>", "<A-k>" },
-            require("smart-splits").resize_up,
-            { silent = true, desc = "Resize up" }
-        )
-        vim.keymap.set(
-            { "n" },
-            { "<space>l", "<A-right>", "<A-l>" },
+            { "<A-l>" },
             require("smart-splits").resize_right,
             { silent = true, desc = "Resize right" }
         )
