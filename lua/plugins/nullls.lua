@@ -203,8 +203,6 @@ M.install_default = function()
     end
 end
 
-M.install_default()
-
 -- local enabled = false
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
