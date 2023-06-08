@@ -122,7 +122,7 @@ local DEFAULT_DIAGNOSTICS = {
 local DEFAULT_FORMATTERS = {
     "sqlfluff",
     "ruff",
-    "yapf",
+    "black",
     "yamlfmt",
     "protolint",
     "stylua",
@@ -161,6 +161,50 @@ local EXEC_CONVERT = {
     ["nginx_beautifier"] = "nginxbeautifier",
 }
 
+local function exec_install(exec)
+    exec = EXEC_CONVERT[exec] or exec
+    local function condition(_)
+        if vim.fn.executable(exec) ~= 1 then
+            local shell = DEFAULT_INSTALL_EXEC[exec]
+            if shell ~= nil then
+                shell = vim.fn.map(shell, function(_, v)
+                    return v
+                end)
+                shell.on_exit = function(j, return_val)
+                    if return_val ~= 0 then
+                        vim.notify(exec .. " error" .. " " .. j:result(), vim.log.levels.WARN)
+                    end
+                end
+                local job = require("plenary.job"):new(shell)
+                vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
+                job:start()
+                return true
+            end
+            vim.notify(exec .. " not found, please install", vim.log.levels.WARN)
+            return false
+        end
+        return true
+    end
+    return condition
+end
+
+M.install_default = function()
+    local diagnostics = DEFAULT_DIAGNOSTICS
+    local formatters = DEFAULT_FORMATTERS
+    local completions = DEFAULT_COMPLETIONS
+    local sources = {}
+    vim.list_extend(sources, diagnostics)
+    vim.list_extend(sources, formatters)
+    vim.list_extend(sources, completions)
+    for _, source in ipairs(sources) do
+        print("try to install " .. source)
+        local installed = exec_install(source)(nil)
+        print("installed " .. installed)
+    end
+end
+
+M.install_default()
+
 -- local enabled = false
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
@@ -171,35 +215,6 @@ M.enable = function(diagnostics, formatters, completions)
     -- print(string.format("%s %s %s", #diagnostics, #formatters, #completions))
     -- enabled = true
     local u = require("null-ls.utils")
-
-    local Job = require("plenary.job")
-
-    local function exec_install(exec)
-        exec = EXEC_CONVERT[exec] or exec
-        local function condition(_)
-            if vim.fn.executable(exec) ~= 1 then
-                local shell = DEFAULT_INSTALL_EXEC[exec]
-                if shell ~= nil then
-                    shell = vim.fn.map(shell, function(_, v)
-                        return v
-                    end)
-                    shell.on_exit = function(j, return_val)
-                        if return_val ~= 0 then
-                            vim.notify(exec .. " error" .. " " .. j:result(), vim.log.levels.WARN)
-                        end
-                    end
-                    local job = Job:new(shell)
-                    vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
-                    job:start()
-                    return true
-                end
-                vim.notify(exec .. " not found, please install", vim.log.levels.WARN)
-                return false
-            end
-            return true
-        end
-        return condition
-    end
 
     local nullls = require("null-ls")
 
