@@ -205,16 +205,6 @@ require("lazy").setup({
     { "wgwoods/vim-systemd-syntax", ft = "systemd" },
     { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
-    {
-        "winston0410/range-highlight.nvim",
-        dependencies = {
-            "winston0410/cmd-parser.nvim",
-        },
-        config = function()
-            require("range-highlight").setup({})
-        end,
-        event = { "CmdlineEnter" },
-    },
 
     require("plugins.treesitter").plugin,
     require("plugins.surround").plugin,
