@@ -255,50 +255,7 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>lcp", ":PythonCopyReferencePytest<CR>")
         end,
     },
-    -- LSP
-
-    {
-        "williamboman/mason.nvim",
-        cond = is_not_mini,
-        dependencies = {
-            {
-                "neovim/nvim-lspconfig",
-            },
-            {
-                "williamboman/mason-lspconfig.nvim",
-            },
-            {
-                "glepnir/lspsaga.nvim",
-                dependencies = { "nvim-tree/nvim-web-devicons" },
-            },
-            {
-                "j-hui/fidget.nvim",
-                opts = {},
-            },
-            {
-                "VidocqH/lsp-lens.nvim",
-                enabled = false,
-                opts = {
-                    sections = {
-                        definition = true,
-                        references = true,
-                        implementation = true,
-                    },
-                    ignore_filetype = {
-                        "prisma",
-                        "markdown",
-                        "json",
-                    },
-                },
-            },
-        },
-        config = function()
-            require("settings.lang").config()
-        end,
-        event = "BufReadPre *.*",
-        ft = { "dockerfile" },
-        cmd = "Mason",
-    },
+    require("plugins.lsp").plugin,
 
     require("plugins.diaglist").plugin,
 

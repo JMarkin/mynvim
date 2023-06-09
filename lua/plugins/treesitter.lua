@@ -183,7 +183,7 @@ M.plugin = {
 
 M.ts_install = function()
     require("nvim-treesitter")
-    local cmd = "TSUpdateSync " .. table.concat(syntax_langs.treesitter_installed, " ")
+    local cmd = "TSUpdateSync " .. table.concat(syntax_langs, " ")
     vim.cmd(cmd)
 end
 

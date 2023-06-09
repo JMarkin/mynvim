@@ -75,6 +75,8 @@ local function setup_lsp(lsp_name, opts)
     end
 end
 
+M.setup_lsp = setup_lsp
+
 M.pylsp = function()
     g.pydocstring_formatter = "google"
     g.neoformat_enabled_python = { "yapf", "isort", "docformatter" }
@@ -367,60 +369,6 @@ M.html = function()
     setup_lsp("html", {
         filetypes = { "html", "htmldjango" },
     })
-end
-
-local is_load = 0
-
-M.config = function()
-    if is_load == 1 or vim.g.disable_lsp == 1 then
-        return is_load
-    end
-    require("mason").setup()
-    require("mason-lspconfig").setup({
-        ensure_installed = {
-            "lua_ls",
-            "rust_analyzer",
-            "jsonls",
-            "yamlls",
-            "html",
-            "marksman",
-            "taplo",
-            "volar",
-            "vimls",
-            "bashls",
-            "clangd",
-            "cssls",
-            "dockerls",
-            "gopls",
-            "jedi_language_server@0.39.0",
-        },
-    })
-    require("mason-lspconfig").setup_handlers({
-        function(server_name)
-            local s_lsp = M[server_name]
-            if s_lsp == nil or s_lsp == "" then
-                -- vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
-                setup_lsp(server_name, {})
-            else
-                s_lsp()
-            end
-        end,
-    })
-
-    vim.diagnostic.config({
-        underline = true,
-        signs = true,
-        virtual_text = false,
-        -- virtual_lines = { only_current_line = true },
-        float = true,
-        update_in_insert = false,
-        severity_sort = true,
-    })
-
-    require("plugins.lspsaga")
-
-    is_load = 1
-    return is_load
 end
 
 return M
