@@ -35,6 +35,7 @@ local syntax_langs = {
     "query",
 }
 
+---@diagnostic disable-next-line: unused-local
 local is_disable = function(_lang, _buf)
     return vim.b.large_buf
 end
@@ -71,7 +72,7 @@ M.plugin = {
     config = function()
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup({
-            ensure_installed = syntax_langs,
+            -- ensure_installed = syntax_langs,
             playground = {
                 enable = true,
                 updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
@@ -181,10 +182,11 @@ M.plugin = {
     end,
 }
 
-M.ts_install = function()
+M.install = function()
     require("nvim-treesitter")
-    local cmd = "TSUpdateSync " .. table.concat(syntax_langs, " ")
-    vim.cmd(cmd)
+    for _, lang in ipairs(syntax_langs) do
+        vim.cmd("TSUpdateSync " .. lang)
+    end
 end
 
 return M
