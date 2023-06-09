@@ -5,27 +5,27 @@ local float_close_decorator = float_preview.float_close_decorator
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
-    -- vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter", "User CloseNvimFloatPrev" }, {
-    --     pattern = { "*" },
-    --     callback = float_preview.close_float,
-    -- })
-    -- vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", "BufWinEnter" }, {
-    --     buffer = bufnr,
-    --     callback = function()
-    --         local win = vim.api.nvim_get_current_win()
-    --         local node = api.tree.get_node_under_cursor()
-    --         if node.absolute_path == float_preview.path then
-    --             return
-    --         end
-    --         float_preview.close_float()
-    --
-    --         if node.type ~= "file" then
-    --             return
-    --         end
-    --
-    --         float_preview.float_preview(win, node.absolute_path)
-    --     end,
-    -- })
+    vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter", "User CloseNvimFloatPrev" }, {
+        pattern = { "*" },
+        callback = float_preview.close_float,
+    })
+    vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", "BufWinEnter" }, {
+        buffer = bufnr,
+        callback = function()
+            local win = vim.api.nvim_get_current_win()
+            local node = api.tree.get_node_under_cursor()
+            if node.absolute_path == float_preview.path then
+                return
+            end
+            float_preview.close_float()
+
+            if node.type ~= "file" then
+                return
+            end
+
+            float_preview.float_preview(win, node.absolute_path)
+        end,
+    })
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
