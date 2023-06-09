@@ -106,12 +106,13 @@ M.plugin = {
             factory = h.formatter_factory,
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
-
-        vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
-            M.enable(nil, nil, nil)
-        end, {})
     end,
+    cmd = { "NullLsEnableDefault", "NullLsInstallDefault" },
 }
+
+vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
+    M.enable(nil, nil, nil)
+end, {})
 
 local DEFAULT_DIAGNOSTICS = {
     "ruff",
@@ -188,6 +189,14 @@ local function exec_install(exec)
     return condition
 end
 
+local function exist_exec(exec)
+    exec = EXEC_CONVERT[exec] or exec
+    local function condition(_)
+        return vim.fn.executable(exec) == 1
+    end
+    return condition
+end
+
 M.install_default = function()
     local diagnostics = DEFAULT_DIAGNOSTICS
     local formatters = DEFAULT_FORMATTERS
@@ -197,9 +206,11 @@ M.install_default = function()
     vim.list_extend(sources, formatters)
     vim.list_extend(sources, completions)
     for _, source in ipairs(sources) do
-        print("try to install " .. source)
+        vim.notify("try to install " .. source, vim.log.levels.DEBUG)
         local installed = exec_install(source)(nil)
-        print("installed " .. installed)
+        if installed then
+            vim.notify("installed " .. source, vim.log.levels.DEBUG)
+        end
     end
 end
 
@@ -229,7 +240,7 @@ M.enable = function(diagnostics, formatters, completions)
             diag = {
                 name = diag,
                 with = {
-                    condition = exec_install(diag),
+                    condition = exist_exec(diag),
                     method = nullls.methods.DIAGNOSTICS_ON_SAVE,
                 },
             }
@@ -242,7 +253,7 @@ M.enable = function(diagnostics, formatters, completions)
             fmt = {
                 name = fmt,
                 with = {
-                    condition = exec_install(fmt),
+                    condition = exist_exec(fmt),
                 },
             }
         end
