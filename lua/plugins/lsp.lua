@@ -37,22 +37,7 @@ M.plugin = {
         {
             "j-hui/fidget.nvim",
             opts = {},
-        },
-        {
-            "VidocqH/lsp-lens.nvim",
-            enabled = false,
-            opts = {
-                sections = {
-                    definition = true,
-                    references = true,
-                    implementation = true,
-                },
-                ignore_filetype = {
-                    "prisma",
-                    "markdown",
-                    "json",
-                },
-            },
+            tag = "legacy",
         },
     },
     config = function()
