@@ -3,6 +3,7 @@ local M = {
     win = nil,
     path = nil,
     current_line = 1,
+    max_line = 999999,
 }
 
 local function close_float()
@@ -13,6 +14,7 @@ local function close_float()
         M.buf = nil
         M.path = nil
         M.current_line = 1
+        M.max_line = 999999
     end
 end
 
@@ -25,6 +27,7 @@ local function preview()
 
     local cmd = string.format("e %s", M.path)
     vim.api.nvim_command(cmd)
+    M.max_line = vim.fn.line("$")
 
     local ok, _ = pcall(vim.api.nvim_command, ":filetype detect")
     if ok and vim.fn.has("nvim-0.9") == 1 then
@@ -74,7 +77,7 @@ end
 
 M.scroll_down = function()
     if M.buf then
-        local next_line = M.current_line + 20
+        local next_line = math.min(M.current_line + 20, M.max_line)
         local ok, _ = pcall(M.scroll, next_line)
         if ok then
             M.current_line = next_line
