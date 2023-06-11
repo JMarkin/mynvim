@@ -6,6 +6,8 @@ end
 
 local M = {}
 
+local float_preview = require("custom.floatpreview")
+
 local diag_opts = {
     focusable = false,
     close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
@@ -69,6 +71,9 @@ local function setup_lsp(lsp_name, opts)
 
     local try_add = conf.manager.try_add
     conf.manager.try_add = function(bufnr)
+        if bufnr == float_preview.buf then
+            return
+        end
         if not vim.b.large_buf then
             return try_add(bufnr)
         end
