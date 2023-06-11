@@ -99,7 +99,7 @@ M.setup = function(bufnr, get_node)
     vim.keymap.set("n", "<C-e>", M.scroll_up, { buffer = bufnr })
     vim.keymap.set("n", "<C-u>", M.scroll_up, { buffer = bufnr })
     vim.keymap.set("n", "<C-d>", M.scroll_down, { buffer = bufnr })
-    vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineEnter", "User CloseNvimFloatPrev" }, {
+    vim.api.nvim_create_autocmd({ "User CloseNvimFloatPrev" }, {
         pattern = { "*" },
         callback = M.close_float,
     })
