@@ -48,13 +48,13 @@ local function float_preview(path)
     local height = vim.api.nvim_get_option("lines")
     local prev_height = math.ceil(height / 2)
     local opts = {
-        style = "minimal",
         relative = "win",
         width = math.ceil(width / 2),
         height = prev_height,
         bufpos = { vim.fn.line(".") - 1, vim.fn.col(".") + 30 },
         border = "rounded",
         focusable = false,
+        noautocmd = true,
     }
 
     M.win = vim.api.nvim_open_win(M.buf, true, opts)

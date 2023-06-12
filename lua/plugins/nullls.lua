@@ -1,6 +1,7 @@
 local M = {}
 
 local is_not_mini = require("custom.funcs").is_not_mini
+local float_preview = require("custom.floatpreview")
 
 M.plugin = {
     "jose-elias-alvarez/null-ls.nvim",
@@ -281,6 +282,9 @@ M.enable = function(diagnostics, formatters, completions)
         update_in_insert = false,
         on_attach = require("settings.lang").on_attach,
         root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
+        should_attach = function(bufnr)
+            return bufnr ~= float_preview.buf
+        end,
     })
 end
 
