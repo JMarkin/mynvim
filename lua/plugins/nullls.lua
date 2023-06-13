@@ -15,7 +15,6 @@ M.plugin = {
         },
     },
     lazy = true,
-    event = "BufReadPre",
     config = function()
         local nullls = require("null-ls")
 

@@ -49,7 +49,6 @@ require("lazy").setup({
         },
     },
     -- командная строчка
-    require("plugins.noice").plugin,
     require("plugins.wilder").plugin,
 
     require("plugins.tabline").plugin,
@@ -346,16 +345,7 @@ require("lazy").setup({
         keys = "<leader>s",
         cmd = "FzfLua",
     },
-    --- Генераци докстрингов и т.п.
-    {
-        "danymat/neogen",
-        cond = is_not_mini,
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require("plugins.neogen")
-        end,
-        cmd = "Neogen",
-    },
+    require("plugins.neogen").plugin,
     --nginx
     {
         "chr4/sslsecure.vim",
