@@ -8,8 +8,8 @@ local M = {
 
 local function close_float()
     if M.path ~= nil then
-        pcall(vim.api.nvim_win_close, M.win, { force = true })
         pcall(vim.api.nvim_buf_delete, M.buf, { force = true })
+        pcall(vim.api.nvim_win_close, M.win, { force = true })
         M.win = nil
         M.buf = nil
         M.path = nil
@@ -28,14 +28,7 @@ local function preview()
     local cmd = string.format("e %s", M.path)
     vim.api.nvim_command(cmd)
     M.max_line = vim.fn.line("$")
-
-    local ok, _ = pcall(vim.api.nvim_command, ":filetype detect")
-    if ok and vim.fn.has("nvim-0.9") == 1 then
-        local lang = require("nvim-treesitter.parsers").ft_to_lang(vim.bo.filetype)
-        if lang then
-            pcall(vim.treesitter.start, M.buf, lang)
-        end
-    end
+    pcall(vim.api.nvim_command, ":filetype detect")
 end
 
 local function float_preview(path)
@@ -48,6 +41,7 @@ local function float_preview(path)
     local height = vim.api.nvim_get_option("lines")
     local prev_height = math.ceil(height / 2)
     local opts = {
+        -- style = "minimal",
         relative = "win",
         width = math.ceil(width / 2),
         height = prev_height,
@@ -99,12 +93,26 @@ M.setup = function(bufnr, get_node)
     vim.keymap.set("n", "<C-e>", M.scroll_up, { buffer = bufnr })
     vim.keymap.set("n", "<C-u>", M.scroll_up, { buffer = bufnr })
     vim.keymap.set("n", "<C-d>", M.scroll_down, { buffer = bufnr })
+
+    local preview_au = "float_preview_au"
+    vim.api.nvim_create_augroup(preview_au, { clear = true })
     vim.api.nvim_create_autocmd({ "User CloseNvimFloatPrev" }, {
         pattern = { "*" },
         callback = M.close_float,
+        group = preview_au,
     })
-    vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", "BufWinEnter" }, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+        callback = function()
+            local buf = vim.api.nvim_get_current_win()
+            if M.buf ~= buf then
+                M.close_float()
+            end
+        end,
+        group = preview_au,
+    })
+    vim.api.nvim_create_autocmd({ "CursorHold" }, {
         buffer = bufnr,
+        group = preview_au,
         callback = function()
             local win = vim.api.nvim_get_current_win()
 

@@ -3,10 +3,7 @@ local M = {}
 M.plugin = {
     "nvim-lualine/lualine.nvim",
     enabled = true,
-    event = { "BufReadPre", "BufAdd" },
-    -- dependencies = {
-    --     "folke/noice.nvim"
-    -- },
+    event = { "BufReadPost" },
     config = function()
         local lualine = require("lualine")
 
@@ -24,17 +21,7 @@ M.plugin = {
                     { "filename", path = 1 },
                 },
                 lualine_c = {},
-                --     {
-                --         require("noice").api.status.mode.get,
-                --         cond = require("noice").api.status.mode.has,
-                --     },
-                -- },
                 lualine_x = {},
-                --     {
-                --         require("noice").api.status.command.get,
-                --         cond = require("noice").api.status.command.has,
-                --     },
-                -- },
                 lualine_y = {
                     "filesize",
                     "encoding",
