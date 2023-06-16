@@ -75,8 +75,8 @@ require("lazy").setup({
             hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
             autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
             commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-            silent = true, -- Disable plugin messages (Config loaded/ignored)
-            lookup_parents = true,
+            silent = false, -- Disable plugin messages (Config loaded/ignored)
+            lookup_parents = false,
         },
     },
 
@@ -167,6 +167,7 @@ require("lazy").setup({
             -- end
         end,
     },
+    require("plugins.block").plugin,
 
     -- Информационная строка внизу
     require("plugins.lualine").plugin,

@@ -6,7 +6,7 @@ require("fzf-lua").setup({
     winopts = {
         width = 0.9,
         preview = {
-            default = "bat",
+            default = "builtin",
             layout = "vertical",
             title_align = "center",
         },
@@ -51,7 +51,7 @@ vim.keymap.set("n", "<leader>ss", function()
 end, { desc = "Search: previous" })
 
 vim.keymap.set("n", "<leader>sb", function()
-    require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
+    require("fzf-lua").buffers({ multiprocess = true }) --, current_tab_only = true })
 end, { desc = "Search: buffers" })
 
 vim.keymap.set("n", "<leader>sf", function()
