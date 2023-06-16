@@ -107,7 +107,7 @@ M.plugin = {
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
     end,
-    cmd = { "NullLsEnableDefault", "NullLsInstallDefault" },
+    cmd = { "NullLsEnableDefault" },
 }
 
 vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
@@ -221,7 +221,7 @@ M.enable = function(diagnostics, formatters, completions)
     -- if enabled then
     --     return
     -- end
-    -- print(string.format("%s %s %s", #diagnostics, #formatters, #completions))
+    -- vim.notify_once(string.format("%s %s %s", #diagnostics, #formatters, #completions), vim.log.levels.DEBUG)
     -- enabled = true
     local u = require("null-ls.utils")
 
@@ -282,6 +282,9 @@ M.enable = function(diagnostics, formatters, completions)
         on_attach = require("settings.lang").on_attach,
         root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
         should_attach = function(bufnr)
+            -- if vim.g.disable_lsp then
+            --     return false
+            -- end
             return bufnr ~= float_preview.buf
         end,
     })

@@ -67,7 +67,6 @@ M.plugin = {
         "saadparwaiz1/cmp_luasnip",
         "danymat/neogen",
         "hrsh7th/cmp-nvim-lua",
-        "quangnguyen30192/cmp-nvim-tags",
         {
             "JMarkin/cmp-diag-codes",
             -- dev = true,
@@ -76,15 +75,6 @@ M.plugin = {
         { "hrsh7th/cmp-path" },
         {
             "hrsh7th/cmp-nvim-lsp",
-            cond = not vim.g.disable_lsp,
-        },
-        -- {
-        --     "hrsh7th/cmp-nvim-lsp-signature-help",
-        --     cond = not vim.g.disable_lsp,
-        -- },
-        {
-            "hrsh7th/cmp-omni",
-            cond = vim.g.disable_lsp,
         },
         "rcarriga/cmp-dap",
     },
@@ -128,25 +118,10 @@ M.plugin = {
             { name = "diag-codes", in_comment = true },
         }
 
-        local preselect = cmp.PreselectMode.None
+        local preselect = cmp.PreselectMode.Item
 
-        if not vim.g.disable_lsp then
-            table.insert(sources, { name = "nvim_lsp" })
-            -- table.insert(sources, { name = "nvim_lsp_signature_help", priority = 200 })
-        else
-            vim.opt.omnifunc = "syntaxcomplete#Complete"
-            table.insert(sources, { name = "omni" })
-        end
+        table.insert(sources, { name = "nvim_lsp" })
 
-        table.insert(sources, {
-            name = "tags",
-            max_item_count = 7,
-            option = {
-                complete_defer = 100,
-                exact_match = true,
-                current_buffer_only = true,
-            },
-        })
         table.insert(sources, {
             name = "vim-dadbod-completion",
             filetype = { "sql", "mssql", "plsql" },
@@ -159,11 +134,6 @@ M.plugin = {
         table.insert(sources, { name = "luasnip", keyword_length = 2, max_item_count = 5 })
 
         cmp.setup({
-            performance = {
-                debounce = 60,
-                throttle = 30,
-                fetching_timeout = 100,
-            },
             preselect = preselect,
             sorting = {
                 comparators = {
@@ -181,13 +151,20 @@ M.plugin = {
                 entries = "custom",
             },
             experimental = {
-                ghost_text = { hl_group = "@text.note" },
+                ghost_text = true,
             },
             enabled = enabled,
             snippet = {
                 expand = function(args)
                     require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
                 end,
+            },
+            matching = {
+                disallow_fuzzy_matching = false,
+                disallow_fullfuzzy_matching = false,
+                disallow_partial_fuzzy_matching = false,
+                disallow_partial_matching = false,
+                disallow_prefix_unmatching = false,
             },
             mapping = {
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),

@@ -60,17 +60,26 @@ local function setup_lsp(lsp_name, opts)
     opts.on_attach = on_attach
     local lsp = require("lspconfig")
     local conf = lsp[lsp_name]
-
+    if vim.g.disable_lsp then
+        opts.autostart = false
+    end
     conf.setup(opts)
 
     local try_add = conf.manager.try_add
-    conf.manager.try_add = function(bufnr)
+    conf.manager.try_add = function(bufnr, project_root)
         if bufnr == float_preview.buf then
             return
         end
-        if not vim.b.large_buf then
-            return try_add(bufnr)
+        if vim.fn.bufname(bufnr) == float_preview.path then
+            return
         end
+
+        if vim.b.large_buf then
+            vim.notify("disable lsp large buffer", vim.log.levels.DEBUG)
+            return
+        end
+
+        return try_add(bufnr, project_root)
     end
 end
 

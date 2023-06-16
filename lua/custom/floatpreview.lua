@@ -4,7 +4,15 @@ local M = {
     path = nil,
     current_line = 1,
     max_line = 999999,
+    disabled = false,
 }
+
+M.toggle = function()
+    if M.buf then
+        M.close_float()
+    end
+    M.disabled = not M.disabled
+end
 
 local function close_float()
     if M.path ~= nil then
@@ -24,11 +32,15 @@ local function preview()
     if not M.win then
         return
     end
-
-    local cmd = string.format("e %s", M.path)
+    local cmd = string.format("edit %s", vim.fn.fnameescape(M.path))
     vim.api.nvim_command(cmd)
     M.max_line = vim.fn.line("$")
-    pcall(vim.api.nvim_command, ":filetype detect")
+
+    local ok, out = pcall(vim.filetype.match, { buf = M.buf, filename = M.path })
+    if ok and out then
+        cmd = string.format("set filetype=%s", out)
+        pcall(vim.api.nvim_command, cmd)
+    end
 end
 
 local function float_preview(path)
@@ -36,6 +48,7 @@ local function float_preview(path)
     M.buf = vim.api.nvim_create_buf(false, true)
 
     vim.api.nvim_buf_set_option(M.buf, "bufhidden", "unload")
+    vim.api.nvim_buf_set_option(M.buf, "readonly", true)
 
     local width = vim.api.nvim_get_option("columns")
     local height = vim.api.nvim_get_option("lines")
@@ -45,7 +58,8 @@ local function float_preview(path)
         relative = "win",
         width = math.ceil(width / 2),
         height = prev_height,
-        bufpos = { vim.fn.line(".") - 1, vim.fn.col(".") + 30 },
+        row = vim.fn.line("."),
+        col = vim.fn.winwidth(0) + 1,
         border = "rounded",
         focusable = false,
         noautocmd = true,
@@ -58,8 +72,10 @@ M.preview = float_preview
 
 M.close_decorator = function(func)
     return function()
+        M.disabled = true
         close_float()
         func()
+        M.disabled = false
     end
 end
 
@@ -114,8 +130,10 @@ M.setup = function(bufnr, get_node)
         buffer = bufnr,
         group = preview_au,
         callback = function()
+            if M.disabled then
+                return
+            end
             local win = vim.api.nvim_get_current_win()
-
             local node = get_node()
             if not node then
                 M.close_float()
@@ -128,11 +146,8 @@ M.setup = function(bufnr, get_node)
             if node.type ~= "file" then
                 return
             end
-
             M.preview(node.absolute_path)
-
             local ok, _ = pcall(vim.api.nvim_set_current_win, win)
-
             if not ok then
                 M.close_float()
             end
