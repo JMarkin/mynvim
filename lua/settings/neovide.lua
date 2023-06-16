@@ -16,3 +16,19 @@ end)
 vim.keymap.set("n", "<C-->", function()
     change_scale_factor(1 / 1.25)
 end)
+
+vim.cmd([[
+    map ˙ <a-h>
+    map ∆ <a-j>
+    map ˚ <a-k
+    map ¬ <a-l>
+    map ƒ <a-f>
+    map © <a-g>
+    tmap © <a-g>
+    map † <a-t>
+    tmap † <a-t>
+    map ∫ <a-b>
+    tmap ∫ <a-b>
+    map ˆ <a-i>
+    tmap ˆ <a-i>
+]])
