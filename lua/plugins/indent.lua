@@ -15,7 +15,7 @@ M.plugin = {
         -- use_treesitter_scope = true,
         show_first_indent_level = false,
     },
-    event = "BufReadPost",
+    event = { "BufReadPost", "FileReadPost" },
     cmd = { "IndentBlanklineEnable", "IndentBlanklineDisable" },
 }
 

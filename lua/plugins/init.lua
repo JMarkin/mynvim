@@ -75,7 +75,7 @@ require("lazy").setup({
             hashfile = vim.fn.stdpath("data") .. "/local", -- Where the plugin keeps files data
             autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
             commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-            silent = false, -- Disable plugin messages (Config loaded/ignored)
+            silent = true, -- Disable plugin messages (Config loaded/ignored)
             lookup_parents = false,
         },
     },
@@ -270,6 +270,7 @@ require("lazy").setup({
                 name = "pqf",
                 url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
                 config = true,
+                ft = "qf",
             },
         },
         opts = {
@@ -320,7 +321,7 @@ require("lazy").setup({
     {
         "numToStr/Comment.nvim",
         opts = {},
-        event = "BufReadPost",
+        event = { "BufReadPost", "FileReadPost" },
     },
     -- EasyMotion
     require("plugins.leap").plugin,
@@ -336,7 +337,7 @@ require("lazy").setup({
     {
         "ibhagwan/fzf-lua",
         lazy = true,
-        event = "BufReadPre",
+        event = { "BufReadPost", "FileReadPost" },
         dependencies = {
             "lotabout/skim",
         },
@@ -404,13 +405,6 @@ require("lazy").setup({
         ft = { "sql", "mssql", "plsql" },
         cmd = { "DB", "DBUI" },
     },
-    {
-        "vim-scripts/dbext.vim",
-        cond = function()
-            return vim.g.disable_lsp
-        end,
-        ft = { "sql", "mssql", "plsql" },
-    },
 
     -- uncompiler
     {
@@ -420,14 +414,7 @@ require("lazy").setup({
         end,
         cmd = { "Godbolt", "GodboltCompiler" },
     },
-    {
-        name = "nvim-window",
-        url = "https://gitlab.com/yorickpeterse/nvim-window",
-        event = "BufAdd",
-        config = function()
-            require("plugins.windows")
-        end,
-    },
+    require("plugins.windows").plugin,
     -- tests
     require("plugins.tests").plugin,
     -- trim
@@ -463,7 +450,7 @@ require("lazy").setup({
                 ignore_filetypes = {},
             })
         end,
-        event = "BufReadPost",
+        event = { "BufReadPost", "FileReadPost" },
     },
     require("plugins.term").plugin,
 

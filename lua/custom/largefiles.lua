@@ -145,7 +145,7 @@ local function optimize_buffer(args)
     end
 end
 
-vim.api.nvim_create_autocmd("BufReadPre", {
+vim.api.nvim_create_autocmd({"BufReadPre", "FileReadPre"}, {
     group = large_files,
     pattern = { "*" },
     callback = optimize_buffer,

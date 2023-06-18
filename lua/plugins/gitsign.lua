@@ -59,7 +59,7 @@ M.plugin = {
             end,
         })
     end,
-    event = "BufReadPost",
+    event = { "BufReadPost", "FileReadPost" },
 }
 
 return M

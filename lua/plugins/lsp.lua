@@ -69,7 +69,7 @@ M.plugin = {
 
         require("plugins.lspsaga")
     end,
-    event = "BufReadPre *.*",
+    event = { "BufReadPre *.*", "FileReadPre *.*" },
     ft = { "dockerfile" },
     cmd = "Mason",
 }
