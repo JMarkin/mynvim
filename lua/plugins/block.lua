@@ -9,7 +9,7 @@ M.plugin = {
         })
     end,
     cmd = { "Block", "BlockOn", "BlockOff" },
-    event = "BufReadPost",
+    event = { "BufReadPost", "FileReadPost" },
 }
 
 return M

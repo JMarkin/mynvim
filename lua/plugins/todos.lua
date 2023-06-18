@@ -17,7 +17,7 @@ M.plugin = {
         end, { desc = "Previous todo comment" })
     end,
     cond = is_not_mini,
-    event = "BufReadPost",
+    event = { "BufReadPost", "FileReadPost" },
 }
 
 return M
