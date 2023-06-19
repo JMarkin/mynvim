@@ -49,7 +49,6 @@ M.plugin = {
                     pattern = wilder.python_fuzzy_pattern({
                         start_at_boundary = 0,
                     }),
-                    engine = "re2",
                 })
             ),
         })

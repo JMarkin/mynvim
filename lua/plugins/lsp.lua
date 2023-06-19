@@ -19,6 +19,18 @@ local ensure_installed = {
     "jedi_language_server@0.39.0",
 }
 
+M.format = function()
+    vim.lsp.buf.format({
+        filter = function(client)
+            if require("plugins.nullls").enabled then
+                return client.name == "null-ls" or client.name == "rust_analyzer"
+            end
+            return true
+        end,
+        async = true,
+    })
+end
+
 M.plugin = {
     "williamboman/mason.nvim",
     cond = is_not_mini,
