@@ -3,6 +3,8 @@ local M = {}
 local is_not_mini = require("custom.funcs").is_not_mini
 local float_preview = require("custom.floatpreview")
 
+M.enabled = false
+
 M.plugin = {
     "jose-elias-alvarez/null-ls.nvim",
     cond = is_not_mini,
@@ -106,13 +108,13 @@ M.plugin = {
             factory = h.formatter_factory,
         })
         rawset(nullls.builtins.formatting, "docformatter", docformatter)
+
+        vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
+            M.enable(nil, nil, nil)
+        end, {})
     end,
     cmd = { "NullLsEnableDefault" },
 }
-
-vim.api.nvim_create_user_command("NullLsEnableDefault", function(_)
-    M.enable(nil, nil, nil)
-end, {})
 
 local DEFAULT_DIAGNOSTICS = {
     "ruff",
@@ -288,6 +290,11 @@ M.enable = function(diagnostics, formatters, completions)
             return bufnr ~= float_preview.buf
         end,
     })
+    M.enabled = true
+end
+
+M.toggle = function()
+    M.enabled = not M.enabled
 end
 
 return M
