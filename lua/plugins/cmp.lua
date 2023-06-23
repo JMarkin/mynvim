@@ -118,7 +118,7 @@ M.plugin = {
             { name = "diag-codes", in_comment = true },
         }
 
-        local preselect = cmp.PreselectMode.Item
+        local preselect = cmp.PreselectMode.None
 
         table.insert(sources, { name = "nvim_lsp" })
 
@@ -151,7 +151,7 @@ M.plugin = {
                 entries = "custom",
             },
             experimental = {
-                ghost_text = true,
+                ghost_text = false,
             },
             enabled = enabled,
             snippet = {

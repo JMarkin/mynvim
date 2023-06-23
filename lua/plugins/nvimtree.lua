@@ -1,11 +1,10 @@
-local float_preview = require("custom.floatpreview")
-
-local float_close_decorator = float_preview.close_decorator
-
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
+    -- local FloatPreview = require("nvim-tree.float-preview")
+    local FloatPreview = require("float-preview")
 
-    float_preview.setup(bufnr, api.tree.get_node_under_cursor)
+    local prev, float_close_decorator = FloatPreview:new()
+    prev:attach(bufnr)
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -73,6 +72,16 @@ M.plugin = {
     "nvim-tree/nvim-tree.lua",
     enabled = true,
     cmd = "NvimTreeOpen",
+    -- dev = true,
+    -- dir = "~/projects/nvim-tree.lua",
+    dependencies = {
+        {
+            "JMarkin/nvim-tree.lua-float-preview",
+            dev = true,
+            -- dir = "~/projects/nvim-tree.lua-float-preview",
+            -- lazy = true,
+        },
+    },
     init = function()
         vim.keymap.set({ "n" }, { "<space>f", "<A-f>" }, "<Cmd>NvimTreeOpen<CR>", { desc = "FileTree" })
     end,
