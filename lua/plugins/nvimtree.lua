@@ -1,3 +1,20 @@
+local M = {}
+
+M.float_preview = {}
+
+M.check_buf_is_float = function(bufnr, path)
+    local buf = M.float_preview.buf
+    local _path = M.float_preview.path
+    if path then
+        return _path == path
+    end
+    if not bufnr then
+        bufnr = vim.api.nvim_get_current_buf()
+    end
+
+    return buf == bufnr
+end
+
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
     -- local FloatPreview = require("nvim-tree.float-preview")
@@ -5,6 +22,8 @@ local function on_attach(bufnr)
 
     local prev, float_close_decorator = FloatPreview:new()
     prev:attach(bufnr)
+
+    M.float_preview = prev
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -65,8 +84,6 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "U", api.tree.toggle_custom_filter, opts("Toggle Hidden"))
     vim.keymap.set("n", "W", api.tree.collapse_all, opts("Collapse"))
 end
-
-local M = {}
 
 M.plugin = {
     "nvim-tree/nvim-tree.lua",
