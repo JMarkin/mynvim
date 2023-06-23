@@ -77,9 +77,9 @@ M.plugin = {
     dependencies = {
         {
             "JMarkin/nvim-tree.lua-float-preview",
-            dev = true,
+            lazy = true,
             -- dir = "~/projects/nvim-tree.lua-float-preview",
-            -- lazy = true,
+            -- dev = true,
         },
     },
     init = function()
