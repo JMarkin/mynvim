@@ -1,7 +1,6 @@
 local M = {}
 
 local is_not_mini = require("custom.funcs").is_not_mini
-local float_preview = require("custom.floatpreview")
 
 M.enabled = false
 
@@ -276,6 +275,8 @@ M.enable = function(diagnostics, formatters, completions)
     table.insert(sources, nullls.builtins.code_actions.ts_node_action)
     table.insert(sources, nullls.builtins.code_actions.refactoring)
 
+    local check_buf_is_float = require("plugins.nvimtree").check_buf_is_float
+
     nullls.setup({
         log_level = "error",
         sources = sources,
@@ -287,7 +288,7 @@ M.enable = function(diagnostics, formatters, completions)
             -- if vim.g.disable_lsp then
             --     return false
             -- end
-            return bufnr ~= float_preview.buf
+            return not check_buf_is_float(bufnr)
         end,
     })
     M.enabled = true

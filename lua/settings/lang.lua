@@ -6,8 +6,6 @@ end
 
 local M = {}
 
-local float_preview = require("custom.floatpreview")
-
 local diag_opts = {
     focusable = false,
     close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
@@ -56,6 +54,8 @@ capabilities.textDocument.completion = {
 }
 
 local function setup_lsp(lsp_name, opts)
+    local check_buf_is_float = require("plugins.nvimtree").check_buf_is_float
+
     opts.capabilities = capabilities
     opts.on_attach = on_attach
     local lsp = require("lspconfig")
@@ -67,10 +67,10 @@ local function setup_lsp(lsp_name, opts)
 
     local try_add = conf.manager.try_add
     conf.manager.try_add = function(bufnr, project_root)
-        if bufnr == float_preview.buf then
+        if check_buf_is_float(bufnr) then
             return
         end
-        if vim.fn.bufname(bufnr) == float_preview.path then
+        if check_buf_is_float(bufnr, vim.fn.bufname(bufnr)) then
             return
         end
 
