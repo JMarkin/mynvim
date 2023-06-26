@@ -1,9 +1,24 @@
-local M = {}
+local M = {
+    neofetch = "",
+    version = "",
+    plugins = "",
+}
+
+local function draw_footer(dashboard)
+    local footer = {
+        M.version,
+        M.plugins,
+    }
+    if type(M.neofetch) ~= "string" then
+        table.insert(footer, string.format("%s\t%s", M.neofetch["OS"], M.neofetch["Kernel"]))
+        table.insert(footer, string.format("uptime: %s", M.neofetch["Uptime"]))
+    end
+    dashboard.section.footer.val = footer
+end
 
 M.plugin = {
     "goolord/alpha-nvim",
     event = "VimEnter",
-    lazy = true,
     opts = function()
         local dashboard = require("alpha.themes.dashboard")
 
@@ -53,15 +68,26 @@ M.plugin = {
             callback = function()
                 local stats = require("lazy").stats()
                 local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-                local version = "  󰥱 v"
-                    .. vim.version().major
-                    .. "."
-                    .. vim.version().minor
-                    .. "."
-                    .. vim.version().patch
-                local plugins = "⚡Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-                local footer = version .. "\t" .. plugins .. "\n"
-                dashboard.section.footer.val = footer
+                M.version = "󰥱 v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+                M.plugins = "⚡Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+
+                local neofetch = vim.fn.executable("neofetch")
+                local t = ""
+                if neofetch then
+                    require("plenary.job")
+                        :new({
+                            command = "neofetch",
+                            args = { "--json" },
+                            on_stdout = function(error, data)
+                                t = t .. data
+                            end,
+                        })
+                        :sync()
+                end
+                if #t > 0 then
+                    M.neofetch = vim.json.decode(t)
+                end
+                draw_footer(dashboard)
                 pcall(vim.cmd.AlphaRedraw)
             end,
         })
