@@ -87,7 +87,6 @@ M.plugin = {
         {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
-            branch = "review",
             -- dir = "~/projects/nvim-tree.lua-float-preview",
             -- dev = true,
         },
