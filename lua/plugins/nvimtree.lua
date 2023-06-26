@@ -3,22 +3,14 @@ local M = {}
 M.float_preview = {}
 
 M.check_buf_is_float = function(bufnr, path)
-    local buf = M.float_preview.buf
-    local _path = M.float_preview.path
-    if path then
-        return _path == path
-    end
-    if not bufnr then
-        bufnr = vim.api.nvim_get_current_buf()
-    end
-
-    return buf == bufnr
+    return false
 end
 
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
     -- local FloatPreview = require("nvim-tree.float-preview")
     local FloatPreview = require("float-preview")
+    M.check_buf_is_float = require("float-preview").is_float
 
     local prev, float_close_decorator = FloatPreview:new()
     prev:attach(bufnr)
@@ -95,6 +87,7 @@ M.plugin = {
         {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
+            branch = "review",
             -- dir = "~/projects/nvim-tree.lua-float-preview",
             -- dev = true,
         },
