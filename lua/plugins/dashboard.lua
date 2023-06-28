@@ -19,7 +19,7 @@ end
 
 local function run_neofetch(dashboard)
     local neofetch = vim.fn.executable("neofetch")
-    if not neofetch then
+    if neofetch == 0 then
         return
     end
 
