@@ -324,7 +324,8 @@ require("lazy").setup({
         event = { "BufReadPost", "FileReadPost" },
     },
     -- EasyMotion
-    require("plugins.leap").plugin,
+    -- require("plugins.leap").plugin,
+    require("plugins.flash").plugin,
     {
         "ggandor/flit.nvim",
         dependencies = { "ggandor/leap.nvim" },

@@ -111,7 +111,7 @@ M.plugin = {
     dependencies = {
         { "nvim-web-devicons" },
         {
-            "MaximilianLloyd/ascii.nvim",
+            "rolflobker/ascii.nvim",
             dependencies = { "MunifTanjim/nui.nvim" },
         },
     },
