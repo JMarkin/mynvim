@@ -325,13 +325,13 @@ require("lazy").setup({
     },
     -- EasyMotion
     -- require("plugins.leap").plugin,
+    -- {
+    --     "ggandor/flit.nvim",
+    --     dependencies = { "ggandor/leap.nvim" },
+    --     opts = {},
+    --     keys = { "f", "F", "t", "T" },
+    -- },
     require("plugins.flash").plugin,
-    {
-        "ggandor/flit.nvim",
-        dependencies = { "ggandor/leap.nvim" },
-        opts = {},
-        keys = { "f", "F", "t", "T" },
-    },
     require("plugins.spider").plugin,
     require("plugins.debug").plugin,
     --- поиски по файлам проверкам и т.п. fzf вобщем
@@ -385,28 +385,7 @@ require("lazy").setup({
             "nvim-treesitter",
         },
     },
-    -- databases
-    {
-        "kristijanhusak/vim-dadbod-ui",
-        enabled = true,
-        cond = is_not_mini,
-        dependencies = {
-            "tpope/vim-dadbod",
-            {
-                "kristijanhusak/vim-dadbod-completion",
-                dependencies = "nvim-cmp",
-            },
-        },
-        init = function()
-            vim.g.db_ui_execute_on_save = 0
-            vim.g.db_ui_win_position = "right"
-            vim.g.db_ui_show_database_icon = 1
-            vim.g.db_ui_use_nerd_fonts = 1
-        end,
-        ft = { "sql", "mssql", "plsql" },
-        cmd = { "DB", "DBUI" },
-    },
-
+    require("plugins.db").plugin,
     -- uncompiler
     {
         "p00f/godbolt.nvim",
