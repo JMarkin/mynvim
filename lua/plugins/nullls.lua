@@ -275,8 +275,6 @@ M.enable = function(diagnostics, formatters, completions)
     table.insert(sources, nullls.builtins.code_actions.ts_node_action)
     table.insert(sources, nullls.builtins.code_actions.refactoring)
 
-    local check_buf_is_float = require("plugins.nvimtree").check_buf_is_float
-
     nullls.setup({
         log_level = "error",
         sources = sources,
@@ -288,7 +286,7 @@ M.enable = function(diagnostics, formatters, completions)
             -- if vim.g.disable_lsp then
             --     return false
             -- end
-            return not check_buf_is_float(bufnr)
+            return not require("float-preview").is_float(bufnr)
         end,
     })
     M.enabled = true
