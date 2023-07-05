@@ -1,15 +1,8 @@
 local M = {}
 
-
-M.check_buf_is_float = function(bufnr, path)
-    return false
-end
-
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
-    -- local FloatPreview = require("nvim-tree.float-preview")
     local FloatPreview = require("float-preview")
-    M.check_buf_is_float = require("float-preview").is_float
 
     FloatPreview.attach_nvimtree(bufnr)
     local float_close_decorator = FloatPreview.close_wrap

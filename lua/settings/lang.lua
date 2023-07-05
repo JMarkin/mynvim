@@ -54,7 +54,7 @@ capabilities.textDocument.completion = {
 }
 
 local function setup_lsp(lsp_name, opts)
-    local check_buf_is_float = require("plugins.nvimtree").check_buf_is_float
+    local check_buf_is_float = require("float-preview").is_float
 
     opts.capabilities = capabilities
     opts.on_attach = on_attach
