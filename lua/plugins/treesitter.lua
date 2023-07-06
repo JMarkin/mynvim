@@ -1,5 +1,7 @@
 local M = {}
 
+local is_large_file = require("custom.largefiles").is_large_file
+
 local syntax_langs = {
     "regex",
     "rust",
@@ -37,7 +39,7 @@ local syntax_langs = {
 
 ---@diagnostic disable-next-line: unused-local
 local is_disable = function(_lang, _buf)
-    return vim.b.large_buf
+    return is_large_file(_buf, true)
 end
 
 M.plugin = {
@@ -98,7 +100,6 @@ M.plugin = {
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = true,
-                disable = is_disable,
             },
             rainbow = {
                 enable = false,

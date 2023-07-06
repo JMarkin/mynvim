@@ -2,9 +2,9 @@
 local large_files = "LargeFiles"
 vim.api.nvim_create_augroup(large_files, { clear = true })
 
-local max_file_size = 5242880 -- 5MB
-local max_file_size_readonly = 10485760 -- 10MB
-local disable_filetype = false
+local max_file_size = 5
+local max_file_size_readonly = 100
+local max_line_length = 2000
 
 local function file_exists(file)
     local f = io.open(file, "rb")
@@ -14,7 +14,9 @@ local function file_exists(file)
     return f ~= nil
 end
 
-local function maxline(file)
+local function maxline(bufnr)
+    bufnr = bufnr or vim.api.nvim_get_current_buf()
+    local file = vim.fn.expand(string.format("#%s:p", bufnr))
     if not file_exists(file) then
         return 0
     end
@@ -27,125 +29,106 @@ local function maxline(file)
     return max
 end
 
-local EVENTS = {
-    "FileType",
-    "CursorMoved",
-    "DiffUpdated",
-    "FileWriteCmd",
-    "FileWritePost",
-    "FileWritePre",
-    "FilterReadPost",
-    "FilterReadPre",
-    "FilterWritePost",
-    "FilterWritePre",
-    "FocusGained",
-    "FocusLost",
-    "FuncUndefined",
-    "ModeChanged",
-    "SearchWrapped",
-    "Syntax",
-    "TextChanged",
-    "User",
-    "WinEnter",
-    "WinNew",
-    "WinScrolled",
-    "WinResized",
-    "OptionSet",
-    "DirChanged",
-    "TabEnter",
-    "TabLeave",
-    "ColorScheme",
-    "ColorSchemePre",
-    "CmdwinLeave",
-    "BufEnter",
-    "BufReadPost",
-    "BufWinEnter",
-    "BufWritePost",
-    "BufWritePre",
-    "BufWipeout",
-}
-
-local function is_large_file(buf)
-    local file
-    if buf == nil then
-        file = vim.fn.expand("%:p")
-    else
-        file = vim.fn.expand(string.format("#%s:p", buf))
-    end
-
-    if file == nil or #file == 0 then
-        if disable_filetype then
-            vim.opt.eventignore:remove(EVENTS)
-        end
+local function get_buf_size(bufnr)
+    bufnr = bufnr or vim.api.nvim_get_current_buf()
+    local ok, stats = pcall(function()
+        return vim.loop.fs_stat(vim.api.nvim_buf_get_name(bufnr))
+    end)
+    if not (ok and stats) then
         return
     end
-    local size = vim.fn.getfsize(file)
-    local disable = false
-    local big_line = false
-
-    if size > max_file_size then
-        vim.notify("BIG FILE SIZE " .. size, vim.log.levels.INFO)
-        disable = true
-    end
-    if not disable then
-        local _m = maxline(file)
-        if _m > vim.opt.synmaxcol._value then
-            vim.notify("BIG FILE COLUMNS " .. _m, vim.log.levels.INFO)
-            big_line = true
-        end
-    end
-
-    vim.b.large_buf = disable or big_line
-    return disable, big_line, size
+    return math.floor(0.5 + (stats.size / (1024 * 1024)))
 end
 
-local is_disabled = false
+local FILE_TYPE = {
+    NORMAL = 0,
+    LONG_LINE = 1,
+    LARGE_SIZE = 2,
+    READ_ONLY = 3,
+}
 
-local function optimize_buffer(args)
-    local disable, big_line, size = is_large_file(args.buf)
-
-    if disable then
-        if vim.opt.eventignore == nil then
-            vim.opt.eventignore = {}
+local function is_large_file(bufnr, as_bool)
+    local function wrap()
+        local status_ok, is_large = pcall(vim.api.nvim_buf_get_var, bufnr, "large_buf")
+        if status_ok then
+            return is_large
         end
-        vim.opt.eventignore:append(EVENTS)
-        vim.opt_local.swapfile = false
-        vim.opt_local.bufhidden = "unload"
-        vim.opt_local.syntax = "disable"
+        local size = get_buf_size(bufnr)
+
+        local _type = FILE_TYPE.NORMAL
+        if not size then
+            vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
+            return
+        end
 
         if size > max_file_size_readonly then
-            vim.opt_local.buftype = "nowrite"
-            vim.opt_local.undolevels = -1
-            vim.opt_local.undofile = false
+            vim.notify("LARGE FILE SIZE: READONLY " .. size, vim.log.levels.INFO)
+            _type = FILE_TYPE.READ_ONLY
+        elseif size > max_file_size then
+            vim.notify("LARGE FILE SIZE " .. size, vim.log.levels.INFO)
+            _type = FILE_TYPE.LARGE_SIZE
+        else
+            local _m = maxline(bufnr)
+            if _m > max_line_length then
+                vim.notify("LONG LINE " .. _m, vim.log.levels.INFO)
+                _type = FILE_TYPE.LONG_LINE
+            end
         end
 
-        disable_filetype = true
-    else
-        if disable_filetype then
-            vim.opt.eventignore:remove(EVENTS)
-            disable_filetype = false
-        end
+        vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
+        return _type
     end
-
-    if disable or big_line then
-        is_disabled = true
-        vim.opt_local.wrap = false
-        vim.opt_local.spell = false
-        vim.opt_local.hlsearch = false
-        vim.opt_local.incsearch = false
-        vim.opt_local.foldmethod = "manual"
-
-        vim.api.nvim_command("IndentBlanklineDisable")
-        pcall(vim.api.nvim_command, "UfoDisable")
+    if not as_bool then
+        return wrap()
     else
-        if is_disabled then
-            vim.api.nvim_command("IndentBlanklineEnable")
-            pcall(vim.api.nvim_command, "UfoEnable")
-        end
+        local _t = wrap()
+        return _t ~= FILE_TYPE.NORMAL
     end
 end
 
-vim.api.nvim_create_autocmd({"BufReadPre", "FileReadPre"}, {
+local function optimize_buffer(args)
+    local bufnr = args.buf
+
+    local status_ok, _ = pcall(vim.api.nvim_buf_get_var, bufnr, "large_buf")
+    if status_ok then
+        return
+    end
+
+    local _type = is_large_file(bufnr)
+
+    if _type == FILE_TYPE.NORMAL then
+        return
+    end
+
+    vim.opt_local.cursorline = false
+    vim.opt_local.linebreak = false
+    vim.opt_local.wrap = false
+    vim.opt_local.spell = false
+    vim.opt_local.hlsearch = false
+    vim.opt_local.incsearch = false
+    vim.opt_local.foldmethod = "manual"
+    vim.opt_local.swapfile = false
+    vim.opt_local.bufhidden = "unload"
+    vim.cmd("syntax clear")
+    vim.opt_local.syntax = "off"
+    vim.opt_local.list = false
+    vim.opt_local.undolevels = -1
+    vim.opt_local.undofile = false
+    -- if vim.opt_local.eventignore == nil then
+    --     vim.opt_local.eventignore = {}
+    -- end
+    -- vim.opt_local.eventignore:append(EVENTS)
+    pcall(function()
+        require("indent_blankline.commands").disable()
+    end)
+    pcall(vim.api.nvim_command, "UfoDisable")
+
+    if _type == FILE_TYPE.READ_ONLY then
+        vim.opt_local.buftype = "nowrite"
+    end
+end
+
+vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
     group = large_files,
     pattern = { "*" },
     callback = optimize_buffer,
@@ -153,4 +136,5 @@ vim.api.nvim_create_autocmd({"BufReadPre", "FileReadPre"}, {
 
 return {
     is_large_file = is_large_file,
+    large_type = FILE_TYPE,
 }

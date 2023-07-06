@@ -1,5 +1,6 @@
 local g = vim.g
 
+local is_large_file = require("custom.largefiles").is_large_file
 if vim.env.NVIM_MINI ~= nil then
     return {}
 end
@@ -16,7 +17,7 @@ local diag_opts = {
 }
 
 local on_attach = function(client, bufnr)
-    if vim.b.large_buf then
+    if is_large_file(bufnr, true) then
         local clients = vim.lsp.buf_get_clients(bufnr)
         for client_id, _ in pairs(clients) do
             vim.lsp.buf_detach_client(bufnr, client_id)
@@ -74,7 +75,7 @@ local function setup_lsp(lsp_name, opts)
             return
         end
 
-        if vim.b.large_buf then
+        if is_large_file(bufnr, true) then
             vim.notify("disable lsp large buffer", vim.log.levels.DEBUG)
             return
         end
