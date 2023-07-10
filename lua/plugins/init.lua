@@ -375,4 +375,5 @@ require("lazy").setup({
     },
 
     require("plugins.pairs").plugin,
+    require("plugins.firefox").plugin,
 })
