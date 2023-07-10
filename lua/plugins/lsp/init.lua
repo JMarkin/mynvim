@@ -48,7 +48,12 @@ M.plugin = {
         },
         {
             "j-hui/fidget.nvim",
-            opts = {},
+            opts = {
+                align = {
+                    bottom = false, -- align fidgets along bottom edge of buffer
+                    right = true, -- align fidgets along right edge of buffer
+                },
+            },
             tag = "legacy",
         },
     },
@@ -81,8 +86,7 @@ M.plugin = {
 
         require("plugins.lspsaga")
     end,
-    event = { "BufReadPre *.*", "FileReadPre *.*" },
-    ft = { "dockerfile" },
+    event = { "BufReadPre", "FileReadPre" },
     cmd = "Mason",
 }
 
