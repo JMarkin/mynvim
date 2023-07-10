@@ -10,6 +10,11 @@ M.plugin = {
         require("lazy").load({ plugins = "firenvim", wait = true })
         vim.fn["firenvim#install"](0)
     end,
+    config = function()
+        vim.opt.guifont = "JetBrainsMonoNL Nerd Font Mono:h10"
+        vim.g.firenvim_config.localSettings[".*"] = { cmdline = "firenvim" }
+        vim.o.laststatus = 0
+    end,
 }
 
 return M

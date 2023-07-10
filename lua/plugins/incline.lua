@@ -36,6 +36,7 @@ M.plugin = {
     init = function()
         vim.opt.laststatus = 3
     end,
+    cond = not vim.g.started_by_firenvim,
     config = function()
         require("incline").setup({
             debounce_threshold = { falling = 150, rising = 30 },
