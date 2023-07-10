@@ -9,15 +9,24 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     {
         "stevearc/dressing.nvim",
-        opts = {
-            input = {
-                insert_only = false,
-                override = function(conf)
-                    conf.col = -1
-                    conf.row = 0
-                    return conf
-                end,
-            },
+        opts = {},
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("dressing").setup({
+                input = {
+                    winhighlight = require("ofirkai.plugins.dressing").winhighlight,
+                    insert_only = false,
+                    override = function(conf)
+                        conf.col = -1
+                        conf.row = 0
+                        return conf
+                    end,
+                },
+            })
+        end,
+        dependencies = {
+            "ofirgall/ofirkai.nvim",
         },
     },
 
@@ -33,23 +42,11 @@ require("lazy").setup({
         },
     },
 
-    {
-        "rcarriga/nvim-notify",
-        config = function()
-            vim.notify = require("notify")
-        end,
-        lazy = false,
-        priority = 1000,
-        opts = {
-            max_width = 80,
-            timeout = 1000,
-            stages = "static",
-            level = vim.log.levels.INFO,
-            background_colour = "#000000",
-        },
-    },
+    require("plugins.notif").plugin,
+
     -- командная строчка
     require("plugins.wilder").plugin,
+    -- require("plugins.noice").plugin,
 
     require("plugins.tabline").plugin,
     require("plugins.incline").plugin,
@@ -80,69 +77,15 @@ require("lazy").setup({
         },
     },
 
-    -- Markdown превью
-    {
-        "ellisonleao/glow.nvim",
-        cond = is_not_mini,
-        config = true,
-        cmd = "Glow",
-    },
-
     -- Цвет тема
-    {
-        "Iron-E/nvim-highlite",
-        enabled = false,
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("colorscheme.highlite")
-        end,
-    },
-    {
-        "olimorris/onedarkpro.nvim",
-        enabled = false,
-        lazy = false,
-        priority = 1000, -- Ensure it loads first
-        config = function()
-            require("colorscheme.onedark")
-        end,
-    },
     {
         "ofirgall/ofirkai.nvim",
         enabled = true,
         lazy = false,
         priority = 1000, -- Ensure it loads first
-        dependencies = {
-            {
-                "rcarriga/nvim-notify",
-            },
-            {
-                "stevearc/dressing.nvim",
-            },
-        },
         config = function()
             require("ofirkai").setup({})
             -- Requires `WhiteBorder` to show the title.
-            require("dressing").setup({
-                input = {
-                    win_options = {
-                        winhighlight = require("ofirkai.plugins.dressing").winhighlight,
-                    },
-                    insert_only = false,
-                    override = function(conf)
-                        conf.col = -1
-                        conf.row = 0
-                        return conf
-                    end,
-                },
-            })
-            require("notify").setup({
-                background_colour = require("ofirkai").scheme.ui_bg,
-                max_width = 80,
-                timeout = 1000,
-                stages = "static",
-                level = vim.log.levels.INFO,
-            })
             for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
                 vim.api.nvim_set_hl(0, group, {})
             end
@@ -324,30 +267,10 @@ require("lazy").setup({
         event = { "BufReadPost", "FileReadPost" },
     },
     -- EasyMotion
-    -- require("plugins.leap").plugin,
-    -- {
-    --     "ggandor/flit.nvim",
-    --     dependencies = { "ggandor/leap.nvim" },
-    --     opts = {},
-    --     keys = { "f", "F", "t", "T" },
-    -- },
     require("plugins.flash").plugin,
     require("plugins.spider").plugin,
     require("plugins.debug").plugin,
-    --- поиски по файлам проверкам и т.п. fzf вобщем
-    {
-        "ibhagwan/fzf-lua",
-        lazy = true,
-        event = { "BufReadPost", "FileReadPost" },
-        dependencies = {
-            "lotabout/skim",
-        },
-        config = function()
-            require("plugins.fzflua")
-        end,
-        keys = "<leader>s",
-        cmd = "FzfLua",
-    },
+    require("plugins.fzflua").plugin,
     require("plugins.neogen").plugin,
     --nginx
     {
