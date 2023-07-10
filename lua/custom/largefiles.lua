@@ -9,7 +9,11 @@ local max_line_length = 2000
 local function file_exists(file)
     local f = io.open(file, "rb")
     if f then
+        local _, _, code = f:read(1)
         f:close()
+        if code == 21 then
+            return false
+        end
     end
     return f ~= nil
 end
