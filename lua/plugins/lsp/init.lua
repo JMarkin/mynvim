@@ -58,7 +58,7 @@ M.plugin = {
         },
     },
     config = function()
-        local setup_lsp = require("settings.lang").setup_lsp
+        local setup_lsp = require("plugins.lsp.lang").setup_lsp
 
         require("mason").setup()
         require("mason-lspconfig").setup({})

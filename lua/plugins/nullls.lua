@@ -280,7 +280,7 @@ M.enable = function(diagnostics, formatters, completions)
         sources = sources,
         temp_dir = "/tmp",
         update_in_insert = false,
-        on_attach = require("settings.lang").on_attach,
+        on_attach = require("plugins.lsp.lang").on_attach,
         root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
         should_attach = function(bufnr)
             -- if vim.g.disable_lsp then

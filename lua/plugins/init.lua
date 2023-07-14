@@ -85,6 +85,7 @@ require("lazy").setup({
         priority = 1000, -- Ensure it loads first
         config = function()
             require("ofirkai").setup({})
+            vim.api.nvim_set_hl(0, "LspInlayHint", { link = "InlayHints", default = true })
             -- Requires `WhiteBorder` to show the title.
             for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
                 vim.api.nvim_set_hl(0, group, {})
