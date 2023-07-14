@@ -17,14 +17,20 @@ local diag_opts = {
 }
 
 local on_attach = function(client, bufnr)
+    -- vim.print(client.server_capabilities)
+
     if is_large_file(bufnr, true) then
-        local clients = vim.lsp.buf_get_clients(bufnr)
-        for client_id, _ in pairs(clients) do
-            vim.lsp.buf_detach_client(bufnr, client_id)
-        end
+        vim.lsp.buf_detach_client(bufnr, client.id)
         return
     end
 
+    local inlayhint = client.server_capabilities.inlayHintProvider
+    if inlayhint then
+        -- vim.print(inlayhint)
+        if inlayhint.resolveProvider then
+            vim.lsp.buf.inlay_hint(bufnr, true)
+        end
+    end
     vim.bo.tagfunc = nil
 end
 
@@ -141,6 +147,9 @@ M.lua_ls = function()
     local opts = {
         settings = {
             Lua = {
+                hint = {
+                    enable = true,
+                },
                 runtime = {
                     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of
                     -- Neovim)

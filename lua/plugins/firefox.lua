@@ -12,7 +12,14 @@ M.plugin = {
     end,
     config = function()
         vim.opt.guifont = "JetBrainsMonoNL Nerd Font Mono:h10"
-        vim.g.firenvim_config.localSettings[".*"] = { cmdline = "firenvim" }
+        vim.g.firenvim_config = {
+            -- config values, like in my case:
+            localSettings = {
+                [".*"] = {
+                    takeover = "never",
+                },
+            },
+        }
         vim.o.laststatus = 0
     end,
 }
