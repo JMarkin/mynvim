@@ -23,16 +23,16 @@ M.plugin = {
             },
         })
 
-        vim.keymap.set("n", "<leader>lt", function()
+        vim.keymap.set("n", "<leader>ltt", function()
             require("neotest").run.run()
         end, { desc = "Tests: run nearest test" })
-        vim.keymap.set("n", "<leader>ls", function()
+        vim.keymap.set("n", "<leader>lts", function()
             require("neotest").run.stop()
         end, { desc = "Tests: stop nearest test" })
-        vim.keymap.set("n", "<leader>la", function()
+        vim.keymap.set("n", "<leader>lta", function()
             require("neotest").run.attach()
         end, { desc = "Tests: attach nearest test" })
-        vim.keymap.set("n", "<leader>lf", function()
+        vim.keymap.set("n", "<leader>ltf", function()
             require("neotest").run.run(vim.fn.expand("%"))
         end, { desc = "Tests: run current file" })
     end,
