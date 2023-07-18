@@ -39,7 +39,7 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
     vim.keymap.set("n", "S", api.tree.search_node, opts("Search"))
     vim.keymap.set("n", "d", float_close_decorator(api.fs.remove), opts("Delete"))
-    vim.keymap.set("n", "r", float_close_decorator(api.fs.rename_sub), opts("Rename: Omit Filename"))
+    vim.keymap.set("n", "r", float_close_decorator(api.fs.rename), opts("Rename: Filename"))
 
     vim.keymap.set("n", "m", api.marks.toggle, opts("Toggle Bookmark"))
     vim.keymap.set("n", "bmv", api.marks.bulk.move, opts("Move Bookmarked"))
