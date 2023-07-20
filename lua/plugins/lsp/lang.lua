@@ -26,10 +26,9 @@ local on_attach = function(client, bufnr)
 
     local inlayhint = client.server_capabilities.inlayHintProvider
     if inlayhint then
-        -- vim.print(inlayhint)
-        if inlayhint.resolveProvider then
-            vim.lsp.buf.inlay_hint(bufnr, true)
-        end
+        vim.schedule(function()
+            vim.lsp.inlay_hint(bufnr, true)
+        end)
     end
     vim.bo.tagfunc = nil
 end
@@ -354,6 +353,12 @@ M.clangd = function()
 
     require("clangd_extensions").setup({
         server = opts,
+        extensions = {
+            autoSetHints = false,
+            inlay_hints = {
+                inline = false,
+            },
+        },
     })
 end
 
