@@ -23,7 +23,9 @@ M.format = function()
     vim.lsp.buf.format({
         filter = function(client)
             if require("plugins.nullls").enabled then
-                return client.name == "null-ls" or client.name == "rust_analyzer"
+                return client.name == "null-ls" or
+                    client.name == "rust_analyzer" or
+                    client.name == "clangd"
             end
             return true
         end,
@@ -58,15 +60,16 @@ M.plugin = {
         },
     },
     config = function()
-        local setup_lsp = require("plugins.lsp.lang").setup_lsp
+        local lang = require("plugins.lsp.lang")
+        local setup_lsp = lang.setup_lsp
 
         require("mason").setup()
         require("mason-lspconfig").setup({})
         require("mason-lspconfig").setup_handlers({
             function(server_name)
-                local s_lsp = M[server_name]
+                local s_lsp = lang[server_name]
                 if s_lsp == nil or s_lsp == "" then
-                    -- vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
+                    vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
                     setup_lsp(server_name, {})
                 else
                     s_lsp()
