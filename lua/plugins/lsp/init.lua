@@ -1,31 +1,12 @@
 local M = {}
 
 local is_not_mini = require("custom.funcs").is_not_mini
-local ensure_installed = {
-    "lua_ls",
-    "rust_analyzer",
-    "jsonls",
-    "yamlls",
-    "html",
-    "marksman",
-    "taplo",
-    "volar",
-    "vimls",
-    "bashls",
-    "clangd",
-    "cssls",
-    "dockerls",
-    "gopls",
-    "jedi_language_server@0.39.0",
-}
 
 M.format = function()
     vim.lsp.buf.format({
         filter = function(client)
             if require("plugins.nullls").enabled then
-                return client.name == "null-ls" or
-                    client.name == "rust_analyzer" or
-                    client.name == "clangd"
+                return client.name == "null-ls" or client.name == "rust_analyzer" or client.name == "clangd"
             end
             return true
         end,
@@ -34,16 +15,10 @@ M.format = function()
 end
 
 M.plugin = {
-    "williamboman/mason.nvim",
+    "neovim/nvim-lspconfig",
     cond = is_not_mini,
     lazy = true,
     dependencies = {
-        {
-            "neovim/nvim-lspconfig",
-        },
-        {
-            "williamboman/mason-lspconfig.nvim",
-        },
         {
             "glepnir/lspsaga.nvim",
             dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -60,22 +35,16 @@ M.plugin = {
         },
     },
     config = function()
-        local lang = require("plugins.lsp.lang")
-        local setup_lsp = lang.setup_lsp
-
-        require("mason").setup()
-        require("mason-lspconfig").setup({})
-        require("mason-lspconfig").setup_handlers({
-            function(server_name)
-                local s_lsp = lang[server_name]
-                if s_lsp == nil or s_lsp == "" then
-                    vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
-                    setup_lsp(server_name, {})
-                else
-                    s_lsp()
-                end
-            end,
-        })
+        local lang = require("lsp")
+        local utils = require("lsp.utils")
+        for server_name, lsp in pairs(lang) do
+            if type(lsp) == "string" then
+                vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
+                utils.setup_lsp(server_name, {})
+            else
+                lsp.setup()
+            end
+        end
 
         vim.diagnostic.config({
             underline = true,
@@ -90,15 +59,13 @@ M.plugin = {
         require("plugins.lspsaga")
     end,
     event = { "BufReadPre", "FileReadPre" },
-    cmd = "Mason",
 }
 
 M.install = function()
-    require("mason").setup()
-    require("mason-lspconfig").setup({
-        ensure_installed = ensure_installed,
-    })
-    require("mason-lspconfig.ensure_installed")()
+    local lang = require("lsp")
+    for _, lsp in pairs(lang) do
+        lsp.install()
+    end
 end
 
 return M

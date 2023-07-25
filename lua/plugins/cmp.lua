@@ -66,7 +66,7 @@ M.plugin = {
         "lukas-reineke/cmp-rg",
         "saadparwaiz1/cmp_luasnip",
         "danymat/neogen",
-        "hrsh7th/cmp-nvim-lua",
+        -- "hrsh7th/cmp-nvim-lua",
         {
             "JMarkin/cmp-diag-codes",
             -- dev = true,
@@ -113,7 +113,7 @@ M.plugin = {
         end, { "i", "s" })
 
         local sources = {
-            { name = "nvim_lua" },
+            -- { name = "nvim_lua" },
             { name = "path", keyword_length = 3 },
             { name = "diag-codes", in_comment = true },
         }
@@ -140,7 +140,6 @@ M.plugin = {
                     cmp.config.compare.offset,
                     cmp.config.compare.exact,
                     cmp.config.compare.score,
-                    require("clangd_extensions.cmp_scores"),
                     require("cmp-under-comparator").under,
                     cmp.config.compare.kind,
                     cmp.config.compare.sort_text,

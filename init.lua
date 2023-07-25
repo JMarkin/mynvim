@@ -7,7 +7,7 @@ vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
 
 vim.g.loaded_matchit = 1
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -39,4 +39,8 @@ vim.api.nvim_create_user_command("InstallDefault", function(_)
     require("plugins.nullls").install_default()
     require("plugins.lsp").install()
     require("plugins.treesitter").install()
+end, {})
+
+vim.api.nvim_create_user_command("LspInstall", function(_)
+    require("plugins.lsp").install()
 end, {})
