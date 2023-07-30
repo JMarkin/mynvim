@@ -22,6 +22,16 @@ local DEFAULT_INSTALL_EXEC = {
     prettierd = { command = "npm", args = { "install", "-g", "@fsouza/prettierd" } },
     ["bash-language-server"] = { command = "npm", args = { "install", "-g", "bash-language-server" } },
     ["vue-language-server"] = { command = "npm", args = { "install", "-g", "@volar/vue-language-server" } },
+    ["docker-compose-langserver"] = {
+        command = "npm",
+        args = { "install", "-g", "@microsoft/compose-language-service" },
+    },
+    ["docker-langserver"] = { command = "npm", args = { "install", "-g", "dockerfile-language-server-nodejs" } },
+    ["yaml-language-server"] = { command = "npm", args = { "install", "-g", "yaml-language-server" } },
+    ["vscode-json-language-server"] = { command = "npm", args = { "install", "-g", "vscode-langservers-extracted" } },
+    ["vscode-html-language-server"] = { command = "npm", args = { "install", "-g", "vscode-langservers-extracted" } },
+    ["vscode-css-language-server"] = { command = "npm", args = { "install", "-g", "vscode-langservers-extracted" } },
+    ["vim-language-server"] = { command = "npm", args = { "install", "-g", "vim-language-server" } },
 
     -- go
     protolint = { command = "go", args = { "install", "github.com/yoheimuta/protolint/cmd/protolint@latest" } },
@@ -42,6 +52,13 @@ local DEFAULT_INSTALL_EXEC = {
             "taplo-cli",
         },
     },
+    neocmakelsp = {
+        command = "cargo",
+        args = {
+            "install",
+            "neocmakelsp",
+        },
+    },
 
     -- rustup
     ["rust-analyzer"] = {
@@ -57,8 +74,8 @@ local DEFAULT_INSTALL_EXEC = {
     },
 }
 
-local function exec_install(exec)
-    vim.schedule(function()
+local function exec_install(exec, sync)
+    local f = function()
         if vim.fn.executable(exec) ~= 1 then
             local shell = DEFAULT_INSTALL_EXEC[exec]
             if shell ~= nil then
@@ -82,10 +99,20 @@ local function exec_install(exec)
                 local job = require("plenary.job"):new(shell)
                 vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
                 job:start()
+                if sync then
+                    job:wait()
+                end
             end
             vim.notify(exec .. " not found config, please install manually", vim.log.levels.WARN)
+        else
+            vim.notify(string.format("%s installed", exec), vim.log.levels.INFO)
         end
-    end)
+    end
+    if sync then
+        f()
+    else
+        vim.schedule(f)
+    end
 end
 
 return exec_install

@@ -35,12 +35,3 @@ require("custom")
 require("settings")
 require("plugins")
 
-vim.api.nvim_create_user_command("InstallDefault", function(_)
-    require("plugins.nullls").install_default()
-    require("plugins.lsp").install()
-    require("plugins.treesitter").install()
-end, {})
-
-vim.api.nvim_create_user_command("LspInstall", function(_)
-    require("plugins.lsp").install()
-end, {})

@@ -2,8 +2,8 @@ local utils = require("lsp.utils")
 local external_install = require("custom.external_install")
 
 return {
-    install = function()
-        external_install("vue-language-server")
+    install = function(sync)
+        external_install("vue-language-server", sync)
     end,
     setup = function()
         local setup_lsp = utils.setup_lsp

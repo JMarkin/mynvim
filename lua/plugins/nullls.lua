@@ -1,5 +1,6 @@
 local M = {}
 
+local external_install = require("custom.external_install")
 local is_not_mini = require("custom.funcs").is_not_mini
 
 M.enabled = false
@@ -49,8 +50,7 @@ M.plugin = {
             name = "bandit",
             meta = {
                 url = "https://github.com/PyCQA/bandit",
-                description =
-                [[Bandit is a tool designed to find common security issues in Python code. To do this Bandit
+                description = [[Bandit is a tool designed to find common security issues in Python code. To do this Bandit
             processes each file, builds an AST from it, and runs appropriate plugins against the AST nodes. Once Bandit
             has finished scanning all the files it generates a report.]],
             },
@@ -138,58 +138,9 @@ local DEFAULT_FORMATTERS = {
 
 local DEFAULT_COMPLETIONS = {}
 
-local DEFAULT_INSTALL_EXEC = {
-    ruff = { command = "pip", args = { "install", "ruff" } },
-    protolint = { command = "go", args = { "install", "github.com/yoheimuta/protolint/cmd/protolint@latest" } },
-    curlylint = { command = "pip", args = { "install", "curlylint" } },
-    spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
-    sqlfluff = { command = "pip", args = { "install", "sqlfluff" } },
-    rome = { command = "npm", args = { "install", "-g", "rome" } },
-    yapf = { command = "pip", args = { "install", "yapf" } },
-    black = { command = "pip", args = { "install", "black" } },
-    isort = { command = "pip", args = { "install", "isort" } },
-    mypy = { command = "pip", args = { "install", "mypy" } },
-    pylint = { command = "pip", args = { "install", "pylint" } },
-    flake8 = { command = "pip", args = { "install", "flake8" } },
-    docformatter = { command = "pip", args = { "install", "docformatter" } },
-    yamlfmt = { command = "go", args = { "install", "github.com/google/yamlfmt/cmd/yamlfmt@latest" } },
-    stylua = { command = "cargo", args = { "install", "stylua" } },
-    djhtml = { command = "pip", args = { "install", "djhtml" } },
-    fixjson = { command = "npm", args = { "install", "-g", "fixjson" } },
-    nginxbeautifier = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
-    taplo = { command = "cargo", args = { "install", "taplo-cli", "--locked" } },
-    prettierd = { command = "npm", args = { "install", "-g", "@fsouza/prettierd" } },
-}
 local EXEC_CONVERT = {
     ["nginx_beautifier"] = "nginxbeautifier",
 }
-
-local function exec_install(exec)
-    exec = EXEC_CONVERT[exec] or exec
-    local function condition(_)
-        if vim.fn.executable(exec) ~= 1 then
-            local shell = DEFAULT_INSTALL_EXEC[exec]
-            if shell ~= nil then
-                shell = vim.fn.map(shell, function(_, v)
-                    return v
-                end)
-                shell.on_exit = function(j, return_val)
-                    if return_val ~= 0 then
-                        vim.notify(exec .. " error" .. " " .. j:result(), vim.log.levels.WARN)
-                    end
-                end
-                local job = require("plenary.job"):new(shell)
-                vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
-                job:start()
-                return true
-            end
-            vim.notify(exec .. " not found, please install", vim.log.levels.WARN)
-            return false
-        end
-        return true
-    end
-    return condition
-end
 
 local function exist_exec(exec)
     exec = EXEC_CONVERT[exec] or exec
@@ -199,7 +150,7 @@ local function exist_exec(exec)
     return condition
 end
 
-M.install_default = function()
+M.install = function(sync)
     local diagnostics = DEFAULT_DIAGNOSTICS
     local formatters = DEFAULT_FORMATTERS
     local completions = DEFAULT_COMPLETIONS
@@ -208,11 +159,8 @@ M.install_default = function()
     vim.list_extend(sources, formatters)
     vim.list_extend(sources, completions)
     for _, source in ipairs(sources) do
-        vim.notify("try to install " .. source, vim.log.levels.DEBUG)
-        local installed = exec_install(source)(nil)
-        if installed then
-            vim.notify("installed " .. source, vim.log.levels.DEBUG)
-        end
+        local exec = EXEC_CONVERT[source] or source
+        external_install(exec, sync)
     end
 end
 

@@ -2,7 +2,7 @@ local utils = require("lsp.utils")
 local external_install = require("custom.external_install")
 
 return {
-    install = function()
+    install = function(sync)
         if vim.fn.executable("clangd") ~= 1 then
             print("please manual install clangd")
             print("alpine: sudo apk add clang-extra-tools llvm16")

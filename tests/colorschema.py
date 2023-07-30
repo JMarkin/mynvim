@@ -1,19 +1,19 @@
 import os
 
-#dldldld
+# dldldld
 """asd
 zxc
 """
 
-#TODO: 123
-#FIXME: 11
+# TODO: 123
+# FIXME: 11
 
 
 class TestClass:
-    s: str = 'sad'
+    s: str = "sad"
 
     def __init__(self, varible):
-        self.a = '%123'
+        self.a = "%123"
         self.variable = varible
 
 
@@ -44,9 +44,9 @@ def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
 
 
-s = '^[1-9]123\n\t$'
+s = "^[1-9]123\n\t$"
 
-s = '<h>asd</h>'
+s = "<h>asd</h>"
 """
 ss
 """
@@ -60,7 +60,6 @@ def a():
     """asdsad."""
 
     def f():
-
         def c():
             {}
             print(1)
