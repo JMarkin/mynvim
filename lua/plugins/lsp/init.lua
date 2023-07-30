@@ -35,16 +35,7 @@ M.plugin = {
         },
     },
     config = function()
-        local lang = require("lsp")
-        local utils = require("lsp.utils")
-        for server_name, lsp in pairs(lang) do
-            if type(lsp) == "string" then
-                vim.notify("default config for " .. server_name, vim.log.levels.DEBUG)
-                utils.setup_lsp(server_name, {})
-            else
-                lsp.setup()
-            end
-        end
+        require("lsp").setup()
 
         vim.diagnostic.config({
             underline = true,
@@ -60,12 +51,5 @@ M.plugin = {
     end,
     event = { "BufReadPre", "FileReadPre" },
 }
-
-M.install = function()
-    local lang = require("lsp")
-    for _, lsp in pairs(lang) do
-        lsp.install()
-    end
-end
 
 return M

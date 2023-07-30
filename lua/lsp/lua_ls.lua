@@ -2,8 +2,8 @@ local utils = require("lsp.utils")
 local external_install = require("custom.external_install")
 
 local M = {
-    install = function()
-        external_install("lua-language-server")
+    install = function(sync)
+        external_install("lua-language-server", sync)
     end,
     setup = function()
         local opts = {

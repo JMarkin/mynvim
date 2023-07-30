@@ -2,8 +2,8 @@ local utils = require("lsp.utils")
 local external_install = require("custom.external_install")
 
 return {
-    install = function()
-        external_install("rust-analyzer")
+    install = function(sync)
+        external_install("rust-analyzer", sync)
     end,
     setup = function()
         local present, rust_tools = pcall(require, "rust-tools")

@@ -22,3 +22,17 @@ vim.keymap.set("n", "<leader>td", ":tabclose<CR>", { desc = "Tabs: close" })
 vim.keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
 vim.keymap.set("n", "<leader>tmp", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
 vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next" })
+
+vim.api.nvim_create_user_command("LspInstall", function(_)
+    require("lsp").install()
+end, {})
+
+vim.api.nvim_create_user_command("LspInstallSync", function(_)
+    require("lsp").install(true)
+end, {})
+
+vim.api.nvim_create_user_command("InstallDefault", function(_)
+    require("plugins.nullls").install(true)
+    require("lsp").install(true)
+    require("plugins.treesitter").install()
+end, {})
