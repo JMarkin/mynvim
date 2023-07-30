@@ -78,6 +78,7 @@
   "pqf": { "branch": "main", "commit": "d15582d3d0c09280f371fa5f21537cf4530ed330" },
   "promise-async": { "branch": "main", "commit": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e" },
   "python-copy-reference.vim": { "branch": "main", "commit": "8172d0ce83d730820d9497fd2e988046022d0b99" },
+  "rainbow-delimiters.nvim": { "branch": "master", "commit": "f6bcc8d1b31702edcf3852f531bdab8191c7c5f0" },
   "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
   "schemastore.nvim": { "branch": "main", "commit": "fba131b5ef7a54a8f8d71ef2a2e8d2263b87daac" },
   "skim": { "branch": "master", "commit": "291fc34c58b1670a5e8c95f1e8f930b82c030b19" },

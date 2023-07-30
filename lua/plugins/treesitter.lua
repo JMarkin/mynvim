@@ -49,11 +49,6 @@ M.plugin = {
     dependencies = {
         "m-demare/hlargs.nvim",
         "yioneko/nvim-yati",
-        {
-            name = "nvim-ts-rainbow",
-            enabled = false,
-            url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
-        },
         "nvim-treesitter/nvim-treesitter-refactor",
         "nvim-treesitter/playground",
         {
@@ -68,6 +63,32 @@ M.plugin = {
                 vim.g.matchup_matchparen_deferred_show_delay = 1000
                 vim.g.matchup_matchparen_deferred_hide_delay = 1000
                 vim.g.matchup_matchparen_timeout = 100
+            end,
+        },
+        {
+            "HiPhish/rainbow-delimiters.nvim",
+            config = function()
+                local rainbow_delimiters = require("rainbow-delimiters")
+                require("rainbow-delimiters.setup")({
+                    strategy = {
+                        [""] = rainbow_delimiters.strategy["global"],
+                        commonlisp = rainbow_delimiters.strategy["local"],
+                    },
+                    query = {
+                        [""] = "rainbow-delimiters",
+                        latex = "rainbow-blocks",
+                    },
+                    highlight = {
+                        "RainbowDelimiterRed",
+                        "RainbowDelimiterYellow",
+                        "RainbowDelimiterBlue",
+                        "RainbowDelimiterOrange",
+                        "RainbowDelimiterGreen",
+                        "RainbowDelimiterViolet",
+                        "RainbowDelimiterCyan",
+                    },
+                    blacklist = {},
+                })
             end,
         },
     },
@@ -100,16 +121,6 @@ M.plugin = {
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = true,
-            },
-            rainbow = {
-                enable = false,
-                extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                max_file_lines = 1500, -- Do not enable for files with more than n lines, int
-                query = {
-                    "rainbow-parens",
-                    html = "rainbow-tags",
-                },
-                disable = is_disable,
             },
             incremental_selection = {
                 enable = true,
