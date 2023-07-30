@@ -76,34 +76,49 @@ local DEFAULT_INSTALL_EXEC = {
 
 local function exec_install(exec, sync)
     local f = function()
+        local notify = nil
         if vim.fn.executable(exec) ~= 1 then
             local shell = DEFAULT_INSTALL_EXEC[exec]
             if shell ~= nil then
                 shell = vim.fn.map(shell, function(_, v)
                     return v
                 end)
+                shell.enable_recording = false
                 shell.on_exit = function(_, return_val)
                     if return_val ~= 0 then
-                        vim.notify(string.format("%s error", exec), vim.log.levels.WARN)
-                        return
+                        notify = vim.notify(string.format("%s error", exec), vim.log.levels.WARN, { replace = notify })
                     else
-                        vim.notify(string.format("Complete install %s", exec), vim.log.levels.INFO)
+                        notify = vim.notify(
+                            string.format("Complete install %s", exec),
+                            vim.log.levels.INFO,
+                            { replace = notify }
+                        )
                     end
                 end
                 shell.on_stdout = function(_, data)
-                    vim.notify(string.format("INSTALL %s ", exec) .. data, vim.log.levels.DEBUG)
+                    notify = vim.notify(
+                        string.format("INSTALL %s %s", exec, data),
+                        vim.log.levels.INFO,
+                        { replace = notify }
+                    )
                 end
                 shell.on_stderr = function(_, data)
-                    vim.notify(string.format("INSTALL %s ", exec) .. data, vim.log.levels.DEBUG)
+                    notify = vim.notify(
+                        string.format("INSTALL %s %s", exec, data),
+                        vim.log.levels.INFO,
+                        { replace = notify }
+                    )
                 end
                 local job = require("plenary.job"):new(shell)
-                vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
+                notify = vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
                 job:start()
                 if sync then
-                    job:wait()
+                    -- 10min
+                    job:wait(1000 * 60 * 10, 5, true)
                 end
+            else
+                vim.notify(exec .. " not found config, please install manually", vim.log.levels.WARN)
             end
-            vim.notify(exec .. " not found config, please install manually", vim.log.levels.WARN)
         else
             vim.notify(string.format("%s installed", exec), vim.log.levels.INFO)
         end
