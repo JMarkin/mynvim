@@ -33,13 +33,6 @@ opt.scrollback = 2000
 opt.synmaxcol = 2000
 opt.shortmess = "fFIlqx"
 
--- fold
-opt.foldmethod = "manual"
-opt.foldcolumn = "1"
-opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-opt.foldlevelstart = 99
-opt.foldenable = true
-
 vim.cmd([[
 syntax on
 filetype plugin on

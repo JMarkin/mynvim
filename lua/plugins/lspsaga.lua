@@ -115,9 +115,6 @@ vim.keymap.set("n", "<leader>la", "<cmd>Lspsaga code_action<cr>", { silent = tru
 vim.keymap.set("n", "<leader>lr", "<cmd>Lspsaga rename<CR>", { silent = true, desc = "Lang: rename" })
 vim.keymap.set("n", "<leader>lR", "<cmd>Lspsaga rename ++project<CR>", { silent = true, desc = "Lang: rename project" })
 
-vim.keymap.set("n", "<Leader>li", "<cmd>Lspsaga incoming_calls<CR>", { desc = "Lang: Incomming calls" })
-vim.keymap.set("n", "<Leader>lo", "<cmd>Lspsaga outgoing_calls<CR>", { desc = "Lang: Outgoing calls" })
-
 vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { desc = "Jump: prev diag" })
 vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { desc = "Jump: next diag" })
 
