@@ -7,14 +7,14 @@ M.plugin = {
             tmux_integration = false,
         })
 
-        vim.keymap.set({ "n" }, { "<C-l>" }, require("smart-splits").move_cursor_left, { silent = true, desc = "left" })
+        vim.keymap.set({ "n" }, { "<C-l>" }, require("smart-splits").move_cursor_right, { silent = true, desc = "right" })
         vim.keymap.set({ "n" }, { "<C-j>" }, require("smart-splits").move_cursor_down, { silent = true, desc = "down" })
         vim.keymap.set({ "n" }, { "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
         vim.keymap.set(
             { "n" },
             { "<C-h>" },
-            require("smart-splits").move_cursor_right,
-            { silent = true, desc = "right" }
+            require("smart-splits").move_cursor_left,
+            { silent = true, desc = "left" }
         )
 
         vim.keymap.set(
