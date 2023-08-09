@@ -9,6 +9,9 @@ local M = {
         local opts = {
             settings = {
                 Lua = {
+                    telemetry = {
+                        enable = false,
+                    },
                     hint = {
                         enable = true,
                     },
@@ -27,6 +30,8 @@ local M = {
                         -- Make the server aware of Neovim runtime files
                         library = {
                             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.expand("$VIMRUNTIME")] = true,
+                            [vim.fn.expand("~/.config/nvim/lua")] = true,
                         },
                     },
                 },

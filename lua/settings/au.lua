@@ -9,21 +9,6 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
         vim.cmd([[if exists(':rshada /tmp/shada') | rshada /tmp/shada | wshada /tmp/shada | endif]])
     end,
 })
--- Запоминает где nvim последний раз редактировал файл
-local last_change = "LastChange"
-vim.api.nvim_create_augroup(last_change, { clear = true })
-
-local function save_last_change()
-    vim.cmd(
-        [[if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" |
-        endif ]]
-    )
-end
-vim.api.nvim_create_autocmd("BufReadPost", {
-    group = last_change,
-    pattern = { "*.*" },
-    callback = save_last_change,
-})
 
 --- сохранение fold
 local save_fold = "PersistentFold"
@@ -36,11 +21,10 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
 })
 vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*.*",
-    command = "silent! loadview",
+    command = "silent loadview",
     group = save_fold,
     desc = "Load view on entering buffer",
 })
-
 
 --matchup custom
 -- local matchup_words = "MatchUpWords"
