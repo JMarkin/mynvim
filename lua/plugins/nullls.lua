@@ -133,7 +133,7 @@ local DEFAULT_FORMATTERS = {
     "isort",
     "nginx_beautifier",
     "taplo",
-    "fixjson",
+    "prettierd",
 }
 
 local DEFAULT_COMPLETIONS = {}
