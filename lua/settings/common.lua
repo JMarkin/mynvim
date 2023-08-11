@@ -54,10 +54,10 @@ if vim.g.neovide then
 end
 
 vim.g.root_pattern = {
+    "pyproject.toml",
+    "package.json",
     ".vimrc.lua",
     "Makefile",
-    "pyproject.toml",
     ".git",
     ".venv",
-    "package.json",
 }
