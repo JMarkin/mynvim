@@ -3,7 +3,7 @@ local M = {}
 M.plugin = {
     "nvim-lualine/lualine.nvim",
     enabled = true,
-    event = { "BufReadPost" },
+    event = { "BufReadPost", "FileReadPost" },
     config = function()
         local lualine = require("lualine")
 

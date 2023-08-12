@@ -3,13 +3,29 @@ local M = {}
 local is_large_file = require("custom.largefiles").is_large_file
 
 local syntax_langs = {
-    "regex",
+    -- languages
     "rust",
+    "c",
     "cpp",
     "cuda",
     "python",
     "typescript",
     "javascript",
+    "fish",
+    "go",
+    "html",
+    "htmldjango",
+    "css",
+    "bash",
+    "vue",
+    "scss",
+    "sql",
+    "markdown",
+    "json",
+    "json5",
+    "jsonc",
+    "graphql",
+    -- conf files
     "jsdoc",
     "yaml",
     "toml",
@@ -17,24 +33,21 @@ local syntax_langs = {
     "http",
     "make",
     "cmake",
-    "fish",
-    "go",
-    "html",
-    "htmldjango",
-    "css",
-    "bash",
     "dockerfile",
-    "vue",
-    "scss",
-    "sql",
-    "markdown",
-    "markdown_inline",
-    "jsonc",
     "ini",
     "gitignore",
+    "vim",
+    "vimdoc",
+    "passwd",
+    "requirements",
+    "hcl",
+    -- tools
+    "markdown_inline",
+    "jq",
+    "regex",
     "git_rebase",
-    "graphql",
     "query",
+    "comment",
 }
 
 ---@diagnostic disable-next-line: unused-local
@@ -91,6 +104,7 @@ M.plugin = {
                 })
             end,
         },
+        "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
         require("nvim-treesitter.install").prefer_git = true
@@ -131,6 +145,9 @@ M.plugin = {
                     node_decremental = "<s-tab>",
                 },
                 disable = is_disable,
+            },
+            context_commentstring = {
+                enable = true,
             },
             yati = {
                 enable = true,
@@ -194,10 +211,14 @@ M.plugin = {
     end,
 }
 
-M.install = function()
+M.install = function(sync)
     require("nvim-treesitter")
     for _, lang in ipairs(syntax_langs) do
-        vim.cmd("TSUpdateSync " .. lang)
+        if sync then
+            vim.cmd("TSUpdateSync " .. lang)
+        else
+            vim.cmd("TSUpdate " .. lang)
+        end
     end
 end
 

@@ -77,6 +77,15 @@ M.plugin = {
             "hrsh7th/cmp-nvim-lsp",
         },
         "rcarriga/cmp-dap",
+        {
+            "JMarkin/gentags.lua",
+            lazy = true,
+            cond = vim.fn.executable("ctags") == 1,
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+            },
+            opts = {},
+        },
     },
     config = function()
         local luasnip = require("luasnip")

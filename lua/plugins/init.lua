@@ -29,7 +29,14 @@ require("lazy").setup({
             "ofirgall/ofirkai.nvim",
         },
     },
-
+    {
+        "mvllow/modes.nvim",
+        opts = {
+            line_opacity = 0.25,
+            set_cursor = false,
+        },
+        event = "VimEnter",
+    },
     {
         "ibhagwan/smartyank.nvim",
         event = "VimEnter",
@@ -86,7 +93,6 @@ require("lazy").setup({
         config = function()
             require("ofirkai").setup({})
             vim.api.nvim_set_hl(0, "LspInlayHint", { link = "InlayHints", default = true })
-            -- Requires `WhiteBorder` to show the title.
             for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
                 vim.api.nvim_set_hl(0, group, {})
             end
@@ -164,14 +170,6 @@ require("lazy").setup({
         opts = {},
     },
     require("plugins.todos").plugin,
-    {
-        "mvllow/modes.nvim",
-        opts = {
-            line_opacity = 0.25,
-            set_cursor = false,
-        },
-        event = "VimEnter",
-    },
 
     -- Доп утился для языков
     {
@@ -223,17 +221,7 @@ require("lazy").setup({
         },
     },
     require("plugins.ufo").plugin,
-    -- Автокомлиты
     require("plugins.cmp").plugin,
-    {
-        "JMarkin/gentags.lua",
-        lazy = true,
-        cond = vim.fn.executable("ctags") == 1,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        opts = {},
-    },
     require("plugins.buffers").plugin,
     require("plugins.splits").plugin,
 
@@ -261,13 +249,7 @@ require("lazy").setup({
         },
         event = "BufReadPre",
     },
-    -- Комментирование
-    {
-        "numToStr/Comment.nvim",
-        opts = {},
-        event = { "BufReadPost", "FileReadPost" },
-    },
-    -- EasyMotion
+    require("plugins.comment").plugin,
     require("plugins.flash").plugin,
     require("plugins.spider").plugin,
     require("plugins.debug").plugin,
@@ -278,7 +260,6 @@ require("lazy").setup({
         "chr4/sslsecure.vim",
         ft = { "nginx" },
     },
-    -- засейчка neovim
     {
         "dstein64/vim-startuptime",
         cmd = { "StartupTime" },
@@ -290,9 +271,7 @@ require("lazy").setup({
     },
     -- bookmark
     require("plugins.bookmark").plugin,
-    -- Классная штука по отображению shortcut
     require("plugins.whichkey").plugin,
-    -- курсор следует за shift
     {
         "gbprod/stay-in-place.nvim",
         opts = {
