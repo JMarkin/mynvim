@@ -2,20 +2,21 @@ local M = {}
 
 M.plugin = {
     "mrjones2014/smart-splits.nvim",
+    enabled = true,
     config = function()
         require("smart-splits").setup({
-            tmux_integration = false,
+            multiplexer_integration = 'tmux'
         })
 
-        vim.keymap.set({ "n" }, { "<C-l>" }, require("smart-splits").move_cursor_right, { silent = true, desc = "right" })
-        vim.keymap.set({ "n" }, { "<C-j>" }, require("smart-splits").move_cursor_down, { silent = true, desc = "down" })
-        vim.keymap.set({ "n" }, { "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
         vim.keymap.set(
             { "n" },
-            { "<C-h>" },
-            require("smart-splits").move_cursor_left,
-            { silent = true, desc = "left" }
+            { "<C-l>" },
+            require("smart-splits").move_cursor_right,
+            { silent = true, desc = "right" }
         )
+        vim.keymap.set({ "n" }, { "<C-j>" }, require("smart-splits").move_cursor_down, { silent = true, desc = "down" })
+        vim.keymap.set({ "n" }, { "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
+        vim.keymap.set({ "n" }, { "<C-h>" }, require("smart-splits").move_cursor_left, { silent = true, desc = "left" })
 
         vim.keymap.set(
             { "n" },

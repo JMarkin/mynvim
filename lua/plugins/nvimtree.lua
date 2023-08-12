@@ -97,7 +97,7 @@ M.plugin = {
                 show_on_open_dirs = true,
             },
             diagnostics = {
-                enable = true,
+                enable = false,
             },
             renderer = {
                 group_empty = true,
@@ -110,7 +110,7 @@ M.plugin = {
                 use_system_clipboard = true,
                 change_dir = {
                     enable = true,
-                    global = false,
+                    global = true,
                     restrict_above_cwd = false,
                 },
                 expand_all = {
