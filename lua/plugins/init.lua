@@ -364,4 +364,5 @@ require("lazy").setup({
             vim.g.lastplace_open_folds = 1
         end,
     },
+    require("plugins.fugitive"),
 })
