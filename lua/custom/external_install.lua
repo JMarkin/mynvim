@@ -49,7 +49,6 @@ local DEFAULT_INSTALL_EXEC = {
             "--locked",
             "--features",
             "lsp",
-            "taplo-cli",
         },
     },
     neocmakelsp = {
