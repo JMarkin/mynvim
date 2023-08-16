@@ -155,6 +155,7 @@ require("lazy").setup({
     { "wgwoods/vim-systemd-syntax", ft = "systemd" },
     { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
+    { "jidn/vim-dbml", ft = "dbml" },
 
     require("plugins.treesitter").plugin,
     require("plugins.surround").plugin,
@@ -228,6 +229,13 @@ require("lazy").setup({
     --  Git
     require("plugins.gitsign").plugin,
     require("plugins.diffview").plugin,
+    {
+        "FabijanZulj/blame.nvim",
+        keys = {
+            { "<leader>gB", ":ToggleBlame window<cr>", desc = "Git: blame file" },
+        },
+    },
+
     -- -- Colorize
     {
         "NvChad/nvim-colorizer.lua",
@@ -364,5 +372,4 @@ require("lazy").setup({
             vim.g.lastplace_open_folds = 1
         end,
     },
-    require("plugins.fugitive"),
 })
