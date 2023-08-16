@@ -131,3 +131,10 @@ autocmd("FileType", {
         vim.opt.omnifunc = "syntaxcomplete#Complete"
     end,
 })
+
+local syntax = "SYNTAX"
+augroup(syntax, { clear = true })
+autocmd("FileType", {
+    pattern = "*",
+    command = [[:if !exists("g:syntax_on") | syntax on | endif]],
+})

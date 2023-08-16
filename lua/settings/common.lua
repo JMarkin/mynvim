@@ -32,9 +32,10 @@ vim.g.loaded_netrwPlugin = 1
 opt.scrollback = 2000
 opt.synmaxcol = 2000
 opt.shortmess = "fFIlqx"
+vim.g.editorconfig = true
+
 
 vim.cmd([[
-syntax on
 filetype plugin on
 filetype indent plugin on
 ]])
