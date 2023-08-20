@@ -1,7 +1,8 @@
 local M = {}
 
 M.plugin = {
-    "gelguy/wilder.nvim",
+    "JMarkin/wilder.nvim",
+    branch = "my",
     enabled = true,
     keys = { "/", "?", ":" },
     build = ":UpdateRemotePlugins",
@@ -74,7 +75,7 @@ M.plugin = {
                 " ",
                 wilder.popupmenu_scrollbar(),
             },
-            max_height = '20%'
+            max_height = "20%",
         }))
 
         local wildmenu_renderer = wilder.wildmenu_renderer({

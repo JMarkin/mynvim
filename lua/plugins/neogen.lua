@@ -14,9 +14,13 @@ M.plugin = {
         })
     end,
     cmd = "Neogen",
-    keys = { "<leader>ld" },
+    keys = {
+        {
+            "<leader>lD",
+            "<cmd>Neogen<cr>",
+            desc = "Lang: generate docs",
+        },
+    },
 }
-
-vim.keymap.set("n", "<leader>ld", "<cmd>Neogen<cr>", { silent = true, desc = "Lang: generete docs" })
 
 return M

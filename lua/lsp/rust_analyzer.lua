@@ -23,7 +23,6 @@ return {
                             enable = false,
                         },
                     },
-                    inlayHints = { locationLinks = false },
                 },
             },
             standalone = true,
@@ -37,7 +36,11 @@ return {
         local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
         rust_tools.setup({
-            tools = {},
+            tools = {
+                inlay_hints = {
+                    auto = false,
+                },
+            },
             server = opts,
             dap = {
                 adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
