@@ -21,6 +21,9 @@ local on_attach = function(client, bufnr)
 
     local inlayhint = client.server_capabilities.inlayHintProvider
     if inlayhint then
+        -- vim.schedule(function()
+        --     vim.lsp.inlay_hint(bufnr)
+        -- end)
         vim.keymap.set({ "n" }, "<leader>li", function()
             vim.lsp.inlay_hint(bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })

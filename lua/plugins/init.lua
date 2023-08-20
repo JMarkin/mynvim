@@ -171,6 +171,7 @@ require("lazy").setup({
         opts = {},
     },
     require("plugins.todos").plugin,
+    require("plugins.tabtree"),
 
     -- Доп утился для языков
     {

@@ -77,6 +77,7 @@ M.plugin = {
             "hrsh7th/cmp-nvim-lsp",
         },
         "rcarriga/cmp-dap",
+        "ray-x/cmp-treesitter",
         {
             "JMarkin/gentags.lua",
             lazy = true,
@@ -121,14 +122,14 @@ M.plugin = {
             end
         end, { "i", "s" })
 
+        local preselect = cmp.PreselectMode.None
+
         local sources = {
             { name = "path", keyword_length = 3 },
             { name = "diag-codes", in_comment = true },
+            { name = "nvim_lsp" },
+            { name = "treesitter" },
         }
-
-        local preselect = cmp.PreselectMode.None
-
-        table.insert(sources, { name = "nvim_lsp" })
 
         table.insert(sources, {
             name = "vim-dadbod-completion",
@@ -160,7 +161,7 @@ M.plugin = {
                 entries = "custom",
             },
             experimental = {
-                ghost_text = false,
+                ghost_text = true,
             },
             enabled = enabled,
             snippet = {

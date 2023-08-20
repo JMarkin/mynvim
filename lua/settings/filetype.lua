@@ -27,6 +27,7 @@ local ext = {
     dat = "csv",
     mako = "mako",
     dbml = "dbml",
+    lalrpop = "lalrpop",
 }
 
 vim2ext(ext, "*.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp,*.rgen,*.rmiss,*.rchit,*.rahit,*.rint,*.rcall", "glsl")
