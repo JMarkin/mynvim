@@ -76,7 +76,10 @@ local function setup_lsp(lsp_name, opts)
         if check_buf_is_float(bufnr) then
             return
         end
-        if check_buf_is_float(bufnr, vim.fn.bufname(bufnr)) then
+        local ok, is_float = pcall(function()
+            return check_buf_is_float(bufnr, vim.fn.bufname(bufnr))
+        end)
+        if ok and is_float then
             return
         end
 
