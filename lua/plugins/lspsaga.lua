@@ -43,7 +43,7 @@ local opts = {
         },
     },
     symbol_in_winbar = {
-        enable = true,
+        enable = false,
         separator = " ",
         hide_keyword = true,
         show_file = true,
@@ -89,7 +89,7 @@ end
 
 lspsaga.setup(opts)
 
-vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { desc = "Lsp: Finder" })
+vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>", { desc = "Lsp: Finder" })
 vim.keymap.set("n", "ge", "<cmd>Lspsaga peek_definition<cr>", { desc = "GoTo: definition float" })
 vim.keymap.set("n", "gdd", "<cmd>Lspsaga goto_definition<cr>", { desc = "GoTo: definition" })
 vim.keymap.set("n", "gdv", "<cmd>:vsplit | Lspsaga goto_definition<CR>", { desc = "GoTo: definition vertical" })

@@ -125,22 +125,22 @@ M.plugin = {
         local preselect = cmp.PreselectMode.None
 
         local sources = {
-            { name = "path", keyword_length = 3 },
             { name = "diag-codes", in_comment = true },
             { name = "nvim_lsp" },
             { name = "treesitter" },
+            {
+                name = "vim-dadbod-completion",
+                filetype = { "sql", "mssql", "plsql" },
+            },
+            { name = "path", keyword_length = 3 },
         }
 
-        table.insert(sources, {
-            name = "vim-dadbod-completion",
-            filetype = { "sql", "mssql", "plsql" },
-        })
+        table.insert(sources, { name = "luasnip", keyword_length = 2, max_item_count = 5 })
         table.insert(sources, {
             name = "rg",
             keyword_length = 2,
             max_item_count = 5,
         })
-        table.insert(sources, { name = "luasnip", keyword_length = 2, max_item_count = 5 })
 
         cmp.setup({
             preselect = preselect,
@@ -149,11 +149,12 @@ M.plugin = {
                     cmp.config.compare.offset,
                     cmp.config.compare.exact,
                     cmp.config.compare.score,
-                    require("clangd_extensions.cmp_scores"),
                     require("cmp-under-comparator").under,
+                    cmp.config.compare.scopes,
                     cmp.config.compare.kind,
                     cmp.config.compare.sort_text,
                     cmp.config.compare.length,
+                    cmp.config.compare.recently_used,
                     cmp.config.compare.order,
                 },
             },
