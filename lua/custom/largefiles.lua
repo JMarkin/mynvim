@@ -53,15 +53,17 @@ local FILE_TYPE = {
 
 local function is_large_file(bufnr, as_bool)
     local function wrap()
-        local status_ok, is_large = pcall(vim.api.nvim_buf_get_var, bufnr, "large_buf")
-        if status_ok then
-            return is_large
+        if not bufnr then
+            return false
+        end
+        if vim.b.large_buf ~= nil then
+            return vim.b.large_buf
         end
         local size = get_buf_size(bufnr)
 
         local _type = FILE_TYPE.NORMAL
         if not size then
-            vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
+            vim.b.large_buf = _type
             return
         end
 
@@ -79,7 +81,7 @@ local function is_large_file(bufnr, as_bool)
             end
         end
 
-        vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
+        vim.b.large_buf = _type
         return _type
     end
     if not as_bool then
