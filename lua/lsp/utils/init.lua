@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
 
     if is_large_file(bufnr, true) then
         vim.lsp.buf_detach_client(bufnr, client.id)
-        return
+        return 0
     end
 
     local inlayhint = client.server_capabilities.inlayHintProvider
@@ -29,6 +29,7 @@ local on_attach = function(client, bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
     vim.bo.tagfunc = nil
+    return 1
 end
 
 M.on_attach = on_attach
