@@ -10,17 +10,19 @@ return {
     end,
     setup = function()
         local opts = {}
-        opts.capabilities = utils.capabilities
-        opts.on_attach = utils.on_attach
-
+        opts.on_attach = function(...)
+            local st = utils.on_attach(...)
+            if st then
+                require("clangd_extensions.inlay_hints").setup_autocmd()
+                require("clangd_extensions.inlay_hints").set_inlay_hints()
+            end
+        end
         require("clangd_extensions").setup({
-            server = opts,
-            extensions = {
-                autoSetHints = false,
-                inlay_hints = {
-                    inline = false,
-                },
+            inlay_hints = {
+                inline = vim.fn.has("nvim-0.10") == 1,
             },
         })
+
+        utils.setup_lsp("clangd", opts)
     end,
 }
