@@ -1,10 +1,3 @@
-local M = {}
-
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 local kind_icons = {
     Text = "",
     Method = "",
@@ -58,9 +51,10 @@ local enabled = function()
     return enabled
 end
 
-M.plugin = {
+return {
     "hrsh7th/nvim-cmp",
     dependencies = {
+        "onsails/lspkind.nvim",
         "L3MON4D3/LuaSnip",
         "lukas-reineke/cmp-under-comparator",
         "lukas-reineke/cmp-rg",
@@ -87,8 +81,13 @@ M.plugin = {
             },
             opts = {},
         },
+        "ofirgall/ofirkai.nvim",
     },
     config = function()
+        local function has_words_before()
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+        end
         local luasnip = require("luasnip")
         require("luasnip.loaders.from_snipmate").lazy_load()
 
@@ -99,7 +98,7 @@ M.plugin = {
         local move_down = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.in_snippet() and luasnip.expand_or_jumpable() then
+            elseif luasnip.expand_or_locally_jumpable() then
                 luasnip.expand_or_jump()
             elseif neogen.jumpable() then
                 neogen.jump_next()
@@ -127,22 +126,30 @@ M.plugin = {
         local sources = {
             { name = "diag-codes", in_comment = true },
             { name = "nvim_lsp" },
-            { name = "treesitter" },
+            { name = "luasnip", keyword_length = 2, max_item_count = 5 },
+            { name = "treesitter", keyword_length = 2, max_item_count = 5 },
             {
                 name = "vim-dadbod-completion",
                 filetype = { "sql", "mssql", "plsql" },
             },
+            {
+                name = "rg",
+                keyword_length = 2,
+                max_item_count = 5,
+                option = { additional_arguments = "--max-depth 4" },
+            },
             { name = "path", keyword_length = 3 },
         }
 
-        table.insert(sources, { name = "luasnip", keyword_length = 2, max_item_count = 5 })
-        table.insert(sources, {
-            name = "rg",
-            keyword_length = 2,
-            max_item_count = 5,
-        })
-
         cmp.setup({
+            performance = {
+                debounce = 60,
+                throttle = 30,
+                fetching_timeout = 500,
+                confirm_resolve_timeout = 80,
+                async_budget = 1,
+                max_view_entries = 100,
+            },
             preselect = preselect,
             sorting = {
                 comparators = {
@@ -188,26 +195,14 @@ M.plugin = {
             },
             sources = sources,
             formatting = {
-                fields = { "kind", "abbr", "menu" },
-                format = function(entry, vim_item)
-                    vim_item.menu =
-                        string.format("%-8s [%s]", vim_item.kind, menu_map[entry.source.name] or entry.source.name)
-
-                    vim_item.kind = kind_icons[vim_item.kind]
-                    return vim_item
-                end,
+                format = require("lspkind").cmp_format({
+                    symbol_map = kind_icons,
+                    maxwidth = 50,
+                    mode = "symbol",
+                    menu = menu_map,
+                }),
             },
-            window = {
-                documentation = {
-                    border = vim.g.floating_window_border_dark,
-                },
-                completion = {
-                    border = vim.g.floating_window_border_dark,
-                    pumheight = 0,
-                    winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-                    col_offset = -3,
-                },
-            },
+            window = require("ofirkai.plugins.nvim-cmp").window,
         })
 
         require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
@@ -218,5 +213,3 @@ M.plugin = {
     end,
     event = { "InsertEnter" },
 }
-
-return M

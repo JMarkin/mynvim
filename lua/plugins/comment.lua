@@ -1,9 +1,10 @@
 local M = {}
 
-local keys = { "gcc", "gc", "gbc", "gb", "gcO", "gco", "gcA" }
+local _keys = { "gcc", "gc", "gbc", "gb", "gcO", "gco", "gcA" }
+local keys = {}
 
-for _, v in pairs(keys) do
-    v = { v, mode = { "n", "v" } }
+for k, v in pairs(_keys) do
+    keys[k] = { v, mode = { "n", "v" } }
 end
 
 M.plugin = {

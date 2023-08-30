@@ -7,7 +7,12 @@ M.plugin = {
     opts = {
         modes = {
             search = {
-                enabled = false,
+                enabled = true,
+            },
+        },
+        label = {
+            rainbow = {
+                enabled = true,
             },
         },
     },
@@ -19,6 +24,14 @@ M.plugin = {
                 require("flash").jump()
             end,
             desc = "Flash",
+        },
+        {
+            "S",
+            mode = { "n", "o", "x" },
+            function()
+                require("flash").treesitter()
+            end,
+            desc = "Flash Treesitter",
         },
         {
             "r",

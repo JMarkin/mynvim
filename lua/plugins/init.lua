@@ -158,8 +158,6 @@ require("lazy").setup({
     { "jidn/vim-dbml", ft = "dbml" },
 
     require("plugins.treesitter").plugin,
-    require("plugins.surround").plugin,
-
     {
         "Wansmer/treesj",
         keys = {
@@ -171,7 +169,6 @@ require("lazy").setup({
         opts = {},
     },
     require("plugins.todos").plugin,
-    require("plugins.tabtree"),
 
     -- Доп утился для языков
     {
@@ -223,7 +220,7 @@ require("lazy").setup({
         },
     },
     require("plugins.ufo").plugin,
-    require("plugins.cmp").plugin,
+    require("plugins.cmp"),
     require("plugins.buffers").plugin,
     require("plugins.splits").plugin,
 
@@ -260,7 +257,7 @@ require("lazy").setup({
     },
     require("plugins.comment").plugin,
     require("plugins.flash").plugin,
-    require("plugins.spider").plugin,
+    require("plugins.spider"),
     require("plugins.debug").plugin,
     require("plugins.fzflua").plugin,
     require("plugins.neogen").plugin,

@@ -56,7 +56,6 @@ end
 
 M.plugin = {
     "kevinhwang91/nvim-ufo",
-    lazy = true,
     enabled = true,
     cond = is_not_mini,
     dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
