@@ -39,7 +39,6 @@ def decorator():
 def s():
     ...
 
-
 def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
 

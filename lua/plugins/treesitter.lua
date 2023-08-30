@@ -69,18 +69,22 @@ M.plugin = {
             enabled = true,
             init = function()
                 vim.g.matchup_transmute_enabled = 1
-                vim.g.matchup_delim_noskips = 1
+                vim.g.matchup_delim_noskips = 0
                 vim.g.matchup_matchparen_deferred = 1
+                vim.g.matchup_delim_start_plaintext = 0
+
                 vim.g.matchup_matchparen_hi_surround_always = 1
                 vim.g.matchup_matchparen_nomode = "i"
-                vim.g.matchup_matchparen_deferred_show_delay = 1000
-                vim.g.matchup_matchparen_deferred_hide_delay = 1000
+                vim.g.matchup_matchparen_deferred = 1
+                vim.g.matchup_matchparen_deferred_show_delay = 100
+                vim.g.matchup_matchparen_deferred_hide_delay = 300
                 vim.g.matchup_matchparen_timeout = 100
+                vim.g.matchup_matchparen_offscreen = { method = "popup" }
             end,
         },
         {
             "HiPhish/rainbow-delimiters.nvim",
-            enabled = false,
+            -- enabled = false,
             config = function()
                 local rainbow_delimiters = require("rainbow-delimiters")
                 require("rainbow-delimiters.setup")({
