@@ -33,6 +33,7 @@ M.plugin = {
             },
             tag = "legacy",
         },
+        { "folke/neodev.nvim", opts = { lspconfig = false } },
     },
     config = function()
         require("lsp").setup()
