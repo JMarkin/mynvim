@@ -5,9 +5,13 @@ local keys = {
     { "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b", mode = modes },
     { "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge", mode = modes },
 }
+-- return {
+--     "chrisgrieser/nvim-spider",
+--     lazy = true,
+--     enabled = false,
+--     keys = keys,
+-- }
+
 return {
-    "chrisgrieser/nvim-spider",
-    lazy = true,
-    enabled = true,
-    keys = keys,
+    "chaoren/vim-wordmotion"
 }
