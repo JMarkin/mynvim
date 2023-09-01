@@ -83,6 +83,7 @@ return {
         },
         "ofirgall/ofirkai.nvim",
         "rafamadriz/friendly-snippets",
+        "ray-x/lsp_signature.nvim",
     },
     config = function()
         local function has_words_before()
