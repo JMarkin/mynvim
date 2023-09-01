@@ -29,6 +29,12 @@ local on_attach = function(client, bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
     vim.bo.tagfunc = nil
+
+    local ok, sig_help = pcall(require, "lsp_signature")
+    if ok then
+        sig_help.on_attach({}, bufnr)
+    end
+
     return 1
 end
 
@@ -47,7 +53,7 @@ capabilities.textDocument.completion = {
         labelDetailsSupport = true,
         deprecatedSupport = true,
         commitCharactersSupport = true,
-        tagSupport = { valueSet = { 1 } },
+        tagSupport = true,
         resolveSupport = {
             properties = {
                 "documentation",
@@ -73,7 +79,7 @@ local function setup_lsp(lsp_name, opts)
     conf.setup(opts)
 
     local try_add = conf.manager.try_add
-    conf.manager.try_add = function(bufnr, project_root)
+    conf.manager.try_add = function(self, bufnr, project_root)
         if check_buf_is_float(bufnr) then
             return
         end
@@ -89,7 +95,7 @@ local function setup_lsp(lsp_name, opts)
             return
         end
 
-        return try_add(bufnr, project_root)
+        return try_add(self, bufnr, project_root)
     end
 end
 
