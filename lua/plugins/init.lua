@@ -306,13 +306,6 @@ require("lazy").setup({
     require("plugins.windows").plugin,
     -- tests
     require("plugins.tests").plugin,
-    -- trim
-    {
-        "zakharykaplan/nvim-retrail",
-        config = function()
-            require("retrail").setup()
-        end,
-    },
     {
         "nvim-zh/colorful-winsep.nvim",
         config = function()
