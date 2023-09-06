@@ -5,18 +5,30 @@ vim.opt.list = true
 --
 local is_not_mini = require("custom.funcs").is_not_mini
 
+local highlight = {
+    "RainbowDelimiterRed",
+    "RainbowDelimiterYellow",
+    "RainbowDelimiterBlue",
+    "RainbowDelimiterOrange",
+    "RainbowDelimiterGreen",
+    "RainbowDelimiterViolet",
+    "RainbowDelimiterCyan",
+}
+
 M.plugin = {
     "lukas-reineke/indent-blankline.nvim",
+    branch = "v3",
     cond = is_not_mini,
-    opts = {
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-        -- use_treesitter_scope = true,
-        show_first_indent_level = false,
-    },
+    config = function()
+        require("ibl").setup({
+            scope = {
+                highlight = highlight,
+            },
+        })
+        local hooks = require("ibl.hooks")
+        hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+    end,
     event = { "BufReadPost", "FileReadPost" },
-    cmd = { "IndentBlanklineEnable", "IndentBlanklineDisable" },
 }
 
 return M

@@ -25,6 +25,8 @@ local syntax_langs = {
     "json5",
     "jsonc",
     "graphql",
+    "commonlisp",
+    "latex",
     -- conf files
     "jsdoc",
     "yaml",
@@ -96,15 +98,7 @@ M.plugin = {
                         [""] = "rainbow-delimiters",
                         latex = "rainbow-blocks",
                     },
-                    highlight = {
-                        "RainbowDelimiterRed",
-                        "RainbowDelimiterYellow",
-                        "RainbowDelimiterBlue",
-                        "RainbowDelimiterOrange",
-                        "RainbowDelimiterGreen",
-                        "RainbowDelimiterViolet",
-                        "RainbowDelimiterCyan",
-                    },
+                    highlight = highlight,
                     blacklist = {},
                 })
             end,

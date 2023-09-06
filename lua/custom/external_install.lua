@@ -13,6 +13,7 @@ local DEFAULT_INSTALL_EXEC = {
     docformatter = { command = "pip", args = { "install", "-U", "docformatter" } },
     jedi_language_server = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
     ["jedi-language-server"] = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
+    pyright = { command = "pip", args = { "install", "-U", "pyright" } },
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
@@ -32,6 +33,10 @@ local DEFAULT_INSTALL_EXEC = {
     ["vscode-html-language-server"] = { command = "npm", args = { "install", "-g", "vscode-langservers-extracted" } },
     ["vscode-css-language-server"] = { command = "npm", args = { "install", "-g", "vscode-langservers-extracted" } },
     ["vim-language-server"] = { command = "npm", args = { "install", "-g", "vim-language-server" } },
+    ["typescript-language-server"] = {
+        command = "npm",
+        args = { "install", "-g", "typescript", "typescript-language-server" },
+    },
 
     -- go
     protolint = { command = "go", args = { "install", "github.com/yoheimuta/protolint/cmd/protolint@latest" } },

@@ -36,14 +36,19 @@ return {
         local volar_cmd = { "vue-language-server", "--stdio" }
         local volar_root_dir = lspconfig_util.root_pattern("package.json")
 
+        local filetypes = { "vue" }
+
+        -- If you want to use Volar's Take Over Mode (if you know, you know)
+        if vim.g.vue_takeover then
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" }
+        end
+
         lspconfig_configs.volar_api = {
             default_config = {
                 cmd = volar_cmd,
                 root_dir = volar_root_dir,
                 on_new_config = on_new_config,
-                -- filetypes = { "vue" },
-                -- If you want to use Volar's Take Over Mode (if you know, you know)
-                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+                filetypes = filetypes,
                 init_options = {
                     typescript = {
                         serverPath = "",
@@ -77,10 +82,7 @@ return {
                 cmd = volar_cmd,
                 root_dir = volar_root_dir,
                 on_new_config = on_new_config,
-
-                -- filetypes = { "vue" },
-                -- If you want to use Volar's Take Over Mode (if you know, you know):
-                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+                filetypes = filetypes,
                 init_options = {
                     typescript = {
                         serverPath = "",
@@ -105,10 +107,7 @@ return {
                 cmd = volar_cmd,
                 root_dir = volar_root_dir,
                 on_new_config = on_new_config,
-
-                -- filetypes = { "vue" },
-                -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+                filetypes = filetypes,
                 init_options = {
                     typescript = {
                         serverPath = "",

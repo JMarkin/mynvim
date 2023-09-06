@@ -235,7 +235,8 @@ M.enable = function(diagnostics, formatters, completions)
             -- if vim.g.disable_lsp then
             --     return false
             -- end
-            return not require("float-preview").is_float(bufnr)
+
+            return not require("float-preview").is_float(bufnr, vim.fn.bufname(bufnr))
         end,
     })
     M.enabled = true

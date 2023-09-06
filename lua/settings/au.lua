@@ -1,18 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- синхронизация между инстансами
-local sync_neovim = "SHADA"
-augroup(sync_neovim, { clear = true })
-
-autocmd({ "TextYankPost" }, {
-    group = sync_neovim,
-    pattern = { "*" },
-    callback = function()
-        vim.cmd([[if exists(':rshada /tmp/shada') | rshada /tmp/shada | wshada /tmp/shada | endif]])
-    end,
-})
-
 -- Format Option
 local format_options = augroup("Format Options", { clear = true })
 autocmd("BufReadPost", {
@@ -105,7 +93,7 @@ autocmd("VimResized", {
     command = 'lua require("fzf-lua").redraw()',
 })
 
-local enable_syntax = "ENABLE_SYNTAX"
+local enable_syntax = "SYNTAX_OMNIFUNC"
 augroup(enable_syntax, { clear = true })
 autocmd("FileType", {
     pattern = {
