@@ -5,7 +5,17 @@ local function on_attach(bufnr)
     local FloatPreview = require("float-preview")
 
     FloatPreview.attach_nvimtree(bufnr)
-    local float_close_decorator = FloatPreview.close_wrap
+    local float_close_decorator = function(f)
+        local ff = FloatPreview.close_wrap(f)
+        return function(...)
+            local r = ff(...)
+            local matching_configs = require("lspconfig.util").get_config_by_ft(vim.bo.filetype)
+            for _, config in ipairs(matching_configs) do
+                config.launch()
+            end
+            return r
+        end
+    end
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }

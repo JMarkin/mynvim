@@ -51,15 +51,12 @@ require("lazy").setup({
 
     require("plugins.notif").plugin,
 
-    -- командная строчка
     require("plugins.wilder").plugin,
-    -- require("plugins.noice").plugin,
 
     require("plugins.tabline").plugin,
     require("plugins.incline").plugin,
     require("plugins.dashboard").plugin,
     require("plugins.indent").plugin,
-    -- вместо ESC просто jj
     {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
@@ -70,7 +67,6 @@ require("lazy").setup({
         },
     },
 
-    --- Локальный настройки для папки с помощью .lvimrc с хэшем
     {
         "klen/nvim-config-local",
         opts = {
@@ -84,7 +80,6 @@ require("lazy").setup({
         },
     },
 
-    -- Цвет тема
     {
         "ofirgall/ofirkai.nvim",
         enabled = true,
@@ -170,7 +165,6 @@ require("lazy").setup({
     },
     require("plugins.todos").plugin,
 
-    -- Доп утился для языков
     {
         "simrat39/rust-tools.nvim",
         cond = is_not_mini,
@@ -195,6 +189,13 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>lcd", ":PythonCopyReferenceDotted<CR>")
             vim.keymap.set("n", "<leader>lcp", ":PythonCopyReferencePytest<CR>")
         end,
+    },
+    {
+        "cuducos/yaml.nvim",
+        ft = { "yaml" }, -- optional
+        dependencies = {
+            "nvim-treesitter",
+        },
     },
     require("plugins.lsp").plugin,
 
@@ -257,7 +258,7 @@ require("lazy").setup({
     },
     require("plugins.comment").plugin,
     require("plugins.flash").plugin,
-    require("plugins.spider"),
+    -- require("plugins.spider"),
     require("plugins.debug").plugin,
     require("plugins.fzflua").plugin,
     require("plugins.neogen").plugin,
@@ -285,14 +286,6 @@ require("lazy").setup({
             preserve_visual_selection = true,
         },
         event = "ModeChanged",
-    },
-    -- yaml
-    {
-        "cuducos/yaml.nvim",
-        ft = { "yaml" }, -- optional
-        dependencies = {
-            "nvim-treesitter",
-        },
     },
     require("plugins.db").plugin,
     -- uncompiler
@@ -363,4 +356,5 @@ require("lazy").setup({
             vim.g.lastplace_open_folds = 1
         end,
     },
+    require("plugins.regex"),
 })

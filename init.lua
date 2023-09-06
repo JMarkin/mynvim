@@ -34,4 +34,3 @@ end
 require("custom")
 require("settings")
 require("plugins")
-

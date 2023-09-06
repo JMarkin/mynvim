@@ -5,13 +5,14 @@ vim.cmd("set cc=")
 opt.updatetime = 100
 opt.scrolloff = 15
 opt.ttyfast = true
+g.spellfile_URL = "https://ftp.nluug.nl/vim/runtime/spell/"
 opt.spell = false
-opt.spelllang = { "en", "ru" } -- Словари рус eng
+opt.spelllang = { "en", "ru" }
 opt.number = true
 opt.guifont = "JetBrainsMonoNL Nerd Font Mono:h13"
-opt.undofile = true -- Возможность отката назад
-opt.splitright = true -- vertical split вправо
-opt.splitbelow = true -- horizontal split вниз
+opt.undofile = true
+opt.splitright = true
+opt.splitbelow = true
 opt.mouse = "a"
 g.mapleader = "\\"
 opt.termguicolors = true --  24-bit RGB colors
@@ -27,13 +28,14 @@ opt.hlsearch = true
 opt.linebreak = true
 opt.autochdir = false
 opt.bs = "indent,eol,start"
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- allow download spell
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 opt.scrollback = 2000
 opt.synmaxcol = 2000
 opt.shortmess = "fFIlqx"
-vim.g.editorconfig = true
-
+g.editorconfig = true
+opt.clipboard = "unnamedplus"
 
 vim.cmd([[
 filetype plugin on
@@ -50,11 +52,11 @@ opt.colorcolumn = "+1"
 opt.completeopt = "menu,menuone,noselect"
 opt.tags = { "tags", ".git/tags" }
 
-if vim.g.neovide then
+if g.neovide then
     require("settings.neovide")
 end
 
-vim.g.root_pattern = {
+g.root_pattern = {
     "pyproject.toml",
     "package.json",
     ".vimrc.lua",

@@ -32,7 +32,11 @@ M.lsps = {
     jedi_language_server = default_lsp("jedi-language-server", "jedi_language_server", {
         filetypes = { "python", "python.django", "django" },
     }),
+    -- pyright = default_lsp("pyright", "pyright", {
+    --     filetypes = { "python", "python.django", "django" },
+    -- }),
     taplo = default_lsp("taplo", "taplo"),
+    tsserver = default_lsp("typescript-language-server", "tsserver"),
     neocmakelsp = default_lsp("neocmakelsp", "neocmake"),
     clangd = require("lsp.clangd"),
     volar = require("lsp.volar"),
