@@ -55,10 +55,16 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
         "onsails/lspkind.nvim",
-        "L3MON4D3/LuaSnip",
+
         "lukas-reineke/cmp-under-comparator",
         "lukas-reineke/cmp-rg",
-        "saadparwaiz1/cmp_luasnip",
+        {
+            "saadparwaiz1/cmp_luasnip",
+            dependencies = {
+                "L3MON4D3/LuaSnip",
+                build = "make install_jsregexp",
+            },
+        },
         "danymat/neogen",
         -- "hrsh7th/cmp-nvim-lua",
         {
