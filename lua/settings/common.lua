@@ -36,6 +36,7 @@ opt.synmaxcol = 2000
 opt.shortmess = "fFIlqx"
 g.editorconfig = true
 opt.clipboard = "unnamedplus"
+opt.exrc = true
 
 vim.cmd([[
 filetype plugin on
@@ -59,7 +60,7 @@ end
 g.root_pattern = {
     "pyproject.toml",
     "package.json",
-    ".vimrc.lua",
+    ".nvim.lua",
     "Makefile",
     ".git",
     ".venv",
