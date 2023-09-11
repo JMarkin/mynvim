@@ -1,7 +1,6 @@
-local g = vim.g -- global variables
+local g = vim.g     -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
-vim.cmd("set cc=")
 opt.updatetime = 100
 opt.scrolloff = 15
 opt.ttyfast = true
@@ -37,14 +36,15 @@ opt.shortmess = "fFIlqx"
 g.editorconfig = true
 opt.clipboard = "unnamedplus"
 opt.exrc = true
+opt.laststatus = 3
 
 vim.cmd([[
 filetype plugin on
 filetype indent plugin on
 ]])
-opt.expandtab = true -- use spaces instead of tabs
-opt.shiftwidth = 4 -- shift 4 spaces when tab
-opt.tabstop = 4 -- 1 tab == 4 spaces
+opt.expandtab = true   -- use spaces instead of tabs
+opt.shiftwidth = 4     -- shift 4 spaces when tab
+opt.tabstop = 4        -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 opt.colorcolumn = "+1"
@@ -53,9 +53,6 @@ opt.colorcolumn = "+1"
 opt.completeopt = "menu,menuone,noselect"
 opt.tags = { "tags", ".git/tags" }
 
-if g.neovide then
-    require("settings.neovide")
-end
 
 g.root_pattern = {
     "pyproject.toml",

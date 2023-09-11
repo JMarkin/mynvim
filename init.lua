@@ -4,20 +4,11 @@ vim.g.python3_host_prog = vim.env.PYTHON3
 vim.g.snips_author = vim.env.AUTHOR or "Jury Markin"
 vim.g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
 vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
-
 vim.g.loaded_matchit = 1
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--single-branch",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    })
+
+if vim.g.neovide then
+    require("neovide")
 end
-vim.opt.runtimepath:prepend(lazypath)
 
 local default_vim_keymap_set = vim.keymap.set
 
@@ -31,6 +22,25 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
     end
 end
 
-require("custom")
-require("settings")
-require("plugins")
+
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
+
+require("common")
+require("au")
+require("funcs")
+require("largefiles")
+require("keymap")
+
+require("lazy").setup("plugins")

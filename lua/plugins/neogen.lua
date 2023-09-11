@@ -1,8 +1,6 @@
-local M = {}
+local is_not_mini = require("funcs").is_not_mini
 
-local is_not_mini = require("custom.funcs").is_not_mini
-
-M.plugin = {
+return {
     "danymat/neogen",
     cond = is_not_mini,
     dependencies = "nvim-treesitter/nvim-treesitter",
@@ -22,5 +20,3 @@ M.plugin = {
         },
     },
 }
-
-return M

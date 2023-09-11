@@ -1,5 +1,3 @@
-local M = {}
-
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
     local FloatPreview = require("float-preview")
@@ -74,7 +72,7 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "W", api.tree.collapse_all, opts("Collapse"))
 end
 
-M.plugin = {
+return {
     "nvim-tree/nvim-tree.lua",
     enabled = true,
     cmd = "NvimTreeOpen",
@@ -156,5 +154,3 @@ M.plugin = {
         })
     end,
 }
-
-return M

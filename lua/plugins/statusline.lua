@@ -1,9 +1,5 @@
-local M = {}
-
-M.plugin = {
+return {
     "nvim-lualine/lualine.nvim",
-    enabled = true,
-    event = { "BufReadPost", "FileReadPost" },
     config = function()
         local lualine = require("lualine")
 
@@ -20,7 +16,7 @@ M.plugin = {
                     "filetype",
                     { "filename", path = 1 },
                 },
-                lualine_c = {},
+                lualine_c = { "diagnostics" },
                 lualine_x = {},
                 lualine_y = {
                     "filesize",
@@ -37,8 +33,17 @@ M.plugin = {
                 },
                 lualine_z = { "location", "hostname" },
             },
+            tabline = {
+                lualine_a = { "tabs" },
+                lualine_b = {},
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = { {
+                    "buffers",
+                    mode = 2,
+                } }
+            }
         })
     end,
 }
-
-return M

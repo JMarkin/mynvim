@@ -49,7 +49,7 @@ local function run_neofetch(dashboard)
         :start()
 end
 
-M.plugin = {
+return {
     "goolord/alpha-nvim",
     event = "VimEnter",
     opts = function()
@@ -116,5 +116,3 @@ M.plugin = {
         },
     },
 }
-
-return M

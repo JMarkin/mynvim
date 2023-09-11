@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "lewis6991/gitsigns.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -61,5 +59,3 @@ M.plugin = {
     end,
     event = { "BufReadPost", "FileReadPost" },
 }
-
-return M

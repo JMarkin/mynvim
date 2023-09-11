@@ -1,6 +1,4 @@
-local M = {}
-
-local is_large_file = require("custom.largefiles").is_large_file
+local is_large_file = require("largefiles").is_large_file
 
 local syntax_langs = {
     -- languages
@@ -13,6 +11,7 @@ local syntax_langs = {
     "javascript",
     "fish",
     "go",
+    "lua",
     "html",
     "htmldjango",
     "css",
@@ -52,12 +51,23 @@ local syntax_langs = {
     "comment",
 }
 
+local install = function(sync)
+    require("nvim-treesitter")
+    for _, lang in ipairs(syntax_langs) do
+        if sync then
+            vim.cmd("TSUpdateSync " .. lang)
+        else
+            vim.cmd("TSUpdate " .. lang)
+        end
+    end
+end
+
 ---@diagnostic disable-next-line: unused-local
 local is_disable = function(_lang, _buf)
     return is_large_file(_buf, true)
 end
 
-M.plugin = {
+return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     lazy = true,
@@ -98,7 +108,6 @@ M.plugin = {
                         [""] = "rainbow-delimiters",
                         latex = "rainbow-blocks",
                     },
-                    highlight = highlight,
                     blacklist = {},
                 })
             end,
@@ -209,16 +218,3 @@ M.plugin = {
         })
     end,
 }
-
-M.install = function(sync)
-    require("nvim-treesitter")
-    for _, lang in ipairs(syntax_langs) do
-        if sync then
-            vim.cmd("TSUpdateSync " .. lang)
-        else
-            vim.cmd("TSUpdate " .. lang)
-        end
-    end
-end
-
-return M

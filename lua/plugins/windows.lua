@@ -1,12 +1,16 @@
-local M = {}
-
-M.plugin = {
+return {
     name = "nvim-window",
     url = "https://gitlab.com/yorickpeterse/nvim-window",
     event = "BufAdd",
-    config = function()
-        vim.keymap.set({ "n", "v" }, "<space>w", require("nvim-window").pick, { silent = true, desc = "Windows: pick" })
-    end,
+    keys = {
+        {
+            "<space>w",
+            function()
+                require("nvim-window").pick()
+            end,
+            silent = true,
+            desc = "Windows: pick",
+            mode = { "n", "v" },
+        },
+    },
 }
-
-return M

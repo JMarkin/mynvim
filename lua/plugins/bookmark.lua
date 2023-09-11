@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "MattesGroeger/vim-bookmarks",
     dependencies = { "ibhagwan/fzf-lua" },
     init = function()
@@ -46,26 +44,15 @@ M.plugin = {
         endfunction
     ]])
     end,
-    keys = "<leader>b",
+    keys = {
+        {"<leader>bb", "<Plug>BookmarkToggle", desc = "Bookmark: Toggle"},
+        {"<leader>bi", "<Plug>BookmarkAnnotate",  desc = "Bookmark: Annotate" },
+        {"]b", "<Plug>BookmarkNext", desc = "Bookmark: Next" },
+        {"[b", "<Plug>BookmarkPrev", desc = "Bookmark: Prev"},
+        {"<leader>bc", "<Plug>BookmarkClear",  desc = "Bookmark: Clear" },
+        { "<leader>bx", "<Plug>BookmarkClearAll", desc = "Bookmark: ClearAll" },
+        {"<leader>bkk", "<Plug>BookmarkMoveUp",  desc = "Bookmark: MoveUp" },
+        {"<leader>bjj", "<Plug>BookmarkMoveDown",  desc = "Bookmark: MoveDown"},
+        { "<leader>bg", "<Plug>BookmarkMoveToLine",  desc = "Bookmark: MoveToLine" }
+    }
 }
-M.search = function()
-    vim.cmd([[
-        cgetexpr bm#location_list()
-    ]])
-    require("fzf-lua").quickfix({})
-end
-
-M.keymaps = function()
-    vim.keymap.set("n", "<leader>bb", "<Plug>BookmarkToggle", { desc = "Bookmark: Toggle" })
-    vim.keymap.set("n", "<leader>bi", "<Plug>BookmarkAnnotate", { desc = "Bookmark: Annotate" })
-    vim.keymap.set("n", "<leader>ba", M.search, { desc = "Bookmark: ShowAll" })
-    vim.keymap.set("n", "<leader>bj", "<Plug>BookmarkNext", { desc = "Bookmark: Next" })
-    vim.keymap.set("n", "<leader>bk", "<Plug>BookmarkPrev", { desc = "Bookmark: Prev" })
-    vim.keymap.set("n", "<leader>bc", "<Plug>BookmarkClear", { desc = "Bookmark: Clear" })
-    vim.keymap.set("n", "<leader>bx", "<Plug>BookmarkClearAll", { desc = "Bookmark: ClearAll" })
-    vim.keymap.set("n", "<leader>bkk", "<Plug>BookmarkMoveUp", { desc = "Bookmark: MoveUp" })
-    vim.keymap.set("n", "<leader>bjj", "<Plug>BookmarkMoveDown", { desc = "Bookmark: MoveDown" })
-    vim.keymap.set("n", "<leader>bg", "<Plug>BookmarkMoveToLine", { desc = "Bookmark: MoveToLine" })
-end
-
-return M
