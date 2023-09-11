@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "sindrets/diffview.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "DiffviewOpen" },
@@ -32,5 +30,3 @@ M.plugin = {
         },
     },
 }
-
-return M

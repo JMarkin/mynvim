@@ -1,6 +1,13 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+
+autocmd({ "BufReadPre", "FileReadPre" }, {
+    group = augroup("large_fiels", { clear = true }),
+    pattern = { "*" },
+    callback = require("largefiles").optimize_buffer,
+})
+
 -- Format Option
 local format_options = augroup("Format Options", { clear = true })
 autocmd("BufReadPost", {
@@ -40,21 +47,21 @@ autocmd("FileType", {
 })
 
 -- Persistent Folds
-local save_fold = augroup("Persistent Folds", { clear = true })
-autocmd("BufWinLeave", {
-    pattern = "*.*",
-    callback = function()
-        vim.cmd.mkview()
-    end,
-    group = save_fold,
-})
-autocmd("BufWinEnter", {
-    pattern = "*.*",
-    callback = function()
-        vim.cmd.loadview({ mods = { emsg_silent = true } })
-    end,
-    group = save_fold,
-})
+-- local save_fold = augroup("Persistent Folds", { clear = true })
+-- autocmd("BufWinLeave", {
+--     pattern = "*.*",
+--     callback = function()
+--         vim.cmd.mkview()
+--     end,
+--     group = save_fold,
+-- })
+-- autocmd("BufWinEnter", {
+--     pattern = "*.*",
+--     callback = function()
+--         vim.cmd.loadview({ mods = { emsg_silent = true } })
+--     end,
+--     group = save_fold,
+-- })
 
 -- Textfile spell
 autocmd("FileType", {

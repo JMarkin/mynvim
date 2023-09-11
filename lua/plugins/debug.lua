@@ -1,6 +1,6 @@
-local is_not_mini = require("custom.funcs").is_not_mini
-local M = {}
-M.python_attach = function(options)
+local is_not_mini = require("funcs").is_not_mini
+
+local python_attach = function(options)
     local dap = require("dap")
     options = {
         host = options.host or "0.0.0.0",
@@ -39,90 +39,14 @@ M.python_attach = function(options)
     require("dapui").open()
 end
 
-M.keymaps = function()
-    vim.api.nvim_create_user_command("PythonAttach", function(opts)
-        M.python_attach({ remote_root = opts.fargs[1] or vim.fn.getcwd() })
-    end, {
-        nargs = "*",
-        complete = "file_in_path",
-    })
+vim.api.nvim_create_user_command("PythonAttach", function(opts)
+    python_attach({ remote_root = opts.fargs[1] or vim.fn.getcwd() })
+end, {
+    nargs = "*",
+    complete = "file_in_path",
+})
 
-    vim.keymap.set("n", "<leader>dc", function()
-        require("dapui").close()
-    end, { desc = "DapUIClose" })
-
-    vim.keymap.set("n", "<leader>do", function()
-        require("dapui").open()
-    end, { desc = "DapUIOpen" })
-
-    vim.keymap.set("n", "<leader>dd", function()
-        require("dapui").toggle()
-    end, { desc = "DapUIToggle" })
-
-    vim.keymap.set("n", "<F5>", function()
-        require("dap").continue()
-    end)
-    vim.keymap.set("n", "<F10>", function()
-        require("dap").step_over()
-    end)
-    vim.keymap.set("n", "<F11>", function()
-        require("dap").step_into()
-    end)
-    vim.keymap.set("n", "<F12>", function()
-        require("dap").step_out()
-    end)
-    vim.keymap.set("n", "<Leader>db", function()
-        require("dap").toggle_breakpoint()
-    end, {
-        desc = "ToggleBreakpoint",
-    })
-    vim.keymap.set("n", "<Leader>dB", function()
-        require("dap").set_breakpoint()
-    end, {
-        desc = "SetBreakpoint",
-    })
-    vim.keymap.set("n", "<Leader>dlp", function()
-        require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-    end)
-    vim.keymap.set("n", "<Leader>dr", function()
-        require("dap").repl.open()
-    end, {
-        desc = "Repl",
-    })
-    vim.keymap.set("n", "<Leader>dl", function()
-        require("dap").run_last()
-    end)
-    vim.keymap.set({ "n", "v" }, "<Leader>dh", function()
-        require("dap.ui.widgets").hover()
-    end, {
-        desc = "DapHover",
-    })
-    vim.keymap.set({ "n", "v" }, "<Leader>dp", function()
-        require("dap.ui.widgets").preview()
-    end, {
-        desc = "DapPreview",
-    })
-    vim.keymap.set("n", "<Leader>df", function()
-        local widgets = require("dap.ui.widgets")
-        widgets.centered_float(widgets.frames)
-    end, { desc = "DapFrames" })
-    vim.keymap.set("n", "<Leader>ds", function()
-        local widgets = require("dap.ui.widgets")
-        widgets.centered_float(widgets.scopes)
-    end, { desc = "DapScopes" })
-
-    vim.keymap.set("n", "<Leader>de", function()
-        require("dapui").float_element()
-    end, { desc = "DapUIFloatElement" })
-
-    vim.keymap.set("v", "<C-e>", require("dapui").eval, { desc = "DapEval" })
-
-    vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
-    vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
-    vim.keymap.set("n", "]S", require("goto-breakpoints").stopped, {})
-end
-
-M.plugin = {
+return {
     "rcarriga/nvim-dap-ui",
     cond = is_not_mini,
     dependencies = {
@@ -140,10 +64,7 @@ M.plugin = {
             dependencies = "nvim-treesitter",
         },
     },
-    keys = "<leader>d",
-    cmd = { "PythonAttach" },
     config = function()
-        M.keymaps()
         local dap, dapui = require("dap"), require("dapui")
         dapui.setup()
         dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -158,6 +79,150 @@ M.plugin = {
 
         require("nvim-dap-repl-highlights").setup()
     end,
+    keys = {
+        {
+            "<leader>dc",
+            function()
+                require("dapui").close()
+            end,
+            desc = "Dap: UIClose",
+        },
+        {
+            "<leader>do",
+            function()
+                require("dapui").open()
+            end,
+            desc = "Dap: UIOpen",
+        },
+        {
+            "<leader>dd",
+            function()
+                require("dapui").toggle()
+            end,
+            desc = "Dap: UIToggle",
+        },
+        {
+            "<F5>",
+            function()
+                require("dap").continue()
+            end,
+            desc = "Dap: continue",
+        },
+        {
+            "<F10>",
+            function()
+                require("dap").step_over()
+            end,
+            desc = "Dap: step over",
+        },
+        {
+            "<F11>",
+            function()
+                require("dap").step_into()
+            end,
+            desc = "Dap: step into",
+        },
+        {
+            "<F12>",
+            function()
+                require("dap").step_out()
+            end,
+            desc = "Dap: step out",
+        },
+        {
+            "<Leader>db",
+            function()
+                require("dap").toggle_breakpoint()
+            end,
+            desc = "Dap: ToggleBreakpoint",
+        },
+        {
+            "<Leader>dB",
+            function()
+                require("dap").set_breakpoint()
+            end,
+            desc = "Dap: SetBreakpoint",
+        },
+        {
+            "<Leader>dr",
+            function()
+                require("dap").repl.open()
+            end,
+            desc = "Dap: Repl",
+        },
+        {
+            "<Leader>dl",
+            function()
+                require("dap").run_last()
+            end,
+            desc = "Dap: run last",
+        },
+        {
+            "<Leader>dh",
+            function()
+                require("dap.ui.widgets").hover()
+            end,
+            desc = "Dap: Hover",
+            mode = { "n", "v" },
+        },
+        {
+            "<Leader>dp",
+            function()
+                require("dap.ui.widgets").preview()
+            end,
+            desc = "Dap: Preview",
+            mode = { "n", "v" },
+        },
+        {
+            "<Leader>df",
+            function()
+                local widgets = require("dap.ui.widgets")
+                widgets.centered_float(widgets.frames)
+            end,
+            desc = "Dap: Frames",
+        },
+        {
+            "<Leader>ds",
+            function()
+                local widgets = require("dap.ui.widgets")
+                widgets.centered_float(widgets.scopes)
+            end,
+            desc = "Dap: Scopes",
+        },
+        {
+            "<Leader>de",
+            function(...)
+                require("dapui").float_element(...)
+            end,
+            desc = "Dap: UIFloatElement",
+            mode = "v",
+        },
+        {
+            "<C-e>",
+            function(...)
+                require("dapui").eval(...)
+            end,
+            desc = "Dap: Eval",
+            mode = "v",
+        },
+        {
+            "]d",
+            function()
+                require("goto-breakpoints").next()
+            end,
+        },
+        {
+            "[d",
+            function()
+                require("goto-breakpoints").prev()
+            end,
+        },
+        {
+            "]S",
+            function()
+                require("goto-breakpoints").stopped()
+            end,
+        },
+    },
+    cmd = { "PythonAttach" },
 }
-
-return M

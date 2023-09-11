@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "JMarkin/wilder.nvim",
     branch = "my",
     enabled = true,
@@ -95,5 +93,3 @@ M.plugin = {
         )
     end,
 }
-
-return M

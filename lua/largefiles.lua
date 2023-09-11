@@ -1,7 +1,3 @@
----------Просмотр больших файлов
-local large_files = "LargeFiles"
-vim.api.nvim_create_augroup(large_files, { clear = true })
-
 local max_file_size = 5
 local max_file_size_readonly = 100
 local max_line_length = 2000
@@ -134,13 +130,8 @@ local function optimize_buffer(args)
     end
 end
 
-vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
-    group = large_files,
-    pattern = { "*" },
-    callback = optimize_buffer,
-})
-
 return {
     is_large_file = is_large_file,
     large_type = FILE_TYPE,
+    optimize_buffer = optimize_buffer
 }

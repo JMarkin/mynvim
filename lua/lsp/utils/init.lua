@@ -1,4 +1,4 @@
-local is_large_file = require("custom.largefiles").is_large_file
+local is_large_file = require("largefiles").is_large_file
 
 local M = {}
 
@@ -30,16 +30,16 @@ local on_attach = function(client, bufnr)
     end
     vim.bo.tagfunc = nil
 
-    local ok, sig_help = pcall(require, "lsp_signature")
-    if ok then
-        sig_help.on_attach({
-            hint_enable = false,
-            -- hint_prefix = "",
-            -- hint_inline = function()
-            --     return true
-            -- end,
-        }, bufnr)
-    end
+    -- local ok, sig_help = pcall(require, "lsp_signature")
+    -- if ok then
+    --     sig_help.on_attach({
+    --         hint_enable = false,
+    --         -- hint_prefix = "",
+    --         -- hint_inline = function()
+    --         --     return true
+    --         -- end,
+    --     }, bufnr)
+    -- end
 
     return 1
 end

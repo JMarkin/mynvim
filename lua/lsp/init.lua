@@ -7,7 +7,7 @@ local default_lsp = function(bin_name, lsp_name, opts)
         opts = {}
     end
     local utils = require("lsp.utils")
-    local external_install = require("custom.external_install")
+    local external_install = require("external_install")
 
     return {
         install = function(sync)

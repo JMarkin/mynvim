@@ -52,3 +52,34 @@ vim.filetype.add({
         ["*/helm/*.yaml"] = "helm",
     },
 })
+
+return {
+    { "pearofducks/ansible-vim", ft = "yaml.ansible" },
+    { "mityu/vim-applescript", ft = "applescript" },
+    { "isobit/vim-caddyfile", ft = "caddyfile" },
+    {
+        "chrisbra/csv.vim",
+        ft = "csv",
+        init = function()
+            vim.g.csv_no_progress = 1
+            vim.g.csv_strict_columns = 1
+            vim.g.csv_start = 1
+            vim.g.csv_end = 100
+            vim.g.csv_nomap_up = 1
+            vim.g.csv_nomap_down = 1
+            vim.g.csv_default_delim = ";"
+        end,
+    },
+    { "tikhomirov/vim-glsl", ft = "glsl" },
+    { "jparise/vim-graphql", ft = "graphql" },
+    { "CH-DanReif/haproxy.vim", ft = "haproxy" },
+    { "towolf/vim-helm", ft = "helm" },
+    { "sophacles/vim-bundle-mako", ft = "mako" },
+    { "chr4/nginx.vim", ft = "nginx" },
+    { "marshallward/vim-restructuredtext", ft = "rst" },
+    { "vim-scripts/svg.vim", ft = "svg" },
+    { "wgwoods/vim-systemd-syntax", ft = "systemd" },
+    { "amadeus/vim-xml", ft = "xml" },
+    { "MTDL9/vim-log-highlighting", ft = "log" },
+    { "jidn/vim-dbml", ft = "dbml" },
+}

@@ -1,11 +1,9 @@
-local M = {}
-
-M.plugin = {
+return {
     "mrjones2014/smart-splits.nvim",
     enabled = true,
     config = function()
         require("smart-splits").setup({
-            multiplexer_integration = 'tmux'
+            multiplexer_integration = "tmux",
         })
 
         vim.keymap.set(
@@ -46,5 +44,3 @@ M.plugin = {
         vim.keymap.set({ "n" }, "<space>r", require("smart-splits").start_resize_mode, { desc = "Resize mode" })
     end,
 }
-
-return M

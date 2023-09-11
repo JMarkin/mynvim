@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "rcarriga/nvim-notify",
     config = function()
         require("notify").setup({
@@ -18,5 +16,3 @@ M.plugin = {
         "ofirgall/ofirkai.nvim",
     },
 }
-
-return M

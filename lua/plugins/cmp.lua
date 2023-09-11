@@ -54,8 +54,6 @@ end
 return {
     "hrsh7th/nvim-cmp",
     dependencies = {
-        "onsails/lspkind.nvim",
-
         "lukas-reineke/cmp-under-comparator",
         "lukas-reineke/cmp-rg",
         {
@@ -75,21 +73,30 @@ return {
         { "hrsh7th/cmp-path" },
         {
             "hrsh7th/cmp-nvim-lsp",
+            dependencies = { "onsails/lspkind.nvim",
+            }
         },
         "rcarriga/cmp-dap",
         "ray-x/cmp-treesitter",
         {
-            "JMarkin/gentags.lua",
-            lazy = true,
-            cond = vim.fn.executable("ctags") == 1,
+            "quangnguyen30192/cmp-nvim-tags",
+            cond = vim.g.ctags_enable == 1,
             dependencies = {
-                "nvim-lua/plenary.nvim",
-            },
-            opts = {},
+                "JMarkin/gentags.lua",
+                lazy = true,
+                cond = vim.fn.executable("ctags") == 1,
+                dependencies = {
+                    "nvim-lua/plenary.nvim",
+                },
+                opts = {},
+                config = function()
+                    require("gentags").enable()
+                end
+            }
         },
         "ofirgall/ofirkai.nvim",
         "rafamadriz/friendly-snippets",
-        "ray-x/lsp_signature.nvim",
+        -- "ray-x/lsp_signature.nvim",
     },
     config = function()
         local function has_words_before()
@@ -139,7 +146,7 @@ return {
         local sources = {
             { name = "diag-codes", in_comment = true },
             { name = "nvim_lsp" },
-            { name = "luasnip", keyword_length = 2, max_item_count = 5 },
+            { name = "luasnip",    keyword_length = 2, max_item_count = 5 },
             { name = "treesitter", keyword_length = 2, max_item_count = 5 },
             {
                 name = "vim-dadbod-completion",
@@ -153,6 +160,24 @@ return {
             },
             { name = "path", keyword_length = 3 },
         }
+
+        if vim.g.ctags_enable == 1 then
+            table.insert(sources, {
+                name = "tags",
+                option = {
+                    -- this is the default options, change them if you want.
+                    -- Delayed time after user input, in milliseconds.
+                    complete_defer = 100,
+                    -- Max items when searching `taglist`.
+                    max_items = 10,
+                    -- Use exact word match when searching `taglist`, for better searching
+                    -- performance.
+                    exact_match = true,
+                    -- Prioritize searching result for current buffer.
+                    current_buffer_only = false,
+                },
+            })
+        end
 
         cmp.setup({
             performance = {

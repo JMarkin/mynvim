@@ -1,6 +1,6 @@
-local is_not_mini = require("custom.funcs").is_not_mini
+local is_not_mini = require("funcs").is_not_mini
 
-require("lazy").setup({
+return {
 
     -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
@@ -42,21 +42,13 @@ require("lazy").setup({
         event = "VimEnter",
         opts = {
             highlight = {
-                enabled = true, -- highlight yanked text
+                enabled = true,        -- highlight yanked text
                 higroup = "ModesCopy", -- highlight group of yanked text
-                timeout = 100, -- timeout for clearing the highlight
+                timeout = 100,         -- timeout for clearing the highlight
             },
         },
     },
 
-    require("plugins.notif").plugin,
-
-    require("plugins.wilder").plugin,
-
-    require("plugins.tabline").plugin,
-    require("plugins.incline").plugin,
-    require("plugins.dashboard").plugin,
-    require("plugins.indent").plugin,
     {
         "max397574/better-escape.nvim",
         event = "InsertEnter",
@@ -98,47 +90,7 @@ require("lazy").setup({
             -- end
         end,
     },
-    require("plugins.block").plugin,
 
-    -- Информационная строка внизу
-    require("plugins.lualine").plugin,
-
-    -- Файловый менеджер
-
-    require("plugins.nvimtree").plugin,
-
-    -- Подцветка синтаксиа
-
-    { "pearofducks/ansible-vim", ft = "yaml.ansible" },
-    { "mityu/vim-applescript", ft = "applescript" },
-    { "isobit/vim-caddyfile", ft = "caddyfile" },
-    {
-        "chrisbra/csv.vim",
-        ft = "csv",
-        init = function()
-            vim.g.csv_no_progress = 1
-            vim.g.csv_strict_columns = 1
-            vim.g.csv_start = 1
-            vim.g.csv_end = 100
-            vim.g.csv_nomap_up = 1
-            vim.g.csv_nomap_down = 1
-            vim.g.csv_default_delim = ";"
-        end,
-    },
-    { "tikhomirov/vim-glsl", ft = "glsl" },
-    { "jparise/vim-graphql", ft = "graphql" },
-    { "CH-DanReif/haproxy.vim", ft = "haproxy" },
-    { "towolf/vim-helm", ft = "helm" },
-    { "sophacles/vim-bundle-mako", ft = "mako" },
-    { "chr4/nginx.vim", ft = "nginx" },
-    { "marshallward/vim-restructuredtext", ft = "rst" },
-    { "vim-scripts/svg.vim", ft = "svg" },
-    { "wgwoods/vim-systemd-syntax", ft = "systemd" },
-    { "amadeus/vim-xml", ft = "xml" },
-    { "MTDL9/vim-log-highlighting", ft = "log" },
-    { "jidn/vim-dbml", ft = "dbml" },
-
-    require("plugins.treesitter").plugin,
     {
         "Wansmer/treesj",
         keys = {
@@ -149,32 +101,27 @@ require("lazy").setup({
         dependencies = { "nvim-treesitter" },
         opts = {},
     },
-    require("plugins.todos").plugin,
 
-    {
-        "simrat39/rust-tools.nvim",
-        cond = is_not_mini,
-        lazy = true,
-    },
+    { "simrat39/rust-tools.nvim", cond = is_not_mini, lazy = true },
     {
         name = "clangd_extenstions",
         url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
         cond = is_not_mini,
-        lazy = true,
+        lazy = true
     },
-    {
-        "b0o/schemastore.nvim",
-        cond = is_not_mini,
-        lazy = true,
-    },
+    { "b0o/schemastore.nvim",     cond = is_not_mini, lazy = true },
     {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
         ft = { "python" },
-        config = function()
-            vim.keymap.set("n", "<leader>lcd", ":PythonCopyReferenceDotted<CR>")
-            vim.keymap.set("n", "<leader>lcp", ":PythonCopyReferencePytest<CR>")
-        end,
+        keys = {
+            {
+                "<leader>lcd", ":PythonCopyReferenceDotted<CR>"
+            },
+            {
+                "<leader>lcp", ":PythonCopyReferencePytest<CR>"
+            }
+        },
     },
     {
         "cuducos/yaml.nvim",
@@ -183,37 +130,20 @@ require("lazy").setup({
             "nvim-treesitter",
         },
     },
-    require("plugins.lsp").plugin,
 
-    require("plugins.diaglist").plugin,
-
-    require("plugins.nullls").plugin,
-
+    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf" },
     {
         "kevinhwang91/nvim-bqf",
         ft = "qf",
         dependencies = {
             "nvim-treesitter",
-            {
-                name = "pqf",
-                url = "https://gitlab.com/yorickpeterse/nvim-pqf.git",
-                config = true,
-                ft = "qf",
-            },
         },
         opts = {
             auto_enable = true,
             auto_resize_height = true,
         },
     },
-    require("plugins.ufo").plugin,
-    require("plugins.cmp"),
-    require("plugins.buffers").plugin,
-    require("plugins.splits").plugin,
 
-    --  Git
-    require("plugins.gitsign").plugin,
-    require("plugins.diffview").plugin,
     {
         "FabijanZulj/blame.nvim",
         keys = {
@@ -226,15 +156,15 @@ require("lazy").setup({
         "NvChad/nvim-colorizer.lua",
         opts = {
             user_default_options = {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                names = false, -- "Name" codes like Blue or blue
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                AARRGGBB = true, -- 0xAARRGGBB hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                RGB = true,          -- #RGB hex codes
+                RRGGBB = true,       -- #RRGGBB hex codes
+                names = false,       -- "Name" codes like Blue or blue
+                RRGGBBAA = true,     -- #RRGGBBAA hex codes
+                AARRGGBB = true,     -- 0xAARRGGBB hex codes
+                rgb_fn = true,       -- CSS rgb() and rgba() functions
+                hsl_fn = true,       -- CSS hsl() and hsla() functions
+                css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
                 -- Available modes for `mode`: foreground, background,  virtualtext
                 mode = "background", -- Set the display mode.
                 virtualtext = "■",
@@ -242,12 +172,6 @@ require("lazy").setup({
         },
         event = "BufReadPre",
     },
-    require("plugins.comment").plugin,
-    require("plugins.flash").plugin,
-    -- require("plugins.spider"),
-    require("plugins.debug").plugin,
-    require("plugins.fzflua").plugin,
-    require("plugins.neogen").plugin,
     --nginx
     {
         "chr4/sslsecure.vim",
@@ -263,8 +187,6 @@ require("lazy").setup({
         cmd = { "SudaRead", "SudaWrite" },
     },
     -- bookmark
-    require("plugins.bookmark").plugin,
-    require("plugins.whichkey").plugin,
     {
         "gbprod/stay-in-place.nvim",
         opts = {
@@ -273,7 +195,6 @@ require("lazy").setup({
         },
         event = "ModeChanged",
     },
-    require("plugins.db").plugin,
     -- uncompiler
     {
         "p00f/godbolt.nvim",
@@ -282,9 +203,7 @@ require("lazy").setup({
         end,
         cmd = { "Godbolt", "GodboltCompiler" },
     },
-    require("plugins.windows").plugin,
     -- tests
-    require("plugins.tests").plugin,
     {
         "nvim-zh/colorful-winsep.nvim",
         config = function()
@@ -313,7 +232,6 @@ require("lazy").setup({
         end,
         event = { "BufReadPost", "FileReadPost" },
     },
-    require("plugins.term").plugin,
 
     {
         "willothy/flatten.nvim",
@@ -332,8 +250,6 @@ require("lazy").setup({
         priority = 1001,
     },
 
-    require("plugins.pairs").plugin,
-    require("plugins.firefox").plugin,
     {
         "farmergreg/vim-lastplace",
         init = function()
@@ -342,5 +258,4 @@ require("lazy").setup({
             vim.g.lastplace_open_folds = 1
         end,
     },
-    require("plugins.regex"),
-})
+}

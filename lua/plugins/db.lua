@@ -1,8 +1,6 @@
-local M = {}
+local is_not_mini = require("funcs").is_not_mini
 
-local is_not_mini = require("custom.funcs").is_not_mini
-
-local dbui = {
+return {
     "kristijanhusak/vim-dadbod-ui",
     enabled = true,
     cond = is_not_mini,
@@ -22,7 +20,3 @@ local dbui = {
     ft = { "sql", "mssql", "plsql" },
     cmd = { "DB", "DBUI" },
 }
-
-M.plugin = dbui
-
-return M

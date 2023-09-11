@@ -1,6 +1,4 @@
-local M = {}
-
-M.plugin = {
+return {
     "glacambre/firenvim",
 
     -- Lazy load firenvim
@@ -23,5 +21,3 @@ M.plugin = {
         vim.o.laststatus = 0
     end,
 }
-
-return M

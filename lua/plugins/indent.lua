@@ -1,9 +1,8 @@
-local M = {}
 vim.opt.list = true
 -- vim.opt.listchars:append("space:⋅")
 -- vim.opt.listchars:append("eol:↴")
 --
-local is_not_mini = require("custom.funcs").is_not_mini
+local is_not_mini = require("funcs").is_not_mini
 
 local highlight = {
     "RainbowDelimiterRed",
@@ -15,7 +14,7 @@ local highlight = {
     "RainbowDelimiterCyan",
 }
 
-M.plugin = {
+return {
     "lukas-reineke/indent-blankline.nvim",
     branch = "v3",
     cond = is_not_mini,
@@ -30,5 +29,3 @@ M.plugin = {
     end,
     event = { "BufReadPost", "FileReadPost" },
 }
-
-return M
