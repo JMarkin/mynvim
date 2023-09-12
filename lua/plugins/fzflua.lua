@@ -43,6 +43,13 @@ return {
         {
             "<leader>sb",
             function()
+                require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
+            end,
+            desc = "Search: buffers"
+        },
+        {
+            "<leader>sB",
+            function()
                 require("fzf-lua").buffers({ multiprocess = true }) --, current_tab_only = true })
             end,
             desc = "Search: buffers"
@@ -134,18 +141,7 @@ return {
             silent = true,
             desc = "GoTo: references"
         },
-        {
 
-            "<leader>sB",
-            function()
-                vim.cmd([[
-                    cgetexpr bm#location_list()
-                ]])
-                require("fzf-lua").quickfix({})
-            end,
-            silent = true,
-            desc = "Search: bookmarks"
-        }
     },
     config = function()
         require("fzf-lua").setup({

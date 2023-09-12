@@ -45,14 +45,26 @@ return {
     ]])
     end,
     keys = {
-        {"<leader>bb", "<Plug>BookmarkToggle", desc = "Bookmark: Toggle"},
-        {"<leader>bi", "<Plug>BookmarkAnnotate",  desc = "Bookmark: Annotate" },
-        {"]b", "<Plug>BookmarkNext", desc = "Bookmark: Next" },
-        {"[b", "<Plug>BookmarkPrev", desc = "Bookmark: Prev"},
-        {"<leader>bc", "<Plug>BookmarkClear",  desc = "Bookmark: Clear" },
-        { "<leader>bx", "<Plug>BookmarkClearAll", desc = "Bookmark: ClearAll" },
-        {"<leader>bkk", "<Plug>BookmarkMoveUp",  desc = "Bookmark: MoveUp" },
-        {"<leader>bjj", "<Plug>BookmarkMoveDown",  desc = "Bookmark: MoveDown"},
-        { "<leader>bg", "<Plug>BookmarkMoveToLine",  desc = "Bookmark: MoveToLine" }
+        {
+
+            "<leader>ba",
+            function()
+                vim.cmd([[
+                    cgetexpr bm#location_list()
+                ]])
+                require("fzf-lua").quickfix({})
+            end,
+            silent = true,
+            desc = "Search: bookmarks"
+        },
+        { "<leader>bb",  "<Plug>BookmarkToggle",     desc = "Bookmark: Toggle" },
+        { "<leader>bi",  "<Plug>BookmarkAnnotate",   desc = "Bookmark: Annotate" },
+        { "]b",          "<Plug>BookmarkNext",       desc = "Bookmark: Next" },
+        { "[b",          "<Plug>BookmarkPrev",       desc = "Bookmark: Prev" },
+        { "<leader>bc",  "<Plug>BookmarkClear",      desc = "Bookmark: Clear" },
+        { "<leader>bx",  "<Plug>BookmarkClearAll",   desc = "Bookmark: ClearAll" },
+        { "<leader>bkk", "<Plug>BookmarkMoveUp",     desc = "Bookmark: MoveUp" },
+        { "<leader>bjj", "<Plug>BookmarkMoveDown",   desc = "Bookmark: MoveDown" },
+        { "<leader>bg",  "<Plug>BookmarkMoveToLine", desc = "Bookmark: MoveToLine" }
     }
 }

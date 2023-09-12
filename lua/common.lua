@@ -62,3 +62,18 @@ g.root_pattern = {
     ".git",
     ".venv",
 }
+
+
+vim.g.diagnostic = {
+    "ruff",
+    "sqlfluff",
+}
+vim.g.formatters = {
+    "ruff",
+    "black",
+    "sqlfluff",
+    "stylua",
+    "nginxbeautifier",
+    "taplo",
+    "prettier",
+}

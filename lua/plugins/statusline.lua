@@ -1,10 +1,22 @@
+local function diff_source()
+    local gitsigns = vim.b.gitsigns_status_dict
+    if gitsigns then
+        return {
+            added = gitsigns.added,
+            modified = gitsigns.changed,
+            removed = gitsigns.removed
+        }
+    end
+end
+
+
 return {
     "nvim-lualine/lualine.nvim",
     config = function()
         local lualine = require("lualine")
 
         lualine.setup({
-            extensions = { "quickfix", "nvim-tree", "fzf", "symbols-outline", "nvim-dap-ui", "toggleterm" },
+            extensions = { "quickfix", "nvim-tree", "fzf", "lazy", "symbols-outline", "nvim-dap-ui", "toggleterm" },
             options = {
                 disabled_filetypes = { "Trouble", "Vista", "dashboard" },
                 theme = require("ofirkai.statuslines.lualine").theme,
@@ -13,6 +25,7 @@ return {
                 lualine_a = { "mode" },
                 lualine_b = {
                     "branch",
+                    { 'diff',     source = diff_source },
                     "filetype",
                     { "filename", path = 1 },
                 },
@@ -40,8 +53,9 @@ return {
                 lualine_x = {},
                 lualine_y = {},
                 lualine_z = { {
-                    "buffers",
+                    "windows",
                     mode = 2,
+                    disabled_buftypes = { 'prompt' },
                 } }
             }
         })
