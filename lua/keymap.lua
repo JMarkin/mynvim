@@ -1,7 +1,6 @@
 vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
 
 -- Visual
-vim.keymap.set({ "n" }, "<C-A>", "ggVG", { desc = "Visual all" })
 vim.keymap.set({ "n" }, "o", "o<Esc>", { desc = "Add line under" })
 vim.keymap.set({ "n" }, "O", "O<Esc>", { desc = "Add line prev" })
 vim.keymap.set({ "v" }, "p", "pgvy", { desc = "Disable yank on paste" })

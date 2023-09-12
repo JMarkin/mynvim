@@ -75,13 +75,17 @@ M.capabilities = capabilities
 local function setup_lsp(lsp_name, opts)
     local check_buf_is_float = require("float-preview").is_float
 
-    opts.capabilities = capabilities
-    opts.on_attach = on_attach
+    local _opts = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+    }
+    if vim.g.disable_lsp then
+        _opts.autostart = false
+    end
+    opts = vim.tbl_extend('force', opts, _opts)
+
     local lsp = require("lspconfig")
     local conf = lsp[lsp_name]
-    if vim.g.disable_lsp then
-        opts.autostart = false
-    end
     conf.setup(opts)
 
     local try_add = conf.manager.try_add

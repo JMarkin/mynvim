@@ -3,7 +3,6 @@ local is_not_mini = require("funcs").is_not_mini
 return {
     "neovim/nvim-lspconfig",
     cond = is_not_mini,
-    lazy = true,
     keys = {
         {
             "<space>bf",
@@ -63,7 +62,7 @@ return {
         },
         {
 
-            "<leader>la",
+            "<C-a>",
             "<cmd>Lspsaga code_action<cr>",
             silent = true,
             desc = "Lang: code action",
@@ -207,7 +206,7 @@ return {
             opts = {
                 align = {
                     bottom = false, -- align fidgets along bottom edge of buffer
-                    right = true, -- align fidgets along right edge of buffer
+                    right = true,   -- align fidgets along right edge of buffer
                 },
             },
             tag = "legacy",
