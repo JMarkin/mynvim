@@ -72,6 +72,15 @@ return {
     build = ":TSUpdate",
     lazy = true,
     dependencies = {
+        {
+            "Wansmer/treesj",
+            keys = {
+                "<space>m",
+                "<space>j",
+                "<space>s",
+            },
+            opts = {},
+        },
         "m-demare/hlargs.nvim",
         "yioneko/nvim-yati",
         "nvim-treesitter/nvim-treesitter-refactor",

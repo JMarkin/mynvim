@@ -92,13 +92,6 @@ autocmd({ "BufWritePre" }, {
 --     command = "call matchup#util#append_match_words('\/\*:\*\/')",
 -- })
 
-local fzf = "FZF"
-augroup(fzf, { clear = true })
-autocmd("VimResized", {
-    pattern = "*",
-    group = fzf,
-    command = 'lua require("fzf-lua").redraw()',
-})
 
 local enable_syntax = "SYNTAX_OMNIFUNC"
 augroup(enable_syntax, { clear = true })

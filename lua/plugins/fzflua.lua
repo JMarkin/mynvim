@@ -1,3 +1,6 @@
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
 return {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
@@ -14,7 +17,7 @@ return {
             function()
                 require("fzf-lua").quickfix({ multiprocess = true })
             end,
-            desc = "Search: quickfix"
+            desc = "Search: quickfix",
         },
         {
             "<leader>sr",
@@ -24,49 +27,49 @@ return {
                     cwd_only = true,
                 })
             end,
-            desc = "Search: old files"
+            desc = "Search: old files",
         },
         {
             "<leader>sl",
             function()
                 require("fzf-lua").loclist({ multiprocess = true })
             end,
-            desc = "Search: loclist"
+            desc = "Search: loclist",
         },
         {
             "<leader>ss",
             function()
                 require("fzf-lua").resume({ multiprocess = true })
             end,
-            desc = "Search: previous"
+            desc = "Search: previous",
         },
         {
             "<leader>sb",
             function()
                 require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
             end,
-            desc = "Search: buffers"
+            desc = "Search: buffers",
         },
         {
             "<leader>sB",
             function()
                 require("fzf-lua").buffers({ multiprocess = true }) --, current_tab_only = true })
             end,
-            desc = "Search: buffers"
+            desc = "Search: buffers",
         },
         {
             "<leader>sf",
             function()
                 require("fzf-lua").files({ multiprocess = true })
             end,
-            desc = "Search: find files"
+            desc = "Search: find files",
         },
         {
             "<leader>sg",
             function()
                 require("fzf-lua").grep_project({ multiprocess = true, continue_last_search = true })
             end,
-            desc = "Search: project"
+            desc = "Search: project",
         },
         {
             "<leader>sg",
@@ -74,21 +77,21 @@ return {
                 require("fzf-lua").grep_visual({ multiprocess = true, continue_last_search = true })
             end,
             desc = "Search: project",
-            mode = "v"
+            mode = "v",
         },
         {
             "<leader>s/",
             function()
                 require("fzf-lua").lgrep_curbuf({ multiprocess = true })
             end,
-            desc = "Search: current buffer"
+            desc = "Search: current buffer",
         },
         {
             "<leader>st",
             function()
                 require("fzf-lua").tags_live_grep({ multiprocess = true })
             end,
-            desc = "Search: tags"
+            desc = "Search: tags",
         },
         {
             "<leader>st",
@@ -96,42 +99,42 @@ return {
                 require("fzf-lua").tags_grep_visual({ multiprocess = true })
             end,
             desc = "Search: tags",
-            mode = "v"
+            mode = "v",
         },
         {
             "<leader>sd",
             function()
                 require("fzf-lua").lsp_definitions({ multiprocess = true })
             end,
-            desc = "Search: Definitions"
+            desc = "Search: Definitions",
         },
         {
             "<leader>sS",
             function()
                 require("fzf-lua").lsp_live_workspace_symbols({ multiprocess = true })
             end,
-            desc = "Search: Symbols"
+            desc = "Search: Symbols",
         },
         {
             "<leader>sc",
             function()
                 require("fzf-lua").commands({ multiprocess = true })
             end,
-            desc = "Search: commands"
+            desc = "Search: commands",
         },
         {
             "<leader>sk",
             function()
                 require("fzf-lua").keymaps({ multiprocess = true })
             end,
-            desc = "Search: keymaps"
+            desc = "Search: keymaps",
         },
         {
             "<leader>sch",
             function()
                 require("fzf-lua").command_history({ multiprocess = true })
             end,
-            desc = "Search: command_history"
+            desc = "Search: command_history",
         },
         {
             "gr",
@@ -139,9 +142,8 @@ return {
                 require("fzf-lua").lsp_finder({ multiprocess = true, ignore_current_line = true })
             end,
             silent = true,
-            desc = "GoTo: references"
+            desc = "GoTo: references",
         },
-
     },
     config = function()
         require("fzf-lua").setup({
@@ -176,5 +178,13 @@ return {
             },
         })
         require("fzf-lua").config.globals.fzf_opts["--border"] = nil
+
+        local fzf = "FZF"
+        augroup(fzf, { clear = true })
+        autocmd("VimResized", {
+            pattern = "*",
+            group = fzf,
+            command = 'lua require("fzf-lua").redraw()',
+        })
     end,
 }
