@@ -4,14 +4,14 @@ local function diff_source()
         return {
             added = gitsigns.added,
             modified = gitsigns.changed,
-            removed = gitsigns.removed
+            removed = gitsigns.removed,
         }
     end
 end
 
-
 return {
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     config = function()
         local lualine = require("lualine")
 
@@ -25,7 +25,7 @@ return {
                 lualine_a = { "mode" },
                 lualine_b = {
                     "branch",
-                    { 'diff',     source = diff_source },
+                    { "diff", source = diff_source },
                     "filetype",
                     { "filename", path = 1 },
                 },
@@ -52,12 +52,14 @@ return {
                 lualine_c = {},
                 lualine_x = {},
                 lualine_y = {},
-                lualine_z = { {
-                    "windows",
-                    mode = 2,
-                    disabled_buftypes = { 'prompt' },
-                } }
-            }
+                lualine_z = {
+                    {
+                        "windows",
+                        mode = 2,
+                        disabled_buftypes = { "prompt" },
+                    },
+                },
+            },
         })
     end,
 }

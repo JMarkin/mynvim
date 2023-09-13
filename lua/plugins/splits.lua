@@ -1,46 +1,78 @@
 return {
     "mrjones2014/smart-splits.nvim",
     enabled = true,
-    config = function()
-        require("smart-splits").setup({
-            multiplexer_integration = "tmux",
-        })
+    opts = {
+        multiplexer_integration = "tmux",
+    },
+    keys = {
+        {
 
-        vim.keymap.set(
-            { "n" },
-            { "<C-l>" },
-            require("smart-splits").move_cursor_right,
-            { silent = true, desc = "right" }
-        )
-        vim.keymap.set({ "n" }, { "<C-j>" }, require("smart-splits").move_cursor_down, { silent = true, desc = "down" })
-        vim.keymap.set({ "n" }, { "<C-k>" }, require("smart-splits").move_cursor_up, { silent = true, desc = "top" })
-        vim.keymap.set({ "n" }, { "<C-h>" }, require("smart-splits").move_cursor_left, { silent = true, desc = "left" })
+            "<C-l>",
+            function(...)
+                require("smart-splits").move_cursor_right(...)
+            end,
+            silent = true,
+            desc = "right",
+        },
+        {
+            "<C-j>",
+            function(...)
+                require("smart-splits").move_cursor_down(...)
+            end,
+            silent = true,
+            desc = "down",
+        },
+        {
 
-        vim.keymap.set(
-            { "n" },
-            { "<A-h>" },
-            require("smart-splits").resize_left,
-            { silent = true, desc = "Resize left" }
-        )
-        vim.keymap.set(
-            { "n" },
-            { "<A-j>" },
-            require("smart-splits").resize_down,
-            { silent = true, desc = "Resize down" }
-        )
-        vim.keymap.set({ "n" }, { "<A-k>" }, require("smart-splits").resize_up, { silent = true, desc = "Resize up" })
-        vim.keymap.set(
-            { "n" },
-            { "<A-l>" },
-            require("smart-splits").resize_right,
-            { silent = true, desc = "Resize right" }
-        )
+            "<C-k>",
+            function(...)
+                require("smart-splits").move_cursor_up(...)
+            end,
+            silent = true,
+            desc = "top",
+        },
+        {
+            "<C-h>",
+            function(...)
+                require("smart-splits").move_cursor_left(...)
+            end,
+            silent = true,
+            desc = "left",
+        },
+        {
 
-        vim.keymap.set("n", "<space><space>h", require("smart-splits").swap_buf_left)
-        vim.keymap.set("n", "<space><space>j", require("smart-splits").swap_buf_down)
-        vim.keymap.set("n", "<space><space>k", require("smart-splits").swap_buf_up)
-        vim.keymap.set("n", "<space><space>l", require("smart-splits").swap_buf_right)
+            "<A-h>",
+            function(...)
+                require("smart-splits").resize_left(...)
+            end,
+            silent = true,
+            desc = "Resize left",
+        },
+        {
 
-        vim.keymap.set({ "n" }, "<space>r", require("smart-splits").start_resize_mode, { desc = "Resize mode" })
-    end,
+            "<A-j>",
+            function(...)
+                require("smart-splits").resize_down(...)
+            end,
+            silent = true,
+            desc = "Resize down",
+        },
+        {
+            "<A-k>",
+            function(...)
+                require("smart-splits").resize_up(...)
+            end,
+            silent = true,
+            desc = "Resize up",
+        },
+        {
+
+            "<A-l>",
+            function(...)
+                require("smart-splits").resize_right(...)
+            end,
+            silent = true,
+            desc = "Resize right",
+        },
+    },
 }
