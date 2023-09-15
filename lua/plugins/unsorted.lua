@@ -10,7 +10,6 @@ return {
     {
         "stevearc/dressing.nvim",
         opts = {},
-        lazy = true,
         config = function()
             require("dressing").setup({
                 input = {
@@ -34,9 +33,9 @@ return {
         event = "VeryLazy",
         opts = {
             highlight = {
-                enabled = true, -- highlight yanked text
+                enabled = true,        -- highlight yanked text
                 higroup = "ModesCopy", -- highlight group of yanked text
-                timeout = 100, -- timeout for clearing the highlight
+                timeout = 100,         -- timeout for clearing the highlight
             },
         },
         dependencies = {
@@ -97,7 +96,7 @@ return {
         cond = is_not_mini,
         lazy = true,
     },
-    { "b0o/schemastore.nvim", cond = is_not_mini, lazy = true },
+    { "b0o/schemastore.nvim",     cond = is_not_mini, lazy = true },
     {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
@@ -146,15 +145,15 @@ return {
         "NvChad/nvim-colorizer.lua",
         opts = {
             user_default_options = {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                names = false, -- "Name" codes like Blue or blue
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                AARRGGBB = true, -- 0xAARRGGBB hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                RGB = true,          -- #RGB hex codes
+                RRGGBB = true,       -- #RRGGBB hex codes
+                names = false,       -- "Name" codes like Blue or blue
+                RRGGBBAA = true,     -- #RRGGBBAA hex codes
+                AARRGGBB = true,     -- 0xAARRGGBB hex codes
+                rgb_fn = true,       -- CSS rgb() and rgba() functions
+                hsl_fn = true,       -- CSS hsl() and hsla() functions
+                css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
                 -- Available modes for `mode`: foreground, background,  virtualtext
                 mode = "background", -- Set the display mode.
                 virtualtext = "■",

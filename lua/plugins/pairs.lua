@@ -1,7 +1,18 @@
 return {
-    "altermo/ultimate-autopair.nvim",
+    "windwp/nvim-autopairs",
+    enabled = true,
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
-        --Config goes here
+        fast_wrap = {
+            map = "<C-e>",
+            chars = { "{", "[", "(", '"', "'" },
+            pattern = [=[[%'%"%>%]%)%}%,]]=],
+            end_key = "$",
+            keys = "qwertyuiopzxcvbnmasdfghjkl",
+            check_comma = true,
+            manual_position = true,
+            highlight = "Search",
+            highlight_grey = "Comment",
+        },
     },
 }
