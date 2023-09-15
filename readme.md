@@ -5,10 +5,9 @@
 1. `rm -rf ~/.config/nvim && git clone https://github.com/JMarkin/mynvim.git ~/.config/nvim`
 2. `nvim` lazy.nvim will install all plugins
 
-
-<img width="605" alt="image" src="https://github.com/JMarkin/mynvim/assets/15740814/7decf544-2fbc-42a0-a358-60cc1e2429ac">
+<img width="748" alt="image" src="https://github.com/JMarkin/mynvim/assets/15740814/1a822992-4e78-4141-a9fc-6e37c58af9df">
 
 StartupTime
 
 
-<img width="474" alt="image" src="https://github.com/JMarkin/mynvim/assets/15740814/ee7c8f6c-4982-4d96-9084-8bbf42ed2c29">
+<img width="517" alt="image" src="https://github.com/JMarkin/mynvim/assets/15740814/2c8173fc-6705-4ff5-99b8-5c93e9277dba">
