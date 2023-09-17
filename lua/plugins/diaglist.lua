@@ -1,7 +1,9 @@
 return {
-    "onsails/diaglist.nvim",
+    "JMarkin/diaglist.nvim",
+    -- dev = true,
+    -- dir = "~/projects/diaglist.nvim",
     opts = {
-        debounce_ms = 150,
+        debounce_ms = 130,
     },
     keys = {
         {

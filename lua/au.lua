@@ -1,11 +1,16 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-
 autocmd({ "BufReadPre", "FileReadPre" }, {
     group = augroup("large_fiels", { clear = true }),
     pattern = { "*" },
     callback = require("largefiles").optimize_buffer,
+})
+
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+    group = augroup("checktime", { clear = true }),
+    command = "checktime",
 })
 
 -- Format Option
@@ -38,11 +43,20 @@ autocmd("FileType", {
         "help",
         "notify",
         "startuptime",
+        "checkhealth",
     },
     callback = function(event)
         vim.opt_local.wrap = false
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("spell", {clear = true}),
+    pattern = { "gitcommit", "markdown" },
+    callback = function()
+        vim.opt_local.spell = true
     end,
 })
 
@@ -91,7 +105,6 @@ autocmd({ "BufWritePre" }, {
 --     pattern = {"css", "javascript", "typescript", "cpp", "c"},
 --     command = "call matchup#util#append_match_words('\/\*:\*\/')",
 -- })
-
 
 local enable_syntax = "SYNTAX_OMNIFUNC"
 augroup(enable_syntax, { clear = true })

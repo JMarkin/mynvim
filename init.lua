@@ -1,15 +1,4 @@
-vim.g.cursorhold_updatetime = 100
-
-vim.g.python3_host_prog = vim.env.PYTHON3
-vim.g.snips_author = vim.env.AUTHOR or "Jury Markin"
-vim.g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
-vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
-vim.g.loaded_matchit = 1
-
-if vim.g.neovide then
-    require("neovide")
-end
-
+require("common")
 local default_vim_keymap_set = vim.keymap.set
 
 vim.keymap.set = function(mode, lhs, rhs, opts)
@@ -21,7 +10,20 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
         default_vim_keymap_set(mode, lhs, rhs, opts)
     end
 end
+require("keymap")
 
+if vim.env.PYTHON3 then
+    vim.g.python3_host_prog = vim.env.PYTHON3
+end
+
+vim.g.snips_author = vim.env.AUTHOR or "Jury Markin"
+vim.g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
+vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
+vim.g.loaded_matchit = 1
+
+if vim.g.neovide then
+    require("neovide")
+end
 
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -37,10 +39,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("common")
-require("au")
 require("funcs")
-require("largefiles")
-require("keymap")
+require("au")
 
 require("lazy").setup("plugins")
+require("ofirkai")

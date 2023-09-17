@@ -17,6 +17,8 @@ class TestClass:
         self.variable = varible
 
 
+value=123
+name=11
 c = TestClass()
 setattr(TestClass, "s", value)
 c.__setattr__(name, value)
@@ -38,6 +40,7 @@ def decorator():
 @decorator
 def s():
     ...
+
 
 def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)

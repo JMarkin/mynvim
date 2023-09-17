@@ -19,13 +19,13 @@ return {
             extensions = { "quickfix", "nvim-tree", "fzf", "lazy", "symbols-outline", "nvim-dap-ui", "toggleterm" },
             options = {
                 disabled_filetypes = { "Trouble", "Vista", "dashboard" },
-                theme = require("ofirkai.statuslines.lualine").theme,
+                theme = vim.g.lualine_theme or "auto",
             },
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = {
                     "branch",
-                    { "diff", source = diff_source },
+                    { "diff",     source = diff_source },
                     "filetype",
                     { "filename", path = 1 },
                 },
