@@ -1,6 +1,7 @@
-local g = vim.g     -- global variables
+local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
+g.cursorhold_updatetime = 100
 opt.updatetime = 100
 opt.scrolloff = 15
 opt.ttyfast = true
@@ -32,7 +33,6 @@ opt.bs = "indent,eol,start"
 -- vim.g.loaded_netrwPlugin = 1
 opt.scrollback = 2000
 opt.synmaxcol = 2000
-opt.shortmess = "fFIlqx"
 g.editorconfig = true
 opt.clipboard = "unnamedplus"
 opt.exrc = true
@@ -42,17 +42,21 @@ vim.cmd([[
 filetype plugin on
 filetype indent plugin on
 ]])
-opt.expandtab = true   -- use spaces instead of tabs
-opt.shiftwidth = 4     -- shift 4 spaces when tab
-opt.tabstop = 4        -- 1 tab == 4 spaces
+opt.expandtab = true -- use spaces instead of tabs
+opt.shiftwidth = 4 -- shift 4 spaces when tab
+opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 opt.colorcolumn = "+1"
 
+opt.autowrite = true
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
+opt.shortmess:append({ W = true, I = true, c = true, C = true })
+
 -- completions
 opt.completeopt = "menu,menuone,noselect"
 opt.tags = { "tags", ".git/tags" }
-
 
 g.root_pattern = {
     "pyproject.toml",
@@ -62,7 +66,6 @@ g.root_pattern = {
     ".git",
     ".venv",
 }
-
 
 vim.g.diagnostic = {
     "ruff",
@@ -77,3 +80,11 @@ vim.g.formatters = {
     "taplo",
     "prettier",
 }
+
+-- fast dirs
+local ramdisk = vim.fn.expand("~/RAMDisk")
+if vim.fn.isdirectory(ramdisk) then
+    ramdisk = ramdisk .. "/nvim/"
+    opt.dir = ramdisk .. "swap"
+    opt.shadafile = ramdisk .. "shada/main.shada"
+end

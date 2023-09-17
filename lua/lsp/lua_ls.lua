@@ -28,8 +28,10 @@ local M = {
                         },
                     },
                     workspace = {
+                        checkThirdParty = false,
                         library = {
                             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.expand("$VIM/lazy")] = true,
                             [vim.fn.expand("$VIMRUNTIME")] = true,
                             [vim.fn.expand("~/.config/nvim/lua")] = true,
                         },

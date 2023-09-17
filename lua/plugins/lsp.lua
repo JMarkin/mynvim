@@ -115,8 +115,6 @@ return {
             "glepnir/lspsaga.nvim",
             dependencies = { "nvim-tree/nvim-web-devicons" },
             config = function()
-                local ok_ofirkai, ofirkai_design = pcall(require, "ofirkai.design")
-
                 local opts = {
                     finder = {
                         jump_to = "p",
@@ -186,17 +184,10 @@ return {
                             expand_or_jump = "<CR>",
                         },
                     },
+                    ui = {
+                        colors = vim.g.lspsaga_colors,
+                    },
                 }
-
-                if ok_ofirkai then
-                    local scheme = ofirkai_design.scheme
-                    opts.ui = {
-                        colors = {
-                            normal_bg = scheme.ui_bg,
-                            title_bg = scheme.mid_orange,
-                        },
-                    }
-                end
 
                 require("lspsaga").setup(opts)
             end,

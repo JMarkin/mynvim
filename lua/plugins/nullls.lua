@@ -1,17 +1,30 @@
 local is_not_mini = require("funcs").is_not_mini
+local external_install = require("external_install")
 
-
-local EXEC_CONVERT = {
-    ["nginx_beautifier"] = "nginxbeautifier",
-}
 
 local function exist_exec(exec)
-    exec = EXEC_CONVERT[exec] or exec
-    local function condition(_)
+    local function condition(...)
         return vim.fn.executable(exec) == 1
     end
-    return condition
 end
+
+
+local install = function(sync)
+    local sources = {}
+    vim.list_extend(sources, vim.g.diagnostic)
+    vim.list_extend(sources, vim.g.formatters)
+    for _, source in ipairs(sources) do
+        external_install(source, sync)
+    end
+end
+
+vim.api.nvim_create_user_command("NullInstallDefault", function(_)
+    install()
+end, {})
+
+vim.api.nvim_create_user_command("NullInstallDefaultSync", function(_)
+    install(true)
+end, {})
 
 return {
     "JMarkin/null-ls.nvim",
@@ -39,8 +52,6 @@ return {
     },
     config = function()
         local nullls = require("null-ls")
-
-        local methods = require("null-ls.methods")
 
         nullls.builtins.diagnostics.ruff = nullls.builtins.diagnostics.ruff.with({
             extra_args = { "--line-length", "120" },

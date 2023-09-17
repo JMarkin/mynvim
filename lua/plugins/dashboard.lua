@@ -35,7 +35,7 @@ local function run_neofetch(dashboard)
                 if #t > 0 then
                     M.neofetch = vim.json.decode(t)
                 end
-                local timer = vim.uv.new_timer()
+                local timer = vim.loop.new_timer()
 
                 timer:start(
                     20,
@@ -84,7 +84,8 @@ return {
     end,
     config = function(_, dashboard)
         -- close Lazy and re-open when the dashboard is ready
-        if vim.o.filetype == "lazy" then
+        local ft = vim.filetype.match({ buf = 0 })
+        if ft == "lazy" then
             vim.cmd.close()
             vim.api.nvim_create_autocmd("User", {
                 pattern = "AlphaReady",

@@ -62,6 +62,14 @@ local install = function(sync)
     end
 end
 
+vim.api.nvim_create_user_command("TSInstallDefault", function(_)
+    install()
+end, {})
+
+vim.api.nvim_create_user_command("TSInstallDefaultSync", function(_)
+    install(true)
+end, {})
+
 ---@diagnostic disable-next-line: unused-local
 local is_disable = function(_lang, _buf)
     return is_large_file(_buf, true)
@@ -83,7 +91,6 @@ return {
         },
         "m-demare/hlargs.nvim",
         "yioneko/nvim-yati",
-        "nvim-treesitter/nvim-treesitter-refactor",
         "nvim-treesitter/playground",
         {
             "andymass/vim-matchup",
@@ -176,31 +183,6 @@ return {
             matchup = {
                 enable = true,
                 include_match_words = true,
-                disable = is_disable,
-            },
-            refactor = {
-                highlight_definitions = {
-                    enable = true,
-                    -- Set to false if you have an `updatetime` of ~100.
-                    clear_on_cursor_move = false,
-                },
-                highlight_current_scope = { enable = false },
-                smart_rename = {
-                    enable = true,
-                    keymaps = {
-                        smart_rename = "<leader>rr",
-                    },
-                },
-                navigation = {
-                    enable = false,
-                    keymaps = {
-                        goto_definition = "gnd",
-                        list_definitions = "gnD",
-                        list_definitions_toc = "gO",
-                        goto_next_usage = "<a-*>",
-                        goto_previous_usage = "<a-#>",
-                    },
-                },
                 disable = is_disable,
             },
         })

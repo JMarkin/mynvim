@@ -73,8 +73,7 @@ return {
         { "hrsh7th/cmp-path" },
         {
             "hrsh7th/cmp-nvim-lsp",
-            dependencies = { "onsails/lspkind.nvim",
-            }
+            dependencies = { "onsails/lspkind.nvim" },
         },
         "rcarriga/cmp-dap",
         "ray-x/cmp-treesitter",
@@ -91,10 +90,9 @@ return {
                 opts = {},
                 config = function()
                     require("gentags").enable()
-                end
-            }
+                end,
+            },
         },
-        "ofirgall/ofirkai.nvim",
         "rafamadriz/friendly-snippets",
         -- "ray-x/lsp_signature.nvim",
     },
@@ -240,7 +238,7 @@ return {
                     menu = menu_map,
                 }),
             },
-            window = require("ofirkai.plugins.nvim-cmp").window,
+            window = vim.g.cmp_window,
         })
 
         require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {

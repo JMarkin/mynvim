@@ -1,51 +1,7 @@
 local is_not_mini = require("funcs").is_not_mini
 
 return {
-
-    -- обноление cursorhold
     "antoinemadec/FixCursorHold.nvim",
-
-    --- Украшения
-    "nvim-tree/nvim-web-devicons",
-    {
-        "stevearc/dressing.nvim",
-        opts = {},
-        config = function()
-            require("dressing").setup({
-                input = {
-                    winhighlight = require("ofirkai.plugins.dressing").winhighlight,
-                    insert_only = false,
-                    override = function(conf)
-                        conf.col = -1
-                        conf.row = 0
-                        return conf
-                    end,
-                },
-            })
-        end,
-        dependencies = {
-            "ofirgall/ofirkai.nvim",
-        },
-    },
-
-    {
-        "ibhagwan/smartyank.nvim",
-        event = "VeryLazy",
-        opts = {
-            highlight = {
-                enabled = true,        -- highlight yanked text
-                higroup = "ModesCopy", -- highlight group of yanked text
-                timeout = 100,         -- timeout for clearing the highlight
-            },
-        },
-        dependencies = {
-            "mvllow/modes.nvim",
-            opts = {
-                line_opacity = 0.25,
-                set_cursor = false,
-            },
-        },
-    },
 
     {
         "max397574/better-escape.nvim",
@@ -55,38 +11,6 @@ return {
             clear_empty_lines = true,
             keys = "<Esc>",
         },
-    },
-    {
-        "ofirgall/ofirkai.nvim",
-        enabled = true,
-        lazy = false,
-        priority = 1000, -- Ensure it loads first
-        config = function()
-            require("ofirkai").setup({})
-            vim.api.nvim_set_hl(0, "LspInlayHint", { link = "InlayHints", default = true })
-            for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-                vim.api.nvim_set_hl(0, group, {})
-            end
-            -- local links = {
-            --     ["@lsp.type.namespace"] = "@namespace",
-            --     ["@lsp.type.type"] = "@type",
-            --     ["@lsp.type.class"] = "@type",
-            --     ["@lsp.type.enum"] = "@type",
-            --     ["@lsp.type.interface"] = "@type",
-            --     ["@lsp.type.struct"] = "@structure",
-            --     ["@lsp.type.parameter"] = "@parameter",
-            --     ["@lsp.type.variable"] = "@variable",
-            --     ["@lsp.type.property"] = "@property",
-            --     ["@lsp.type.enumMember"] = "@constant",
-            --     ["@lsp.type.function"] = "@function",
-            --     ["@lsp.type.method"] = "@method",
-            --     ["@lsp.type.macro"] = "@macro",
-            --     ["@lsp.type.decorator"] = "@function",
-            -- }
-            -- for newgroup, oldgroup in pairs(links) do
-            --     vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
-            -- end
-        end,
     },
 
     { "simrat39/rust-tools.nvim", cond = is_not_mini, lazy = true },
@@ -140,27 +64,6 @@ return {
         },
     },
 
-    -- -- Colorize
-    {
-        "NvChad/nvim-colorizer.lua",
-        opts = {
-            user_default_options = {
-                RGB = true,          -- #RGB hex codes
-                RRGGBB = true,       -- #RRGGBB hex codes
-                names = false,       -- "Name" codes like Blue or blue
-                RRGGBBAA = true,     -- #RRGGBBAA hex codes
-                AARRGGBB = true,     -- 0xAARRGGBB hex codes
-                rgb_fn = true,       -- CSS rgb() and rgba() functions
-                hsl_fn = true,       -- CSS hsl() and hsla() functions
-                css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
-                -- Available modes for `mode`: foreground, background,  virtualtext
-                mode = "background", -- Set the display mode.
-                virtualtext = "■",
-            },
-        },
-        event = "VeryLazy",
-    },
     --nginx
     {
         "chr4/sslsecure.vim",
@@ -191,35 +94,6 @@ return {
             require("godbolt").setup()
         end,
         cmd = { "Godbolt", "GodboltCompiler" },
-    },
-    -- tests
-    {
-        "nvim-zh/colorful-winsep.nvim",
-        config = function()
-            require("colorful-winsep").setup()
-        end,
-        event = "BufAdd",
-    },
-    {
-        "rainbowhxch/beacon.nvim",
-        cond = function()
-            return not vim.g.neovide
-        end,
-        config = function()
-            require("beacon").setup({
-                enable = true,
-                size = 40,
-                fade = true,
-                minimal_jump = 10,
-                show_jumps = true,
-                focus_gained = true,
-                shrink = true,
-                timeout = 500,
-                ignore_buffers = {},
-                ignore_filetypes = {},
-            })
-        end,
-        event = { "BufReadPost", "FileReadPost" },
     },
 
     {

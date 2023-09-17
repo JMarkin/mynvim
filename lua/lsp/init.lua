@@ -76,4 +76,12 @@ M.setup = function()
     end
 end
 
+vim.api.nvim_create_user_command("LspInstallDefault", function(_)
+    M.install()
+end, {})
+
+vim.api.nvim_create_user_command("LspInstallDefaultSync", function(_)
+    M.install(true)
+end, {})
+
 return M
