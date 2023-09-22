@@ -13,6 +13,7 @@ return {
             end,
             silent = true,
             desc = "right",
+            mode = { "n", "t", "v" },
         },
         {
             "<C-j>",
@@ -21,6 +22,7 @@ return {
             end,
             silent = true,
             desc = "down",
+            mode = { "n", "t", "v" },
         },
         {
 
@@ -30,6 +32,7 @@ return {
             end,
             silent = true,
             desc = "top",
+            mode = { "n", "t", "v" },
         },
         {
             "<C-h>",
@@ -38,6 +41,7 @@ return {
             end,
             silent = true,
             desc = "left",
+            mode = { "n", "t", "v" },
         },
         {
 
@@ -47,6 +51,7 @@ return {
             end,
             silent = true,
             desc = "Resize left",
+            mode = { "n", "t", "v" },
         },
         {
 
@@ -56,6 +61,7 @@ return {
             end,
             silent = true,
             desc = "Resize down",
+            mode = { "n", "t", "v" },
         },
         {
             "<A-k>",
@@ -64,6 +70,7 @@ return {
             end,
             silent = true,
             desc = "Resize up",
+            mode = { "n", "t", "v" },
         },
         {
 
@@ -73,6 +80,7 @@ return {
             end,
             silent = true,
             desc = "Resize right",
+            mode = { "n", "t", "v" },
         },
     },
 }

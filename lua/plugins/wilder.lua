@@ -5,7 +5,6 @@ return {
     keys = { "/", "?", ":" },
     build = ":UpdateRemotePlugins",
     dependencies = {
-        "sharkdp/fd",
         {
             "nixprime/cpsm",
             build = "PY3=ON bash install.sh",

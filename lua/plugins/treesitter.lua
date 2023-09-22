@@ -81,15 +81,20 @@ return {
     lazy = true,
     dependencies = {
         {
-            "Wansmer/treesj",
-            keys = {
-                "<space>m",
-                "<space>j",
-                "<space>s",
-            },
-            opts = {},
+            "nvim-treesitter/nvim-treesitter-textobjects",
+            init = function()
+                -- disable rtp plugin, as we only need its queries for mini.ai
+                -- In case other textobject modules are enabled, we will load them
+                -- once nvim-treesitter is loaded
+                require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+                load_textobjects = true
+            end,
         },
-        "m-demare/hlargs.nvim",
+        {
+            "m-demare/hlargs.nvim",
+            -- dev = true,
+            -- dir = "~/projects/hlargs.nvim",
+        },
         "yioneko/nvim-yati",
         "nvim-treesitter/playground",
         {
@@ -113,6 +118,7 @@ return {
         {
             "HiPhish/rainbow-delimiters.nvim",
             -- enabled = false,
+            branch = "use-children",
             config = function()
                 local rainbow_delimiters = require("rainbow-delimiters")
                 require("rainbow-delimiters.setup")({

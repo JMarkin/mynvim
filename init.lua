@@ -11,6 +11,8 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
     end
 end
 require("keymap")
+require("funcs")
+require("au")
 
 if vim.env.PYTHON3 then
     vim.g.python3_host_prog = vim.env.PYTHON3
@@ -25,7 +27,6 @@ if vim.g.neovide then
     require("neovide")
 end
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -39,8 +40,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("funcs")
-require("au")
-
-require("lazy").setup("plugins")
+require("lazy").setup({ import = "plugins" }, {
+    checker = {
+        notify = false,
+    },
+    change_detection = {
+        notify = false,
+    },
+})
 require("ofirkai")
+vim.opt.laststatus = 3

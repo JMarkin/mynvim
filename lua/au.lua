@@ -44,6 +44,7 @@ autocmd("FileType", {
         "notify",
         "startuptime",
         "checkhealth",
+        "netrw",
     },
     callback = function(event)
         vim.opt_local.wrap = false
@@ -53,7 +54,7 @@ autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = augroup("spell", {clear = true}),
+    group = augroup("spell", { clear = true }),
     pattern = { "gitcommit", "markdown" },
     callback = function()
         vim.opt_local.spell = true
