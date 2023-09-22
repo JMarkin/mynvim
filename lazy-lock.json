@@ -34,6 +34,7 @@
   "goto-breakpoints.nvim": { "branch": "master", "commit": "e57cf63d152534db3a9177ae53abbff43fcab6c2" },
   "haproxy.vim": { "branch": "master", "commit": "ecc39867aac1d7dc946b7dbd1855330df6ebe1d7" },
   "hlargs.nvim": { "branch": "main", "commit": "6218a401824c5733ac50b264991b62d064e85ab2" },
+  "incline.nvim": { "branch": "main", "commit": "fdd7e08a6e3d0dd8d9aa02428861fa30c37ba306" },
   "indent-blankline.nvim": { "branch": "v3", "commit": "8a8de7f69a1e2eb548c3a48886d1aebde32c080e" },
   "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
   "local-highlight.nvim": { "branch": "master", "commit": "b5c45c0383f814b7b1498dd53fdd840750d50243" },

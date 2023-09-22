@@ -1,6 +1,15 @@
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
+if vim.env.PYTHON3 then
+    g.python3_host_prog = vim.env.PYTHON3
+end
+
+g.snips_author = vim.env.AUTHOR or "Jury Markin"
+g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
+g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
+g.loaded_matchit = 1
+vim.cmd[[language C]]
 g.cursorhold_updatetime = 100
 opt.updatetime = 100
 opt.scrolloff = 15
@@ -36,7 +45,6 @@ opt.synmaxcol = 2000
 g.editorconfig = true
 opt.clipboard = "unnamedplus"
 opt.exrc = true
-opt.laststatus = 3
 
 vim.cmd([[
 filetype plugin on
