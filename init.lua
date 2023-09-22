@@ -14,15 +14,6 @@ require("keymap")
 require("funcs")
 require("au")
 
-if vim.env.PYTHON3 then
-    vim.g.python3_host_prog = vim.env.PYTHON3
-end
-
-vim.g.snips_author = vim.env.AUTHOR or "Jury Markin"
-vim.g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
-vim.g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
-vim.g.loaded_matchit = 1
-
 if vim.g.neovide then
     require("neovide")
 end
@@ -49,4 +40,3 @@ require("lazy").setup({ import = "plugins" }, {
     },
 })
 require("ofirkai")
-vim.opt.laststatus = 3

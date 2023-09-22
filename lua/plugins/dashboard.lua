@@ -60,13 +60,14 @@ return {
         dashboard.section.header.val = header
         dashboard.section.buttons.val = {
             dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-            dashboard.button("f", " " .. " Find file", ":lua require('fzf-lua').files({ multiprocess=true,})<cr>"),
+            dashboard.button("f", " " .. " Find file", ":FzfLua files<cr>"),
+            dashboard.button("s", " " .. " Search", ":FzfLua grep_project<cr>"),
             dashboard.button(
                 "r",
                 "󰄉 " .. " Recent files",
                 ":lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })<cr>"
             ),
-            dashboard.button("c", " " .. " Config", ":e .vimrc.lua <CR>"),
+            dashboard.button("c", " " .. " Config", ":e .nvim.lua <CR>"),
             dashboard.button("u", " " .. " Update Plugins", ":Lazy update<CR>"),
             dashboard.button("q", " " .. " Quit", ":qa<CR>"),
         }
