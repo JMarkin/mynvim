@@ -53,12 +53,6 @@ return {
     config = function()
         local nullls = require("null-ls")
 
-        nullls.builtins.diagnostics.ruff = nullls.builtins.diagnostics.ruff.with({
-            extra_args = { "--line-length", "120" },
-        })
-        nullls.builtins.formatting.ruff = nullls.builtins.formatting.ruff.with({
-            extra_args = { "--line-length", "120" },
-        })
         nullls.builtins.diagnostics.djlint = nullls.builtins.diagnostics.djlint.with({
             filetypes = { "jinja.html", "htmldjango" },
         })
@@ -111,7 +105,7 @@ return {
         table.insert(sources, nullls.builtins.code_actions.ltrs)
 
         nullls.setup({
-            log_level = "error",
+            log_level = "trace",
             sources = sources,
             temp_dir = "/tmp",
             update_in_insert = false,

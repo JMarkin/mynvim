@@ -25,7 +25,7 @@ return {
                 lualine_a = { "mode" },
                 lualine_b = {
                     "branch",
-                    { "diff",     source = diff_source },
+                    { "diff", source = diff_source },
                     "filetype",
                     { "filename", path = 1 },
                 },
@@ -47,17 +47,20 @@ return {
                 lualine_z = { "location", "hostname" },
             },
             tabline = {
-                lualine_a = { "tabs" },
-                lualine_b = {},
-                lualine_c = {},
-                lualine_x = {},
-                lualine_y = {},
-                lualine_z = {
+                lualine_a = {
+
                     {
                         "windows",
                         mode = 2,
                         disabled_buftypes = { "prompt" },
                     },
+                },
+                lualine_b = {},
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {
+                    "tabs",
                 },
             },
         })

@@ -43,15 +43,15 @@ return {
             end,
             desc = "Search: previous",
         },
+        -- {
+        --     "<leader>sb",
+        --     function()
+        --         require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
+        --     end,
+        --     desc = "Search: buffers",
+        -- },
         {
             "<leader>sb",
-            function()
-                require("fzf-lua").buffers({ multiprocess = true, current_tab_only = true })
-            end,
-            desc = "Search: buffers",
-        },
-        {
-            "<leader>sB",
             function()
                 require("fzf-lua").buffers({ multiprocess = true }) --, current_tab_only = true })
             end,
@@ -135,6 +135,13 @@ return {
                 require("fzf-lua").command_history({ multiprocess = true })
             end,
             desc = "Search: command_history",
+        },
+        {
+            "<leader>sG",
+            function()
+                require("fzf-lua").git_status({ multiprocess = true })
+            end,
+            desc = "Search: git status",
         },
         {
             "gr",
