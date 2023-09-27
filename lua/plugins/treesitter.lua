@@ -93,7 +93,6 @@ return {
         {
             "m-demare/hlargs.nvim",
             -- dev = true,
-            -- dir = "~/projects/hlargs.nvim",
         },
         "yioneko/nvim-yati",
         "nvim-treesitter/playground",

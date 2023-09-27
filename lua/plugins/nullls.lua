@@ -28,8 +28,7 @@ end, {})
 
 return {
     "JMarkin/null-ls.nvim",
-    -- dev = true,
-    -- dir = "~/projects/null-ls.nvim",
+    dev = true,
     cond = is_not_mini,
     event = { "BufReadPre", "FileReadPre" },
     dependencies = {
@@ -111,13 +110,6 @@ return {
             update_in_insert = false,
             on_attach = require("lsp").on_attach,
             root_dir = u.root_pattern(unpack(vim.g.root_pattern)),
-            should_attach = function(bufnr)
-                -- if vim.g.disable_lsp then
-                --     return false
-                -- end
-
-                return not require("float-preview").is_float(bufnr, vim.fn.bufname(bufnr))
-            end,
         })
     end,
 }

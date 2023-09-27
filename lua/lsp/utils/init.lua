@@ -73,8 +73,6 @@ capabilities.textDocument.completion = {
 M.capabilities = capabilities
 
 local function setup_lsp(lsp_name, opts)
-    local check_buf_is_float = require("float-preview").is_float
-
     local _opts = {
         capabilities = capabilities,
         on_attach = on_attach,
@@ -82,7 +80,7 @@ local function setup_lsp(lsp_name, opts)
     if vim.g.disable_lsp then
         _opts.autostart = false
     end
-    opts = vim.tbl_extend('force', opts, _opts)
+    opts = vim.tbl_extend("force", opts, _opts)
 
     local lsp = require("lspconfig")
     local conf = lsp[lsp_name]
@@ -90,16 +88,6 @@ local function setup_lsp(lsp_name, opts)
 
     local try_add = conf.manager.try_add
     conf.manager.try_add = function(self, bufnr, project_root)
-        if check_buf_is_float(bufnr) then
-            return
-        end
-        local ok, is_float = pcall(function()
-            return check_buf_is_float(bufnr, vim.fn.bufname(bufnr))
-        end)
-        if ok and is_float then
-            return
-        end
-
         if is_large_file(bufnr, true) then
             vim.notify("disable lsp large buffer", vim.log.levels.DEBUG)
             return

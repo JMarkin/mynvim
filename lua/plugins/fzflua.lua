@@ -179,10 +179,6 @@ return {
                 ["--layout"] = "reverse",
                 ["--no-separator"] = false,
             },
-            files = {
-                rg_opts = "--color=never --files --no-ignore --hidden -g '!.git'",
-                fd_opts = "--color=never --type f --no-ignore --hidden --exclude .git",
-            },
         })
         require("fzf-lua").config.globals.fzf_opts["--border"] = nil
 

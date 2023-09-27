@@ -1,7 +1,6 @@
 return {
     "JMarkin/diaglist.nvim",
-    -- dev = true,
-    -- dir = "~/projects/diaglist.nvim",
+    dev = true,
     opts = {
         debounce_ms = 130,
     },
