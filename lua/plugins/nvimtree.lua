@@ -3,17 +3,7 @@ local function on_attach(bufnr)
     local FloatPreview = require("float-preview")
 
     FloatPreview.attach_nvimtree(bufnr)
-    local float_close_decorator = function(f)
-        local ff = FloatPreview.close_wrap(f)
-        return function(...)
-            local r = ff(...)
-            local matching_configs = require("lspconfig.util").get_config_by_ft(vim.bo.filetype)
-            for _, config in ipairs(matching_configs) do
-                config.launch()
-            end
-            return r
-        end
-    end
+    local float_close_decorator = FloatPreview.close_wrap
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -82,8 +72,27 @@ return {
         {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
-            -- dir = "/projects/nvim-tree.lua-float-preview",
-            -- dev = true,
+            dev = true,
+            opts = {
+                hooks = {
+                    pre_open = function(path)
+                        local is_showed = require("float-preview.utils").is_showed(path)
+                        if is_showed then
+                            return false
+                        end
+                        -- if file > 5 MB or not text -> not preview
+                        local size = require("float-preview.utils").get_size(path)
+                        if type(size) ~= "number" then
+                            return false
+                        end
+                        local is_text = require("float-preview.utils").is_text(path)
+                        return size < 5 and is_text
+                    end,
+                    post_open = function(bufnr)
+                        return true
+                    end,
+                },
+            },
         },
     },
     init = function()

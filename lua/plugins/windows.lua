@@ -1,6 +1,5 @@
 return {
-    name = "nvim-window",
-    url = "https://gitlab.com/yorickpeterse/nvim-window",
+    "yorickpeterse/nvim-window",
     event = "BufAdd",
     keys = {
         {

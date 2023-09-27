@@ -9,6 +9,9 @@ return {
                     delay = 300,
                 },
                 triggers = {
+                    -- space triggers
+                    { mode = "n", keys = "<space>" },
+
                     -- Leader triggers
                     { mode = "n", keys = "<Leader>" },
                     { mode = "x", keys = "<Leader>" },
@@ -49,7 +52,8 @@ return {
                     miniclue.gen_clues.windows(),
                     miniclue.gen_clues.z(),
 
-                    { mode = "n", keys = "<space>b", desc = "Buffers" },
+                    { mode = "n", keys = "<space>s",  desc = "Scratch" },
+                    { mode = "n", keys = "<space>b",  desc = "Buffers" },
                     { mode = "n", keys = "<leader>b", desc = "Bookmark" },
                     { mode = "n", keys = "<Leader>t", desc = "Tabs" },
                     { mode = "n", keys = "<Leader>l", desc = "Lang" },
@@ -75,12 +79,12 @@ return {
             local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
             local opts = require("lazy.core.plugin").values(plugin, "opts", false)
             local mappings = {
-                { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
-                { opts.mappings.delete, desc = "Delete surrounding" },
-                { opts.mappings.find, desc = "Find right surrounding" },
-                { opts.mappings.find_left, desc = "Find left surrounding" },
-                { opts.mappings.highlight, desc = "Highlight surrounding" },
-                { opts.mappings.replace, desc = "Replace surrounding" },
+                { opts.mappings.add,            desc = "Add surrounding",                     mode = { "n", "v" } },
+                { opts.mappings.delete,         desc = "Delete surrounding" },
+                { opts.mappings.find,           desc = "Find right surrounding" },
+                { opts.mappings.find_left,      desc = "Find left surrounding" },
+                { opts.mappings.highlight,      desc = "Highlight surrounding" },
+                { opts.mappings.replace,        desc = "Replace surrounding" },
                 { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
             }
             mappings = vim.tbl_filter(function(m)
@@ -90,17 +94,17 @@ return {
         end,
         opts = {
             mappings = {
-                add = "gza", -- Add surrounding in Normal and Visual modes
-                delete = "gzd", -- Delete surrounding
-                find = "gzf", -- Find surrounding (to the right)
-                find_left = "gzF", -- Find surrounding to the left
-                highlight = "gzh", -- Highlight surrounding
-                replace = "gzr", -- Replace surrounding
+                add = "gza",            -- Add surrounding in Normal and Visual modes
+                delete = "gzd",         -- Delete surrounding
+                find = "gzf",           -- Find surrounding (to the right)
+                find_left = "gzF",      -- Find surrounding to the left
+                highlight = "gzh",      -- Highlight surrounding
+                replace = "gzr",        -- Replace surrounding
                 update_n_lines = "gzn", -- Update `n_lines`
             },
         },
     },
-    { "echasnovski/mini.pairs", event = "VeryLazy", opts = {} },
+    { "echasnovski/mini.pairs",     event = "VeryLazy",                       opts = {} },
     {
         "echasnovski/mini.ai",
         event = "ModeChanged",

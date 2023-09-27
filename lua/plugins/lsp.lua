@@ -197,7 +197,7 @@ return {
             opts = {
                 align = {
                     bottom = false, -- align fidgets along bottom edge of buffer
-                    right = true,   -- align fidgets along right edge of buffer
+                    right = true, -- align fidgets along right edge of buffer
                 },
             },
             tag = "legacy",

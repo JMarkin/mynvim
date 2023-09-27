@@ -1,6 +1,7 @@
 return {
     "JMarkin/wilder.nvim",
     branch = "my",
+    dev = true,
     enabled = true,
     keys = { "/", "?", ":" },
     build = ":UpdateRemotePlugins",
@@ -21,7 +22,13 @@ return {
         wilder.set_option("pipeline", {
             wilder.branch(
                 wilder.python_file_finder_pipeline({
-                    file_command = { "fd", "-tf" },
+                    file_command = function(ctx, arg)
+                        if string.find(arg, ".") ~= nil then
+                            return { "fd", "-tf", "-H" }
+                        else
+                            return { "fd", "-tf" }
+                        end
+                    end,
                     dir_command = { "fd", "-td" },
                     filters = { "cpsm_filter" },
                 }),
@@ -34,7 +41,7 @@ return {
                     }),
                 }),
                 wilder.cmdline_pipeline({
-                    fuzzy = 2,
+                    fuzzy = 1,
                     fuzzy_filter = wilder.lua_fzy_filter(),
                 }),
                 {
@@ -65,7 +72,7 @@ return {
                 wilder.popupmenu_devicons(),
                 wilder.popupmenu_buffer_flags({
                     flags = " a + ",
-                    icons = { ["+"] = "", a = "", h = "" },
+                    icons = { ["+"] = "󰏫", a = "󰈔", h = "󰈤" },
                 }),
             },
             right = {
@@ -77,7 +84,7 @@ return {
 
         local wildmenu_renderer = wilder.wildmenu_renderer({
             highlighter = highlighters,
-            separator = " · ",
+            separator = " | ",
             left = { " ", wilder.wildmenu_spinner(), " " },
             right = { " ", wilder.wildmenu_index() },
         })
