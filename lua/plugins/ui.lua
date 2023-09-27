@@ -107,14 +107,6 @@ return {
         event = "VeryLazy",
     },
     {
-        "nvim-zh/colorful-winsep.nvim",
-        enabled = false,
-        config = function()
-            require("colorful-winsep").setup()
-        end,
-        event = "BufAdd",
-    },
-    {
         "rainbowhxch/beacon.nvim",
         cond = function()
             return not vim.g.neovide
