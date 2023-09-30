@@ -79,7 +79,7 @@ local DEFAULT_INSTALL_EXEC = {
     },
 }
 
-local function exec_install(exec, sync)
+local function external_install(exec, sync)
     local f = function()
         local notify = nil
         if vim.fn.executable(exec) ~= 1 then
@@ -135,4 +135,29 @@ local function exec_install(exec, sync)
     end
 end
 
-return exec_install
+local install = function(sync)
+    local sources = {
+        "ruff",
+        "black",
+        "stylua",
+        "nginxbeautifier",
+        "prettier",
+        "mypy",
+        "isort",
+        "flake8",
+        "fixjson",
+    }
+    for _, source in ipairs(sources) do
+        external_install(source, sync)
+    end
+end
+
+vim.api.nvim_create_user_command("ExternalInstallDefault", function(_)
+    install()
+end, {})
+
+vim.api.nvim_create_user_command("ExternalInstallDefaultSync", function(_)
+    install(true)
+end, {})
+
+return external_install

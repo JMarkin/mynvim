@@ -27,6 +27,7 @@ local syntax_langs = {
     "commonlisp",
     "latex",
     -- conf files
+    "ssh_config",
     "jsdoc",
     "yaml",
     "toml",
@@ -117,7 +118,6 @@ return {
         {
             "HiPhish/rainbow-delimiters.nvim",
             -- enabled = false,
-            branch = "use-children",
             config = function()
                 local rainbow_delimiters = require("rainbow-delimiters")
                 require("rainbow-delimiters.setup")({
