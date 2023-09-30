@@ -25,5 +25,5 @@ vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next
 vim.api.nvim_create_user_command("InstallDefault", function(_)
     vim.cmd.TSInstallDefault()
     require("lsp").install()
-    vim.cmd.NullInstallDefault()
+    vim.cmd.ExternalInstallDefault()
 end, {})

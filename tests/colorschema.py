@@ -5,6 +5,7 @@ import os
 zxc
 """
 
+
 # TODO: 123
 # FIXME: 11
 
@@ -17,8 +18,8 @@ class TestClass:
         self.variable = varible
 
 
-value=123
-name=11
+value = 123
+name = 11
 c = TestClass()
 setattr(TestClass, "s", value)
 c.__setattr__(name, value)

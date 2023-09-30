@@ -16,7 +16,6 @@ local highlight = {
 
 return {
     "lukas-reineke/indent-blankline.nvim",
-    branch = "v3",
     cond = is_not_mini,
     config = function()
         require("ibl").setup({

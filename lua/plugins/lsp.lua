@@ -5,14 +5,6 @@ return {
     cond = is_not_mini,
     keys = {
         {
-            "<space>bf",
-            function()
-                vim.lsp.buf.format({
-                    async = true,
-                })
-            end,
-        },
-        {
             "gh",
             "<cmd>Lspsaga finder<CR>",
             desc = "Lsp: Finder",
@@ -197,7 +189,7 @@ return {
             opts = {
                 align = {
                     bottom = false, -- align fidgets along bottom edge of buffer
-                    right = true, -- align fidgets along right edge of buffer
+                    right = true,   -- align fidgets along right edge of buffer
                 },
             },
             tag = "legacy",
