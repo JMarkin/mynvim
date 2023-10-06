@@ -43,6 +43,10 @@ local DEFAULT_INSTALL_EXEC = {
     yamlfmt = { command = "go", args = { "install", "github.com/google/yamlfmt/cmd/yamlfmt@latest" } },
 
     -- cargo
+    ["nil"] = {
+        command = "cargo",
+        args = { "install", "--git", "https://github.com/oxalica/nil.git", "--tag", "2023-08-09", "nil" },
+    },
     stylua = {
         command = "cargo",
         args = { "install", "--locked", "--git", "https://github.com/JohnnyMorganz/StyLua.git", "--tag", "v0.18.1" },

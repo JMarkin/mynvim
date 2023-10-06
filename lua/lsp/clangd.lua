@@ -9,7 +9,9 @@ return {
         end
     end,
     setup = function()
-        local opts = {}
+        local opts = {
+            cmd = { "clangd", "--malloc-trim", "--background-index=false", "--clang-tidy"  }
+        }
         opts.on_attach = function(...)
             local st = utils.on_attach(...)
             if st then

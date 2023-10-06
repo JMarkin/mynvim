@@ -76,9 +76,10 @@ local function setup_lsp(lsp_name, opts)
     local _opts = {
         capabilities = capabilities,
         on_attach = on_attach,
+        autostart = false,
     }
-    if vim.g.disable_lsp then
-        _opts.autostart = false
+    if vim.g.lsp_autostart then
+        _opts.autostart = true
     end
     opts = vim.tbl_extend("force", opts, _opts)
 

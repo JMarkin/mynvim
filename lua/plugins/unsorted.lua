@@ -5,6 +5,7 @@ return {
 
     {
         "max397574/better-escape.nvim",
+        enabled = false,
         event = "InsertEnter",
         opts = {
             mapping = { "jj", "qq", "jk" },
@@ -20,7 +21,7 @@ return {
         cond = is_not_mini,
         lazy = true,
     },
-    { "b0o/schemastore.nvim",     cond = is_not_mini, lazy = true },
+    { "b0o/schemastore.nvim", cond = is_not_mini, lazy = true },
     {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
@@ -120,5 +121,35 @@ return {
             vim.g.lastplace_ignore_buftype = "quickfix,nofile,help"
             vim.g.lastplace_open_folds = 1
         end,
+    },
+    {
+        "stevearc/profile.nvim",
+        keys = "F2",
+        config = function()
+            local function toggle_profile()
+                local prof = require("profile")
+                if prof.is_recording() then
+                    prof.stop()
+                    vim.ui.input(
+                        { prompt = "Save profile to:", completion = "file", default = "profile.json" },
+                        function(filename)
+                            if filename then
+                                prof.export(filename)
+                                vim.notify(string.format("Wrote %s", filename))
+                            end
+                        end
+                    )
+                else
+                    prof.start("*")
+                end
+            end
+            vim.keymap.set("", "<F2>", toggle_profile)
+        end,
+    },
+    {
+        "theHamsta/nvim_rocks",
+        lazy = true,
+        dev = true,
+        build = "pip3 install --user hererocks && python3 -mhererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",
     },
 }

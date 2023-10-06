@@ -1,7 +1,83 @@
 return {
     {
-        "ofirgall/ofirkai.nvim",
+        "Iron-E/nvim-highlite",
+        config = function(_, opts)
+            local Highlite = require("highlite")
+
+            local palette, terminal_palette = Highlite.palette("highlite")
+
+            require("highlite").setup({
+                generator = {
+                    plugins = {
+                        nvim = {
+                            aerial = false,
+                            barbar = false,
+                            bqf = true,
+                            cmp = true,
+                            fzf = true,
+                            gitsigns = true,
+                            indent_blankline = false,
+                            lazy = true,
+                            leap = false,
+                            lspconfig = true,
+                            lspsaga = true,
+                            lsp_signature = false,
+                            mini = true,
+                            neo_tree = false,
+                            nvim_tree = true,
+                            packer = false,
+                            registers = false,
+                            symbols_outline = false,
+                            telescope = false,
+                            todo_comments = true,
+                            trouble = false,
+                        },
+                    },
+                    vim = {
+
+                        ale = false,
+                        coc = false,
+                        dadbod_ui = true,
+                        easymotion = false,
+                        fern = false,
+                        gitgutter = false,
+                        indent_guides = false,
+                        jumpmotion = false,
+                        nerdtree = false,
+                        sandwich = false,
+                        signify = false,
+                        swap = false,
+                        undotree = false,
+                        win = false,
+                    },
+                    syntax = true,
+                },
+            })
+
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                callback = function()
+                    vim.api.nvim_set_hl(0, "DiagnosticError", { fg = palette.error, bold = true })
+                    vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = palette.hint, bold = true })
+                    vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = palette.info, bold = true })
+                    vim.api.nvim_set_hl(0, "DiagnosticOk", { fg = palette.ok, bold = true })
+                    vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = palette.warning, bold = true })
+                    vim.api.nvim_set_hl(0, "DiffAdd", { fg = palette.string })
+                    vim.api.nvim_set_hl(0, "DiffDelete", { fg = palette.error })
+                    vim.api.nvim_set_hl(0, "DiffText", { fg = palette.diff_change })
+                end,
+                group = vim.api.nvim_create_augroup("config", { clear = true }),
+                -- pattern = "highlite",
+            })
+
+            vim.api.nvim_command("colorscheme highlite-papercolor")
+        end,
+        lazy = false,
+        priority = math.huge,
         enabled = true,
+    },
+    {
+        "ofirgall/ofirkai.nvim",
+        enabled = false,
         lazy = false,
         priority = math.huge,
         config = function()

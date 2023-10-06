@@ -1,4 +1,4 @@
-local max_file_size = 5
+local max_file_size = 2
 local max_file_size_readonly = 100
 local max_line_length = 2000
 
@@ -120,9 +120,6 @@ local function optimize_buffer(args)
     --     vim.opt_local.eventignore = {}
     -- end
     -- vim.opt_local.eventignore:append(EVENTS)
-    pcall(function()
-        require("indent_blankline.commands").disable()
-    end)
     pcall(vim.api.nvim_command, "UfoDisable")
 
     if _type == FILE_TYPE.READ_ONLY then
@@ -133,5 +130,5 @@ end
 return {
     is_large_file = is_large_file,
     large_type = FILE_TYPE,
-    optimize_buffer = optimize_buffer
+    optimize_buffer = optimize_buffer,
 }

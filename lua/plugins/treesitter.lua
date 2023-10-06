@@ -164,6 +164,7 @@ return {
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = true,
+                disable = is_disable,
             },
             incremental_selection = {
                 enable = true,
@@ -177,6 +178,7 @@ return {
             },
             context_commentstring = {
                 enable = true,
+                disable = is_disable,
             },
             yati = {
                 enable = true,
@@ -184,6 +186,7 @@ return {
             },
             indent = {
                 enable = false,
+                disable = is_disable,
             },
             matchup = {
                 enable = true,
