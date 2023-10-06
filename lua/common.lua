@@ -1,4 +1,4 @@
-local g = vim.g     -- global variables
+local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
 if vim.env.PYTHON3 then
@@ -8,8 +8,7 @@ end
 g.snips_author = vim.env.AUTHOR or "Jury Markin"
 g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
 g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
-g.loaded_matchit = 1
-vim.cmd [[language C]]
+vim.cmd([[language C]])
 g.cursorhold_updatetime = 100
 opt.updatetime = 100
 opt.scrolloff = 15
@@ -50,9 +49,9 @@ vim.cmd([[
 filetype plugin on
 filetype indent plugin on
 ]])
-opt.expandtab = true   -- use spaces instead of tabs
-opt.shiftwidth = 4     -- shift 4 spaces when tab
-opt.tabstop = 4        -- 1 tab == 4 spaces
+opt.expandtab = true -- use spaces instead of tabs
+opt.shiftwidth = 4 -- shift 4 spaces when tab
+opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 opt.colorcolumn = "+1"

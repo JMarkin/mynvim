@@ -18,6 +18,10 @@ class TestClass:
         self.variable = varible
 
 
+B = 123
+
+C = 1111111111
+
 value = 123
 name = 11
 c = TestClass()

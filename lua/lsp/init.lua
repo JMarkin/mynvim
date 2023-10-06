@@ -21,6 +21,7 @@ end
 
 local M = {}
 M.lsps = {
+    ["nil"] = default_lsp("nil", "nil_ls"),
     lua_ls = require("lsp.lua_ls"),
     rust_analyzer = require("lsp.rust_analyzer"),
     bashls = default_lsp("bash-language-server", "bashls"),
