@@ -48,7 +48,7 @@ local menu_map = {
 return {
     {
         "JMarkin/gentags.lua",
-        dev = true,
+        -- dev = true,
         cond = vim.fn.executable("ctags") == 1,
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -76,7 +76,7 @@ return {
             -- "hrsh7th/cmp-nvim-lua",
             {
                 "JMarkin/cmp-diag-codes",
-                dev = true,
+                -- dev = true,
             },
             {
                 "hrsh7th/cmp-nvim-lsp",

@@ -72,7 +72,7 @@ return {
         {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
-            dev = true,
+            -- dev = true,
             opts = {
                 hooks = {
                     pre_open = function(path)

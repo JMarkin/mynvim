@@ -8,7 +8,7 @@ end
 g.snips_author = vim.env.AUTHOR or "Jury Markin"
 g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
 g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
-vim.cmd([[language C]])
+--vim.cmd([[language C]])
 g.cursorhold_updatetime = 100
 opt.updatetime = 100
 opt.scrolloff = 15
