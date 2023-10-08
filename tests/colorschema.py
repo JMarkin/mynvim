@@ -18,6 +18,9 @@ class TestClass:
         self.variable = varible
 
 
+asdasdsa = asd
+
+
 B = 123
 
 C = 1111111111
@@ -51,7 +54,7 @@ def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
 
 
-s = "^[1-9]123\n\t$"
+s = "^[1-9]123\sxxn\t$""
 
 s = "<h>asd</h>"
 """

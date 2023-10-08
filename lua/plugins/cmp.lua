@@ -1,32 +1,30 @@
-local is_large_file = require("largefiles").is_large_file
-
-local kind_icons = {
-    Text = "",
-    Method = "󰆧",
-    Function = "󰊕",
-    Constructor = "",
-    Field = "󰇽",
-    Variable = "󰂡",
-    Class = "󰠱",
-    Interface = "",
-    Module = "",
-    Property = "󰜢",
-    Unit = "",
-    Value = "󰎠",
-    Enum = "",
-    Keyword = "󰌋",
-    Snippet = "",
-    Color = "󰏘",
-    File = "󰈙",
-    Reference = "",
-    Folder = "󰉋",
-    EnumMember = "",
-    Constant = "󰏿",
-    Struct = "",
-    Event = "",
-    Operator = "󰆕",
-    TypeParameter = "󰅲",
-}
+-- local kind_icons = {
+--     Text = "",
+--     Method = "󰆧",
+--     Function = "󰊕",
+--     Constructor = "",
+--     Field = "󰇽",
+--     Variable = "󰂡",
+--     Class = "󰠱",
+--     Interface = "",
+--     Module = "",
+--     Property = "󰜢",
+--     Unit = "",
+--     Value = "󰎠",
+--     Enum = "",
+--     Keyword = "󰌋",
+--     Snippet = "",
+--     Color = "󰏘",
+--     File = "󰈙",
+--     Reference = "",
+--     Folder = "󰉋",
+--     EnumMember = "",
+--     Constant = "󰏿",
+--     Struct = "",
+--     Event = "",
+--     Operator = "󰆕",
+--     TypeParameter = "󰅲",
+-- }
 
 local menu_map = {
     gh_issues = "ISSUE",
@@ -73,6 +71,7 @@ return {
                     build = "make install_jsregexp",
                 },
             },
+            "hrsh7th/cmp-omni",
             "danymat/neogen",
             -- "hrsh7th/cmp-nvim-lua",
             {
@@ -134,8 +133,6 @@ return {
             local preselect = cmp.PreselectMode.None
 
             local sources = {
-                { name = "diag-codes", in_comment = true },
-                { name = "nvim_lsp" },
                 { name = "luasnip", keyword_length = 2, max_item_count = 5 },
                 {
                     name = "tags",
@@ -163,10 +160,22 @@ return {
                 },
             }
 
+            if vim.g.lsp_autostart then
+                table.insert(sources, 1, { name = "diag-codes", in_comment = true })
+                table.insert(sources, 1, { name = "nvim_lsp" })
+            else
+                table.insert(sources, 3, {
+                    name = "omni",
+                    option = {
+                        disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
+                    },
+                })
+            end
+
             cmp.setup({
                 enabled = function()
                     local disabled = false
-                    disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
+                    disabled = disabled or (vim.bo.buftype == "prompt")
                     disabled = disabled or (vim.fn.reg_recording() ~= "")
                     disabled = disabled or require("cmp_dap").is_dap_buffer()
                     return not disabled
@@ -224,7 +233,7 @@ return {
                 sources = sources,
                 formatting = {
                     format = require("lspkind").cmp_format({
-                        symbol_map = kind_icons,
+                        -- symbol_map = kind_icons,
                         maxwidth = 50,
                         mode = "symbol",
                         menu = menu_map,

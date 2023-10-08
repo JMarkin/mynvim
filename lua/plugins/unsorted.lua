@@ -57,14 +57,6 @@ return {
             auto_resize_height = true,
         },
     },
-
-    {
-        "FabijanZulj/blame.nvim",
-        keys = {
-            { "<leader>gB", ":ToggleBlame window<cr>", desc = "Git: blame file" },
-        },
-    },
-
     --nginx
     {
         "chr4/sslsecure.vim",
