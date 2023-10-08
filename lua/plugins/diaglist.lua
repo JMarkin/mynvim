@@ -1,6 +1,6 @@
 return {
     "JMarkin/diaglist.nvim",
-    dev = true,
+    -- dev = true,
     -- enabled = false,
     opts = {
         debounce_ms = 130,
