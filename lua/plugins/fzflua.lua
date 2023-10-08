@@ -80,6 +80,21 @@ return {
             mode = "v",
         },
         {
+            "gr",
+            function()
+                require("fzf-lua").grep_cword({ multiprocess = true })
+            end,
+            desc = "Search: references",
+        },
+        {
+            "gr",
+            function()
+                require("fzf-lua").grep_visual({ multiprocess = true })
+            end,
+            desc = "Search: visual references",
+            mode = "v",
+        },
+        {
             "<leader>s/",
             function()
                 require("fzf-lua").lgrep_curbuf({ multiprocess = true })
@@ -100,20 +115,6 @@ return {
             end,
             desc = "Search: tags",
             mode = "v",
-        },
-        {
-            "<leader>sd",
-            function()
-                require("fzf-lua").lsp_definitions({ multiprocess = true })
-            end,
-            desc = "Search: Definitions",
-        },
-        {
-            "<leader>sS",
-            function()
-                require("fzf-lua").lsp_live_workspace_symbols({ multiprocess = true })
-            end,
-            desc = "Search: Symbols",
         },
         {
             "<leader>sc",
@@ -142,14 +143,6 @@ return {
                 require("fzf-lua").git_status({ multiprocess = true })
             end,
             desc = "Search: git status",
-        },
-        {
-            "gr",
-            function()
-                require("fzf-lua").lsp_finder({ multiprocess = true, ignore_current_line = true })
-            end,
-            silent = true,
-            desc = "GoTo: references",
         },
     },
     config = function()

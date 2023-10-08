@@ -1,3 +1,5 @@
+table.unpack = table.unpack or unpack
+
 require("common")
 local default_vim_keymap_set = vim.keymap.set
 
