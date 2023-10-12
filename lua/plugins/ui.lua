@@ -124,7 +124,7 @@ return {
             ignore_buffers = {},
             ignore_filetypes = {},
         },
-        event = { "BufReadPost", "FileReadPost" },
+        event = "VeryLazy"
     },
     {
         "tzachar/local-highlight.nvim",

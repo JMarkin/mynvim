@@ -111,8 +111,6 @@ return {
                     luasnip.expand_or_jump()
                 elseif neogen.jumpable() then
                     neogen.jump_next()
-                elseif has_words_before() then
-                    cmp.complete()
                 else
                     fallback()
                 end
@@ -172,24 +170,26 @@ return {
                 })
             end
 
+            local autocomplete = false
+
+            if vim.g.lsp_autostart then
+                local types = require("cmp.types")
+                ---@diagnostic disable-next-line: cast-local-type
+                autocomplete = {
+                    types.cmp.TriggerEvent.TextChanged,
+                }
+            end
+
             cmp.setup({
+                completion = { autocomplete = autocomplete },
                 enabled = function()
                     local disabled = false
-                    disabled = disabled or (vim.bo.buftype == "prompt")
+                    ---@diagnostic disable-next-line: deprecated
+                    disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
                     disabled = disabled or (vim.fn.reg_recording() ~= "")
                     disabled = disabled or require("cmp_dap").is_dap_buffer()
                     return not disabled
                 end,
-                performance = {
-                    async_budget = 1,
-                    confirm_resolve_timeout = 80,
-                    max_view_entries = 100,
-
-                    trigger_debounce_time = 200,
-                    debounce = 200,
-                    throttle = 60,
-                    fetching_timeout = 200,
-                },
                 preselect = preselect,
                 sorting = {
                     comparators = {
@@ -226,7 +226,17 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm(),
+                    ["<CR>"] = cmp.mapping({
+                        i = function(fallback)
+                            if cmp.visible() and cmp.get_active_entry() then
+                                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                            else
+                                fallback()
+                            end
+                        end,
+                        s = cmp.mapping.confirm({ select = true }),
+                        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+                    }),
                     ["<Tab>"] = move_down,
                     ["<S-Tab>"] = move_up,
                 },
