@@ -14,6 +14,7 @@ local DEFAULT_INSTALL_EXEC = {
     jedi_language_server = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
     ["jedi-language-server"] = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
     pyright = { command = "pip", args = { "install", "-U", "pyright" } },
+    ["nginx-language-server"] = { command = "pip", args = { "install", "-U", "nginx-language-server" } },
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },

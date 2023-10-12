@@ -93,11 +93,6 @@ return {
         "willothy/flatten.nvim",
         config = true,
         opts = {
-            callbacks = {
-                pre_open = function(bufnr, winnr, filetype)
-                    pcall(require, "tabby")
-                end,
-            },
             window = {
                 open = "tab",
             },

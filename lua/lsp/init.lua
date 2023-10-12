@@ -21,6 +21,7 @@ end
 
 local M = {}
 M.lsps = {
+    nginx_language_server = default_lsp("nginx-language-server", "nginx_language_server"),
     ["nil"] = default_lsp("nil", "nil_ls"),
     lua_ls = require("lsp.lua_ls"),
     rust_analyzer = require("lsp.rust_analyzer"),

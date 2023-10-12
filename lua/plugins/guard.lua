@@ -9,6 +9,7 @@ return {
     keys = {
         { "<space>bf", "<cmd>GuardFmt<cr>", desc = "Format buffer" },
     },
+    lazy = true,
     event = { "BufReadPost" },
     config = function()
         local ft = require("guard.filetype")

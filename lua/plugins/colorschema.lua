@@ -147,7 +147,7 @@ return {
                     -- Style to be applied to different syntax groups. See `:help nvim_set_hl`
                     comments = { italic = true },
                     keywords = { italic = false, bold = true },
-                    functions = {},
+                    functions = { bold = true },
                     variables = {},
                     -- Background styles for sidebars (panels) and floating windows:
                     floats = "default", -- default, dark, transparent
