@@ -124,7 +124,7 @@ return {
             ignore_buffers = {},
             ignore_filetypes = {},
         },
-        event = "VeryLazy"
+        event = "VeryLazy",
     },
     {
         "tzachar/local-highlight.nvim",
@@ -132,5 +132,12 @@ return {
             insert_mode = true,
             hlgroup = "Search",
         },
+    },
+    {
+        "nvimdev/hlsearch.nvim",
+        event = "BufRead",
+        config = function()
+            require("hlsearch").setup()
+        end,
     },
 }
