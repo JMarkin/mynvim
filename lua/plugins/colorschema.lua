@@ -1,112 +1,11 @@
-local highlight = {
-    "RainbowRed",
-    "RainbowYellow",
-    "RainbowBlue",
-    "RainbowOrange",
-    "RainbowGreen",
-    "RainbowViolet",
-    "RainbowCyan",
-}
-
-vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-vim.g.rainbow_delimiters_highlight = highlight
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_set_hl(0, "LocalHighlight", { link = "Debug" })
+    end,
+})
 
 return {
-    {
-        "Iron-E/nvim-highlite",
-        config = function()
-            local Highlite = require("highlite")
-
-            local palette, _ = Highlite.palette("highlite")
-
-            require("highlite").setup({
-                generator = {
-                    plugins = {
-                        nvim = {
-                            aerial = false,
-                            barbar = false,
-                            bqf = true,
-                            cmp = true,
-                            fzf = true,
-                            gitsigns = true,
-                            indent_blankline = true,
-                            lazy = true,
-                            leap = false,
-                            lspconfig = true,
-                            lspsaga = true,
-                            lsp_signature = false,
-                            mini = true,
-                            neo_tree = false,
-                            nvim_tree = true,
-                            packer = false,
-                            registers = false,
-                            symbols_outline = false,
-                            telescope = false,
-                            todo_comments = true,
-                            trouble = false,
-                        },
-                    },
-                    vim = {
-                        ale = false,
-                        coc = false,
-                        dadbod_ui = true,
-                        easymotion = false,
-                        fern = false,
-                        gitgutter = false,
-                        indent_guides = false,
-                        jumpmotion = false,
-                        nerdtree = false,
-                        sandwich = false,
-                        signify = false,
-                        swap = false,
-                        undotree = false,
-                        win = false,
-                    },
-                    syntax = true,
-                },
-            })
-
-            vim.api.nvim_create_autocmd("ColorScheme", {
-                callback = function()
-                    vim.api.nvim_set_hl(0, "DiagnosticError", { fg = palette.error, bold = true })
-                    vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = palette.hint, bold = true })
-                    vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = palette.info, bold = true })
-                    vim.api.nvim_set_hl(0, "DiagnosticOk", { fg = palette.ok, bold = true })
-                    vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = palette.warning, bold = true })
-                    vim.api.nvim_set_hl(0, "DiffAdd", { fg = palette.string })
-                    vim.api.nvim_set_hl(0, "DiffDelete", { fg = palette.error })
-                    vim.api.nvim_set_hl(0, "DiffText", { fg = palette.diff_change })
-                    vim.api.nvim_set_hl(0, "Error", { undercurl = true })
-                    vim.api.nvim_set_hl(0, "Normal", { guibg = nil })
-                end,
-                group = vim.api.nvim_create_augroup("config", { clear = true }),
-                -- pattern = "highlite",
-            })
-
-            local design = {
-                border = "single",
-                winhighlight = "Normal:CmpFloat,FloatBorder:CmpFloatBorder,CursorLine:Visual,Search:None",
-                zindex = 1001,
-            }
-
-            vim.g.cmp_window = {
-                completion = design,
-                documentation = design,
-            }
-            vim.g.lualine_theme = "powerline_dark"
-
-            vim.api.nvim_command("colorscheme highlite-papercolor")
-        end,
-        lazy = false,
-        priority = math.huge,
-        enabled = false,
-    },
     {
         "ofirgall/ofirkai.nvim",
         enabled = false,
@@ -155,6 +54,7 @@ return {
     {
         "polirritmico/monokai-nightasty.nvim",
         lazy = false,
+        enabled = true,
         priority = math.huge,
         config = function()
             require("monokai-nightasty").setup({

@@ -26,7 +26,6 @@ return {
             args.opts.background_colour = vim.g.notify_background_color
             require("notify").setup(args.opts)
             vim.notify = require("notify")
-            require("lsp.utils.notify")
         end,
         event = "VeryLazy",
     },
@@ -128,9 +127,9 @@ return {
     },
     {
         "tzachar/local-highlight.nvim",
+        enabled = true,
         opts = {
             insert_mode = true,
-            hlgroup = "Search",
         },
     },
     {

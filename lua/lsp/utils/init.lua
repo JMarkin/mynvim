@@ -113,12 +113,13 @@ local on_attach = function(client, bufnr)
     -- vim.print(client.server_capabilities)
 
     if is_large_file(bufnr, true) then
-        print("is_large")
         vim.lsp.buf_detach_client(bufnr, client.id)
-        vim.bo.tagfunc = nil
-        vim.bo.omnifunc = "syntaxcomplete#Complete"
+        vim.bo[bufnr].tagfunc = nil
+        vim.bo[bufnr].omnifunc = "syntaxcomplete#Complete"
         return 0
     end
+
+    require("lsp.utils.notify").enable()
 
     for _, keymap in ipairs(keys) do
         keymap[3].buffer = bufnr
@@ -131,6 +132,9 @@ local on_attach = function(client, bufnr)
             vim.lsp.inlay_hint(bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
+
+    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
 
     -- local ok, sig_help = pcall(require, "lsp_signature")
     -- if ok then
