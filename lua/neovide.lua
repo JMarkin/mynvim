@@ -1,3 +1,4 @@
+vim.g.neovide_transparency = 0.75
 vim.g.neovide_input_macos_alt_is_meta = true
 vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
 vim.keymap.set("v", "<D-c>", '"+y') -- Copy
