@@ -33,6 +33,8 @@
   "gitsigns.nvim": { "branch": "main", "commit": "5a9a6ac29a7805c4783cda21b80a1e361964b3f2" },
   "godbolt.nvim": { "branch": "main", "commit": "74c32eaa520987d195a2594a6efaab61cf9072c8" },
   "goto-breakpoints.nvim": { "branch": "master", "commit": "e57cf63d152534db3a9177ae53abbff43fcab6c2" },
+  "guard-collection": { "branch": "main", "commit": "41d4e036e350c44316c00eeaa651bb00ac24916f" },
+  "guard.nvim": { "branch": "main", "commit": "71a5e4861fc65dd6298bdb6e6d3027e81c134708" },
   "haproxy.vim": { "branch": "master", "commit": "ecc39867aac1d7dc946b7dbd1855330df6ebe1d7" },
   "hlargs.nvim": { "branch": "main", "commit": "6218a401824c5733ac50b264991b62d064e85ab2" },
   "hlsearch.nvim": { "branch": "main", "commit": "40a590d0720bb08be2a5bdf668d3f85b5b824162" },
