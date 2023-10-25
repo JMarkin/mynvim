@@ -10,20 +10,27 @@ return {
     end,
     setup = function()
         local opts = {
-            cmd = { "clangd", "--malloc-trim", "--background-index=false", "--clang-tidy"  }
+            cmd = { "clangd", "--malloc-trim", "--background-index=false", "--clang-tidy" },
         }
+
+        local clangd_extensions_setuped = 0
+
         opts.on_attach = function(...)
             local st = utils.on_attach(...)
             if st then
+                if not clangd_extensions_setuped then
+                    require("clangd_extensions").setup({
+                        inlay_hints = {
+                            inline = vim.fn.has("nvim-0.10") == 1,
+                        },
+                    })
+                    clangd_extensions_setuped = 1
+                end
+
                 require("clangd_extensions.inlay_hints").setup_autocmd()
                 require("clangd_extensions.inlay_hints").set_inlay_hints()
             end
         end
-        require("clangd_extensions").setup({
-            inlay_hints = {
-                inline = vim.fn.has("nvim-0.10") == 1,
-            },
-        })
 
         utils.setup_lsp("clangd", opts)
     end,

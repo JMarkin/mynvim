@@ -1,6 +1,7 @@
 local DEFAULT_INSTALL_EXEC = {
     -- pip
     ruff = { command = "pip", args = { "install", "-U", "ruff" } },
+    ["ruff-lsp"] = { command = "pip", args = { "install", "-U", "ruff-lsp" } },
     curlylint = { command = "pip", args = { "install", "-U", "curlylint" } },
     sqlfluff = { command = "pip", args = { "install", "-U", "sqlfluff" } },
     yapf = { command = "pip", args = { "install", "-U", "yapf" } },
@@ -13,6 +14,7 @@ local DEFAULT_INSTALL_EXEC = {
     docformatter = { command = "pip", args = { "install", "-U", "docformatter" } },
     jedi_language_server = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
     ["jedi-language-server"] = { command = "pip", args = { "install", "-U", "jedi_language_server==0.39.0" } },
+    ["python-lsp-server"] = { command = "pip", args = { "install", "-U", "python-lsp-server" } },
     pyright = { command = "pip", args = { "install", "-U", "pyright" } },
     ["nginx-language-server"] = { command = "pip", args = { "install", "-U", "nginx-language-server" } },
 

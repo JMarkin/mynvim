@@ -34,6 +34,35 @@ M.lsps = {
     jedi_language_server = default_lsp("jedi-language-server", "jedi_language_server", {
         filetypes = { "python", "python.django", "django" },
     }),
+    ruff_lsp = default_lsp("ruff-lsp", "ruff_lsp", {
+        filetypes = { "python", "python.django", "django" },
+    }),
+    -- pylsp = default_lsp("python-lsp-server", "pylsp", {
+    --     filetypes = { "python", "python.django", "django" },
+    --     settings = {
+    --         pylsp = {
+    --             configurationSources = {},
+    --             plugins = {
+    --                 jedi_completion = {
+    --                     include_function_objects = true,
+    --                     include_params = true,
+    --                 },
+    --                 yapf = {
+    --                     enabled = false,
+    --                 },
+    --                 pycodestyle = {
+    --                     enabled = false,
+    --                 },
+    --                 flake8 = {
+    --                     enabled = false,
+    --                 },
+    --                 autopep8 = {
+    --                     enabled = false,
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- }),
     -- pyright = default_lsp("pyright", "pyright", {
     --     filetypes = { "python", "python.django", "django" },
     -- }),

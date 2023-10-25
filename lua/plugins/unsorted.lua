@@ -5,11 +5,11 @@ return {
 
     {
         "max397574/better-escape.nvim",
-        enabled = false,
+        enabled = true,
         event = "InsertEnter",
         opts = {
-            mapping = { "jj", "qq", "jk" },
-            clear_empty_lines = true,
+            mapping = { "jj" },
+            clear_empty_lines = false,
             keys = "<Esc>",
         },
     },
@@ -30,10 +30,12 @@ return {
             {
                 "<leader>lcd",
                 ":PythonCopyReferenceDotted<CR>",
+                desc = "Copy as: ReferenceDotted",
             },
             {
                 "<leader>lcp",
                 ":PythonCopyReferencePytest<CR>",
+                desc = "Copy as: ReferencePytest",
             },
         },
     },
@@ -135,6 +137,7 @@ return {
     },
     {
         "theHamsta/nvim_rocks",
+        enabled = false,
         lazy = true,
         -- dev = true,
         build = "pip3 install --user hererocks && python3 -mhererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",

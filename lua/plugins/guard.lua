@@ -1,24 +1,22 @@
 return {
     "nvimdev/guard.nvim",
+    dev = true,
     dependencies = {
         {
             "nvimdev/guard-collection",
-            -- dev = true,
+            dev = true,
         },
     },
-    keys = {
-        { "<space>bf", "<cmd>GuardFmt<cr>", desc = "Format buffer" },
-    },
     lazy = true,
-    event = { "BufReadPost" },
+    event = { "BufReadPost", "FileReadPost" },
     config = function()
         local ft = require("guard.filetype")
 
-        ft("python"):fmt("ruff_fix"):append("ruff"):lint("ruff")
+        ft("python"):fmt("ruff"):lint("dmypy")
         ft("lua"):fmt("stylua")
         ft("c,cpp"):lint("clang-tidy")
         ft("toml"):fmt("taplo")
-        ft("typescript,javascript,typescriptreact"):fmt("prettier")
+        ft("typescript,javascript,typescriptreact,markdown"):fmt("prettier")
 
         require("guard").setup({
             -- the only options for the setup function
@@ -26,5 +24,7 @@ return {
             -- Use lsp if no formatter was defined for this filetype
             lsp_as_default_formatter = true,
         })
+
+        vim.keymap.set({ "n" }, "<space>bf", "<cmd>GuardFmt<cr>", { desc = "Format buffer" })
     end,
 }

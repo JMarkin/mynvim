@@ -6,6 +6,11 @@ zxc
 """
 
 
+def f(i: int) -> int:
+    i += "123"
+    return "123"
+
+
 # TODO: 123
 # FIXME: 11
 
@@ -54,7 +59,7 @@ def f(val1: str, ss, sncjllll):
     print(val1, ss, sncjllll)
 
 
-s = "^[1-9]123\sxxn\t$""
+s = "^[1-9]123\sxxn\t$"
 
 s = "<h>asd</h>"
 """
