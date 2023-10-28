@@ -58,6 +58,7 @@ return {
                     miniclue.gen_clues.windows(),
                     miniclue.gen_clues.z(),
 
+                    { mode = "n", keys = "gz", desc = "Surround" },
                     { mode = "n", keys = "<space>s", desc = "Scratch" },
                     { mode = "n", keys = "<space>b", desc = "Buffers" },
                     { mode = "n", keys = "<leader>b", desc = "Bookmark" },
@@ -71,6 +72,7 @@ return {
                     { mode = "v", keys = "<Leader>d", desc = "Debug" },
                     { mode = "n", keys = "<Leader>s", desc = "Search" },
                     { mode = "n", keys = "<Leader>lc", desc = "Copy as" },
+                    { mode = "n", keys = "<Leader>lt", desc = "Tests" },
                 },
             })
         end,

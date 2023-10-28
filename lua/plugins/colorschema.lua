@@ -53,8 +53,8 @@ return {
     },
     {
         "polirritmico/monokai-nightasty.nvim",
+        enabled = false,
         lazy = false,
-        enabled = true,
         priority = math.huge,
         config = function()
             require("monokai-nightasty").setup({
@@ -98,4 +98,33 @@ return {
             vim.g.lualine_theme = "monokai-nightasty"
         end,
     },
+    {
+        "ray-x/aurora",
+        enabled = false,
+        lazy = false,
+        priority = math.huge,
+        init = function()
+            vim.g.aurora_italic = 1
+            vim.g.aurora_transparent = 1
+            vim.g.aurora_bold = 1
+        end,
+        config = function()
+            vim.api.nvim_command("colorscheme aurora")
+            vim.g.lualine_theme = "aurora"
+        end,
+    },
+    {
+        "sekke276/dark_flat.nvim",
+        enabled = true,
+        lazy = false,
+        priority = math.huge,
+        config = function()
+            require("dark_flat").setup({
+                transparent = true,
+                italics = true,
+            })
+            vim.api.nvim_command("colorscheme dark_flat")
+            vim.g.lualine_theme = "dark_flat"
+        end,
+    }
 }

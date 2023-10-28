@@ -1,5 +1,6 @@
 return {
     "bennypowers/nvim-regexplainer",
+    enabled = false,
     opts = {
         mappings = {
             toggle = "gR",
