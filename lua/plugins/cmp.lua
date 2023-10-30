@@ -94,6 +94,10 @@ return {
             end
 
             local luasnip = require("luasnip")
+            luasnip.config.set_config({
+                region_check_events = "InsertEnter",
+                delete_check_events = "TextChanged,InsertLeave",
+            })
             require("luasnip.loaders.from_snipmate").lazy_load()
             require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -103,25 +107,14 @@ return {
             local neogen = require("neogen")
 
             local cmp = require("cmp")
-            vim.keymap.set({ "i", "s" }, "<c-l>", function()
-                if luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                elseif neogen.jumpable() then
-                    neogen.jump_next()
-                end
-            end, { expr = true })
-
-            vim.keymap.set({ "i", "s" }, "<c-k>", function()
-                if luasnip.in_snippet() and luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                elseif neogen.jumpable(true) then
-                    neogen.jump_prev()
-                end
-            end, { expr = true })
 
             local move_down = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
+                elseif luasnip.expand_or_locally_jumpable() then
+                    luasnip.expand_or_jump()
+                elseif neogen.jumpable() then
+                    neogen.jump_next()
                 else
                     fallback()
                 end
@@ -130,6 +123,10 @@ return {
             local move_up = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_prev_item()
+                elseif luasnip.in_snippet() and luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                elseif neogen.jumpable(true) then
+                    neogen.jump_prev()
                 else
                     fallback()
                 end
