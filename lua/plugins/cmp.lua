@@ -67,8 +67,11 @@ return {
             {
                 "saadparwaiz1/cmp_luasnip",
                 dependencies = {
-                    "L3MON4D3/LuaSnip",
-                    build = "make install_jsregexp",
+                    {
+                        "L3MON4D3/LuaSnip",
+                        build = "make install_jsregexp",
+                    },
+                    "rafamadriz/friendly-snippets",
                 },
             },
             "hrsh7th/cmp-omni",
@@ -84,7 +87,6 @@ return {
             },
             "rcarriga/cmp-dap",
             "quangnguyen30192/cmp-nvim-tags",
-            "rafamadriz/friendly-snippets",
         },
         config = function()
             local function has_words_before()
