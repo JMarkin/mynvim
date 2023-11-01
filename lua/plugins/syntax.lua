@@ -28,6 +28,7 @@ local ext = {
     mako = "mako",
     dbml = "dbml",
     lalrpop = "lalrpop",
+    snippets = "snippets",
 }
 
 vim2ext(ext, "*.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp,*.rgen,*.rmiss,*.rchit,*.rahit,*.rint,*.rcall", "glsl")
@@ -82,4 +83,9 @@ return {
     { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
     { "jidn/vim-dbml", ft = "dbml" },
+    {
+        "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
+        ft = "snippets",
+    },
 }
