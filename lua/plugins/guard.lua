@@ -1,18 +1,18 @@
 return {
     "nvimdev/guard.nvim",
-    dev = true,
+    -- dev = true,
     dependencies = {
         {
             "nvimdev/guard-collection",
-            dev = true,
+            -- dev = true,
         },
     },
     lazy = true,
-    event = { "BufReadPost", "FileReadPost" },
+    event = { "BufReadPre", "FileReadPre" },
     config = function()
         local ft = require("guard.filetype")
 
-        ft("python"):fmt("ruff"):lint("dmypy")
+        ft("python"):fmt("ruff"):lint("mypy")
         ft("lua"):fmt("stylua")
         ft("c,cpp"):lint("clang-tidy")
         ft("toml"):fmt("taplo")

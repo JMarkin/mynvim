@@ -45,12 +45,13 @@ vim.filetype.add({
         [".*nginx/.*/conf.*"] = "nginx",
         [".*/nginx/.*%.conf"] = "nginx",
         ["/srv/nginx/conf%.d/locations/.*"] = "nginx",
-        ["*/playbooks/*.yml"] = "yaml.ansible",
+        [".*/playbooks/*.y*"] = "yaml.ansible",
+        [".*compose.*.y*"] = "yaml.docker-compose",
         ["Caddyfile.*"] = "caddyfile",
-        ["haproxy*.c*"] = "haproxy",
-        ["*/templates/*.yaml"] = "helm",
-        ["*/templates/*.tpl"] = "helm",
-        ["*/helm/*.yaml"] = "helm",
+        ["haproxy.*.c.*"] = "haproxy",
+        [".*/templates/.*.yaml"] = "helm",
+        [".*/templates/.*.tpl"] = "helm",
+        [".*/helm/.*.yaml"] = "helm",
     },
 })
 

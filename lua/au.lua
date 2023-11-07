@@ -45,6 +45,9 @@ autocmd("FileType", {
         "startuptime",
         "checkhealth",
         "netrw",
+        "neotest-output",
+        "neotest-output-panel",
+        "neotest-summary"
     },
     callback = function(event)
         vim.opt_local.wrap = false
