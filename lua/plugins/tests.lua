@@ -11,6 +11,20 @@ return {
     },
     keys = {
         {
+            "<space>T",
+            function()
+                require("neotest").summary.toggle()
+            end,
+            desc = "Tests",
+        },
+        {
+            "<leader>lto",
+            function()
+                require("neotest").output_panel.toggle()
+            end,
+            desc = "Tests: output",
+        },
+        {
             "<leader>ltt",
             function()
                 require("neotest").run.run()

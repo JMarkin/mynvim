@@ -133,8 +133,7 @@ local on_attach = function(client, bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
 
-    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
+    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- local ok, sig_help = pcall(require, "lsp_signature")
     -- if ok then
@@ -160,7 +159,7 @@ capabilities.textDocument = {
         lineFoldingOnly = true,
     },
     completion = {
-        dynamicRegistration = false,
+        dynamicRegistration = true,
         completionItem = {
             snippetSupport = true,
             commitCharactersSupport = true,
@@ -170,38 +169,18 @@ capabilities.textDocument = {
                 valueSet = {
                     1, -- Deprecated
                 },
+                labelDetailsSupport = true,
             },
-            insertReplaceSupport = true,
-            resolveSupport = {
-                properties = {
-                    "documentation",
-                    "detail",
-                    "additionalTextEdits",
-                    "sortText",
-                    "filterText",
-                    "insertText",
-                    "textEdit",
+            contextSupport = true,
+            insertTextMode = 1,
+            completionList = {
+                itemDefaults = {
+                    "commitCharacters",
+                    "editRange",
                     "insertTextFormat",
                     "insertTextMode",
+                    "data",
                 },
-            },
-            insertTextModeSupport = {
-                valueSet = {
-                    1, -- asIs
-                    2, -- adjustIndentation
-                },
-            },
-            labelDetailsSupport = true,
-        },
-        contextSupport = true,
-        insertTextMode = 1,
-        completionList = {
-            itemDefaults = {
-                "commitCharacters",
-                "editRange",
-                "insertTextFormat",
-                "insertTextMode",
-                "data",
             },
         },
     },
@@ -224,7 +203,7 @@ local function setup_lsp(lsp_name, opts)
     local try_add = conf.manager.try_add
     conf.manager.try_add = function(self, bufnr, project_root)
         if is_large_file(bufnr, true) then
-            vim.notify("disable lsp large buffer", vim.log.levels.DEBUG)
+            vim.notify("disable lsp large buffer", vim.log.levels.ERROR)
             vim.bo.tagfunc = nil
             vim.bo.omnifunc = "syntaxcomplete#Complete"
             return

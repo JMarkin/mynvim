@@ -65,7 +65,6 @@ opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.completeopt = "menu,menuone,noselect"
 opt.tags = { "tags", ".git/tags" }
 opt.tagfunc = nil
-g.lsp_autostart = false
 
 g.root_pattern = {
     "pyproject.toml",
