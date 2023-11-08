@@ -1,6 +1,18 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = augroup("hl_yank", { clear = true }),
+    pattern = "*",
+    desc = "hightlight on yanl",
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = "ModesCopy",
+            timeout = 100,
+        })
+    end,
+})
+
 autocmd({ "BufReadPre", "FileReadPre" }, {
     group = augroup("large_fiels", { clear = true }),
     pattern = { "*" },
@@ -47,7 +59,7 @@ autocmd("FileType", {
         "netrw",
         "neotest-output",
         "neotest-output-panel",
-        "neotest-summary"
+        "neotest-summary",
     },
     callback = function(event)
         vim.opt_local.wrap = false

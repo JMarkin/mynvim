@@ -43,6 +43,18 @@ opt.scrollback = 2000
 opt.synmaxcol = 2000
 g.editorconfig = true
 opt.clipboard = "unnamedplus"
+-- g.clipboard = {
+--     name = "OSC 52",
+--     copy = {
+--         ["+"] = require("vim.clipboard.osc52").copy,
+--         ["*"] = require("vim.clipboard.osc52").copy,
+--     },
+--
+--     paste = {
+--         ["+"] = require("vim.clipboard.osc52").paste,
+--         ["*"] = require("vim.clipboard.osc52").paste,
+--     },
+-- }
 opt.exrc = true
 
 vim.cmd([[
