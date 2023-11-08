@@ -66,23 +66,28 @@ return {
 
     -- ui components
     { "MunifTanjim/nui.nvim", lazy = true },
+    {
+        "mvllow/modes.nvim",
+        event = "VeryLazy",
+        opts = {
+            line_opacity = 0.25,
+            set_cursor = false,
+        },
+    },
 
     {
         "ibhagwan/smartyank.nvim",
+        enabled = true,
         event = "VeryLazy",
         opts = {
             highlight = {
-                enabled = true, -- highlight yanked text
+                enabled = false, -- highlight yanked text
                 higroup = "ModesCopy", -- highlight group of yanked text
                 timeout = 100, -- timeout for clearing the highlight
             },
         },
         dependencies = {
             "mvllow/modes.nvim",
-            opts = {
-                line_opacity = 0.25,
-                set_cursor = false,
-            },
         },
     },
 
@@ -127,14 +132,14 @@ return {
     },
     {
         "tzachar/local-highlight.nvim",
-        enabled = true,
+        event = "VeryLazy",
         opts = {
             insert_mode = true,
         },
     },
     {
         "nvimdev/hlsearch.nvim",
-        event = "BufRead",
+        event = "VeryLazy",
         config = function()
             require("hlsearch").setup()
         end,
