@@ -12,7 +12,7 @@ return {
         },
         keys = {
             {
-                "<leader>gL",
+                "<leader>gl",
                 function()
                     require("git-log").check_log()
                 end,
