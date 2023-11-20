@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 -- local kind_icons = {
 --     Text = "",
 --     Method = "󰆧",
@@ -48,14 +49,14 @@ local menu_map = {
 return {
     {
         "JMarkin/gentags.lua",
-        dev = true,
+        -- dev = true,
         cond = vim.fn.executable("ctags") == 1,
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        config = function()
-            require("gentags").setup({})
-        end,
+        opts = {
+            async = false,
+        },
         event = "VeryLazy",
     },
     {
@@ -231,7 +232,7 @@ return {
                     entries = "custom",
                 },
                 experimental = {
-                    ghost_text = true,
+                    ghost_text = false,
                 },
                 snippet = {
                     expand = function(args)

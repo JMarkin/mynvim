@@ -52,14 +52,18 @@ local function is_large_file(bufnr, as_bool)
         if not bufnr then
             return false
         end
-        if vim.b.large_buf ~= nil then
-            return vim.b.large_buf
+        local ok, large_buf = pcall(vim.api.nvim_buf_get_var, bufnr, "large_buf")
+        if not ok then
+            large_buf = nil
+        end
+        if large_buf ~= nil then
+            return large_buf
         end
         local size = get_buf_size(bufnr)
 
         local _type = FILE_TYPE.NORMAL
         if not size then
-            vim.b.large_buf = _type
+            vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
             return
         end
 
@@ -70,14 +74,14 @@ local function is_large_file(bufnr, as_bool)
             vim.notify("LARGE FILE SIZE " .. size, vim.log.levels.INFO)
             _type = FILE_TYPE.LARGE_SIZE
         else
-            local _m = maxline(bufnr)
+            local _m = vim.api.nvim_buf_line_count(bufnr)
             if _m > max_line_length then
                 vim.notify("LONG LINE " .. _m, vim.log.levels.INFO)
                 _type = FILE_TYPE.LONG_LINE
             end
         end
 
-        vim.b.large_buf = _type
+        vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
         return _type
     end
     if not as_bool then

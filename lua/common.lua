@@ -5,6 +5,8 @@ if vim.env.PYTHON3 then
     g.python3_host_prog = vim.env.PYTHON3
 end
 
+opt.cursorline = true
+opt.omnifunc = "syntaxcomplete#Complete"
 g.snips_author = vim.env.AUTHOR or "Jury Markin"
 g.snips_email = vim.env.EMAIL or "me@jmarkin.ru"
 g.snips_github = vim.env.EMAIL or "https://github.com/JMarkin"
@@ -68,7 +70,6 @@ opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 opt.colorcolumn = "+1"
 
-opt.autowrite = true
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
@@ -86,11 +87,3 @@ g.root_pattern = {
     ".git",
     ".venv",
 }
-
--- fast dirs
-local ramdisk = vim.fn.expand("~/RAMDisk")
-if vim.fn.isdirectory(ramdisk) then
-    ramdisk = ramdisk .. "/nvim/"
-    opt.dir = ramdisk .. "swap"
-    opt.shadafile = ramdisk .. "shada/main.shada"
-end

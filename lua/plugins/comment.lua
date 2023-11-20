@@ -1,22 +1,21 @@
-local _keys = { "gcc", "gc" }
-local keys = {}
-
-for k, v in pairs(_keys) do
-    keys[k] = { v, mode = { "n", "v" } }
-end
+local is_large_file = require("largefiles").is_large_file
+vim.g.skip_ts_context_commentstring_module = true
 
 return {
-    { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
     {
-        "echasnovski/mini.comment",
-        event = "ModeChanged",
-        opts = {
-            options = {
-                custom_commentstring = function()
-                    return require("ts_context_commentstring.internal").calculate_commentstring()
-                        or vim.bo.commentstring
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        lazy = true,
+    },
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup({
+                pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+                ignore = function()
+                    return is_large_file(vim.api.nvim_get_current_buf(), true)
                 end,
-            },
-        },
+            })
+        end,
+        event = "VeryLazy",
     },
 }

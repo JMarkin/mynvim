@@ -133,7 +133,6 @@ return {
                 })
             end,
         },
-        "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
         require("nvim-treesitter.install").prefer_git = true
@@ -155,10 +154,6 @@ return {
                     scope_incremental = "<tab>",
                     node_decremental = "<s-tab>",
                 },
-                disable = is_disable,
-            },
-            context_commentstring = {
-                enable = true,
                 disable = is_disable,
             },
             yati = {

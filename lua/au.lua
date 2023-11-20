@@ -4,7 +4,7 @@ local augroup = vim.api.nvim_create_augroup
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = augroup("hl_yank", { clear = true }),
     pattern = "*",
-    desc = "hightlight on yanl",
+    desc = "hightlight on yank",
     callback = function()
         vim.highlight.on_yank({
             higroup = "ModesCopy",
@@ -145,7 +145,7 @@ autocmd("FileType", {
     },
     group = enable_syntax,
     callback = function()
-        vim.opt.omnifunc = "syntaxcomplete#Complete"
+        vim.opt_local.omnifunc = "syntaxcomplete#Complete"
     end,
 })
 

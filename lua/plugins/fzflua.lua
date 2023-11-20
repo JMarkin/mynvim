@@ -146,6 +146,7 @@ return {
         },
     },
     config = function()
+        local actions = require("fzf-lua.actions")
         require("fzf-lua").setup({
             fzf_bin = "sk",
             async_or_timeout = 3000,
@@ -163,6 +164,11 @@ return {
                 fzf = {
                     ["ctrl-a"] = "abort",
                     ["ctrl-b"] = "beginning-of-line",
+                },
+            },
+            files = {
+                actions = {
+                    ["ctrl-I"] = { actions.toggle_ignore },
                 },
             },
             fzf_opts = {

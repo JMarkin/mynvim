@@ -52,7 +52,7 @@ local DEFAULT_INSTALL_EXEC = {
     },
     stylua = {
         command = "cargo",
-        args = { "install", "--locked", "--git", "https://github.com/JohnnyMorganz/StyLua.git", "--tag", "v0.18.1" },
+        args = { "install", "--locked", "--git", "https://github.com/JohnnyMorganz/StyLua.git", "--tag", "v0.19.0" },
     },
     taplo = {
         command = "cargo",
