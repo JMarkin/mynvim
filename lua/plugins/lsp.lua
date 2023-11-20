@@ -66,6 +66,11 @@ return {
         event = "LspAttach",
     },
     {
+        "j-hui/fidget.nvim",
+        opts = {},
+        event = "LspAttach",
+    },
+    {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
         event = "VeryLazy",

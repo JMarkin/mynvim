@@ -1,6 +1,7 @@
 return {
     "nvimdev/guard.nvim",
-    -- dev = true,
+    -- enabled=false,
+    dev = true,
     dependencies = {
         {
             "nvimdev/guard-collection",
@@ -22,6 +23,7 @@ return {
         require("guard").setup({
             -- the only options for the setup function
             fmt_on_save = false,
+            lint_on_change = false,
             -- Use lsp if no formatter was defined for this filetype
             lsp_as_default_formatter = true,
         })

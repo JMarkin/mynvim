@@ -3,7 +3,6 @@ local function on_attach(bufnr)
     local FloatPreview = require("float-preview")
 
     FloatPreview.attach_nvimtree(bufnr)
-    local float_close_decorator = FloatPreview.close_wrap
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -22,15 +21,15 @@ local function on_attach(bufnr)
     end, opts("CD"))
     vim.keymap.set("n", ",", api.tree.change_root_to_parent, opts("Up"))
 
-    vim.keymap.set("n", "<C-t>", float_close_decorator(api.node.open.tab), opts("Open: New Tab"))
-    vim.keymap.set("n", "<C-v>", float_close_decorator(api.node.open.vertical), opts("Open: Vertical Split"))
-    vim.keymap.set("n", "<C-s>", float_close_decorator(api.node.open.horizontal), opts("Open: Horizontal Split"))
-    vim.keymap.set("n", "<CR>", float_close_decorator(api.node.open.edit), opts("Open"))
-    vim.keymap.set("n", "<Tab>", float_close_decorator(api.node.open.preview), opts("Open"))
+    vim.keymap.set("n", "<C-t>", api.node.open.tab, opts("Open: New Tab"))
+    vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts("Open: Vertical Split"))
+    vim.keymap.set("n", "<C-s>", api.node.open.horizontal, opts("Open: Horizontal Split"))
+    vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
+    vim.keymap.set("n", "<Tab>", api.node.open.edit, opts("Open"))
     vim.keymap.set("n", "<S-Tab>", api.node.navigate.parent_close, opts("Close Directory"))
-    vim.keymap.set("n", "o", float_close_decorator(api.node.open.edit), opts("Open"))
-    vim.keymap.set("n", "O", float_close_decorator(api.node.open.no_window_picker), opts("Open: No Window Picker"))
-    vim.keymap.set("n", "q", float_close_decorator(api.tree.close), opts("Close"))
+    vim.keymap.set("n", "o", api.node.open.edit, opts("Open"))
+    vim.keymap.set("n", "O", api.node.open.no_window_picker, opts("Open: No Window Picker"))
+    vim.keymap.set("n", "q", api.tree.close, opts("Close"))
 
     vim.keymap.set("n", "c", api.fs.copy.node, opts("Copy"))
     vim.keymap.set("n", "x", api.fs.cut, opts("Cut"))
@@ -38,13 +37,13 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
     vim.keymap.set("n", "gy", api.fs.copy.absolute_path, opts("Copy Absolute Path"))
 
-    vim.keymap.set("n", "a", float_close_decorator(api.fs.create), opts("Create"))
+    vim.keymap.set("n", "a", api.fs.create, opts("Create"))
     vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
     vim.keymap.set("n", "<BS>", api.node.navigate.parent_close, opts("Close Directory"))
     vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
     vim.keymap.set("n", "S", api.tree.search_node, opts("Search"))
-    vim.keymap.set("n", "d", float_close_decorator(api.fs.remove), opts("Delete"))
-    vim.keymap.set("n", "r", float_close_decorator(api.fs.rename), opts("Rename: Filename"))
+    vim.keymap.set("n", "d", api.fs.remove, opts("Delete"))
+    vim.keymap.set("n", "r", api.fs.rename, opts("Rename: Filename"))
 
     vim.keymap.set("n", "m", api.marks.toggle, opts("Toggle Bookmark"))
     vim.keymap.set("n", "bmv", api.marks.bulk.move, opts("Move Bookmarked"))
@@ -105,7 +104,7 @@ return {
             sync_root_with_cwd = false,
             respect_buf_cwd = false,
             update_focused_file = {
-                enable = true,
+                enable = false,
                 update_root = false,
             },
             modified = {

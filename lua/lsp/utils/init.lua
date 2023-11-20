@@ -110,7 +110,6 @@ local keys = {
 }
 
 local on_attach = function(client, bufnr)
-    -- vim.print(client.server_capabilities)
 
     if is_large_file(bufnr, true) then
         vim.lsp.buf_detach_client(bufnr, client.id)
@@ -200,17 +199,17 @@ local function setup_lsp(lsp_name, opts)
     local conf = lsp[lsp_name]
     conf.setup(opts)
 
-    local try_add = conf.manager.try_add
-    conf.manager.try_add = function(self, bufnr, project_root)
-        if is_large_file(bufnr, true) then
-            vim.notify("disable lsp large buffer", vim.log.levels.ERROR)
-            vim.bo.tagfunc = nil
-            vim.bo.omnifunc = "syntaxcomplete#Complete"
-            return
-        end
-
-        return try_add(self, bufnr, project_root)
-    end
+    -- local try_add = conf.manager.try_add
+    -- conf.manager.try_add = function(self, bufnr, project_root)
+    --     if is_large_file(bufnr, true) then
+    --         vim.notify("disable lsp large buffer", vim.log.levels.ERROR)
+    --         vim.bo[bufnr].tagfunc = nil
+    --         vim.bo[bufnr].omnifunc = "syntaxcomplete#Complete"
+    --         return
+    --     end
+    --
+    --     return try_add(self, bufnr, project_root)
+    -- end
 end
 
 M.setup_lsp = setup_lsp

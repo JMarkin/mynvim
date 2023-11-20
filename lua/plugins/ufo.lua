@@ -54,7 +54,7 @@ end
 
 return {
     "kevinhwang91/nvim-ufo",
-    enabled = true,
+    -- enabled = false,
     cond = is_not_mini,
     dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
     event = "BufReadPost",
