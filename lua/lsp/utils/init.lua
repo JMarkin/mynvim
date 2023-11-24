@@ -104,13 +104,12 @@ local keys = {
     },
     {
         "<space>t",
-        ":Vista nvim_lsp<cr>",
+        ":Lspsaga outline<cr>",
         { desc = "Tagbar", silent = true },
     },
 }
 
 local on_attach = function(client, bufnr)
-
     if is_large_file(bufnr, true) then
         vim.lsp.buf_detach_client(bufnr, client.id)
         vim.bo[bufnr].tagfunc = nil
