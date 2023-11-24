@@ -45,6 +45,7 @@ autocmd("BufReadPost", {
 
 -- Use 'q' to quit from common plugins
 autocmd("FileType", {
+    group = augroup("quit", { clear = true }),
     pattern = {
         "help",
         "man",
@@ -60,6 +61,8 @@ autocmd("FileType", {
         "neotest-output",
         "neotest-output-panel",
         "neotest-summary",
+        "vista_kind",
+        "sagaoutline",
     },
     callback = function(event)
         vim.opt_local.wrap = false
