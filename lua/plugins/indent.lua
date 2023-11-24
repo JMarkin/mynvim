@@ -8,14 +8,14 @@ return {
     {
         {
             "vidocqh/auto-indent.nvim",
-            event = "VeryLazy",
+            event = { "VeryLazy", "FileReadPre", "BufReadPre" },
             opts = {},
         },
     },
     {
         "lukas-reineke/indent-blankline.nvim",
         cond = is_not_mini,
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         config = function()
             local hooks = require("ibl.hooks")
 

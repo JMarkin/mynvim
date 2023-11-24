@@ -16,6 +16,6 @@ return {
                 end,
             })
         end,
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
     },
 }
