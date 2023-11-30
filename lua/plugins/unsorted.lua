@@ -47,10 +47,12 @@ return {
         },
     },
 
-    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf" },
+    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", event = "VeryLazy" },
+
     {
         "kevinhwang91/nvim-bqf",
         ft = "qf",
+        event = "VeryLazy",
         dependencies = {
             "nvim-treesitter",
         },
