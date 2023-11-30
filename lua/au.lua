@@ -19,6 +19,14 @@ autocmd({ "BufReadPre", "FileReadPre" }, {
     callback = require("largefiles").optimize_buffer,
 })
 
+autocmd({ "LspAttach" }, {
+    group = augroup("lsp_attach", { clear = true }),
+    pattern = { "*" },
+    callback = function()
+        vim.b.lsp_attached = true
+    end,
+})
+
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime", { clear = true }),

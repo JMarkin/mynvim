@@ -73,7 +73,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         config = function()
             require("lsp").setup()
 

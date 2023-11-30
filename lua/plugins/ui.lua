@@ -28,6 +28,7 @@ return {
             vim.notify = require("notify")
         end,
         event = "VeryLazy",
+        lazy = true,
     },
 
     -- better vim.ui
@@ -68,7 +69,7 @@ return {
     { "MunifTanjim/nui.nvim", lazy = true },
     {
         "mvllow/modes.nvim",
-        event = "VeryLazy",
+        event = { "VeryLazy", "ModeChanged" },
         opts = {
             line_opacity = 0.25,
             set_cursor = false,
@@ -109,7 +110,7 @@ return {
                 virtualtext = "■",
             },
         },
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
     },
     {
         "rainbowhxch/beacon.nvim",
@@ -128,18 +129,18 @@ return {
             ignore_buffers = {},
             ignore_filetypes = {},
         },
-        event = "VeryLazy",
+        event = { "VeryLazy", "BufAdd" },
     },
     {
         "tzachar/local-highlight.nvim",
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         opts = {
             insert_mode = true,
         },
     },
     {
         "nvimdev/hlsearch.nvim",
-        event = "VeryLazy",
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         config = function()
             require("hlsearch").setup()
         end,

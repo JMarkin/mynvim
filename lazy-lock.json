@@ -120,4 +120,3 @@
   "vista.vim": { "branch": "master", "commit": "290b815cd5a5ff1fb65a48936633d93e2bf14dbd" },
   "wilder.nvim": { "branch": "my", "commit": "e3f1812f3b62816b7838687c357fa74336f14ac3" },
   "yaml.nvim": { "branch": "main", "commit": "77aa8812e652acc44ae16fd1dbeb5a952db937e0" }
-}
