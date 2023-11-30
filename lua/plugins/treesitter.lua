@@ -50,6 +50,7 @@ local syntax_langs = {
     "git_rebase",
     "query",
     "comment",
+    "rst"
 }
 
 local install = function(sync)
