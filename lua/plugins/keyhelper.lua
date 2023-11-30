@@ -73,6 +73,7 @@ return {
                     { mode = "n", keys = "<Leader>s", desc = "Search" },
                     { mode = "n", keys = "<Leader>lc", desc = "Copy as" },
                     { mode = "n", keys = "<Leader>lt", desc = "Tests" },
+                    { mode = "n", keys = "<Leader>h", desc = "Http" },
                 },
             })
         end,
