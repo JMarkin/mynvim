@@ -3,6 +3,12 @@ return {
     config = function()
         local toggleterm = require("toggleterm")
 
+        local shell = vim.o.shell
+
+        if vim.fn.executable("fish") then
+            shell = "fish"
+        end
+
         toggleterm.setup({
             size = function(term)
                 if term.direction == "horizontal" then
@@ -23,7 +29,7 @@ return {
             persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
             direction = "horizontal",
             close_on_exit = true, -- close the terminal window when the process exits
-            shell = vim.o.shell, -- change the default shell
+            shell = shell, -- change the default shell
             auto_scroll = false, -- automatically scroll to the bottom on terminal output
             float_opts = {
                 border = "curved",

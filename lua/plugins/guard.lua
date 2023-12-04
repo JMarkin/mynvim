@@ -14,10 +14,13 @@ return {
         local ft = require("guard.filetype")
 
         ft("python"):fmt("ruff"):lint("mypy")
+
         ft("lua"):fmt("stylua")
+
         ft("c,cpp"):lint("clang-tidy")
-        -- ft("sql"):fmt("sqlfluff_fix"):append("sqlfluff"):lint("sqlfluff"):extra({ "--diallect", "postgres" })
+
         ft("toml"):fmt("taplo")
+
         ft("typescript,javascript,typescriptreact,markdown"):fmt("prettier")
 
         require("guard").setup({

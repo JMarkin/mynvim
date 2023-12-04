@@ -111,13 +111,12 @@ local keys = {
 
 local on_attach = function(client, bufnr)
     if is_large_file(bufnr, true) then
+        vim.notify("2")
         vim.lsp.buf_detach_client(bufnr, client.id)
         vim.bo[bufnr].tagfunc = nil
         vim.bo[bufnr].omnifunc = "syntaxcomplete#Complete"
         return 0
     end
-
-    require("lsp.utils.notify").enable()
 
     for _, keymap in ipairs(keys) do
         keymap[3].buffer = bufnr
@@ -162,23 +161,43 @@ capabilities.textDocument = {
             snippetSupport = true,
             commitCharactersSupport = true,
             deprecatedSupport = true,
-            preselectSupport = false,
+            preselectSupport = true,
             tagSupport = {
                 valueSet = {
                     1, -- Deprecated
                 },
-                labelDetailsSupport = true,
             },
-            contextSupport = true,
-            insertTextMode = 1,
-            completionList = {
-                itemDefaults = {
-                    "commitCharacters",
-                    "editRange",
+            insertReplaceSupport = true,
+            resolveSupport = {
+                properties = {
+                    "documentation",
+                    "detail",
+                    "additionalTextEdits",
+                    "sortText",
+                    "filterText",
+                    "insertText",
+                    "textEdit",
                     "insertTextFormat",
                     "insertTextMode",
-                    "data",
                 },
+            },
+            insertTextModeSupport = {
+                valueSet = {
+                    1, -- asIs
+                    2, -- adjustIndentation
+                },
+            },
+            labelDetailsSupport = true,
+        },
+        contextSupport = true,
+        insertTextMode = 1,
+        completionList = {
+            itemDefaults = {
+                "commitCharacters",
+                "editRange",
+                "insertTextFormat",
+                "insertTextMode",
+                "data",
             },
         },
     },
@@ -187,10 +206,12 @@ capabilities.textDocument = {
 M.capabilities = capabilities
 
 local function setup_lsp(lsp_name, opts)
+    local lsp_util = require("lspconfig.util")
+
     local _opts = {
+        root_dir = lsp_util.root_pattern(table.unpack(vim.g.root_pattern)),
         capabilities = capabilities,
         on_attach = on_attach,
-        autostart = vim.g.lsp_autostart,
     }
     opts = vim.tbl_extend("force", opts, _opts)
 

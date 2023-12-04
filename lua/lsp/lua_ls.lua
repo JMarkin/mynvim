@@ -7,12 +7,8 @@ local M = {
     end,
     setup = function()
         local opts = {
-            before_init = require("neodev.lsp").before_init,
             settings = {
                 Lua = {
-                    completion = {
-                        callSnippet = "Replace",
-                    },
                     telemetry = {
                         enable = false,
                     },

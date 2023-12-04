@@ -116,6 +116,7 @@ return {
     {
         "stevearc/profile.nvim",
         keys = "F2",
+        lazy = true,
         config = function()
             local function toggle_profile()
                 local prof = require("profile")

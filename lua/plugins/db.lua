@@ -10,6 +10,7 @@ return {
             "kristijanhusak/vim-dadbod-completion",
             dependencies = "nvim-cmp",
         },
+        "vim-scripts/dbext.vim",
     },
     init = function()
         vim.g.db_ui_execute_on_save = 0

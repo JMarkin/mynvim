@@ -5,6 +5,9 @@ if vim.env.PYTHON3 then
     g.python3_host_prog = vim.env.PYTHON3
 end
 
+if vim.fn.executable("bash") then
+    opt.shell = "bash"
+end
 opt.cursorline = true
 opt.omnifunc = "syntaxcomplete#Complete"
 g.snips_author = vim.env.AUTHOR or "Jury Markin"
