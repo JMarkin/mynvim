@@ -111,7 +111,6 @@ local keys = {
 
 local on_attach = function(client, bufnr)
     if is_large_file(bufnr, true) then
-        vim.notify("2")
         vim.lsp.buf_detach_client(bufnr, client.id)
         vim.bo[bufnr].tagfunc = nil
         vim.bo[bufnr].omnifunc = "syntaxcomplete#Complete"
