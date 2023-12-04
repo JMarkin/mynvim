@@ -2,7 +2,7 @@
 
 cd /opt
 rm -rf lua-language-server
-git clone -b 3.6.24 https://github.com/LuaLS/lua-language-server
+git clone -b 3.7.3 https://github.com/LuaLS/lua-language-server
 cd lua-language-server
 ./make.sh
 mkdir -p ~/.local/bin

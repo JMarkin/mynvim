@@ -2,6 +2,24 @@ local is_not_mini = require("funcs").is_not_mini
 
 return {
     {
+        "neovim/nvim-lspconfig",
+        cond = is_not_mini,
+        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
+        config = function()
+            require("lsp").setup()
+
+            vim.diagnostic.config({
+                underline = true,
+                signs = true,
+                virtual_text = false,
+                -- virtual_lines = { only_current_line = true },
+                float = true,
+                update_in_insert = false,
+                severity_sort = true,
+            })
+        end,
+    },
+    {
         "glepnir/lspsaga.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = true,
@@ -59,7 +77,6 @@ return {
             require("lspsaga").setup(opts)
         end,
     },
-    { "folke/neodev.nvim", lazy = true, opts = { lspconfig = false } },
     {
         "VidocqH/lsp-lens.nvim",
         opts = {},
@@ -69,23 +86,5 @@ return {
         "j-hui/fidget.nvim",
         opts = {},
         event = "LspAttach",
-    },
-    {
-        "neovim/nvim-lspconfig",
-        cond = is_not_mini,
-        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
-        config = function()
-            require("lsp").setup()
-
-            vim.diagnostic.config({
-                underline = true,
-                signs = true,
-                virtual_text = false,
-                -- virtual_lines = { only_current_line = true },
-                float = true,
-                update_in_insert = false,
-                severity_sort = true,
-            })
-        end,
     },
 }

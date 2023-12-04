@@ -50,7 +50,7 @@ local syntax_langs = {
     "git_rebase",
     "query",
     "comment",
-    "rst"
+    "rst",
 }
 
 local install = function(sync)
@@ -80,6 +80,7 @@ end
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    -- enabled = false,
     lazy = true,
     event = { "VeryLazy", "FileReadPre", "BufReadPre" },
     dependencies = {

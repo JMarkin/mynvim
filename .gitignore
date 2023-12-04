@@ -5,3 +5,4 @@ build
 .dmypy.json
 .ruff_cache
 .mypy_cache
+tests/data

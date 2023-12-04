@@ -1,38 +1,12 @@
+local doau = require("funcs").doau
+local maxline = require("funcs").maxline
+
 local max_file_size = 2
 local max_file_size_readonly = 100
-local max_line_length = 2000
 
-local function file_exists(file)
-    local f = io.open(file, "rb")
-    if f then
-        local _, _, code = f:read(1)
-        f:close()
-        if code == 21 then
-            return false
-        end
-    end
-    return f ~= nil
-end
-
-local function maxline(bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
-    local file = vim.fn.expand(string.format("#%s:p", bufnr))
-    if not file_exists(file) then
-        return 0
-    end
-    local max = 0
-    for line in io.lines(file) do
-        if max < #line then
-            max = #line
-        end
-    end
-    return max
-end
-
-local function get_buf_size(bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
+local function get_buf_size(path)
     local ok, stats = pcall(function()
-        return vim.loop.fs_stat(vim.api.nvim_buf_get_name(bufnr))
+        return vim.loop.fs_stat(path)
     end)
     if not (ok and stats) then
         return
@@ -59,7 +33,10 @@ local function is_large_file(bufnr, as_bool)
         if large_buf ~= nil then
             return large_buf
         end
-        local size = get_buf_size(bufnr)
+
+        bufnr = bufnr or vim.api.nvim_get_current_buf()
+        local path = vim.api.nvim_buf_get_name(bufnr)
+        local size = get_buf_size(path)
 
         local _type = FILE_TYPE.NORMAL
         if not size then
@@ -74,11 +51,15 @@ local function is_large_file(bufnr, as_bool)
             vim.notify("LARGE FILE SIZE " .. size, vim.log.levels.INFO)
             _type = FILE_TYPE.LARGE_SIZE
         else
-            local _m = vim.api.nvim_buf_line_count(bufnr)
-            if _m > max_line_length then
+            local _m = maxline(path)
+            if _m > vim.o.synmaxcol then
                 vim.notify("LONG LINE " .. _m, vim.log.levels.INFO)
                 _type = FILE_TYPE.LONG_LINE
             end
+        end
+
+        if _type ~= FILE_TYPE.NORMAL then
+            doau("LargeFile", {})
         end
 
         vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
@@ -120,11 +101,16 @@ local function optimize_buffer(args)
     vim.opt_local.list = false
     vim.opt_local.undolevels = -1
     vim.opt_local.undofile = false
+
+    pcall(function()
+        require("rainbow-delimiters").disable(bufnr)
+    end)
+    pcall(vim.api.nvim_command, "UfoDisable")
+    pcall(vim.api.nvim_command, "NoMatchParen")
     -- if vim.opt_local.eventignore == nil then
     --     vim.opt_local.eventignore = {}
     -- end
     -- vim.opt_local.eventignore:append(EVENTS)
-    pcall(vim.api.nvim_command, "UfoDisable")
 
     if _type == FILE_TYPE.READ_ONLY then
         vim.opt_local.buftype = "nowrite"
