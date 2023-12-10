@@ -138,11 +138,4 @@ return {
             vim.keymap.set("", "<F2>", toggle_profile)
         end,
     },
-    {
-        "theHamsta/nvim_rocks",
-        enabled = false,
-        lazy = true,
-        -- dev = true,
-        build = "pip3 install --user hererocks && python3 -mhererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",
-    },
 }

@@ -88,21 +88,21 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Persistent Folds
--- local save_fold = augroup("Persistent Folds", { clear = true })
--- autocmd("BufWinLeave", {
---     pattern = "*.*",
---     callback = function()
---         vim.cmd.mkview()
---     end,
---     group = save_fold,
--- })
--- autocmd("BufWinEnter", {
---     pattern = "*.*",
---     callback = function()
---         vim.cmd.loadview({ mods = { emsg_silent = true } })
---     end,
---     group = save_fold,
--- })
+local save_fold = augroup("Persistent Folds", { clear = true })
+autocmd("BufWinLeave", {
+    pattern = "*.*",
+    callback = function()
+        vim.cmd.mkview()
+    end,
+    group = save_fold,
+})
+autocmd("BufWinEnter", {
+    pattern = "*.*",
+    callback = function()
+        vim.cmd.loadview({ mods = { emsg_silent = true } })
+    end,
+    group = save_fold,
+})
 
 -- Textfile spell
 autocmd("FileType", {
@@ -119,7 +119,7 @@ autocmd({ "BufWritePre" }, {
         if event.match:match("^%w%w+://") then
             return
         end
-        local file = vim.loop.fs_realpath(event.match) or event.match
+        local file = vim.uv.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
 })

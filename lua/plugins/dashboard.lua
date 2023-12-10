@@ -35,7 +35,7 @@ local function run_neofetch(dashboard)
                 if #t > 0 then
                     M.neofetch = vim.json.decode(t)
                 end
-                local timer = vim.loop.new_timer()
+                local timer = vim.uv.new_timer()
 
                 timer:start(
                     20,

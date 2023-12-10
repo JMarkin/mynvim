@@ -6,7 +6,7 @@ local max_file_size_readonly = 100
 
 local function get_buf_size(path)
     local ok, stats = pcall(function()
-        return vim.loop.fs_stat(path)
+        return vim.uv.fs_stat(path)
     end)
     if not (ok and stats) then
         return

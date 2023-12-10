@@ -113,7 +113,6 @@ local on_attach = function(client, bufnr)
     if is_large_file(bufnr, true) then
         vim.lsp.buf_detach_client(bufnr, client.id)
         vim.bo[bufnr].tagfunc = nil
-        vim.bo[bufnr].omnifunc = "syntaxcomplete#Complete"
         return 0
     end
 
@@ -125,7 +124,7 @@ local on_attach = function(client, bufnr)
     local inlayhint = client.server_capabilities.inlayHintProvider
     if inlayhint then
         vim.keymap.set({ "n" }, "<leader>li", function()
-            vim.lsp.inlay_hint(bufnr)
+            vim.lsp.inlay_hint.enable(bufnr, not vim.lsp.inlay_hint.is_enabled(bufnr))
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
 
