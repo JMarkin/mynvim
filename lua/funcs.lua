@@ -24,10 +24,10 @@ M.doau = function(pattern, data)
 end
 
 function M.maxline(path)
-    local fd = vim.loop.fs_open(path, "r", 1)
-    local stat = vim.loop.fs_fstat(fd)
-    local data = vim.loop.fs_read(fd, stat.size, nil)
-    vim.loop.fs_close(fd)
+    local fd = vim.uv.fs_open(path, "r", 1)
+    local stat = vim.uv.fs_fstat(fd)
+    local data = vim.uv.fs_read(fd, stat.size, nil)
+    vim.uv.fs_close(fd)
     local max = 0
 
     local lines = vim.split(data, "[\r]?\n")

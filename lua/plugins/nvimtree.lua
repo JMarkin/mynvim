@@ -80,19 +80,32 @@ return {
                         if is_showed then
                             return false
                         end
+                        local is_text = require("float-preview.utils").is_text(path)
+                        if not is_text then
+                            return false
+                        end
+
+                        -- if file > 5 MB or not text -> not preview
+                        local size = require("float-preview.utils").get_size(path)
+                        if type(size) ~= "number" then
+                            return false
+                        end
+
+                        if size > 5 then
+                            return false
+                        end
 
                         -- len
                         local len = maxline(path)
                         if type(len) ~= "number" then
                             return false
                         end
-                        -- if file > 5 MB or not text -> not preview
-                        local size = require("float-preview.utils").get_size(path)
-                        if type(size) ~= "number" then
+
+                        if len > vim.o.synmaxcol then
                             return false
                         end
-                        local is_text = require("float-preview.utils").is_text(path)
-                        return len < vim.o.synmaxcol and size < 5 and is_text
+
+                        return true
                     end,
                     post_open = function(bufnr)
                         return true

@@ -85,6 +85,7 @@ opt.tagfunc = nil
 g.root_pattern = {
     "pyproject.toml",
     "package.json",
+    "Cargo.toml",
     ".nvim.lua",
     "Makefile",
     ".git",

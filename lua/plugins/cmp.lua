@@ -54,7 +54,7 @@ local function has_words_before()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local default_sources = {
+local _sources = {
     { name = "luasnip", keyword_length = 2, max_item_count = 5 },
     {
         name = "tags",
@@ -74,15 +74,16 @@ local default_sources = {
         name = "vim-dadbod-completion",
         filetype = { "sql", "mssql", "plsql" },
     },
-    {
-        name = "omni",
-        option = {
-            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
-        },
-    },
 }
+local default_sources = vim.deepcopy(_sources)
+table.insert(default_sources, {
+    name = "omni",
+    option = {
+        disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
+    },
+})
 
-local lsp_sources = vim.deepcopy(default_sources)
+local lsp_sources = vim.deepcopy(_sources)
 table.insert(lsp_sources, 1, { name = "diag-codes", in_comment = true })
 table.insert(lsp_sources, 1, { name = "nvim_lsp" })
 table.insert(lsp_sources, {
