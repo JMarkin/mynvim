@@ -1,5 +1,5 @@
 local is_large_file = require("largefiles").is_large_file
-
+local methods = vim.lsp.protocol.Methods
 local M = {}
 
 local diag_opts = {
@@ -45,7 +45,7 @@ local keys = {
     },
     {
 
-        "<leader>lk",
+        "K",
         "<cmd>Lspsaga hover_doc<CR>",
         { silent = true, desc = "Lang: hover doc" },
     },
@@ -60,12 +60,6 @@ local keys = {
         "<leader>lE",
         "<cmd>Lspsaga show_workspace_diagnostics<CR>",
         { silent = true, desc = "Lang: show workspace disagnostic" },
-    },
-    {
-
-        "<leader>la",
-        "<cmd>Lspsaga code_action<cr>",
-        { silent = true, desc = "Lang: code action" },
     },
     {
         "<leader>lr",
@@ -109,7 +103,10 @@ local keys = {
     },
 }
 
-local on_attach = function(client, bufnr)
+--- Sets up LSP keymaps and autocommands for the given buffer.
+---@param client lsp.Client
+---@param bufnr integer
+local function on_attach(client, bufnr)
     if is_large_file(bufnr, true) then
         vim.lsp.buf_detach_client(bufnr, client.id)
         vim.bo[bufnr].tagfunc = nil
@@ -121,11 +118,47 @@ local on_attach = function(client, bufnr)
         vim.keymap.set("n", table.unpack(keymap))
     end
 
-    local inlayhint = client.server_capabilities.inlayHintProvider
-    if inlayhint then
+    if client.supports_method(methods.textDocument_codeAction) then
+        vim.keymap.set({ "n", "v" }, "<leader>ca", function()
+            require("fzf-lua").lsp_code_actions({
+                winopts = {
+                    relative = "cursor",
+                    width = 0.6,
+                    height = 0.6,
+                    row = 1,
+                    preview = { vertical = "up:70%" },
+                },
+            })
+        end, { desc = "Code actions" })
+    end
+
+    if client.supports_method(methods.textDocument_inlayHint) then
+        local inlay_hints_group = vim.api.nvim_create_augroup("toggle_inlay_hints", { clear = false })
         vim.keymap.set({ "n" }, "<leader>li", function()
             vim.lsp.inlay_hint.enable(bufnr, not vim.lsp.inlay_hint.is_enabled(bufnr))
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
+        -- Initial inlay hint display.
+        -- Idk why but without the delay inlay hints aren't displayed at the very start.
+        vim.defer_fn(function()
+            local mode = vim.api.nvim_get_mode().mode
+            vim.lsp.inlay_hint.enable(bufnr, mode == "n" or mode == "v")
+        end, 500)
+        vim.api.nvim_create_autocmd("InsertEnter", {
+            group = inlay_hints_group,
+            desc = "Enable inlay hints",
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.inlay_hint.enable(bufnr, false)
+            end,
+        })
+        vim.api.nvim_create_autocmd("InsertLeave", {
+            group = inlay_hints_group,
+            desc = "Disable inlay hints",
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.inlay_hint.enable(bufnr, true)
+            end,
+        })
     end
 
     vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
