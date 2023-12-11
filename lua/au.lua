@@ -166,3 +166,13 @@ autocmd("FileType", {
     pattern = "*",
     command = [[:if !exists("g:syntax_on") | syntax on | endif]],
 })
+
+autocmd("BufWinEnter", {
+    group = augroup("help_window_right", {}),
+    pattern = { "*.txt" },
+    callback = function()
+        if vim.o.filetype == "help" then
+            vim.cmd.wincmd("L")
+        end
+    end,
+})

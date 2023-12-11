@@ -8,6 +8,10 @@ end
 if vim.fn.executable("bash") then
     opt.shell = "bash"
 end
+
+opt.winwidth = 20
+opt.winminwidth = 20
+opt.equalalways = false
 opt.cursorline = true
 opt.omnifunc = "syntaxcomplete#Complete"
 g.snips_author = vim.env.AUTHOR or "Jury Markin"
