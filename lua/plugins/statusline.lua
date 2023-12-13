@@ -11,7 +11,7 @@ end
 
 return {
     "nvim-lualine/lualine.nvim",
-    event =  "VeryLazy",
+    event = "VeryLazy",
     config = function()
         local lualine = require("lualine")
 
@@ -26,10 +26,11 @@ return {
                 lualine_b = {
                     "branch",
                     { "diff", source = diff_source },
+                    "diagnostics",
                     "filetype",
                     { "filename", path = 1 },
                 },
-                lualine_c = { "diagnostics" },
+                lualine_c = {},
                 lualine_x = {},
                 lualine_y = {
                     "filesize",

@@ -12,8 +12,14 @@ local DEFAULT_INSTALL_EXEC = {
     flake8 = { command = "pip", args = { "install", "-U", "flake8" } },
     djhtml = { command = "pip", args = { "install", "-U", "djhtml" } },
     docformatter = { command = "pip", args = { "install", "-U", "docformatter" } },
-    jedi_language_server = { command = "pip", args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" } },
-    ["jedi-language-server"] = { command = "pip", args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" } },
+    jedi_language_server = {
+        command = "pip",
+        args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" },
+    },
+    ["jedi-language-server"] = {
+        command = "pip",
+        args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" },
+    },
     ["python-lsp-server"] = { command = "pip", args = { "install", "-U", "python-lsp-server" } },
     pyright = { command = "pip", args = { "install", "-U", "pyright" } },
     ["nginx-language-server"] = { command = "pip", args = { "install", "-U", "nginx-language-server" } },
@@ -61,6 +67,8 @@ local DEFAULT_INSTALL_EXEC = {
             "--locked",
             "--features",
             "lsp",
+            "--git",
+            "https://github.com/tamasfe/taplo.git",
             "taplo-cli",
         },
     },
@@ -86,10 +94,10 @@ local DEFAULT_INSTALL_EXEC = {
     },
 }
 
-local function external_install(exec, sync)
+local function external_install(exec, sync, update)
     local f = function()
         local notify = nil
-        if vim.fn.executable(exec) ~= 1 then
+        if vim.fn.executable(exec) ~= 1 or update then
             local shell = DEFAULT_INSTALL_EXEC[exec]
             if shell ~= nil then
                 shell = vim.fn.map(shell, function(_, v)
@@ -142,20 +150,21 @@ local function external_install(exec, sync)
     end
 end
 
-local install = function(sync)
-    local sources = {
-        "ruff",
-        "black",
-        "stylua",
-        "nginxbeautifier",
-        "prettier",
-        "mypy",
-        "isort",
-        "flake8",
-        "fixjson",
-    }
+local sources = {
+    "ruff",
+    "black",
+    "stylua",
+    "nginxbeautifier",
+    "prettier",
+    "mypy",
+    "isort",
+    "flake8",
+    "fixjson",
+}
+
+local install = function(sync, update)
     for _, source in ipairs(sources) do
-        external_install(source, sync)
+        external_install(source, sync, update)
     end
 end
 
@@ -165,6 +174,14 @@ end, {})
 
 vim.api.nvim_create_user_command("ExternalInstallDefaultSync", function(_)
     install(true)
+end, {})
+
+vim.api.nvim_create_user_command("ExternalUpdateDefault", function(_)
+    install(false, true)
+end, {})
+
+vim.api.nvim_create_user_command("ExternalUpdateDefaultSync", function(_)
+    install(true, true)
 end, {})
 
 return external_install

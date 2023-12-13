@@ -113,29 +113,4 @@ return {
             vim.g.lastplace_open_folds = 1
         end,
     },
-    {
-        "stevearc/profile.nvim",
-        keys = "F2",
-        lazy = true,
-        config = function()
-            local function toggle_profile()
-                local prof = require("profile")
-                if prof.is_recording() then
-                    prof.stop()
-                    vim.ui.input(
-                        { prompt = "Save profile to:", completion = "file", default = "profile.json" },
-                        function(filename)
-                            if filename then
-                                prof.export(filename)
-                                vim.notify(string.format("Wrote %s", filename))
-                            end
-                        end
-                    )
-                else
-                    prof.start("*")
-                end
-            end
-            vim.keymap.set("", "<F2>", toggle_profile)
-        end,
-    },
 }

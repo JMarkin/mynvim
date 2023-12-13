@@ -2,7 +2,7 @@ return {
     "JMarkin/wilder.nvim",
     branch = "my",
     -- dev = true,
-    enabled = true,
+    enabled = false,
     keys = { "/", "?", ":" },
     build = ":UpdateRemotePlugins",
     dependencies = {

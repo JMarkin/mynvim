@@ -21,6 +21,7 @@ return {
             max_width = function()
                 return math.floor(vim.o.columns * 0.75)
             end,
+            top_down = false,
         },
         config = function(args)
             args.opts.background_colour = vim.g.notify_background_color

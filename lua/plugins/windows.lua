@@ -1,6 +1,7 @@
 return {
     {
         "anuvyklack/windows.nvim",
+        -- dev = true,
         dependencies = {
             "anuvyklack/middleclass",
             "anuvyklack/animation.nvim",
@@ -11,8 +12,23 @@ return {
                 winwidth = 1.2,
             },
             ignore = {
-                buftype = { "quickfix" },
-                filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "blame", "toggleterm" },
+                buftype = { "quickfix", "nofile" },
+                filetype = {
+                    "vista_kind",
+                    "NvimTree",
+                    "neo-tree",
+                    "undotree",
+                    "gundo",
+                    "blame",
+                    "toggleterm",
+                    "startuptime",
+                    "checkhealth",
+                    "netrw",
+                    "neotest-output",
+                    "neotest-output-panel",
+                    "neotest-summary",
+                    "sagaoutline",
+                },
             },
             animation = {
                 enable = true,
@@ -21,7 +37,6 @@ return {
                 easing = "in_out_sine",
             },
         },
-        event = "VeryLazy",
     },
     {
         "yorickpeterse/nvim-window",

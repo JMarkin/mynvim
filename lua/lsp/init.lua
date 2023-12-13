@@ -10,8 +10,8 @@ local default_lsp = function(bin_name, lsp_name, opts)
     local external_install = require("external_install")
 
     return {
-        install = function(sync)
-            external_install(bin_name, sync)
+        install = function(sync, update)
+            external_install(bin_name, sync, update)
         end,
         setup = function()
             utils.setup_lsp(lsp_name, opts)
@@ -97,9 +97,9 @@ M.lsps = {
         },
     }),
 }
-M.install = function(sync)
+M.install = function(sync, update)
     for _, lsp in pairs(M.lsps) do
-        lsp.install(sync)
+        lsp.install(sync, update)
     end
 end
 
@@ -115,6 +115,14 @@ end, {})
 
 vim.api.nvim_create_user_command("LspInstallDefaultSync", function(_)
     M.install(true)
+end, {})
+
+vim.api.nvim_create_user_command("LspUpdateDefault", function(_)
+    M.install(false, true)
+end, {})
+
+vim.api.nvim_create_user_command("LspUpdateDefaultSync", function(_)
+    M.install(true, true)
 end, {})
 
 return M
