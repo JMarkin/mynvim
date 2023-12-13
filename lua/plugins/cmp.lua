@@ -182,6 +182,9 @@ local cmp_config = function(sources, buffer, comparators)
     end
 
     setup({
+        performance = {
+            max_view_entries = 50,
+        },
         enabled = function()
             local disabled = false
             ---@diagnostic disable-next-line: deprecated
