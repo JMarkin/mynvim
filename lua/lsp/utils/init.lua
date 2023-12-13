@@ -98,7 +98,7 @@ local keys = {
     },
     {
         "<space>t",
-        ":Lspsaga outline<cr>",
+        ":Vista nvim_lsp<cr>",
         { desc = "Tagbar", silent = true },
     },
 }
@@ -135,30 +135,33 @@ local function on_attach(client, bufnr)
     if client.supports_method(methods.textDocument_inlayHint) then
         local inlay_hints_group = vim.api.nvim_create_augroup("toggle_inlay_hints", { clear = false })
         vim.keymap.set({ "n" }, "<leader>li", function()
-            vim.lsp.inlay_hint.enable(bufnr, not vim.lsp.inlay_hint.is_enabled(bufnr))
+            local enabled = vim.lsp.inlay_hint.is_enabled(bufnr)
+
+            if not enabled then
+                vim.api.nvim_create_autocmd("InsertEnter", {
+                    group = inlay_hints_group,
+                    desc = "Enable inlay hints",
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.inlay_hint.enable(bufnr, false)
+                    end,
+                })
+                vim.api.nvim_create_autocmd("InsertLeave", {
+                    group = inlay_hints_group,
+                    desc = "Disable inlay hints",
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.inlay_hint.enable(bufnr, true)
+                    end,
+                })
+            else
+                vim.api.nvim_clear_autocmds({
+                    buffer = bufnr,
+                    group = inlay_hints_group,
+                })
+            end
+            vim.lsp.inlay_hint.enable(bufnr, not enabled)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
-        -- Initial inlay hint display.
-        -- Idk why but without the delay inlay hints aren't displayed at the very start.
-        vim.defer_fn(function()
-            local mode = vim.api.nvim_get_mode().mode
-            vim.lsp.inlay_hint.enable(bufnr, mode == "n" or mode == "v")
-        end, 500)
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            group = inlay_hints_group,
-            desc = "Enable inlay hints",
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.inlay_hint.enable(bufnr, false)
-            end,
-        })
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            group = inlay_hints_group,
-            desc = "Disable inlay hints",
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.inlay_hint.enable(bufnr, true)
-            end,
-        })
     end
 
     vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -187,7 +190,7 @@ capabilities.textDocument = {
         lineFoldingOnly = true,
     },
     completion = {
-        dynamicRegistration = true,
+        dynamicRegistration = false,
         completionItem = {
             snippetSupport = true,
             commitCharactersSupport = true,

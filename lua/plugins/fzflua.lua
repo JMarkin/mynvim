@@ -168,8 +168,8 @@ return {
             global_resume = true,
             global_resume_query = true,
             winopts = {
-                height = 0.7,
-                width = 0.65,
+                height = 0.8,
+                width = 0.75,
                 preview = {
                     scrollbar = false,
                     default = "builtin",
@@ -179,15 +179,28 @@ return {
             },
             keymap = {
                 builtin = {
-                    ["<C-/>"] = "toggle-help",
-                    ["<C-f>"] = "toggle-fullscreen",
-                    ["<C-i>"] = "toggle-preview",
+                    ["<F1>"] = "toggle-help",
+                    ["<F2>"] = "toggle-fullscreen",
+                    ["<F3>"] = "toggle-preview-wrap",
+                    ["<F4>"] = "toggle-preview",
+                    ["<F5>"] = "toggle-preview-ccw",
+                    ["<F6>"] = "toggle-preview-cw",
                     ["<C-d>"] = "preview-page-down",
                     ["<C-e>"] = "preview-page-up",
+                    ["<C-r>"] = "preview-page-reset",
                 },
                 fzf = {
-                    ["ctrl-a"] = "abort",
-                    ["ctrl-b"] = "beginning-of-line",
+                    ["ctrl-z"] = "abort",
+                    ["ctrl-u"] = "unix-line-discard",
+                    ["ctrl-f"] = "half-page-down",
+                    ["ctrl-b"] = "half-page-up",
+                    ["ctrl-a"] = "beginning-of-line",
+                    ["ctrl-e"] = "end-of-line",
+                    ["alt-a"] = "toggle-all",
+                    ["f3"] = "toggle-preview-wrap",
+                    ["f4"] = "toggle-preview",
+                    ["shift-down"] = "preview-page-down",
+                    ["shift-up"] = "preview-page-up",
                 },
             },
             files = {
@@ -197,10 +210,10 @@ return {
             },
             fzf_opts = {
                 ["--ansi"] = "",
-                ["--info"] = "default",
+                ["--info"] = "inline",
                 ["--height"] = "100%",
                 ["--layout"] = "reverse",
-                ["--no-separator"] = false,
+                ["--border"] = "none",
             },
             lsp = {
                 code_actions = {

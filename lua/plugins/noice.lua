@@ -1,9 +1,17 @@
 return {
     "folke/noice.nvim",
     event = "VeryLazy",
-    enabled = false,
+    -- enabled = false,
     keys = { "/", "?", ":" },
     opts = {
+        popupmenu = {
+            enabled = true, -- enables the Noice popupmenu UI
+            ---@type 'nui'|'cmp'
+            backend = "cmp", -- backend to use to show regular cmdline completions
+            ---@type NoicePopupmenuItemKind|false
+            -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
+            kind_icons = {}, -- set to `false` to disable icons
+        },
         cmdline = {
             view = "cmdline",
             format = {
@@ -16,6 +24,7 @@ return {
             },
         },
         lsp = {
+            progress = { enabled = false },
             -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
             override = {
                 ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -29,17 +38,13 @@ return {
             command_palette = false, -- position the cmdline and popupmenu together
             long_message_to_split = true, -- long messages will be sent to a split
             inc_rename = false, -- enables an input dialog for inc-rename.nvim
-            lsp_doc_border = false, -- add a border to hover docs and signature help
+            lsp_doc_border = true, -- add a border to hover docs and signature help
         },
         routes = {
             {
-                view = "notify",
-                filter = { event = "msg_showmode" },
-            },
-            {
                 filter = {
                     event = "msg_show",
-                    kind = "",
+                    kind = "lua_error",
                     find = "written",
                 },
                 opts = { skip = true },

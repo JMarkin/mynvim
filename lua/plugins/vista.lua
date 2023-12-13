@@ -5,13 +5,11 @@ vim.keymap.set("n", "<space>t", ":Vista ctags<cr>", { desc = "Tagbar" })
 
 return {
     "liuchengxu/vista.vim",
-    dependencies = {
-        {
-            "lotabout/skim",
-            build = "cargo install skim",
-        },
-    },
     cmd = { "Vista" },
+    init = function()
+        vim.g.vista_update_on_text_changed = 1
+        vim.g.vista_disable_statusline = 1
+    end,
     config = function()
         autocmd("FileType", {
             group = augroup("vista", { clear = true }),

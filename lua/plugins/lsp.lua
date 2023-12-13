@@ -87,4 +87,7 @@ return {
         opts = {},
         event = "LspAttach",
     },
+    { "folke/neodev.nvim", lazy = true, opts = {
+        lspconfig = false,
+    } },
 }

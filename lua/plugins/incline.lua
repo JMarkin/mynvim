@@ -29,6 +29,25 @@ local function get_git_diff(props)
     return labels
 end
 
+local function get_noice_recording(props)
+    local statusline = require("noice").api.statusline.mode
+
+    local label = {}
+    local m = statusline.get()
+    local idx = m:find("@")
+    if idx then
+        m = m:sub(idx, #m) .. " "
+        table.insert(label, {
+            m,
+            guifg = "#00b0ff",
+        })
+    end
+    if #label > 0 then
+        table.insert(label, { "| " })
+    end
+    return label
+end
+
 return {
     "b0o/incline.nvim",
     init = function()
@@ -45,8 +64,10 @@ return {
                     or "bold"
                 local st_diag, diag = pcall(get_diagnostic_label, props)
                 local st_git, git = pcall(get_git_diff, props)
+                local st_noice, noice = pcall(get_noice_recording, props)
 
                 local buffer = {
+                    { st_noice and noice or "" },
                     { st_diag and diag or "" },
                     { st_git and git or "" },
                     { ft_icon, guifg = ft_color },

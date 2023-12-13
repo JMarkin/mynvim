@@ -79,7 +79,7 @@ opt.colorcolumn = "+1"
 
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
-opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.shortmess:append({ W = false, I = true, c = true, C = true, A = false })
 
 -- completions
 opt.completeopt = "menu,menuone,noselect"

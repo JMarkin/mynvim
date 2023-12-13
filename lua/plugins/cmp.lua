@@ -93,12 +93,55 @@ table.insert(lsp_sources, {
     option = { additional_arguments = "--max-depth 4" },
 })
 
-local cmp_config = function(sources, buffer)
+local default_comparators = function(compare)
+    return {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.recently_used,
+        compare.locality,
+        compare.kind,
+        compare.length,
+        compare.order,
+    }
+end
+
+local python_comparators = function(compare)
+    return {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.recently_used,
+        require("cmp-under-comparator").under,
+        compare.locality,
+        compare.kind,
+        compare.length,
+        compare.order,
+    }
+end
+
+local clang_comparators = function(compare)
+    return {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.recently_used,
+        require("clangd_extensions.cmp_scores"),
+        compare.locality,
+        compare.kind,
+        compare.length,
+        compare.order,
+    }
+end
+
+local cmp_config = function(sources, buffer, comparators)
+    comparators = comparators or default_comparators
     local luasnip = require("luasnip")
 
     local neogen = require("neogen")
 
     local cmp = require("cmp")
+    local compare = require("cmp.config.compare")
 
     local move_down = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -149,16 +192,8 @@ local cmp_config = function(sources, buffer)
         end,
         preselect = preselect,
         sorting = {
-            comparators = {
-                cmp.config.compare.offset,
-                cmp.config.compare.exact,
-                require("cmp-under-comparator").under,
-                cmp.config.compare.score,
-                cmp.config.compare.kind,
-                cmp.config.compare.recently_used,
-                cmp.config.compare.length,
-                cmp.config.compare.order,
-            },
+            priority_weight = 2,
+            comparators = comparators(compare),
         },
         view = {
             entries = "custom",
@@ -179,10 +214,10 @@ local cmp_config = function(sources, buffer)
             disallow_prefix_unmatching = false,
         },
         mapping = {
-            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-e>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-d>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
-            ["<C-e>"] = cmp.mapping.abort(),
+            ["<C-a>"] = cmp.mapping.abort(),
             ["<CR>"] = cmp.mapping({
                 i = function(fallback)
                     if cmp.visible() and cmp.get_active_entry() then
@@ -192,7 +227,6 @@ local cmp_config = function(sources, buffer)
                     end
                 end,
                 s = cmp.mapping.confirm({ select = true }),
-                c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
             }),
             ["<Tab>"] = move_down,
             ["<S-Tab>"] = move_up,
@@ -210,13 +244,68 @@ local cmp_config = function(sources, buffer)
     })
 end
 
+local function cmp_cmdline(is_large)
+    local cmp = require("cmp")
+
+    if is_large then
+        cmp.setup.cmdline({ "/", "?" }, {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+                { name = "cmdline_history", max_item_count = 2 },
+            },
+            performance = {
+                max_view_entries = 10,
+            },
+        })
+    else
+        cmp.setup.cmdline({ "/", "?" }, {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+                { name = "cmdline_history", max_item_count = 2 },
+                { name = "buffer" },
+                { name = "rg" },
+            },
+            performance = {
+                max_view_entries = 10,
+            },
+        })
+    end
+
+    cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = "cmdline_history", max_item_count = 2 },
+            { name = "path" },
+            { name = "cmdline", option = {
+                ignore_cmds = { "Man", "!" },
+            } },
+        }),
+    })
+end
+
 local gr = augroup("cmp", { clear = true })
+
+autocmd("FileType", {
+    group = gr,
+    pattern = "python",
+    callback = function(opts)
+        vim.b.comparators = python_comparators
+    end,
+})
+
+autocmd("FileType", {
+    group = gr,
+    pattern = { "c", "cpp", "h" },
+    callback = function(opts)
+        vim.b.comparators = clang_comparators
+    end,
+})
 
 autocmd("LspAttach", {
     group = gr,
     pattern = "*",
     callback = function(opts)
-        cmp_config(lsp_sources, opts.buf)
+        cmp_config(lsp_sources, opts.buf, vim.b.comparators)
     end,
 })
 
@@ -225,6 +314,7 @@ autocmd("User", {
     group = gr,
     callback = function(opts)
         cmp_config(default_sources, opts.buf)
+        cmp_cmdline(true)
     end,
 })
 
@@ -299,9 +389,14 @@ return {
             },
             "rcarriga/cmp-dap",
             "quangnguyen30192/cmp-nvim-tags",
+            "dmitmel/cmp-cmdline-history",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
         },
         config = function()
             cmp_config(default_sources)
+            cmp_cmdline()
         end,
         event = { "InsertEnter" },
     },
