@@ -24,6 +24,32 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = true,
         event = "LspAttach",
+        keys = {
+            {
+                "[d",
+                "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+                desc = "Jump: prev diag",
+            },
+            {
+                "]d",
+                "<cmd>Lspsaga diagnostic_jump_next<CR>",
+                desc = "Jump: next diag",
+            },
+            {
+                "[e",
+                function()
+                    require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                desc = "Jump: prev Error",
+            },
+            {
+                "]e",
+                function()
+                    require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                desc = "Jump: next Error",
+            },
+        },
         config = function()
             local opts = {
                 finder = {

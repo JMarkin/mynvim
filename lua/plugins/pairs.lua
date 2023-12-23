@@ -6,7 +6,7 @@ return {
         opts = {
             --Config goes here
         },
-        enabled = true,
+        enabled = false,
     },
-    { "echasnovski/mini.pairs", enabled = false, event = "InsertEnter", opts = {} },
+    { "echasnovski/mini.pairs", enabled = true, event = "InsertEnter", opts = {} },
 }

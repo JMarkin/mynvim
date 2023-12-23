@@ -1,6 +1,6 @@
 vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
+vim.keymap.set({ "n", "v" }, "<C-e>", "<C-u>")
 
--- Visual
 vim.keymap.set({ "n" }, "o", "o<Esc>", { desc = "Add line under" })
 vim.keymap.set({ "n" }, "O", "O<Esc>", { desc = "Add line prev" })
 vim.keymap.set({ "v" }, "p", "pgvy", { desc = "Disable yank on paste" })
@@ -13,6 +13,9 @@ vim.keymap.set(
     "<Esc>:w<CR>",
     { desc = "visual mode: escape to normal and save" }
 )
+
+vim.keymap.set({ "n" }, { "<leader>W" }, ":wa<CR>", { silent = true, desc = "normal mode: save" })
+vim.keymap.set({ "v" }, { "<leader>W" }, "<Esc>:wa<CR>", { desc = "visual mode: escape to normal and save" })
 
 vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
 

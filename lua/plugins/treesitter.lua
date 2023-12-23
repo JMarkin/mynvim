@@ -86,6 +86,7 @@ return {
     dependencies = {
         {
             "nvim-treesitter/nvim-treesitter-textobjects",
+            enabled = false,
             init = function()
                 -- disable rtp plugin, as we only need its queries for mini.ai
                 -- In case other textobject modules are enabled, we will load them
@@ -103,16 +104,15 @@ return {
             enabled = true,
             init = function()
                 vim.g.matchup_transmute_enabled = 1
-                vim.g.matchup_delim_noskips = 0
+                vim.g.matchup_delim_noskips = 2
                 vim.g.matchup_matchparen_deferred = 1
-                vim.g.matchup_delim_start_plaintext = 0
+                vim.g.matchup_delim_start_plaintext = 1
 
                 vim.g.matchup_matchparen_hi_surround_always = 1
                 vim.g.matchup_matchparen_nomode = "i"
                 vim.g.matchup_matchparen_deferred = 1
-                vim.g.matchup_matchparen_deferred_show_delay = 100
-                vim.g.matchup_matchparen_deferred_hide_delay = 300
-                vim.g.matchup_matchparen_timeout = 100
+                -- vim.g.matchup_matchparen_deferred_show_delay = 100
+                -- vim.g.matchup_matchparen_deferred_hide_delay = 500
                 vim.g.matchup_matchparen_offscreen = { method = "popup" }
             end,
         },

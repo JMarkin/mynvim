@@ -8,9 +8,11 @@ if enabled then
 end
 
 return {
-    "JarKz/nvim-spider-utf8",
-    brach = "utf8supportdev",
+    "chrisgrieser/nvim-spider",
     lazy = true,
     enabled = enabled,
-    dependencies = "theHamsta/nvim_rocks",
+    config = function()
+        local rocks = require("nvim_rocks")
+        rocks.ensure_installed("luautf8")
+    end,
 }

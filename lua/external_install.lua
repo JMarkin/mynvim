@@ -4,6 +4,7 @@ local DEFAULT_INSTALL_EXEC = {
     ["ruff-lsp"] = { command = "pip", args = { "install", "-U", "ruff-lsp" } },
     curlylint = { command = "pip", args = { "install", "-U", "curlylint" } },
     sqlfluff = { command = "pip", args = { "install", "-U", "sqlfluff" } },
+    sqlfmt = { command = "pip", args = { "install", "-U", "shandy-sqlfmt[jinjafmt]" } },
     yapf = { command = "pip", args = { "install", "-U", "yapf" } },
     black = { command = "pip", args = { "install", "-U", "black" } },
     isort = { command = "pip", args = { "install", "-U", "isort" } },
@@ -85,6 +86,10 @@ local DEFAULT_INSTALL_EXEC = {
         command = "rustup",
         args = { "component", "add", "rust-analyzer" },
     },
+    ["rustfmt"] = {
+        command = "rustup",
+        args = { "component", "add", "rustfmt" },
+    },
 
     -- custom
     ["lua-language-server"] = {
@@ -152,14 +157,13 @@ end
 
 local sources = {
     "ruff",
-    "black",
     "stylua",
     "nginxbeautifier",
-    "prettier",
-    "mypy",
-    "isort",
-    "flake8",
+    "prettierd",
     "fixjson",
+    "rustfmt",
+    "taplo",
+    "sqlfmt",
 }
 
 local install = function(sync, update)
