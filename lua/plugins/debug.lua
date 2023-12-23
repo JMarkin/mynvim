@@ -206,16 +206,18 @@ return {
             mode = "v",
         },
         {
-            "]d",
+            "]D",
             function()
                 require("goto-breakpoints").next()
             end,
+            desc = "Next breakkpoint",
         },
         {
-            "[d",
+            "[D",
             function()
                 require("goto-breakpoints").prev()
             end,
+            desc = "Prev breakkpoint",
         },
         {
             "]S",

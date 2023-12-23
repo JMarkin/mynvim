@@ -73,30 +73,6 @@ local keys = {
         { silent = true, desc = "Lang: rename project" },
     },
     {
-        "[e",
-        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-        { desc = "Jump: prev diag" },
-    },
-    {
-        "]e",
-        "<cmd>Lspsaga diagnostic_jump_next<CR>",
-        { desc = "Jump: next diag" },
-    },
-    {
-        "[E",
-        function()
-            require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-        end,
-        { desc = "Jump: prev Error" },
-    },
-    {
-        "]E",
-        function()
-            require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-        end,
-        { desc = "Jump: next Error" },
-    },
-    {
         "<space>t",
         ":Vista nvim_lsp<cr>",
         { desc = "Tagbar", silent = true },

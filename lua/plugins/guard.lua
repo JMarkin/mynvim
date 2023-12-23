@@ -1,6 +1,6 @@
 return {
     "nvimdev/guard.nvim",
-    -- enabled=false,
+    enabled=false,
     dev = true,
     dependencies = {
         {
@@ -13,7 +13,7 @@ return {
     config = function()
         local ft = require("guard.filetype")
 
-        ft("python"):fmt("ruff"):lint("mypy")
+        ft("python"):fmt("ruff")
 
         ft("lua"):fmt("stylua")
 
