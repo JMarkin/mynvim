@@ -190,6 +190,7 @@ local cmp_config = function(sources, buffer, comparators)
             ---@diagnostic disable-next-line: deprecated
             disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
             disabled = disabled or (vim.fn.reg_recording() ~= "")
+            disabled = disabled or (vim.fn.reg_executing() ~= "")
             disabled = disabled or require("cmp_dap").is_dap_buffer()
             return not disabled
         end,
@@ -236,14 +237,15 @@ local cmp_config = function(sources, buffer, comparators)
         },
         sources = sources,
         formatting = {
-            format = require("lspkind").cmp_format({
-                -- symbol_map = kind_icons,
-                maxwidth = 50,
-                mode = "symbol",
-                menu = menu_map,
-            }),
+            fields = { "kind", "abbr", "menu" },
+            format = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50, menu = menu_map }),
         },
-        window = vim.g.cmp_window,
+        window = {
+            completion = {
+                col_offset = -1,
+                side_padding = 0,
+            },
+        },
     })
 end
 
@@ -259,6 +261,9 @@ local function cmp_cmdline(is_large)
             performance = {
                 max_view_entries = 10,
             },
+            view = {
+                entries = { name = "wildmenu", separator = " | " },
+            },
         })
     else
         cmp.setup.cmdline({ "/", "?" }, {
@@ -271,6 +276,9 @@ local function cmp_cmdline(is_large)
             performance = {
                 max_view_entries = 10,
             },
+            view = {
+                entries = { name = "wildmenu", separator = " | " },
+            },
         })
     end
 
@@ -280,7 +288,7 @@ local function cmp_cmdline(is_large)
             { name = "cmdline_history", max_item_count = 2 },
             { name = "path" },
             { name = "cmdline", option = {
-                ignore_cmds = { "Man", "!" },
+                ignore_cmds = { "Man" },
             } },
         }),
     })
