@@ -16,11 +16,14 @@ end
 local function get_git_diff(props)
     local icons = { removed = "", changed = "", added = "" }
     local labels = {}
-    local signs = vim.api.nvim_buf_get_var(props.buf, "gitsigns_status_dict")
+    local signs = vim.b.gitsigns_status_dict
+
+    local group_map = { removed = "Delete", changed = "Change", added = "Add" }
 
     for name, icon in pairs(icons) do
         if tonumber(signs[name]) and signs[name] > 0 then
-            table.insert(labels, { icon .. " " .. signs[name] .. " ", group = "Diff" .. name })
+            local group = "Diff" .. group_map[name]
+            table.insert(labels, { icon .. " " .. signs[name] .. " ", group = group })
         end
     end
     if #labels > 0 then
