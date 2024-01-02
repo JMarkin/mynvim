@@ -20,21 +20,37 @@ return {
             options = {
                 disabled_filetypes = { "Trouble", "Vista", "dashboard" },
                 theme = vim.g.lualine_theme or "auto",
+                component_separators = { left = " ", right = " " },
+                globalstatus = true,
             },
             sections = {
-                lualine_a = { "mode" },
+                lualine_a = { { "mode", icon = "" } },
                 lualine_b = {
-                    "branch",
-                    { "diff", source = diff_source },
-                    "diagnostics",
-                    "filetype",
-                    { "filename", path = 1 },
+                    { "branch", icon = "" },
                 },
-                lualine_c = {},
-                lualine_x = {},
+                lualine_c = {
+                    {
+                        "diagnostics",
+                        symbols = {
+                            error = " ",
+                            warn = " ",
+                            info = " ",
+                            hint = "󰝶 ",
+                        },
+                    },
+                    { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+                    { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+                },
+                lualine_x = {
+                    {
+                        require("lazy.status").updates,
+                        cond = require("lazy.status").has_updates,
+                    },
+                    { "diff", source = diff_source },
+                },
                 lualine_y = {
-                    "filesize",
                     "encoding",
+                    "filesize",
                     {
                         "fileformat",
                         icons_enabled = true,
