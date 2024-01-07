@@ -1,17 +1,55 @@
 return {
     {
-        "mfussenegger/nvim-lint",
-        event = { "BufReadPre", "FileReadPre" },
-        enabled = true,
+        "nvimdev/guard.nvim",
+        enabled = false,
+        dev = true,
+        dependencies = {
+            {
+                "nvimdev/guard-collection",
+                -- dev = true,
+            },
+        },
+        lazy = true,
+        keys = {
+            { "<space>bf", "<cmd>GuardFmt<cr>", desc = "Format buffer" },
+        },
         config = function()
-            require("lint").linters_by_ft = {
-                sql = { "sqlfluff" },
-            }
+            local ft = require("guard.filetype")
+
+            ft("python"):fmt("ruff")
+
+            ft("lua"):fmt("stylua")
+
+            ft("c,cpp"):lint("clang-tidy")
+
+            ft("toml"):fmt("taplo")
+
+            ft("typescript,javascript,typescriptreact,markdown"):fmt("prettier")
+
+            require("guard").setup({
+                -- the only options for the setup function
+                fmt_on_save = false,
+                lint_on_change = false,
+                -- Use lsp if no formatter was defined for this filetype
+                lsp_as_default_formatter = true,
+            })
+        end,
+    },
+    {
+        "mfussenegger/nvim-lint",
+        lazy = true,
+        enabled = true,
+        init = function()
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "FileReadPost" }, {
                 callback = function()
                     require("lint").try_lint()
                 end,
             })
+        end,
+        config = function()
+            require("lint").linters_by_ft = {
+                sql = { "sqlfluff" },
+            }
         end,
     },
     {
@@ -20,11 +58,11 @@ return {
         keys = {
             { "<space>bf", "<cmd>Neoformat<cr>", desc = "Format buffer" },
         },
-        config = function()
+        init = function()
             vim.g.neoformat_run_all_formatters = 1
             vim.g.neoformat_only_msg_on_error = 0
             vim.g.neoformat_basic_format_align = 1
-            vim.g.neoformat_basic_format_retab = 1
+            vim.g.neoformat_basic_format_retab = 0
             vim.g.neoformat_basic_format_trim = 1
 
             vim.g.neoformat_enabled_python = { "ruff" }
