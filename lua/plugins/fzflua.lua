@@ -167,16 +167,16 @@ return {
             async_or_timeout = 3000,
             global_resume = true,
             global_resume_query = true,
-            winopts = {
-                height = 0.8,
-                width = 0.75,
-                preview = {
-                    scrollbar = false,
-                    default = "builtin",
-                    layout = "vertical",
-                    title_align = "center",
-                },
-            },
+            -- winopts = {
+            --     height = 0.8,
+            --     width = 0.75,
+            --     -- preview = {
+            --     --     scrollbar = false,
+            --     --     default = "builtin",
+            --     --     layout = "vertical",
+            --     --     title_align = "center",
+            --     -- },
+            -- },
             keymap = {
                 builtin = {
                     ["<F1>"] = "toggle-help",
@@ -201,11 +201,16 @@ return {
                     ["f4"] = "toggle-preview",
                     ["shift-down"] = "preview-page-down",
                     ["shift-up"] = "preview-page-up",
+                    ["tab"] = "down",
+                    ["shift-tab"] = "up",
+                    ["space"] = "toggle+down",
+                    ["ctrl-space"] = "toggle+up",
                 },
             },
             files = {
                 actions = {
-                    ["ctrl-I"] = { actions.toggle_ignore },
+                    ["ctrl-g"] = { actions.toggle_ignore },
+                    ["tab"] = false,
                 },
             },
             fzf_opts = {
