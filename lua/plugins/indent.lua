@@ -6,13 +6,6 @@ local is_not_mini = require("funcs").is_not_mini
 
 return {
     {
-        {
-            "vidocqh/auto-indent.nvim",
-            event = { "VeryLazy", "FileReadPre", "BufReadPre" },
-            opts = {},
-        },
-    },
-    {
         "lukas-reineke/indent-blankline.nvim",
         cond = is_not_mini,
         event = { "VeryLazy", "FileReadPre", "BufReadPre" },

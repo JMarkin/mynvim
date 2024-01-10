@@ -1,3 +1,4 @@
+local is_not_mini = require("funcs").is_not_mini
 return {
     {
         "nvimdev/guard.nvim",
@@ -83,5 +84,45 @@ return {
                 vim.g["neoformat_enabled_" .. lang] = { "prettierd" }
             end
         end,
+    },
+    { "simrat39/rust-tools.nvim", cond = is_not_mini, lazy = true },
+    {
+        name = "clangd_extenstions",
+        url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
+        cond = is_not_mini,
+        lazy = true,
+    },
+    { "b0o/schemastore.nvim", cond = is_not_mini, lazy = true },
+    {
+        "ranelpadon/python-copy-reference.vim",
+        cond = is_not_mini,
+        ft = { "python" },
+        keys = {
+            {
+                "<leader>lcd",
+                ":PythonCopyReferenceDotted<CR>",
+                desc = "Copy as: ReferenceDotted",
+            },
+            {
+                "<leader>lcp",
+                ":PythonCopyReferencePytest<CR>",
+                desc = "Copy as: ReferencePytest",
+            },
+        },
+    },
+    {
+        "cuducos/yaml.nvim",
+        ft = { "yaml" }, -- optional
+        dependencies = {
+            "nvim-treesitter",
+        },
+    },
+    -- uncompiler
+    {
+        "p00f/godbolt.nvim",
+        config = function()
+            require("godbolt").setup()
+        end,
+        cmd = { "Godbolt", "GodboltCompiler" },
     },
 }
