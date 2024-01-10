@@ -6,9 +6,8 @@ zxc
 """
 
 
-def f(i: int) -> int:
-    i += "123"
-    return "123"
+def sum_two_number(a: int, b: int) -> int:
+    return a + b
 
 
 # TODO: 123
