@@ -55,7 +55,7 @@ local function has_words_before()
 end
 
 local _sources = {
-    { name = "luasnip", keyword_length = 2, max_item_count = 5 },
+    { name = "luasnip", keyword_length = 1, max_item_count = 5 },
     {
         name = "tags",
         option = {
@@ -73,6 +73,7 @@ local _sources = {
     {
         name = "vim-dadbod-completion",
         filetype = { "sql", "mssql", "plsql" },
+        max_item_count = 20,
     },
 }
 local default_sources = vim.deepcopy(_sources)
@@ -81,11 +82,12 @@ table.insert(default_sources, {
     option = {
         disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
     },
+    max_item_count = 20,
 })
 
 local lsp_sources = vim.deepcopy(_sources)
 table.insert(lsp_sources, 1, { name = "diag-codes", in_comment = true })
-table.insert(lsp_sources, 1, { name = "nvim_lsp" })
+table.insert(lsp_sources, 1, { name = "nvim_lsp", max_item_count = 20 })
 table.insert(lsp_sources, {
     name = "rg",
     keyword_length = 2,
@@ -133,6 +135,22 @@ local clang_comparators = function(compare)
         compare.order,
     }
 end
+
+---Hack: `nvim_lsp` and `nvim_lsp_signature_help` source still use
+---deprecated `vim.lsp.buf_get_clients()`, which is slower due to
+---the deprecation and version check in that function. Overwrite
+---it using `vim.lsp.get_clients()` to improve performance.
+---@diagnostic disable-next-line: duplicate-set-field
+function vim.lsp.buf_get_clients(bufnr)
+    return vim.lsp.get_clients({ buffer = bufnr })
+end
+
+---@type string?
+local last_key
+
+vim.on_key(function(k)
+    last_key = k
+end)
 
 local cmp_config = function(sources, buffer, comparators)
     comparators = comparators or default_comparators
@@ -183,7 +201,8 @@ local cmp_config = function(sources, buffer, comparators)
 
     setup({
         performance = {
-            max_view_entries = 50,
+            async_budget = 64,
+            max_view_entries = 64,
         },
         enabled = function()
             local disabled = false
@@ -245,6 +264,11 @@ local cmp_config = function(sources, buffer, comparators)
                 col_offset = -1,
                 side_padding = 0,
             },
+            documentation = {
+                max_width = 80,
+                max_height = 20,
+                border = "solid",
+            },
         },
     })
 end
@@ -286,10 +310,10 @@ local function cmp_cmdline(is_large)
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
             { name = "cmdline_history", max_item_count = 2 },
-            { name = "path" },
             { name = "cmdline", option = {
                 ignore_cmds = { "Man" },
             } },
+            { name = "path" },
         }),
     })
 end
@@ -362,6 +386,7 @@ return {
             vim.tbl_map(function(type)
                 require("luasnip.loaders.from_" .. type).lazy_load()
             end, { "vscode", "snipmate", "lua" })
+
             -- friendly-snippets - enable standardized comments snippets
             require("luasnip").filetype_extend("typescript", { "tsdoc" })
             require("luasnip").filetype_extend("javascript", { "jsdoc" })
@@ -406,8 +431,56 @@ return {
             "hrsh7th/cmp-path",
         },
         config = function()
+            local cmp = require("cmp")
+            local cmp_core = require("cmp.core")
+
+            ---@type integer
+            local last_changed = 0
+            local _cmp_on_change = cmp_core.on_change
+            local string_byte_c = string.byte("c")
+
+            ---Improves performance when inserting in large files
+            ---@diagnostic disable-next-line: duplicate-set-field
+            function cmp_core.on_change(self, trigger_event)
+                -- Don't know why but inserting spaces/tabs causes higher latency than other
+                -- keys, e.g. when holding down 's' the interval between keystrokes is less
+                -- than 32ms (80 repeats/s keyboard), but when holding spaces/tabs the
+                -- interval increases to 100ms, guess is is due ot some other plugins that
+                -- triggers on spaces/tabs
+                -- Spaces/tabs are not useful in triggering completions in insert mode but can
+                -- be useful in command-line autocompletion, so ignore them only when not in
+                -- command-line mode
+                if (last_key == " " or last_key == "\t") and string.byte(vim.fn.mode(), 1) ~= string_byte_c then
+                    return
+                end
+
+                local now = vim.uv.now()
+                local fast_typing = now - last_changed < 32
+                last_changed = now
+
+                if not fast_typing or trigger_event ~= "TextChanged" or cmp.visible() then
+                    _cmp_on_change(self, trigger_event)
+                    return
+                end
+
+                vim.defer_fn(function()
+                    if last_changed == now then
+                        _cmp_on_change(self, trigger_event)
+                    end
+                end, 200)
+            end
+
             cmp_config(default_sources)
             cmp_cmdline()
+
+            -- cmp does not work with cmdline with type other than `:`, '/', and '?', e.g.
+            -- it does not respect the completion option of `input()`/`vim.ui.input()`, see
+            -- https://github.com/hrsh7th/nvim-cmp/issues/1690
+            -- https://github.com/hrsh7th/nvim-cmp/discussions/1073
+            cmp.setup.cmdline("@", { enabled = false })
+            cmp.setup.cmdline(">", { enabled = false })
+            cmp.setup.cmdline("-", { enabled = false })
+            cmp.setup.cmdline("=", { enabled = false })
         end,
         event = { "InsertEnter" },
     },

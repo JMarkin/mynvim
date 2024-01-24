@@ -10,10 +10,10 @@ return {
         cond = is_not_mini,
         event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         config = function()
-            local hooks = require("ibl.hooks")
+            -- local hooks = require("ibl.hooks")
 
             require("ibl").setup({ scope = { highlight = vim.g.rainbow_delimiters_highlight } })
-            hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+            -- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
         end,
     },
 }

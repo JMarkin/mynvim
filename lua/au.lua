@@ -1,8 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+local groupid = vim.api.nvim_create_augroup
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-    group = augroup("hl_yank", { clear = true }),
+    group = groupid("hl_yank", { clear = true }),
     pattern = "*",
     desc = "hightlight on yank",
     callback = function()
@@ -14,13 +14,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 autocmd({ "BufReadPre", "FileReadPre" }, {
-    group = augroup("large_fiels", { clear = true }),
+    group = groupid("large_fiels", { clear = true }),
     pattern = { "*" },
     callback = require("largefiles").optimize_buffer,
 })
 
 autocmd({ "LspAttach" }, {
-    group = augroup("lsp_attach", { clear = true }),
+    group = groupid("lsp_attach", { clear = true }),
     pattern = { "*" },
     callback = function()
         vim.b.lsp_attached = true
@@ -29,12 +29,12 @@ autocmd({ "LspAttach" }, {
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-    group = augroup("checktime", { clear = true }),
+    group = groupid("checktime", { clear = true }),
     command = "checktime",
 })
 
 -- Format Option
-local format_options = augroup("Format Options", { clear = true })
+local format_options = groupid("Format Options", { clear = true })
 autocmd("BufReadPost", {
     callback = function()
         vim.opt_local.formatoptions = vim.opt_local.formatoptions
@@ -53,7 +53,7 @@ autocmd("BufReadPost", {
 
 -- Use 'q' to quit from common plugins
 autocmd("FileType", {
-    group = augroup("quit", { clear = true }),
+    group = groupid("quit", { clear = true }),
     pattern = {
         "help",
         "man",
@@ -80,7 +80,7 @@ autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = augroup("spell", { clear = true }),
+    group = groupid("spell", { clear = true }),
     pattern = { "gitcommit", "markdown" },
     callback = function()
         vim.opt_local.spell = true
@@ -88,7 +88,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Persistent Folds
-local save_fold = augroup("Persistent Folds", { clear = true })
+local save_fold = groupid("Persistent Folds", { clear = true })
 autocmd("BufWinLeave", {
     pattern = "*.*",
     callback = function()
@@ -114,7 +114,7 @@ autocmd("FileType", {
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd({ "BufWritePre" }, {
-    group = augroup("auto_create_dir", { clear = true }),
+    group = groupid("auto_create_dir", { clear = true }),
     callback = function(event)
         if event.match:match("^%w%w+://") then
             return
@@ -124,17 +124,8 @@ autocmd({ "BufWritePre" }, {
     end,
 })
 
---matchup custom
--- local matchup_words = "MatchUpWords"
--- augroup(matchup_words, { clear = true })
--- autocmd("FileType", {
---     group = matchup_words,
---     pattern = {"css", "javascript", "typescript", "cpp", "c"},
---     command = "call matchup#util#append_match_words('\/\*:\*\/')",
--- })
-
 local enable_syntax = "SYNTAX_OMNIFUNC"
-augroup(enable_syntax, { clear = true })
+groupid(enable_syntax, { clear = true })
 autocmd("FileType", {
     pattern = {
         "mako",
@@ -161,18 +152,88 @@ autocmd("FileType", {
 })
 
 local syntax = "SYNTAX"
-augroup(syntax, { clear = true })
+groupid(syntax, { clear = true })
 autocmd("FileType", {
     pattern = "*",
     command = [[:if !exists("g:syntax_on") | syntax on | endif]],
 })
 
 autocmd("BufWinEnter", {
-    group = augroup("help_window_right", {}),
+    group = groupid("help_window_right", {}),
     pattern = { "*.txt" },
     callback = function()
         if vim.o.filetype == "help" then
             vim.cmd.wincmd("L")
         end
     end,
+})
+
+-- copy from https://github.com/Bekaboo/nvim/blob/master/lua/core/autocmds.lua
+
+---@param group string
+---@vararg { [1]: string|string[], [2]: vim.api.keyset.create_autocmd }
+---@return nil
+local function augroup(group, ...)
+    local id = groupid(group, {})
+    for _, a in ipairs({ ... }) do
+        a[2].group = id
+        autocmd(unpack(a))
+    end
+end
+
+augroup("Autosave", {
+    { "BufLeave", "WinLeave", "FocusLost" },
+    {
+        nested = true,
+        desc = "Autosave on focus change.",
+        callback = function(info)
+            if vim.bo[info.buf].bt == "" then
+                vim.cmd.update({
+                    mods = { emsg_silent = true },
+                })
+            end
+        end,
+    },
+})
+
+augroup("WinCloseJmp", {
+    "WinClosed",
+    {
+        nested = true,
+        desc = "Jump to last accessed window on closing the current one.",
+        command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
+    },
+})
+
+-- Show cursor line and cursor column only in current window
+augroup("AutoHlCursorLine", {
+    { "BufWinEnter", "WinEnter" },
+    {
+        desc = "Show cursorline and cursorcolumn in current window.",
+        callback = function()
+            if vim.w._cul and not vim.wo.cul then
+                vim.wo.cul = true
+                vim.w._cul = nil
+            end
+            if vim.w._cuc and not vim.wo.cuc then
+                vim.wo.cuc = true
+                vim.w._cuc = nil
+            end
+        end,
+    },
+}, {
+    "WinLeave",
+    {
+        desc = "Hide cursorline and cursorcolumn in other windows.",
+        callback = function()
+            if vim.wo.cul then
+                vim.w._cul = true
+                vim.wo.cul = false
+            end
+            if vim.wo.cuc then
+                vim.w._cuc = true
+                vim.wo.cuc = false
+            end
+        end,
+    },
 })

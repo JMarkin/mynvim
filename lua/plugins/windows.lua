@@ -4,7 +4,7 @@ return {
         -- dev = true,
         dependencies = {
             "anuvyklack/middleclass",
-            "anuvyklack/animation.nvim",
+            -- "anuvyklack/animation.nvim",
         },
         opts = {
             autowidth = {
@@ -14,6 +14,7 @@ return {
             ignore = {
                 buftype = { "quickfix", "nofile" },
                 filetype = {
+                    "dbui",
                     "vista_kind",
                     "NvimTree",
                     "neo-tree",
@@ -31,7 +32,7 @@ return {
                 },
             },
             animation = {
-                enable = true,
+                enable = false,
                 duration = 300,
                 fps = 30,
                 easing = "in_out_sine",

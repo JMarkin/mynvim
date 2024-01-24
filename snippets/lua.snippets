@@ -48,3 +48,36 @@ snippet unittest
 snippet db
     vim.g.db = "postgresql://postgres:postgres@localhost:5432/postgres"
 
+snippet py-lint
+    require("lint").linters_by_ft = {
+        python = { "mypy", "bandit" },
+    }
+
+snippet py-proj
+    require("neogen").setup({
+        enabled = true,
+        input_after_comment = true,
+        snippet_engine = "luasnip",
+        languages = {
+            python = {
+                template = {
+                    annotation_convention = "google",
+                },
+            },
+        },
+    })
+    require("neotest").setup({
+        adapters = {
+            require("neotest-python")({
+                dap = { justMyCode = false },
+                args = { "--log-level", "DEBUG" },
+                runner = "pytest",
+            }),
+        },
+    })
+    vim.g.db = "postgresql://postgres:postgres@localhost:5432/postgres"
+
+    require("lint").linters_by_ft = {
+        python = { "mypy", "bandit" },
+    }
+

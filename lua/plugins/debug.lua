@@ -198,7 +198,7 @@ return {
             mode = "v",
         },
         {
-            "<C-e>",
+            "<leader>dE",
             function(...)
                 require("dapui").eval(...)
             end,
