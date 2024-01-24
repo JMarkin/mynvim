@@ -34,7 +34,7 @@ local keys = {
         { silent = true, desc = "GoTo: references" },
     },
     {
-        "gdf",
+        "gf",
         "<cmd>Lspsaga peek_definition<cr>",
         { desc = "GoTo: definition float" },
     },
