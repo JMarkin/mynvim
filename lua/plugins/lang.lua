@@ -85,7 +85,12 @@ return {
             end
         end,
     },
-    { "simrat39/rust-tools.nvim", cond = is_not_mini, lazy = true },
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^4", -- Recommended
+        ft = { "rust" },
+        cond = is_not_mini,
+    },
     {
         name = "clangd_extenstions",
         url = "https://git.sr.ht/~p00f/clangd_extensions.nvim",
