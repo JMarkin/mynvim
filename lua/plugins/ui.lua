@@ -70,10 +70,21 @@ return {
     { "MunifTanjim/nui.nvim", lazy = true },
     {
         "mvllow/modes.nvim",
+        enabled = false,
         event = { "VeryLazy", "ModeChanged" },
         opts = {
             line_opacity = 0.25,
             set_cursor = false,
+        },
+    },
+    {
+        "rasulomaroff/reactive.nvim",
+        opts = {
+            builtin = {
+                cursorline = true,
+                cursor = true,
+                modemsg = true,
+            },
         },
     },
 
@@ -87,9 +98,6 @@ return {
                 higroup = "ModesCopy", -- highlight group of yanked text
                 timeout = 100, -- timeout for clearing the highlight
             },
-        },
-        dependencies = {
-            "mvllow/modes.nvim",
         },
     },
 
@@ -115,6 +123,7 @@ return {
     },
     {
         "rainbowhxch/beacon.nvim",
+        enabled = false,
         cond = function()
             return not vim.g.neovide
         end,
