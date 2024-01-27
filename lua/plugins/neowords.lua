@@ -3,10 +3,10 @@ return {
     lazy = true,
     enabled = true,
     keys = {
-        "w",
-        "e",
-        "b",
-        "ge",
+        { "w", mode = { "n", "x", "o" } },
+        { "e", mode = { "n", "x", "o" } },
+        { "b", mode = { "n", "x", "o" } },
+        { "ge", mode = { "n", "x", "o" } },
     },
     config = function()
         local neowords = require("neowords")
