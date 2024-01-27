@@ -6,7 +6,6 @@ vim.keymap.set({ "n" }, "O", "O<Esc>", { desc = "Add line prev" })
 vim.keymap.set({ "v" }, "p", "pgvy", { desc = "Disable yank on paste" })
 
 vim.keymap.set({ "n" }, { "<leader>w", "<leader>'" }, ":w<CR>", { silent = true, desc = "normal mode: save" })
-vim.keymap.set({ "i" }, "<C-s>", "<Esc>:w<CR>l", { silent = true, desc = "insert mode: escape to normal and save" })
 vim.keymap.set(
     { "v" },
     { "<leader>w", "<leader>'" },
@@ -40,3 +39,55 @@ end, {})
 vim.api.nvim_create_user_command("UnicodeUndoEscape", function(_)
     vim.cmd([[:%s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g]])
 end, {})
+
+-- ins-completion shortmaps
+-- h ins-completion
+vim.cmd([[
+inoremap <C-L> <C-X><C-L>
+inoremap <C-N> <C-X><C-N>
+inoremap <C-K> <C-X><C-K>
+inoremap <C-T> <C-X><C-T>
+inoremap <C-I> <C-X><C-I>
+inoremap <C-]> <C-X><C-]>
+inoremap <C-F> <C-X><C-F>
+inoremap <C-D> <C-X><C-D>
+inoremap <C-U> <C-X><C-U>
+inoremap <C-O> <C-X><C-O>
+inoremap <C-s> <C-X><C-s>
+inoremap <C-z> <C-N><C-P>
+]])
+
+-- Tabpages
+---@param tab_action function
+---@param default_count number?
+---@return function
+local function tabswitch(tab_action, default_count)
+  return function()
+    local count = default_count or vim.v.count
+    local num_tabs = vim.fn.tabpagenr('$')
+    if num_tabs >= count then
+      tab_action(count ~= 0 and count or nil)
+      return
+    end
+    vim.cmd.tablast()
+    for _ = 1, count - num_tabs do
+      vim.cmd.tabnew()
+    end
+  end
+end
+vim.keymap.set({ 'n', 'x' }, 'gt', tabswitch(vim.cmd.tabnext))
+vim.keymap.set({ 'n', 'x' }, 'gT', tabswitch(vim.cmd.tabprev))
+vim.keymap.set({ 'n', 'x' }, 'gy', tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+
+vim.keymap.set({ 'n', 'x' }, '<space>0', '<Cmd>0tabnew<CR>')
+vim.keymap.set({ 'n', 'x' }, '<space>1', tabswitch(vim.cmd.tabnext, 1))
+vim.keymap.set({ 'n', 'x' }, '<space>2', tabswitch(vim.cmd.tabnext, 2))
+vim.keymap.set({ 'n', 'x' }, '<space>3', tabswitch(vim.cmd.tabnext, 3))
+vim.keymap.set({ 'n', 'x' }, '<space>4', tabswitch(vim.cmd.tabnext, 4))
+vim.keymap.set({ 'n', 'x' }, '<space>5', tabswitch(vim.cmd.tabnext, 5))
+vim.keymap.set({ 'n', 'x' }, '<space>6', tabswitch(vim.cmd.tabnext, 6))
+vim.keymap.set({ 'n', 'x' }, '<space>7', tabswitch(vim.cmd.tabnext, 7))
+vim.keymap.set({ 'n', 'x' }, '<space>8', tabswitch(vim.cmd.tabnext, 8))
+vim.keymap.set({ 'n', 'x' }, '<space>9', tabswitch(vim.cmd.tabnext, 9))
+
+

@@ -72,7 +72,7 @@ return {
                 winblend = 0,
             },
             mappings = {
-                scrollU = "<C-u>",
+                scrollU = "<C-e>",
                 scrollD = "<C-d>",
                 jumpTop = "[",
                 jumpBot = "]",
@@ -83,7 +83,6 @@ return {
         vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
         vim.o.foldcolumn = "1" -- '0' is not bad
         vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-        vim.o.foldlevelstart = 99
         vim.o.foldenable = true
     end,
     keys = {
@@ -109,7 +108,7 @@ return {
             desc = "Close All Folds",
         },
         {
-            "zK",
+            "zk",
             function()
                 local winid = require("ufo").peekFoldedLinesUnderCursor()
                 if not winid then
