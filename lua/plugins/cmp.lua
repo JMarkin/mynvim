@@ -277,25 +277,13 @@ local function cmp_cmdline(is_large)
     local cmp = require("cmp")
 
     if is_large then
-        cmp.setup.cmdline({ "/", "?" }, {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = "cmdline_history", max_item_count = 2 },
-            },
-            performance = {
-                max_view_entries = 10,
-            },
-            view = {
-                entries = { name = "wildmenu", separator = " | " },
-            },
-        })
+        cmp.setup.cmdline({ "/", "?" }, { enabled = false })
     else
         cmp.setup.cmdline({ "/", "?" }, {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
                 { name = "cmdline_history", max_item_count = 2 },
                 { name = "buffer" },
-                { name = "rg" },
             },
             performance = {
                 max_view_entries = 10,
@@ -313,49 +301,53 @@ local function cmp_cmdline(is_large)
             { name = "cmdline", option = {
                 ignore_cmds = { "Man" },
             } },
-            { name = "path" },
         }),
     })
 end
 
-local gr = augroup("cmp", { clear = true })
+local enabled = true
 
-autocmd("FileType", {
-    group = gr,
-    pattern = "python",
-    callback = function(opts)
-        vim.b.comparators = python_comparators
-    end,
-})
+if enabled then
+    local gr = augroup("cmp", { clear = true })
 
-autocmd("FileType", {
-    group = gr,
-    pattern = { "c", "cpp", "h" },
-    callback = function(opts)
-        vim.b.comparators = clang_comparators
-    end,
-})
+    autocmd("FileType", {
+        group = gr,
+        pattern = "python",
+        callback = function(opts)
+            vim.b.comparators = python_comparators
+        end,
+    })
 
-autocmd("LspAttach", {
-    group = gr,
-    pattern = "*",
-    callback = function(opts)
-        cmp_config(lsp_sources, opts.buf, vim.b.comparators)
-    end,
-})
+    autocmd("FileType", {
+        group = gr,
+        pattern = { "c", "cpp", "h" },
+        callback = function(opts)
+            vim.b.comparators = clang_comparators
+        end,
+    })
 
-autocmd("User", {
-    pattern = "LargeFile",
-    group = gr,
-    callback = function(opts)
-        cmp_config(default_sources, opts.buf)
-        cmp_cmdline(true)
-    end,
-})
+    autocmd("LspAttach", {
+        group = gr,
+        pattern = "*",
+        callback = function(opts)
+            cmp_config(lsp_sources, opts.buf, vim.b.comparators)
+        end,
+    })
+
+    autocmd("User", {
+        pattern = "LargeFile",
+        group = gr,
+        callback = function(opts)
+            cmp_config(default_sources, opts.buf)
+            cmp_cmdline(true)
+        end,
+    })
+end
 
 return {
     {
         "JMarkin/gentags.lua",
+        enabled = enabled,
         -- dev = true,
         cond = vim.fn.executable("ctags") == 1,
         dependencies = {
@@ -367,6 +359,7 @@ return {
         event = "VeryLazy",
     },
     {
+        enabled = enabled,
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
         dependencies = {
@@ -405,6 +398,7 @@ return {
     },
     {
         "hrsh7th/nvim-cmp",
+        enabled = enabled,
         lazy = true,
         -- dev = true,
         -- enabled = false,
@@ -428,7 +422,6 @@ return {
             "dmitmel/cmp-cmdline-history",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
         },
         config = function()
             local cmp = require("cmp")
@@ -482,6 +475,6 @@ return {
             cmp.setup.cmdline("-", { enabled = false })
             cmp.setup.cmdline("=", { enabled = false })
         end,
-        event = { "InsertEnter" },
+        event = { "InsertEnter", "CmdlineEnter" },
     },
 }

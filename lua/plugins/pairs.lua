@@ -1,22 +1,3 @@
----Record previous cmdline completion types,
----cmdcompltype[1] is the current completion type,
----cmdcompltype[2] is the previous completion type
----@type string[]
-local compltype = {}
-
-vim.api.nvim_create_autocmd("CmdlineChanged", {
-    desc = "Record cmd compltype to determine whether to autopair.",
-    group = vim.api.nvim_create_augroup("AutopairRecordCmdCompltype", {}),
-    callback = function()
-        local type = vim.fn.getcmdcompltype()
-        if compltype[1] == type then
-            return
-        end
-        compltype[2] = compltype[1]
-        compltype[1] = type
-    end,
-})
-
 ---Get next two characters after cursor, whether in cmdline or normal buffer
 ---@return string: next two characters
 local function get_next_two_chars()
@@ -39,7 +20,7 @@ local IGNORE_REGEX = vim.regex([=[^\%(\k\|\\\?[([{]\)]=])
 return {
     {
         "altermo/ultimate-autopair.nvim",
-        event = { "InsertEnter", "CmdlineEnter" },
+        event = { "InsertEnter" },
         branch = "v0.6", --recomended as each new version will have breaking changes
         enabled = true,
         config = function()
@@ -51,13 +32,10 @@ return {
                     filetype = { tree = false },
                     cond = {
                         cond = function(f)
-                            return not f.in_macro()
+                            return not f.in_cmdline()
+                                and not f.in_macro()
                                 -- Disable autopairs if followed by a keyword or an opening pair
                                 and not IGNORE_REGEX:match_str(get_next_two_chars())
-                                -- Disable autopairs when inserting a regex,
-                                -- e.g. `:s/{pattern}/{string}/[flags]` or
-                                -- `:g/{pattern}/[cmd]`, etc.
-                                and (not f.in_cmdline() or compltype[1] ~= "" or compltype[2] ~= "command")
                         end,
                     },
                 },

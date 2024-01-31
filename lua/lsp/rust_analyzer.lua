@@ -7,6 +7,7 @@ return {
     end,
     setup = function()
         vim.g.rustaceanvim = {
+            tools = {},
             server = {
                 on_attach = utils.on_attach,
                 settings = {
