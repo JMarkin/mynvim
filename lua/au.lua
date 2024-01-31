@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "hightlight on yank",
     callback = function()
         vim.highlight.on_yank({
-            higroup = "ModesCopy",
+            higroup = "DiffChange",
             timeout = 100,
         })
     end,
@@ -196,14 +196,14 @@ augroup("Autosave", {
     },
 })
 
-augroup("WinCloseJmp", {
-    "WinClosed",
-    {
-        nested = true,
-        desc = "Jump to last accessed window on closing the current one.",
-        command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
-    },
-})
+-- augroup("WinCloseJmp", {
+--     "WinClosed",
+--     {
+--         nested = true,
+--         desc = "Jump to last accessed window on closing the current one.",
+--         command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
+--     },
+-- })
 
 -- Show cursor line and cursor column only in current window
 augroup("AutoHlCursorLine", {

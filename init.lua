@@ -59,7 +59,7 @@ require("lazy").setup({ import = "plugins" }, {
                 "matchparen",
                 -- "netrwPlugin",
                 -- "tarPlugin",
-                -- "tohtml",
+                "tohtml",
                 "tutor",
                 -- "zipPlugin",
             },

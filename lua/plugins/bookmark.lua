@@ -1,5 +1,6 @@
 return {
     "MattesGroeger/vim-bookmarks",
+    enabled = false,
     dependencies = { "ibhagwan/fzf-lua" },
     init = function()
         vim.g.bookmark_highlight_lines = 1
@@ -55,16 +56,18 @@ return {
                 require("fzf-lua").quickfix({})
             end,
             silent = true,
-            desc = "Search: bookmarks"
+            desc = "Search: bookmarks",
         },
-        { "<leader>bb",  "<Plug>BookmarkToggle",     desc = "Bookmark: Toggle" },
-        { "<leader>bi",  "<Plug>BookmarkAnnotate",   desc = "Bookmark: Annotate" },
-        { "]b",          "<Plug>BookmarkNext",       desc = "Bookmark: Next" },
-        { "[b",          "<Plug>BookmarkPrev",       desc = "Bookmark: Prev" },
-        { "<leader>bc",  "<Plug>BookmarkClear",      desc = "Bookmark: Clear" },
-        { "<leader>bx",  "<Plug>BookmarkClearAll",   desc = "Bookmark: ClearAll" },
-        { "<leader>bkk", "<Plug>BookmarkMoveUp",     desc = "Bookmark: MoveUp" },
-        { "<leader>bjj", "<Plug>BookmarkMoveDown",   desc = "Bookmark: MoveDown" },
-        { "<leader>bg",  "<Plug>BookmarkMoveToLine", desc = "Bookmark: MoveToLine" }
-    }
+        -- stylua: ignore start
+        { "<leader>bb",  "<Plug>BookmarkToggle",     desc = "Bookmark: Toggle"     },
+        { "<leader>bi",  "<Plug>BookmarkAnnotate",   desc = "Bookmark: Annotate"   },
+        { "]b",          "<Plug>BookmarkNext",       desc = "Bookmark: Next"       },
+        { "[b",          "<Plug>BookmarkPrev",       desc = "Bookmark: Prev"       },
+        { "<leader>bc",  "<Plug>BookmarkClear",      desc = "Bookmark: Clear"      },
+        { "<leader>bx",  "<Plug>BookmarkClearAll",   desc = "Bookmark: ClearAll"   },
+        { "<leader>bkk", "<Plug>BookmarkMoveUp",     desc = "Bookmark: MoveUp"     },
+        { "<leader>bjj", "<Plug>BookmarkMoveDown",   desc = "Bookmark: MoveDown"   },
+        { "<leader>bg",  "<Plug>BookmarkMoveToLine", desc = "Bookmark: MoveToLine" },
+        -- stylua: ignore end
+    },
 }

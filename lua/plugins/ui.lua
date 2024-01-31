@@ -69,16 +69,8 @@ return {
     -- ui components
     { "MunifTanjim/nui.nvim", lazy = true },
     {
-        "mvllow/modes.nvim",
-        enabled = false,
-        event = { "VeryLazy", "ModeChanged" },
-        opts = {
-            line_opacity = 0.25,
-            set_cursor = false,
-        },
-    },
-    {
         "rasulomaroff/reactive.nvim",
+        enabled = true,
         opts = {
             builtin = {
                 cursorline = true,
@@ -95,8 +87,6 @@ return {
         opts = {
             highlight = {
                 enabled = false, -- highlight yanked text
-                higroup = "ModesCopy", -- highlight group of yanked text
-                timeout = 100, -- timeout for clearing the highlight
             },
         },
     },

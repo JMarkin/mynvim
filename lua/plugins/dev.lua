@@ -9,7 +9,9 @@ return {
     },
     {
         "stevearc/profile.nvim",
-        keys = "F2",
+        cond = function()
+            return os.getenv("NVIM_PROFILE")
+        end,
         lazy = true,
         config = function()
             local function toggle_profile()
