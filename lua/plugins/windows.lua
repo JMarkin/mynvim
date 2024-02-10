@@ -4,12 +4,15 @@ return {
         -- dev = true,
         dependencies = {
             "anuvyklack/middleclass",
-            -- "anuvyklack/animation.nvim",
+            {
+                "anuvyklack/animation.nvim",
+                enabled = not vim.g.neovide,
+            },
         },
         opts = {
             autowidth = {
                 enable = true,
-                winwidth = 1.2,
+                winwidth = 2,
             },
             ignore = {
                 buftype = { "quickfix", "nofile" },
@@ -32,7 +35,7 @@ return {
                 },
             },
             animation = {
-                enable = false,
+                enable = not vim.g.neovide,
                 duration = 300,
                 fps = 30,
                 easing = "in_out_sine",
