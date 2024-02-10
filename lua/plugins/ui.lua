@@ -70,7 +70,7 @@ return {
     { "MunifTanjim/nui.nvim", lazy = true },
     {
         "rasulomaroff/reactive.nvim",
-        enabled = true,
+        enabled = false,
         opts = {
             builtin = {
                 cursorline = true,
@@ -113,7 +113,7 @@ return {
     },
     {
         "rainbowhxch/beacon.nvim",
-        enabled = false,
+        enabled = true,
         cond = function()
             return not vim.g.neovide
         end,

@@ -96,6 +96,12 @@ M.lsps = {
             },
         },
     }),
+    -- sourcekit = {
+    --     install = function(_, _) end,
+    --     setup = function()
+    --         require("lsp.utils").setup_lsp("sourcekit", {})
+    --     end,
+    -- },
 }
 M.install = function(sync, update)
     for _, lsp in pairs(M.lsps) do
