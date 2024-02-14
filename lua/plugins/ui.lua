@@ -15,12 +15,6 @@ return {
             timeout = 1000,
             stages = "static",
             level = vim.log.levels.INFO,
-            max_height = function()
-                return math.floor(vim.o.lines * 0.75)
-            end,
-            max_width = function()
-                return math.floor(vim.o.columns * 0.75)
-            end,
             top_down = false,
         },
         config = function(args)
