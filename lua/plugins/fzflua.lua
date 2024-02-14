@@ -146,14 +146,14 @@ return {
             desc = "Search: git status",
         },
         {
-            "<leader>gC",
+            "<leader>gsC",
             function()
                 require("fzf-lua").git_commits({ multiprocess = true })
             end,
             desc = "Search: git commits",
         },
         {
-            "<leader>gc",
+            "<leader>gsc",
             function()
                 require("fzf-lua").git_bcommits({ multiprocess = true })
             end,

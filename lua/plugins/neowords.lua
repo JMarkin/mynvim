@@ -1,7 +1,7 @@
 return {
     "backdround/neowords.nvim",
     lazy = true,
-    enabled = true,
+    enabled = false,
     keys = {
         { "w", mode = { "n", "x", "o" } },
         { "e", mode = { "n", "x", "o" } },
