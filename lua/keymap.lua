@@ -62,32 +62,30 @@ inoremap <C-z> <C-N><C-P>
 ---@param default_count number?
 ---@return function
 local function tabswitch(tab_action, default_count)
-  return function()
-    local count = default_count or vim.v.count
-    local num_tabs = vim.fn.tabpagenr('$')
-    if num_tabs >= count then
-      tab_action(count ~= 0 and count or nil)
-      return
+    return function()
+        local count = default_count or vim.v.count
+        local num_tabs = vim.fn.tabpagenr("$")
+        if num_tabs >= count then
+            tab_action(count ~= 0 and count or nil)
+            return
+        end
+        vim.cmd.tablast()
+        for _ = 1, count - num_tabs do
+            vim.cmd.tabnew()
+        end
     end
-    vim.cmd.tablast()
-    for _ = 1, count - num_tabs do
-      vim.cmd.tabnew()
-    end
-  end
 end
-vim.keymap.set({ 'n', 'x' }, 'gt', tabswitch(vim.cmd.tabnext))
-vim.keymap.set({ 'n', 'x' }, 'gT', tabswitch(vim.cmd.tabprev))
-vim.keymap.set({ 'n', 'x' }, 'gy', tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext))
+vim.keymap.set({ "n", "x" }, "gT", tabswitch(vim.cmd.tabprev))
+vim.keymap.set({ "n", "x" }, "gy", tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
 
-vim.keymap.set({ 'n', 'x' }, '<space>0', '<Cmd>0tabnew<CR>')
-vim.keymap.set({ 'n', 'x' }, '<space>1', tabswitch(vim.cmd.tabnext, 1))
-vim.keymap.set({ 'n', 'x' }, '<space>2', tabswitch(vim.cmd.tabnext, 2))
-vim.keymap.set({ 'n', 'x' }, '<space>3', tabswitch(vim.cmd.tabnext, 3))
-vim.keymap.set({ 'n', 'x' }, '<space>4', tabswitch(vim.cmd.tabnext, 4))
-vim.keymap.set({ 'n', 'x' }, '<space>5', tabswitch(vim.cmd.tabnext, 5))
-vim.keymap.set({ 'n', 'x' }, '<space>6', tabswitch(vim.cmd.tabnext, 6))
-vim.keymap.set({ 'n', 'x' }, '<space>7', tabswitch(vim.cmd.tabnext, 7))
-vim.keymap.set({ 'n', 'x' }, '<space>8', tabswitch(vim.cmd.tabnext, 8))
-vim.keymap.set({ 'n', 'x' }, '<space>9', tabswitch(vim.cmd.tabnext, 9))
-
-
+vim.keymap.set({ "n", "x" }, "<space>0", "<Cmd>0tabnew<CR>")
+vim.keymap.set({ "n", "x" }, "<space>1", tabswitch(vim.cmd.tabnext, 1))
+vim.keymap.set({ "n", "x" }, "<space>2", tabswitch(vim.cmd.tabnext, 2))
+vim.keymap.set({ "n", "x" }, "<space>3", tabswitch(vim.cmd.tabnext, 3))
+vim.keymap.set({ "n", "x" }, "<space>4", tabswitch(vim.cmd.tabnext, 4))
+vim.keymap.set({ "n", "x" }, "<space>5", tabswitch(vim.cmd.tabnext, 5))
+vim.keymap.set({ "n", "x" }, "<space>6", tabswitch(vim.cmd.tabnext, 6))
+vim.keymap.set({ "n", "x" }, "<space>7", tabswitch(vim.cmd.tabnext, 7))
+vim.keymap.set({ "n", "x" }, "<space>8", tabswitch(vim.cmd.tabnext, 8))
+vim.keymap.set({ "n", "x" }, "<space>9", tabswitch(vim.cmd.tabnext, 9))

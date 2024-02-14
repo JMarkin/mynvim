@@ -37,7 +37,6 @@ local syntax_langs = {
     "cmake",
     "dockerfile",
     "ini",
-    "gitignore",
     "vim",
     "vimdoc",
     "passwd",
@@ -47,10 +46,16 @@ local syntax_langs = {
     "markdown_inline",
     "jq",
     "regex",
-    "git_rebase",
     "query",
     "comment",
     "rst",
+
+    -- git
+    "gitcommit",
+    "git_rebase",
+    "gitignore",
+    "git_config",
+    "gitattributes",
 }
 
 local install = function(sync)

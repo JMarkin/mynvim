@@ -33,6 +33,7 @@ return {
     dependencies = "nvim-lua/plenary.nvim",
     keys = {
         { "<leader>gD", DiffviewToggle, silent = true, desc = "Git: Diffview toggle" },
+        { "<leader>gF", ":DiffviewFileHistory %<cr>", silent = true, desc = "Git: DiffviewFileHistory current" },
     },
     cmd = {
         "DiffviewOpen",

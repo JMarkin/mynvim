@@ -1,24 +1,20 @@
 return {
     {
-        "FabijanZulj/blame.nvim",
-        keys = {
-            { "<leader>gB", ":ToggleBlame window<cr>", desc = "Git: blame file" },
-        },
-    },
-    {
-        "niuiic/git-log.nvim",
+        "chrisgrieser/nvim-tinygit",
+        lazy = true,
+        ft = { "gitrebase", "gitcommit" }, -- so ftplugins are loaded
         dependencies = {
-            "niuiic/core.nvim",
+            "stevearc/dressing.nvim",
+            "ibhagwan/fzf-lua",
+            "rcarriga/nvim-notify", -- optional, but will lack some features without it
         },
         keys = {
-            {
-                "<leader>gl",
-                function()
-                    require("git-log").check_log()
-                end,
-                mode = { "v", "n" },
-                desc = "Git: show log",
-            },
+            -- stylua: ignore start
+            {"<leader>gcc", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
+            {"<leader>gp", function() require("tinygit").push() end, desc = "Git: push"},
+            {"<leader>gco", function() require("tinygit").amendOnlyMsg({ forcePushIfDiverged = false }) end, desc = "Git: amend only message"},
+            {"<leader>gce", function() require("tinygit").amendNoEdit({ forcePushIfDiverged = false }) end, desc = "Git: amend no edit"},
+            -- stylua: ignore end
         },
     },
     {
@@ -59,7 +55,7 @@ return {
                     end, { expr = true, desc = "Git: prev hunk" })
 
                     -- Actions
-                    map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Git: stage hunk" })
+                    map({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<CR>", { desc = "Git: stage hunk" })
                     map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Git: reset hunk" })
                     map("n", "<leader>gS", gs.stage_buffer, { desc = "Git: stage buffer" })
                     map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Git: undo stage hunk" })
@@ -68,7 +64,6 @@ return {
                     map("n", "<leader>gb", function()
                         gs.blame_line({ full = true })
                     end, { desc = "Git: blame line full" })
-                    map("n", "<leader>gd", gs.diffthis, { desc = "Git: diff this" })
 
                     -- Text object
                     map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Git: select hunk" })
@@ -76,5 +71,6 @@ return {
             })
         end,
         event = { "BufReadPost", "FileReadPost" },
+        keys = "<leader>g",
     },
 }
