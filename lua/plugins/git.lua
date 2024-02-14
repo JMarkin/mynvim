@@ -10,10 +10,10 @@ return {
         },
         keys = {
             -- stylua: ignore start
-            {"<leader>gcc", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
-            {"<leader>gp", function() require("tinygit").push() end, desc = "Git: push"},
-            {"<leader>gco", function() require("tinygit").amendOnlyMsg({ forcePushIfDiverged = false }) end, desc = "Git: amend only message"},
-            {"<leader>gce", function() require("tinygit").amendNoEdit({ forcePushIfDiverged = false }) end, desc = "Git: amend no edit"},
+            {"<leader>gc", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
+            {"<leader>gP", function() require("tinygit").push() end, desc = "Git: push"},
+            {"<leader>gAo", function() require("tinygit").amendOnlyMsg({ forcePushIfDiverged = false }) end, desc = "Git: amend only message"},
+            {"<leader>gAe", function() require("tinygit").amendNoEdit({ forcePushIfDiverged = false }) end, desc = "Git: amend no edit"},
             -- stylua: ignore end
         },
     },
