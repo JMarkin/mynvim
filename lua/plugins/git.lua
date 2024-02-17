@@ -10,7 +10,7 @@ return {
         },
         keys = {
             -- stylua: ignore start
-            {"<leader>gc", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
+            {"<leader>gm", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
             {"<leader>gP", function() require("tinygit").push() end, desc = "Git: push"},
             {"<leader>gAo", function() require("tinygit").amendOnlyMsg({ forcePushIfDiverged = false }) end, desc = "Git: amend only message"},
             {"<leader>gAe", function() require("tinygit").amendNoEdit({ forcePushIfDiverged = false }) end, desc = "Git: amend no edit"},
@@ -39,7 +39,7 @@ return {
                             return "]c"
                         end
                         vim.schedule(function()
-                            gs.next_hunk()
+                            gs.next_hunk({ preview = true })
                         end)
                         return "<Ignore>"
                     end, { expr = true, desc = "Git: next hunk" })
@@ -49,28 +49,32 @@ return {
                             return "[c"
                         end
                         vim.schedule(function()
-                            gs.prev_hunk()
+                            gs.prev_hunk({ preview = true })
                         end)
                         return "<Ignore>"
                     end, { expr = true, desc = "Git: prev hunk" })
 
                     -- Actions
-                    map({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<CR>", { desc = "Git: stage hunk" })
-                    map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Git: reset hunk" })
-                    map("n", "<leader>gS", gs.stage_buffer, { desc = "Git: stage buffer" })
-                    map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Git: undo stage hunk" })
-                    map("n", "<leader>gR", gs.reset_buffer, { desc = "Git: reset buffer" })
-                    map("n", "<leader>gp", gs.preview_hunk, { desc = "Git: preview hunk" })
                     map("n", "<leader>gb", function()
                         gs.blame_line({ full = true })
                     end, { desc = "Git: blame line full" })
-
-                    -- Text object
-                    map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Git: select hunk" })
                 end,
             })
         end,
-        event = { "BufReadPost", "FileReadPost" },
-        keys = "<leader>g",
+        event = { "VeryLazy" },
+        keys = {
+            "<leader>gS",
+            "<leader>gu",
+            "<leader>gb",
+            "[c",
+            "]c",
+            { "<space>s", ":Gitsign stage_hunk<cr>", desc = "Git: stage hunk", mode = { "n", "v" } },
+            { "<space>S", ":Gitsign stage_buffer<cr>", desc = "Git: stage buffer" },
+            { "<space>u", ":Gitsign undo_stage_hunk<cr>", desc = "Git: undo stage hunk", mode = { "n", "v" } },
+            { "<leader>gr", ":Gitsign reset_hunk<cr>", desc = "Git: reset hunk", mode = { "n", "v" } },
+            { "<leader>gR", ":Gitsign reset_buffer<cr>", desc = "Git: reset buffer" },
+            { "<leader>gp", ":Gitsign preview_hunk_inline<cr>", desc = "Git: preview hunk" },
+            { "ih", ":<C-U>Gitsigns select_hunk<CR>", desc = "Git: select hunk", mode = { "o", "x" } },
+        },
     },
 }

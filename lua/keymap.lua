@@ -47,11 +47,9 @@ inoremap <C-L> <C-X><C-L>
 inoremap <C-N> <C-X><C-N>
 inoremap <C-K> <C-X><C-K>
 inoremap <C-T> <C-X><C-T>
-inoremap <C-I> <C-X><C-I>
 inoremap <C-]> <C-X><C-]>
 inoremap <C-F> <C-X><C-F>
 inoremap <C-D> <C-X><C-D>
-inoremap <C-U> <C-X><C-U>
 inoremap <C-O> <C-X><C-O>
 inoremap <C-s> <C-X><C-s>
 inoremap <C-z> <C-N><C-P>
