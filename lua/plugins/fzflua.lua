@@ -98,16 +98,9 @@ return {
         {
             "<leader>st",
             function()
-                require("fzf-lua").tags_live_grep({ multiprocess = true })
+                require("fzf-lua").tags({ multiprocess = true })
             end,
             desc = "Search: tags",
-        },
-        {
-            "<leader>sh",
-            function()
-                require("fzf-lua").help_tags({ multiprocess = true })
-            end,
-            desc = "Search: helptags",
         },
         {
             "<leader>st",
@@ -116,6 +109,13 @@ return {
             end,
             desc = "Search: tags",
             mode = "v",
+        },
+        {
+            "<leader>sh",
+            function()
+                require("fzf-lua").help_tags({ multiprocess = true })
+            end,
+            desc = "Search: helptags",
         },
         {
             "<leader>sc",
@@ -146,14 +146,14 @@ return {
             desc = "Search: git status",
         },
         {
-            "<leader>gsC",
+            "<leader>gC",
             function()
                 require("fzf-lua").git_commits({ multiprocess = true })
             end,
             desc = "Search: git commits",
         },
         {
-            "<leader>gsc",
+            "<leader>gc",
             function()
                 require("fzf-lua").git_bcommits({ multiprocess = true })
             end,
