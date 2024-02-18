@@ -81,7 +81,7 @@ autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
     group = groupid("spell", { clear = true }),
-    pattern = { "gitcommit", "markdown" },
+    pattern = { "gitcommit", "markdown", "text" },
     callback = function()
         vim.opt_local.spell = true
     end,
@@ -104,14 +104,6 @@ autocmd("BufWinEnter", {
     group = save_fold,
 })
 
--- Textfile spell
-autocmd("FileType", {
-    pattern = { "gitcommit", "markdown", "text" },
-    callback = function()
-        vim.opt_local.spell = true
-    end,
-})
-
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd({ "BufWritePre" }, {
     group = groupid("auto_create_dir", { clear = true }),
@@ -122,40 +114,6 @@ autocmd({ "BufWritePre" }, {
         local file = vim.uv.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
-})
-
-local enable_syntax = "SYNTAX_OMNIFUNC"
-groupid(enable_syntax, { clear = true })
-autocmd("FileType", {
-    pattern = {
-        "mako",
-        "yaml.ansible",
-        "applescript",
-        "caddyfile",
-        "csv",
-        "glsl",
-        "graphql",
-        "haproxy",
-        "helm",
-        "mako",
-        "nginx",
-        "rst",
-        "svg",
-        "systemd",
-        "xml",
-        "log",
-    },
-    group = enable_syntax,
-    callback = function()
-        vim.opt_local.omnifunc = "syntaxcomplete#Complete"
-    end,
-})
-
-local syntax = "SYNTAX"
-groupid(syntax, { clear = true })
-autocmd("FileType", {
-    pattern = "*",
-    command = [[:if !exists("g:syntax_on") | syntax on | endif]],
 })
 
 autocmd("BufWinEnter", {
@@ -174,12 +132,32 @@ autocmd("BufWinEnter", {
 ---@vararg { [1]: string|string[], [2]: vim.api.keyset.create_autocmd }
 ---@return nil
 local function augroup(group, ...)
-    local id = groupid(group, {})
+    local id = groupid(group, { clear = true })
     for _, a in ipairs({ ... }) do
         a[2].group = id
         autocmd(unpack(a))
     end
 end
+
+augroup("SYNTAX", {
+    "FileType",
+    {
+        desc = "syntax set",
+        callback = function(info)
+            vim.bo[info.buf].syntax = vim.bo[info.buf].ft
+        end,
+    },
+})
+
+augroup("OmniFunc", {
+    "FileType",
+    {
+        desc = "Smart set omnifunc",
+        callback = function(info)
+            vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
+        end,
+    },
+})
 
 augroup("Autosave", {
     { "BufLeave", "WinLeave", "FocusLost" },

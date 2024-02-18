@@ -84,7 +84,7 @@ if vim.g.modern_ui then
         -- },
         {
             "sekke276/dark_flat.nvim",
-            enabled = true,
+            enabled = false,
             lazy = false,
             priority = math.huge,
             config = function()
@@ -103,7 +103,7 @@ if vim.g.modern_ui then
         },
         {
             "scottmckendry/cyberdream.nvim",
-            enabled = false,
+            enabled = true,
             lazy = false,
             priority = math.huge,
             config = function()

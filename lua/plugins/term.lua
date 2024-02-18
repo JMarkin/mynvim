@@ -63,47 +63,47 @@ return {
                 end,
             })
 
-            -- local Terminal = require("toggleterm.terminal").Terminal
+            local Terminal = require("toggleterm.terminal").Terminal
 
-            -- local lazygit = Terminal:new({
-            --     cmd = "lazygit",
-            --     hidden = true,
-            --     direction = "float",
-            --     on_open = function(term)
-            --         vim.cmd("startinsert!")
-            --         vim.api.nvim_buf_set_keymap(
-            --             term.bufnr,
-            --             "n",
-            --             "q",
-            --             "<cmd>close<CR>",
-            --             { noremap = true, silent = true }
-            --         )
-            --         vim.api.nvim_buf_set_keymap(
-            --             term.bufnr,
-            --             "n",
-            --             "<A-g>",
-            --             "<cmd>close<CR>",
-            --             { noremap = true, silent = true }
-            --         )
-            --         vim.api.nvim_buf_set_keymap(
-            --             term.bufnr,
-            --             "t",
-            --             "<A-g>",
-            --             "<cmd>close<CR>",
-            --             { noremap = true, silent = true }
-            --         )
-            --
-            --         vim.keymap.del("t", "<esc>", { buffer = term.bufnr })
-            --     end,
-            -- })
-            --
-            -- local function lazygit_toggle()
-            --     lazygit:toggle()
-            -- end
-            --
-            -- vim.keymap.set({ "n" }, "<A-g>", lazygit_toggle, { desc = "Git", noremap = true, silent = true })
-            --
-            -- vim.api.nvim_create_user_command("Git", lazygit_toggle, { bang = true })
+            local lazygit = Terminal:new({
+                cmd = "lazygit",
+                hidden = true,
+                direction = "float",
+                on_open = function(term)
+                    vim.cmd("startinsert!")
+                    vim.api.nvim_buf_set_keymap(
+                        term.bufnr,
+                        "n",
+                        "q",
+                        "<cmd>close<CR>",
+                        { noremap = true, silent = true }
+                    )
+                    vim.api.nvim_buf_set_keymap(
+                        term.bufnr,
+                        "n",
+                        "<A-g>",
+                        "<cmd>close<CR>",
+                        { noremap = true, silent = true }
+                    )
+                    vim.api.nvim_buf_set_keymap(
+                        term.bufnr,
+                        "t",
+                        "<A-g>",
+                        "<cmd>close<CR>",
+                        { noremap = true, silent = true }
+                    )
+
+                    vim.keymap.del("t", "<esc>", { buffer = term.bufnr })
+                end,
+            })
+
+            local function lazygit_toggle()
+                lazygit:toggle()
+            end
+
+            vim.keymap.set({ "n" }, "<A-g>", lazygit_toggle, { desc = "Git", noremap = true, silent = true })
+
+            vim.api.nvim_create_user_command("Git", lazygit_toggle, { bang = true })
         end,
         keys = { "<A-g>", "<A-t>" },
     },

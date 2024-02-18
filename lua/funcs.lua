@@ -24,11 +24,14 @@ M.doau = function(pattern, data)
 end
 
 function M.maxline(path)
+    local max = 0
     local fd = vim.uv.fs_open(path, "r", 1)
+    if not fd then
+        return max
+    end
     local stat = vim.uv.fs_fstat(fd)
     local data = vim.uv.fs_read(fd, stat.size, nil)
     vim.uv.fs_close(fd)
-    local max = 0
 
     local lines = vim.split(data, "[\r]?\n")
 
