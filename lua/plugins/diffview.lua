@@ -14,7 +14,7 @@ local gr = augroup("DiffView", { clear = true })
 vim.api.nvim_create_autocmd("User", {
     group = gr,
     pattern = "DiffviewViewEnter",
-    callback = function()
+    callback = function(event)
         vim.cmd(":WindowsDisableAutowidth")
         vim.keymap.set("n", "q", DiffviewToggle, { silent = true })
     end,
@@ -25,6 +25,7 @@ vim.api.nvim_create_autocmd("User", {
     pattern = "DiffviewViewLeave",
     callback = function()
         vim.cmd(":WindowsDisableAutowidth")
+        vim.keymap.del("n", "q")
     end,
 })
 
