@@ -24,29 +24,40 @@ local function run_neofetch(dashboard)
     end
 
     local t = ""
-    require("plenary.job")
-        :new({
-            command = "neofetch",
-            args = { "--json" },
-            on_stdout = function(error, data)
-                t = t .. data
-            end,
-            on_exit = function(_, _)
-                if #t > 0 then
-                    M.neofetch = vim.json.decode(t)
-                end
-                local timer = vim.uv.new_timer()
+    local stdout = function(error, data)
+        if data then
+            t = t .. data
+        end
+    end
+    local on_exit = function(...)
+        if #t > 0 then
+            M.neofetch = vim.json.decode(t)
+        end
+        local timer = vim.uv.new_timer()
 
-                timer:start(
-                    20,
-                    0,
-                    vim.schedule_wrap(function()
-                        draw_footer(dashboard)
-                    end)
-                )
-            end,
-        })
-        :start()
+        timer:start(
+            20,
+            0,
+            vim.schedule_wrap(function()
+                draw_footer(dashboard)
+            end)
+        )
+    end
+    if vim.system then
+        vim.system({ "neofetch", "--json" }, {
+            text = true,
+            stdout = stdout,
+        }, on_exit)
+    else
+        require("plenary.job")
+            :new({
+                command = "neofetch",
+                args = { "--json" },
+                on_stdout = stdout,
+                on_exit = on_exit,
+            })
+            :start()
+    end
 end
 
 return {
@@ -55,6 +66,8 @@ return {
         local dashboard = require("alpha.themes.dashboard")
 
         local header = require("ascii").get_random_global()
+
+        dashboard.config.layout[1].val = 1
 
         dashboard.section.header.val = header
         dashboard.section.buttons.val = {
@@ -73,7 +86,7 @@ return {
             ),
             dashboard.button("c", " " .. " Config", ":e .nvim.lua <CR>"),
             dashboard.button("u", "󰊳 " .. " Update Plugins", ":Lazy update<CR>"),
-            -- dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+            dashboard.button("q", " " .. " Quit", ":qa<CR>"),
         }
 
         -- set highlight
@@ -84,7 +97,6 @@ return {
         dashboard.section.header.opts.hl = "AlphaHeader"
         dashboard.section.buttons.opts.hl = "AlphaButtons"
         dashboard.section.footer.opts.hl = "AlphaFooter"
-        dashboard.opts.layout[1].val = 8
         return dashboard
     end,
     config = function(_, dashboard)
@@ -115,10 +127,7 @@ return {
         })
     end,
     dependencies = {
-        { "nvim-web-devicons" },
-        {
-            "MaximilianLloyd/ascii.nvim",
-            dependencies = { "MunifTanjim/nui.nvim" },
-        },
+        "nvim-web-devicons",
+        "JMarkin/ascii.nvim",
     },
 }
