@@ -72,16 +72,12 @@ return {
             vim.g.csv_default_delim = ";"
         end,
     },
-    { "tikhomirov/vim-glsl", ft = "glsl" },
-    { "jparise/vim-graphql", ft = "graphql" },
     { "CH-DanReif/haproxy.vim", ft = "haproxy" },
     { "towolf/vim-helm", ft = "helm" },
     { "sophacles/vim-bundle-mako", ft = "mako" },
     { "chr4/nginx.vim", ft = "nginx" },
-    { "marshallward/vim-restructuredtext", ft = "rst" },
     { "vim-scripts/svg.vim", ft = "svg" },
     { "wgwoods/vim-systemd-syntax", ft = "systemd" },
-    { "amadeus/vim-xml", ft = "xml" },
     { "MTDL9/vim-log-highlighting", ft = "log" },
     { "jidn/vim-dbml", ft = "dbml" },
     {

@@ -1,5 +1,7 @@
 table.unpack = table.unpack or unpack
-vim.uv = vim.loop
+if not vim.uv then
+    vim.uv = vim.loop
+end
 
 require("common")
 local default_vim_keymap_set = vim.keymap.set

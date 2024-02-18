@@ -51,7 +51,6 @@ end
 
 return {
     "goolord/alpha-nvim",
-    event = "VimEnter",
     opts = function()
         local dashboard = require("alpha.themes.dashboard")
 
@@ -74,7 +73,7 @@ return {
             ),
             dashboard.button("c", " " .. " Config", ":e .nvim.lua <CR>"),
             dashboard.button("u", "󰊳 " .. " Update Plugins", ":Lazy update<CR>"),
-            dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+            -- dashboard.button("q", " " .. " Quit", ":qa<CR>"),
         }
 
         -- set highlight

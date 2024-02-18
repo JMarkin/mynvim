@@ -26,6 +26,7 @@ local syntax_langs = {
     "graphql",
     "commonlisp",
     "latex",
+    "glsl",
     -- conf files
     "ssh_config",
     "jsdoc",
@@ -42,6 +43,7 @@ local syntax_langs = {
     "passwd",
     "requirements",
     "hcl",
+    "xml",
     -- tools
     "markdown_inline",
     "jq",

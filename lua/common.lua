@@ -122,11 +122,6 @@ if g.modern_ui then
     })
 end
 
-vim.cmd([[
-filetype plugin on
-filetype indent plugin on
-]])
-
 if not vim.g.modern_ui then
     opt.termguicolors = false
 end
@@ -145,6 +140,21 @@ end
 opt.shada = ""
 vim.defer_fn(_rshada, 100)
 vim.api.nvim_create_autocmd("BufReadPre", { once = true, callback = _rshada })
+
+---enable filetype
+---@return true
+local function _filetype()
+    if not vim.g._filetype then
+        vim.cmd([[
+            filetype plugin on
+            filetype indent plugin on
+        ]])
+        vim.g._filetype = true
+    end
+    return true
+end
+
+vim.defer_fn(_filetype, 100)
 
 opt.backup = true
 opt.backupdir:remove(".")
@@ -168,7 +178,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_node_provider = 0
 g.loaded_perl_provider = 0
-
 
 -- g.loaded_zip = 1
 -- g.loaded_zipPlugin = 1
