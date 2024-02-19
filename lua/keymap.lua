@@ -18,12 +18,6 @@ vim.keymap.set({ "v" }, { "<leader>W" }, "<Esc>:wa<CR>", { desc = "visual mode: 
 
 vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
 
-vim.keymap.set("n", "<leader>tn", ":$tabnew<CR>", { desc = "Tabs: new" })
-vim.keymap.set("n", "<leader>td", ":tabclose<CR>", { desc = "Tabs: close" })
-vim.keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
-vim.keymap.set("n", "<leader>tmp", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
-vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next" })
-
 vim.api.nvim_create_user_command("InstallDefault", function(_)
     vim.cmd.TSInstallDefault()
     require("lsp").install()
@@ -76,6 +70,12 @@ end
 vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext))
 vim.keymap.set({ "n", "x" }, "gT", tabswitch(vim.cmd.tabprev))
 vim.keymap.set({ "n", "x" }, "gy", tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+
+vim.keymap.set("n", "<leader>tn", ":$tabnew<CR>", { desc = "Tabs: new" })
+vim.keymap.set("n", "<leader>td", ":tabclose<CR>", { desc = "Tabs: close" })
+vim.keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
+vim.keymap.set("n", "<leader>tmp", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
+vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next" })
 
 vim.keymap.set({ "n", "x" }, "<space>0", "<Cmd>0tabnew<CR>")
 vim.keymap.set({ "n", "x" }, "<space>1", tabswitch(vim.cmd.tabnext, 1))
