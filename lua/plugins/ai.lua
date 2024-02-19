@@ -28,12 +28,12 @@ return {
         require("gen").prompts["WriteTest"] = {
             prompt = "Write test on different cases for language $filetype for this $text",
             replace = false,
-            model = "phi:latest",
+            model = "dolphin-phi:latest",
         }
         require("gen").prompts["Pytest"] = {
             prompt = "Write parametrize test on different cases for python using pytest for this $text",
             replace = false,
-            model = "phi:latest",
+            model = "dolphin-phi:latest",
         }
         require("gen").prompts["Postgresql"] = {
             prompt = "For postgresql generate query $text",
@@ -42,9 +42,9 @@ return {
 
         local Terminal = require("toggleterm.terminal").Terminal
         local oatmeal = Terminal:new({
-            cmd = "oatmeal -e neovim --model mistral:latest",
+            cmd = "oatmeal -e neovim --model dolphin-mistral:latest",
             hidden = true,
-            direction = "float",
+            direction = "tab",
             on_open = function(term)
                 vim.cmd("startinsert")
                 vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })

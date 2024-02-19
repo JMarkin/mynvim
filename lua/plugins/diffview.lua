@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd("User", {
     group = gr,
     pattern = "DiffviewViewEnter",
     callback = function(event)
-        vim.cmd(":WindowsDisableAutowidth")
+        pcall(vim.cmd, ":WindowsDisableAutowidth")
         vim.keymap.set("n", "q", DiffviewToggle, { silent = true })
     end,
 })
@@ -24,17 +24,17 @@ vim.api.nvim_create_autocmd("User", {
     group = gr,
     pattern = "DiffviewViewLeave",
     callback = function()
-        vim.cmd(":WindowsDisableAutowidth")
+        pcall(vim.cmd, ":WindowsDisableAutowidth")
         vim.keymap.del("n", "q")
     end,
 })
 
 return {
     "sindrets/diffview.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
     keys = {
         { "<leader>gD", DiffviewToggle, silent = true, desc = "Git: Diffview toggle" },
-        { "<leader>gF", ":DiffviewFileHistory %<cr>", silent = true, desc = "Git: DiffviewFileHistory current" },
+        { "<leader>gh", ":DiffviewFileHistory %<cr>", silent = true, desc = "Git: DiffviewFileHistory current" },
+        { "<leader>gH", ":DiffviewFileHistory<cr>", silent = true, desc = "Git: DiffviewFileHistory current" },
     },
     cmd = {
         "DiffviewOpen",
