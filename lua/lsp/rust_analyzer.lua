@@ -10,7 +10,7 @@ return {
             tools = {},
             server = {
                 on_attach = utils.on_attach,
-                settings = {
+                default_settings = {
                     ["rust-analyzer"] = {
                         checkOnSave = {
                             command = "clippy",
@@ -19,6 +19,9 @@ return {
                             autoimport = {
                                 enable = false,
                             },
+                        },
+                        procMacro = {
+                            enable = false,
                         },
                     },
                 },
