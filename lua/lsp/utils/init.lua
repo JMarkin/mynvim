@@ -29,14 +29,24 @@ local keys = {
     {
         "gr",
         function()
-            require("fzf-lua").lsp_finder({ multiprocess = true, ignore_current_line = true })
+            require("fzf-lua").lsp_references({ multiprocess = true, ignore_current_line = true })
         end,
-        { silent = true, desc = "GoTo: references" },
+        { silent = true, desc = "Search: references" },
     },
     {
         "gf",
         "<cmd>Lspsaga peek_definition<cr>",
         { desc = "GoTo: definition float" },
+    },
+    {
+        "gd",
+        vim.lsp.buf.definition,
+        { desc = "GoTo: definition" },
+    },
+    {
+        "gD",
+        vim.lsp.buf.declaration,
+        { desc = "GoTo: declarations" },
     },
     {
         "gh",
@@ -73,7 +83,7 @@ local keys = {
         { silent = true, desc = "Lang: rename project" },
     },
     {
-        "<space>t",
+        "<space>T",
         ":Vista nvim_lsp<cr>",
         { desc = "Tagbar", silent = true },
     },

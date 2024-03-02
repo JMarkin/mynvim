@@ -103,4 +103,85 @@ function M.in_visual_mode()
     return modes[current_mode] or false
 end
 
+-- https://github.com/mobily/.nvim/blob/main/lua/utils/fn.lua
+--
+M.switch = function(param, t)
+    local case = t[param]
+    if case then
+        return case()
+    end
+    local defaultFn = t["default"]
+    return defaultFn and defaultFn() or nil
+end
+
+-- Executes a user-supplied "reducer" callback function on each element of the table indexed with a numeric key, in order, passing in the return value from the calculation on the preceding element
+M.ireduce = function(tbl, func, acc)
+    for i, v in ipairs(tbl) do
+        acc = func(acc, v, i)
+    end
+    return acc
+end
+
+M.ieach = function(tbl, func)
+    for index, element in ipairs(tbl) do
+        func(element, index)
+    end
+end
+
+M.always = function(value)
+    return function()
+        return value
+    end
+end
+
+-- Returns the first element in the array that satisfies the provided testing function
+M.ifind = function(tbl, func)
+    for index, item in ipairs(tbl) do
+        if func(item, index) then
+            return item
+        end
+    end
+
+    return nil
+end
+
+M.isome = function(tbl, func)
+    for index, item in ipairs(tbl) do
+        if func(item, index) then
+            return true
+        end
+    end
+
+    return false
+end
+
+M.trim = function(str)
+    return (str:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+M.ifilter = function(tbl, func)
+    return vim.tbl_filter(func, tbl)
+end
+
+-- Creates a new table populated with the results of calling a provided functions on every numeric indexed element in the calling table
+M.imap = function(tbl, func)
+    return M.ireduce(tbl, function(new_tbl, value, index)
+        table.insert(new_tbl, func(value, index))
+        return new_tbl
+    end, {})
+end
+
+M.to_macos_keys = function(keymap)
+    return keymap
+        :gsub("CR", "↩")
+        :gsub("<", "")
+        :gsub(">", "")
+        :gsub("-", " ")
+        :gsub("D", "⌘")
+        :gsub("A", "⌥")
+        :gsub("C", "⌃")
+        :gsub("BS", "⌫")
+        :gsub("leader", vim.g.mapleader .. " ")
+end
+
 return M

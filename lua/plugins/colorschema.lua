@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.api.nvim_set_hl(0, "CursorLine", { bg = "#202020" })
         vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#b0b0b0", bg = "#202020" })
 
-        vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#202020" })
+        vim.api.nvim_set_hl(0, "ColorColumn", { fg = "#b0b0b0", bg = "#202020" })
     end,
 })
 
@@ -84,7 +84,7 @@ if vim.g.modern_ui then
         -- },
         {
             "sekke276/dark_flat.nvim",
-            enabled = false,
+            enabled = true,
             lazy = false,
             priority = math.huge,
             config = function()
@@ -103,7 +103,7 @@ if vim.g.modern_ui then
         },
         {
             "scottmckendry/cyberdream.nvim",
-            enabled = true,
+            enabled = false,
             lazy = false,
             priority = math.huge,
             config = function()
@@ -121,6 +121,29 @@ if vim.g.modern_ui then
             --     require("highlite.export").bat("cyberdream", { force = true })
             --     require("highlite.export").wezterm("cyberdream", { force = true, dir = "~/.config/wezterm" })
             -- end,
+        },
+        {
+            "polirritmico/monokai-nightasty.nvim",
+            enabled = false,
+            lazy = false,
+            priority = math.huge,
+            opts = {
+                dark_style_background = "transparent", -- default, dark, transparent, #color
+                light_style_background = "transparent", -- default, dark, transparent, #color
+                color_headers = true, -- Enable header colors for each header level (h1, h2, etc.)
+                lualine_bold = true, -- Lualine a and z sections font width
+                lualine_style = "default", -- "dark", "light" or "default" (Follows dark/light style)
+                -- Style to be applied to different syntax groups. See `:help nvim_set_hl`
+                hl_styles = {
+                    keywords = { italic = true },
+                    comments = { italic = true },
+                },
+                sidebars = { "qf", "help" },
+            },
+            config = function(opts)
+                require("monokai-nightasty").load(opts)
+                -- vim.g.lualine_theme = "monokai-nightasty"
+            end,
         },
     }
 else

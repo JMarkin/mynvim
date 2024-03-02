@@ -37,16 +37,16 @@ end, {})
 -- ins-completion shortmaps
 -- h ins-completion
 vim.cmd([[
-inoremap <C-L> <C-X><C-L>
-inoremap <C-N> <C-X><C-N>
-inoremap <C-K> <C-X><C-K>
-inoremap <C-T> <C-X><C-T>
-inoremap <C-]> <C-X><C-]>
 inoremap <C-F> <C-X><C-F>
-inoremap <C-D> <C-X><C-D>
-inoremap <C-O> <C-X><C-O>
-inoremap <C-s> <C-X><C-s>
-inoremap <C-z> <C-N><C-P>
+" inoremap <C-L> <C-X><C-L>
+" inoremap <C-N> <C-X><C-N>
+" inoremap <C-K> <C-X><C-K>
+" inoremap <C-T> <C-X><C-T>
+" inoremap <C-]> <C-X><C-]>
+" inoremap <C-D> <C-X><C-D>
+" inoremap <C-O> <C-X><C-O>
+" inoremap <C-s> <C-X><C-s>
+" inoremap <C-z> <C-N><C-P>
 ]])
 
 -- Tabpages
@@ -71,19 +71,12 @@ vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext))
 vim.keymap.set({ "n", "x" }, "gT", tabswitch(vim.cmd.tabprev))
 vim.keymap.set({ "n", "x" }, "gy", tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
 
-vim.keymap.set("n", "<leader>tn", ":$tabnew<CR>", { desc = "Tabs: new" })
-vim.keymap.set("n", "<leader>td", ":tabclose<CR>", { desc = "Tabs: close" })
-vim.keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
-vim.keymap.set("n", "<leader>tmp", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
-vim.keymap.set("n", "<leader>tmn", ":+tabmove<CR>", { desc = "Tabs: move to next" })
+vim.keymap.set("n", "<space>t", ":$tabnew<CR>", { desc = "Tabs: new" })
+vim.keymap.set("n", "<space>d", ":tabclose<CR>", { desc = "Tabs: close" })
+vim.keymap.set("n", "<space>D", ":tabonly<CR>", { desc = "Tabs: close other tabs" })
+vim.keymap.set("n", "<space>[", ":-tabmove<CR>", { desc = "Tabs: move to prev" })
+vim.keymap.set("n", "<space>]", ":+tabmove<CR>", { desc = "Tabs: move to next" })
 
-vim.keymap.set({ "n", "x" }, "<space>0", "<Cmd>0tabnew<CR>")
-vim.keymap.set({ "n", "x" }, "<space>1", tabswitch(vim.cmd.tabnext, 1))
-vim.keymap.set({ "n", "x" }, "<space>2", tabswitch(vim.cmd.tabnext, 2))
-vim.keymap.set({ "n", "x" }, "<space>3", tabswitch(vim.cmd.tabnext, 3))
-vim.keymap.set({ "n", "x" }, "<space>4", tabswitch(vim.cmd.tabnext, 4))
-vim.keymap.set({ "n", "x" }, "<space>5", tabswitch(vim.cmd.tabnext, 5))
-vim.keymap.set({ "n", "x" }, "<space>6", tabswitch(vim.cmd.tabnext, 6))
-vim.keymap.set({ "n", "x" }, "<space>7", tabswitch(vim.cmd.tabnext, 7))
-vim.keymap.set({ "n", "x" }, "<space>8", tabswitch(vim.cmd.tabnext, 8))
-vim.keymap.set({ "n", "x" }, "<space>9", tabswitch(vim.cmd.tabnext, 9))
+for i = 1, 9, 1 do
+    vim.keymap.set({ "n", "x" }, "<space>" .. i, tabswitch(vim.cmd.tabnext, i), { desc = "Tabs: go to " .. i })
+end

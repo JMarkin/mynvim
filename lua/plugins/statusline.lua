@@ -77,7 +77,10 @@ return {
                 lualine_x = {},
                 lualine_y = {},
                 lualine_z = {
-                    "tabs",
+                    {
+                        "tabs",
+                        mode = 2,
+                    },
                 },
             },
         })
