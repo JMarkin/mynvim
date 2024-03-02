@@ -47,6 +47,7 @@ autocmd("BufReadPost", {
             + "n" -- Indent past the formatlistpat, not underneath it.
             + "j" -- Auto-remove comments if possible.
             - "2" -- I'm not in gradeschool anymore
+            + "p" --
     end,
     group = format_options,
 })
@@ -85,23 +86,6 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.opt_local.spell = true
     end,
-})
-
--- Persistent Folds
-local save_fold = groupid("Persistent Folds", { clear = true })
-autocmd("BufWinLeave", {
-    pattern = "*.*",
-    callback = function()
-        vim.cmd.mkview()
-    end,
-    group = save_fold,
-})
-autocmd("BufWinEnter", {
-    pattern = "*.*",
-    callback = function()
-        vim.cmd.loadview({ mods = { emsg_silent = true } })
-    end,
-    group = save_fold,
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
@@ -211,6 +195,63 @@ augroup("AutoHlCursorLine", {
             if vim.wo.cuc then
                 vim.w._cuc = true
                 vim.wo.cuc = false
+            end
+        end,
+    },
+})
+
+-- number toggle
+augroup("NumberToggle", {
+    { "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" },
+    {
+        callback = function()
+            if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
+                vim.opt.relativenumber = true
+            end
+        end,
+    },
+}, {
+    { "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" },
+    {
+
+        callback = function()
+            if vim.o.nu then
+                vim.opt.relativenumber = false
+                vim.cmd("redraw")
+            end
+        end,
+    },
+})
+
+-- Persistent Folds
+augroup("auto_view", {
+    { "BufWinLeave", "BufWritePost", "WinLeave" },
+    {
+        desc = "Save view with mkview for real files",
+        callback = function(args)
+            if vim.b[args.buf].view_activated then
+                vim.cmd.mkview({ mods = { emsg_silent = true } })
+            end
+        end,
+    },
+}, {
+    "BufWinEnter",
+    {
+        desc = "Try to load file view if available and enable view saving for real files",
+        callback = function(args)
+            if not vim.b[args.buf].view_activated then
+                local filetype = vim.api.nvim_get_option_value("filetype", { buf = args.buf })
+                local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+                local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+                if
+                    buftype == ""
+                    and filetype
+                    and filetype ~= ""
+                    and not vim.tbl_contains(ignore_filetypes, filetype)
+                then
+                    vim.b[args.buf].view_activated = true
+                    vim.cmd.loadview({ mods = { emsg_silent = true } })
+                end
             end
         end,
     },

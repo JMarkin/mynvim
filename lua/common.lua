@@ -65,7 +65,6 @@ opt.background              = "dark"
 
 opt.completeopt             = "menu,menuone,noselect"
 opt.tags                    = { "tags", ".git/tags" }
-opt.tagfunc                 = nil
 g.omni_sql_no_default_maps  = true
 opt.omnifunc                = "syntaxcomplete#Complete"
 
@@ -110,7 +109,6 @@ opt.textwidth               = 120
 -- stylua: ignore end
 
 opt.clipboard:append("unnamedplus")
-opt.formatoptions:append("n")
 opt.shortmess:append({ W = false, I = true, c = true, C = true, A = false })
 
 if g.modern_ui then
