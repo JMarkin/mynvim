@@ -15,76 +15,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 if vim.g.modern_ui then
     return {
-        -- {
-        --     "Iron-E/nvim-highlite",
-        --     enabled = true,
-        --     lazy = false,
-        --     priority = math.huge,
-        --     config = function(_, opts)
-        --         -- OPTIONAL: setup the plugin. See "Configuration" for information
-        --         require("highlite").setup({
-        --             generator = {
-        --                 plugins = {
-        --                     terminal_palette = true,
-        --                     syntax = true,
-        --                     nvim = {
-        --
-        --                         aerial = false,
-        --                         barbar = false,
-        --                         bqf = true,
-        --                         cmp = true,
-        --                         fzf = true,
-        --                         gitsigns = true,
-        --                         indent_blankline = true,
-        --                         lazy = true,
-        --                         leap = false,
-        --                         lspconfig = true,
-        --                         lspsaga = true,
-        --                         lsp_signature = false,
-        --                         mini = true,
-        --                         neo_tree = false,
-        --                         neotest = true,
-        --                         nvim_tree = true,
-        --                         packer = false,
-        --                         registers = false,
-        --                         symbols_outline = false,
-        --                         telescope = false,
-        --                         todo_comments = true,
-        --                         treesitter_context = false,
-        --                         trouble = false,
-        --                     },
-        --                     vim = {
-        --                         ale = false,
-        --                         coc = false,
-        --                         dadbod_ui = true,
-        --                         easymotion = false,
-        --                         fern = false,
-        --                         gitgutter = false,
-        --                         indent_guides = false,
-        --                         jumpmotion = false,
-        --                         nerdtree = false,
-        --                         sandwich = false,
-        --                         signify = false,
-        --                         swap = false,
-        --                         undotree = false,
-        --                         win = false,
-        --                     },
-        --                 },
-        --             },
-        --         })
-        --
-        --         -- or one of the alternate colorschemes (see the "Built-in Colorschemes" section)
-        --         vim.api.nvim_command("colorscheme highlite")
-        --         vim.cmd([[ highlight Normal ctermbg=NONE guibg=NONE ]])
-        --     end,
-        --     version = "^4.0.0",
-        --     build = function()
-        --         require("highlite.export").bat("highlite", { force = true })
-        --     end,
-        -- },
         {
             "sekke276/dark_flat.nvim",
-            enabled = true,
+            enabled = false,
             lazy = false,
             priority = math.huge,
             config = function()
@@ -95,11 +28,6 @@ if vim.g.modern_ui then
                 vim.api.nvim_command("colorscheme dark_flat")
                 vim.g.lualine_theme = "dark_flat"
             end,
-            -- dependencies = "Iron-E/nvim-highlite",
-            -- build = function()
-            --     require("highlite.export").bat("dark_flat", { force = true })
-            --     require("highlite.export").wezterm("dark_flat", { force = true, dir = "~/.config/wezterm" })
-            -- end,
         },
         {
             "scottmckendry/cyberdream.nvim",
@@ -116,11 +44,6 @@ if vim.g.modern_ui then
                 vim.api.nvim_command("colorscheme cyberdream")
                 vim.g.lualine_theme = "cyberdream"
             end,
-            -- dependencies = "Iron-E/nvim-highlite",
-            -- build = function()
-            --     require("highlite.export").bat("cyberdream", { force = true })
-            --     require("highlite.export").wezterm("cyberdream", { force = true, dir = "~/.config/wezterm" })
-            -- end,
         },
         {
             "polirritmico/monokai-nightasty.nvim",
@@ -143,6 +66,59 @@ if vim.g.modern_ui then
             config = function(opts)
                 require("monokai-nightasty").load(opts)
                 -- vim.g.lualine_theme = "monokai-nightasty"
+            end,
+        },
+        {
+            "EdenEast/nightfox.nvim",
+            enabled = true,
+            lazy = false,
+            priority = math.huge,
+            config = function()
+                -- Default options
+                require("nightfox").setup({
+                    options = {
+                        -- Compiled file's destination location
+                        compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+                        compile_file_suffix = "_compiled", -- Compiled file suffix
+                        transparent = false, -- Disable setting background
+                        terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+                        dim_inactive = true, -- Non focused panes set to alternative background
+                        module_default = true, -- Default enable value for modules
+                        colorblind = {
+                            enable = false, -- Enable colorblind support
+                            simulate_only = false, -- Only show simulated colorblind colors and not diff shifted
+                            severity = {
+                                protan = 0, -- Severity [0,1] for protan (red)
+                                deutan = 0, -- Severity [0,1] for deutan (green)
+                                tritan = 0, -- Severity [0,1] for tritan (blue)
+                            },
+                        },
+                        styles = { -- Style to be applied to different syntax groups
+                            comments = "italic", -- Value is any valid attr-list value `:help attr-list`
+                            conditionals = "NONE",
+                            constants = "NONE",
+                            functions = "italic",
+                            keywords = "bold",
+                            numbers = "NONE",
+                            operators = "NONE",
+                            strings = "NONE",
+                            types = "NONE",
+                            variables = "NONE",
+                        },
+                        inverse = { -- Inverse highlight for different types
+                            match_paren = false,
+                            visual = false,
+                            search = false,
+                        },
+                    },
+                    palettes = {},
+                    specs = {},
+                    groups = {},
+                })
+
+                -- setup must be called before loading
+                vim.cmd("colorscheme carbonfox")
+                vim.g.lualine_theme = "carbonfox"
             end,
         },
     }
