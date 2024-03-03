@@ -354,7 +354,16 @@ return {
             "nvim-lua/plenary.nvim",
         },
         opts = {
-            async = false,
+            async = true,
+            args = {
+                "--extras=+r+q",
+                "--exclude=\\.*",
+                "--exclude=dist",
+                "--exclude=node_modules*",
+                "--exclude=BUILD",
+                "--exclude=vendor*",
+                "--exclude=*.min.*",
+            },
         },
         event = "VeryLazy",
     },
