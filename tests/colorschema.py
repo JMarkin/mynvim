@@ -45,13 +45,11 @@ a, b, c = "1", "2", "3"
 c: int = 1
 
 
-def decorator():
-    ...
+def decorator(): ...
 
 
 @decorator
-def s():
-    ...
+def s(): ...
 
 
 def f(val1: str, ss, sncjllll):

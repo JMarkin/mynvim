@@ -1,4 +1,3 @@
-
 return {
     "antoinemadec/FixCursorHold.nvim",
 
@@ -12,7 +11,6 @@ return {
             keys = "<Esc>",
         },
     },
-
 
     { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", event = "VeryLazy" },
 
@@ -58,5 +56,26 @@ return {
             vim.g.lastplace_ignore_buftype = "quickfix,nofile,help"
             vim.g.lastplace_open_folds = 1
         end,
+    },
+    {
+        "JMarkin/gentags.lua",
+        -- dev = true,
+        cond = vim.fn.executable("ctags") == 1,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {
+            async = true,
+            args = {
+                "--extras=+r+q",
+                "--exclude=\\.*",
+                "--exclude=dist",
+                "--exclude=node_modules*",
+                "--exclude=BUILD",
+                "--exclude=vendor*",
+                "--exclude=*.min.*",
+            },
+        },
+        event = "VeryLazy",
     },
 }

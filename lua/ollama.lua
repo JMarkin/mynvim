@@ -8,6 +8,7 @@ M.toggle = function()
     local form = Form:new({
         on_close = function() end,
         on_submit = function(state)
+            local gen = require("gen")
             local id = state.type[1].id
 
             local prompt = fn.switch(id, {
@@ -76,11 +77,16 @@ M.toggle = function()
                 end,
             })
 
-            return require("gen").exec({ prompt = prompt })
+            gen.exec({ prompt = prompt })
         end,
     })
 
     local register = vim.fn.getreg('"')
+
+    if fn.in_visual_mode() then
+        register = fn.get_visual()
+        fn.exit_visual()
+    end
 
     form:set_content(
         form.select({

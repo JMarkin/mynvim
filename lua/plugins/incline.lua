@@ -51,18 +51,45 @@ local function get_noice_recording(props)
     return label
 end
 
+local shorting_target = 40
+
+---shortens path by turning apple/orange -> a/orange
+---@param path string
+---@param sep string path separator
+---@param max_len integer maximum length of the full filename string
+---@return string
+local function shorten_path(path, sep, max_len)
+    local len = #path
+    if len <= max_len then
+        return path
+    end
+
+    local segments = vim.split(path, sep)
+    for idx = 1, #segments - 1 do
+        if len <= max_len then
+            break
+        end
+
+        local segment = segments[idx]
+        local shortened = segment:sub(1, vim.startswith(segment, ".") and 2 or 1)
+        segments[idx] = shortened
+        len = len - (#segment - #shortened)
+    end
+
+    return table.concat(segments, sep)
+end
+
 return {
     "b0o/incline.nvim",
-    init = function()
-        vim.opt.laststatus = 3
-    end,
     cond = not vim.g.started_by_firenvim,
     config = function()
+        vim.opt.laststatus = 3
         require("incline").setup({
             debounce_threshold = { falling = 150, rising = 30 },
             render = function(props)
-                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), "%:~:.")
                 local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+
                 local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,undercurl,italic"
                     or "bold"
                 local st_diag, diag = pcall(get_diagnostic_label, props)

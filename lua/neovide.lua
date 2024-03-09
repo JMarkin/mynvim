@@ -60,5 +60,5 @@ local colors = {
 }
 
 for index, value in ipairs(colors) do
-    vim.g[string.format("terminal_color_%s", 15-index)] = value
+    vim.g[string.format("terminal_color_%s", 15 - index)] = value
 end
