@@ -92,6 +92,25 @@ return {
     event = { "VeryLazy", "FileReadPre", "BufReadPre" },
     dependencies = {
         {
+            "nvim-treesitter/nvim-treesitter-context",
+            opts = {
+                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+                min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+                line_numbers = true,
+                multiline_threshold = 20, -- Maximum number of lines to show for a single context
+                trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+                mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+                -- Separator between context and content. Should be a single character string, like '-'.
+                -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+                -- separator = "---",
+                zindex = 20, -- The Z-index of the context window
+                on_attach = function(buf)
+                    return not is_large_file(buf, true)
+                end,
+            },
+        },
+        {
             "nvim-treesitter/nvim-treesitter-textobjects",
             enabled = false,
             init = function()
@@ -118,8 +137,8 @@ return {
                 vim.g.matchup_matchparen_hi_surround_always = 1
                 vim.g.matchup_matchparen_nomode = "i"
                 vim.g.matchup_matchparen_deferred = 1
-                -- vim.g.matchup_matchparen_deferred_show_delay = 100
-                -- vim.g.matchup_matchparen_deferred_hide_delay = 500
+                vim.g.matchup_matchparen_deferred_show_delay = 100
+                vim.g.matchup_matchparen_deferred_hide_delay = 500
                 vim.g.matchup_matchparen_offscreen = { method = "popup" }
             end,
         },

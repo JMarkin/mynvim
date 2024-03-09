@@ -1,5 +1,6 @@
 return {
-    "David-Kunz/gen.nvim",
+    "JMarkin/gen.nvim",
+    dev = true,
     config = function()
         require("gen").setup({
             debug = false,
@@ -13,6 +14,12 @@ return {
             end,
             host = vim.env.OLLAMA_HOST or "192.168.88.251",
             port = vim.env.OLLAMA_PORt or "11434",
+            reprompt = {
+                enabled = true,
+                clear = false,
+                focus_on_new = true,
+                map = "<c-r>",
+            },
         })
         local Terminal = require("toggleterm.terminal").Terminal
         local oatmeal = Terminal:new({

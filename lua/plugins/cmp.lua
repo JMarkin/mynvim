@@ -1,6 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+local enabled = true
+
 ---@diagnostic disable: missing-fields
 -- local kind_icons = {
 --     Text = "",
@@ -47,6 +49,7 @@ local menu_map = {
     ["vim-dadbod-completion"] = "DB",
     tags = "TG",
     ["diag-codes"] = "DC",
+    cmp_ai = "[AI]",
 }
 
 local function has_words_before()
@@ -61,7 +64,7 @@ local _sources = {
         option = {
             -- this is the default options, change them if you want.
             -- Delayed time after user input, in milliseconds.
-            complete_defer = 100,
+            complete_defer = 50,
             -- Use exact word match when searching `taglist`, for better searching
             -- performance.
             exact_match = true,
@@ -94,6 +97,9 @@ table.insert(lsp_sources, {
     max_item_count = 5,
     option = { additional_arguments = "--max-depth 4" },
 })
+
+local nvim_sources = vim.deepcopy(lsp_sources)
+table.insert(nvim_sources, 1, { name = "nvim_lua" })
 
 local default_comparators = function(compare)
     return {
@@ -253,15 +259,46 @@ local cmp_config = function(sources, buffer, comparators)
             }),
             ["<Tab>"] = move_down,
             ["<S-Tab>"] = move_up,
+            ["<C-]>"] = cmp.mapping(
+                cmp.mapping.complete({
+                    config = {
+                        sources = cmp.config.sources({
+                            { name = "cmp_ai" },
+                        }),
+                    },
+                }),
+                { "i" }
+            ),
         },
         sources = sources,
         formatting = {
-            fields = { "kind", "abbr", "menu" },
-            format = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50, menu = menu_map }),
+            fields = { "abbr", "kind", "menu" },
+            format = function(entry, vim_item)
+                if entry.source.name == "cmp_ai" then
+                    vim_item.menu = menu_map[entry.source.name]
+                    local detail = (entry.completion_item.labelDetails or {}).detail
+                    vim_item.kind = ""
+                    if detail and detail:find(".*%%.*") then
+                        vim_item.kind = vim_item.kind .. " " .. detail
+                    end
+
+                    if (entry.completion_item.data or {}).multiline then
+                        vim_item.kind = vim_item.kind .. " " .. "[ML]"
+                    end
+                    vim_item.abbr = string.sub(vim_item.abbr, 1, 80)
+                    return vim_item
+                end
+                local resp = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50, menu = menu_map })(
+                    entry,
+                    vim_item
+                )
+                return resp
+            end,
         },
         window = {
             completion = {
-                col_offset = -1,
+                -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                col_offset = 1,
                 side_padding = 0,
             },
             documentation = {
@@ -305,8 +342,6 @@ local function cmp_cmdline(is_large)
     })
 end
 
-local enabled = true
-
 if enabled then
     local gr = augroup("cmp", { clear = true })
 
@@ -334,6 +369,20 @@ if enabled then
         end,
     })
 
+    -- autocmd("FileType", {
+    --     group = gr,
+    --     pattern = { "lua" },
+    --     callback = function(opts)
+    --         local current_file = vim.fn.expand("%:p")
+    --
+    --         local base_vimruntime_dir = vim.api.nvim_call_function("finddir", "vimruntime")
+    --
+    --         if string.find(base_vimruntime_dir, current_file) then
+    --             cmp_config(nvim_sources, opts.buf, vim.b.comparators)
+    --         end
+    --     end,
+    -- })
+
     autocmd("User", {
         pattern = "LargeFile",
         group = gr,
@@ -345,28 +394,6 @@ if enabled then
 end
 
 return {
-    {
-        "JMarkin/gentags.lua",
-        enabled = enabled,
-        -- dev = true,
-        cond = vim.fn.executable("ctags") == 1,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        opts = {
-            async = true,
-            args = {
-                "--extras=+r+q",
-                "--exclude=\\.*",
-                "--exclude=dist",
-                "--exclude=node_modules*",
-                "--exclude=BUILD",
-                "--exclude=vendor*",
-                "--exclude=*.min.*",
-            },
-        },
-        event = "VeryLazy",
-    },
     {
         enabled = enabled,
         "L3MON4D3/LuaSnip",
@@ -417,7 +444,7 @@ return {
             "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-omni",
             "danymat/neogen",
-            -- "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-nvim-lua",
             {
                 "JMarkin/cmp-diag-codes",
                 -- dev = true,
@@ -431,6 +458,25 @@ return {
             "dmitmel/cmp-cmdline-history",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-buffer",
+            {
+                "tzachar/cmp-ai",
+                config = function()
+                    local cmp_ai = require("cmp_ai.config")
+
+                    cmp_ai:setup({
+                        max_lines = 200,
+                        provider = "Ollama",
+                        provider_options = {
+                            model = "codellama:7b-code",
+                        },
+                        notify = true,
+                        notify_callback = function(msg)
+                            vim.notify(msg)
+                        end,
+                        run_on_every_keystroke = false,
+                    })
+                end,
+            },
         },
         config = function()
             local cmp = require("cmp")
@@ -440,7 +486,6 @@ return {
             local last_changed = 0
             local _cmp_on_change = cmp_core.on_change
             local string_byte_c = string.byte("c")
-
             ---Improves performance when inserting in large files
             ---@diagnostic disable-next-line: duplicate-set-field
             function cmp_core.on_change(self, trigger_event)
@@ -456,20 +501,22 @@ return {
                     return
                 end
 
-                local now = vim.uv.now()
-                local fast_typing = now - last_changed < 32
-                last_changed = now
+                _cmp_on_change(self, trigger_event)
 
-                if not fast_typing or trigger_event ~= "TextChanged" or cmp.visible() then
-                    _cmp_on_change(self, trigger_event)
-                    return
-                end
-
-                vim.defer_fn(function()
-                    if last_changed == now then
-                        _cmp_on_change(self, trigger_event)
-                    end
-                end, 200)
+                -- local now = vim.uv.now()
+                -- local fast_typing = now - last_changed < 32
+                -- last_changed = now
+                --
+                -- if not fast_typing or trigger_event ~= "TextChanged" or cmp.visible() then
+                --     _cmp_on_change(self, trigger_event)
+                --     return
+                -- end
+                --
+                -- vim.defer_fn(function()
+                --     if last_changed == now then
+                --         _cmp_on_change(self, trigger_event)
+                --     end
+                -- end, 200)
             end
 
             cmp_config(default_sources)

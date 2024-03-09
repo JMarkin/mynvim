@@ -13,7 +13,6 @@ vim.api.nvim_create_user_command("QfReplace", function(opts)
     vim.cmd.cdo(cmd)
 end, {
     nargs = "*",
-    complete = "tag",
 })
 
 M.doau = function(pattern, data)
@@ -101,6 +100,10 @@ function M.in_visual_mode()
     }
     local current_mode = vim.api.nvim_get_mode()["mode"]
     return modes[current_mode] or false
+end
+
+function M.exit_visual()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>", true, false, true), "i", true)
 end
 
 -- https://github.com/mobily/.nvim/blob/main/lua/utils/fn.lua
