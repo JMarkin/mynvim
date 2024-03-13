@@ -83,8 +83,9 @@ g.root_pattern              = {
                             }
 opt.list                    = true
 opt.listchars               = {
-                              tab      = '→ ',
-                              trail    = '·',
+                              tab            = '→ ',
+                              trail          = '·',
+                              eol            = '↲',
                             }
 opt.fillchars               = {
                               fold      = '·',
@@ -105,6 +106,8 @@ opt.smartcase               = true
 opt.termguicolors           = true
 
 opt.textwidth               = 120
+
+opt.relativenumber          = true
 
 -- stylua: ignore end
 

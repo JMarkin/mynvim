@@ -49,7 +49,7 @@ local menu_map = {
     ["vim-dadbod-completion"] = "DB",
     tags = "TG",
     ["diag-codes"] = "DC",
-    cmp_ai = "[AI]",
+    cmp_ai = "AI",
 }
 
 local function has_words_before()
@@ -437,7 +437,6 @@ return {
         enabled = enabled,
         lazy = true,
         -- dev = true,
-        -- enabled = false,
         dependencies = {
             "lukas-reineke/cmp-under-comparator",
             "lukas-reineke/cmp-rg",

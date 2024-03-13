@@ -3,6 +3,7 @@ if not vim.uv then
     vim.uv = vim.loop
 end
 
+require("indent")
 require("common")
 local default_vim_keymap_set = vim.keymap.set
 

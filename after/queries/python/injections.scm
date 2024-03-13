@@ -42,6 +42,12 @@
             (string
                 (string_content) @injection.content (#set! injection.language "sql")))
 
+;lua
+(assignment
+            ((identifier) @_varx (#match? @_varx ".*lua$"))
+            (string
+                (string_content) @injection.content (#set! injection.language "lua")))
+
 
 ; rst
 (

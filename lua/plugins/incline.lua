@@ -81,6 +81,7 @@ end
 
 return {
     "b0o/incline.nvim",
+    -- enabled = false,
     cond = not vim.g.started_by_firenvim,
     config = function()
         vim.opt.laststatus = 3

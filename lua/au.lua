@@ -143,21 +143,6 @@ augroup("OmniFunc", {
     },
 })
 
-augroup("Autosave", {
-    { "BufLeave", "WinLeave", "FocusLost" },
-    {
-        nested = true,
-        desc = "Autosave on focus change.",
-        callback = function(info)
-            if vim.bo[info.buf].bt == "" then
-                vim.cmd.update({
-                    mods = { emsg_silent = true },
-                })
-            end
-        end,
-    },
-})
-
 -- augroup("WinCloseJmp", {
 --     "WinClosed",
 --     {
@@ -167,42 +152,9 @@ augroup("Autosave", {
 --     },
 -- })
 
--- Show cursor line and cursor column only in current window
-augroup("AutoHlCursorLine", {
-    { "BufWinEnter", "WinEnter" },
-    {
-        desc = "Show cursorline and cursorcolumn in current window.",
-        callback = function()
-            if vim.w._cul and not vim.wo.cul then
-                vim.wo.cul = true
-                vim.w._cul = nil
-            end
-            if vim.w._cuc and not vim.wo.cuc then
-                vim.wo.cuc = true
-                vim.w._cuc = nil
-            end
-        end,
-    },
-}, {
-    "WinLeave",
-    {
-        desc = "Hide cursorline and cursorcolumn in other windows.",
-        callback = function()
-            if vim.wo.cul then
-                vim.w._cul = true
-                vim.wo.cul = false
-            end
-            if vim.wo.cuc then
-                vim.w._cuc = true
-                vim.wo.cuc = false
-            end
-        end,
-    },
-})
-
 -- number toggle
 augroup("NumberToggle", {
-    { "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" },
+    { "InsertLeave", "CmdlineLeave" },
     {
         callback = function()
             if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
@@ -211,7 +163,7 @@ augroup("NumberToggle", {
         end,
     },
 }, {
-    { "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" },
+    { "InsertEnter", "CmdlineEnter" },
     {
 
         callback = function()
