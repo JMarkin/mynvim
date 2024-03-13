@@ -1,7 +1,7 @@
 return {
     {
         "mrjones2014/smart-splits.nvim",
-        enabled = true,
+        -- enabled = false,
         opts = {
             multiplexer_integration = "tmux",
         },

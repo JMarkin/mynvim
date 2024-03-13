@@ -8,6 +8,7 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         cond = is_not_mini,
+        enabled = false,
         event = { "VeryLazy", "FileReadPre", "BufReadPre" },
         config = function()
             -- local hooks = require("ibl.hooks")

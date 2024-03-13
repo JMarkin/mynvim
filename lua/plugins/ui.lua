@@ -87,6 +87,7 @@ return {
 
     {
         "NvChad/nvim-colorizer.lua",
+        enabled = false,
         opts = {
             user_default_options = {
                 RGB = true, -- #RGB hex codes
@@ -107,7 +108,6 @@ return {
     },
     {
         "rainbowhxch/beacon.nvim",
-        enabled = true,
         cond = function()
             return not vim.g.neovide
         end,

@@ -2,6 +2,7 @@ return {
     {
         "anuvyklack/windows.nvim",
         -- dev = true,
+        enabled = false,
         event = "BufAdd",
         dependencies = {
             "anuvyklack/middleclass",

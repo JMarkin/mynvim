@@ -22,7 +22,7 @@ if vim.g.modern_ui then
             priority = math.huge,
             config = function()
                 require("dark_flat").setup({
-                    transparent = true,
+                    -- transparent = true,
                     italics = true,
                 })
                 vim.api.nvim_command("colorscheme dark_flat")
