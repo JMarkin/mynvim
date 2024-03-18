@@ -62,7 +62,6 @@ autocmd("FileType", {
         "trouble",
         "null-ls-info",
         "qf",
-        "help",
         "notify",
         "startuptime",
         "checkhealth",
@@ -100,16 +99,6 @@ autocmd({ "BufWritePre" }, {
     end,
 })
 
-autocmd("BufWinEnter", {
-    group = groupid("help_window_right", {}),
-    pattern = { "*.txt" },
-    callback = function()
-        if vim.o.filetype == "help" then
-            vim.cmd.wincmd("L")
-        end
-    end,
-})
-
 -- copy from https://github.com/Bekaboo/nvim/blob/master/lua/core/autocmds.lua
 
 ---@param group string
@@ -122,6 +111,28 @@ local function augroup(group, ...)
         autocmd(unpack(a))
     end
 end
+
+augroup("SplitRightDefaults", {
+    "BufWinEnter",
+    {
+        desc = "split right help, preview",
+        pattern = "*",
+        callback = function(info)
+            local change = false
+            if vim.o.filetype == "help" then
+                change = true
+            end
+
+            if vim.o.previewwindow then
+                change = true
+            end
+
+            if change then
+                vim.cmd.wincmd("L")
+            end
+        end,
+    },
+})
 
 augroup("SYNTAX", {
     "FileType",

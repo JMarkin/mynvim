@@ -62,22 +62,11 @@ return {
 
     -- ui components
     { "MunifTanjim/nui.nvim", lazy = true },
-    {
-        "rasulomaroff/reactive.nvim",
-        enabled = false,
-        opts = {
-            builtin = {
-                cursorline = true,
-                cursor = true,
-                modemsg = true,
-            },
-        },
-    },
 
     {
         "ibhagwan/smartyank.nvim",
         enabled = true,
-        event = "VeryLazy",
+        event = "ModeChanged",
         opts = {
             highlight = {
                 enabled = false, -- highlight yanked text
@@ -86,26 +75,10 @@ return {
     },
 
     {
-        "NvChad/nvim-colorizer.lua",
-        enabled = false,
-        opts = {
-            user_default_options = {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                names = false, -- "Name" codes like Blue or blue
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                AARRGGBB = true, -- 0xAARRGGBB hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-                -- Available modes for `mode`: foreground, background,  virtualtext
-                mode = "background", -- Set the display mode.
-                virtualtext = "■",
-            },
-        },
-        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
+        "brenoprata10/nvim-highlight-colors",
+        event = { "FileReadPre", "BufReadPre" },
     },
+
     {
         "rainbowhxch/beacon.nvim",
         cond = function()
@@ -123,18 +96,18 @@ return {
             ignore_buffers = {},
             ignore_filetypes = {},
         },
-        event = { "VeryLazy", "BufAdd" },
+        event = { "BufAdd" },
     },
     {
         "tzachar/local-highlight.nvim",
-        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
+        event = { "FileReadPre", "BufReadPre" },
         opts = {
             insert_mode = true,
         },
     },
     {
         "nvimdev/hlsearch.nvim",
-        event = { "VeryLazy", "FileReadPre", "BufReadPre" },
+        event = { "ModeChanged" },
         config = function()
             require("hlsearch").setup()
         end,

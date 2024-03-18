@@ -18,9 +18,6 @@ return {
         "kevinhwang91/nvim-bqf",
         ft = "qf",
         event = "VeryLazy",
-        dependencies = {
-            "nvim-treesitter",
-        },
         opts = {
             auto_enable = true,
             auto_resize_height = true,
@@ -76,6 +73,6 @@ return {
                 "--exclude=*.min.*",
             },
         },
-        event = "VeryLazy",
+        event = { "FileReadPost", "BufReadPost" },
     },
 }

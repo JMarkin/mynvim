@@ -3,8 +3,8 @@ if not vim.uv then
     vim.uv = vim.loop
 end
 
-require("indent")
 require("common")
+require("indent")
 local default_vim_keymap_set = vim.keymap.set
 
 vim.keymap.set = function(mode, lhs, rhs, opts)
@@ -42,7 +42,7 @@ require("lazy").setup({ import = "plugins" }, {
         notify = true,
     },
     dev = {
-        path = "~/projects",
+        path = "/projects",
         patterns = {},
         fallback = true, -- Fallback to git when local plugin doesn't exist
     },
