@@ -1,2 +1,5 @@
 GET https://jmarkin.ru/ip
 
+
+
+GET https://httpbin.org/json

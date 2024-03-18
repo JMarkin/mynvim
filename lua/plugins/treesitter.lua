@@ -89,6 +89,7 @@ return {
     build = ":TSUpdate",
     -- enabled = false,
     lazy = true,
+    -- ft = "qf",
     event = { "VeryLazy", "FileReadPre", "BufReadPre" },
     dependencies = {
         {
