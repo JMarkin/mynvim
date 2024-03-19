@@ -334,6 +334,14 @@ return {
                         ["--delimiter"] = "'[:]'",
                     },
                 },
+
+                previewers = {
+                    -- check FastSyntax autocmd
+                    builtin = {
+                        syntax = false, -- preview syntax highlight?
+                        treesitter = { enable = false, disable = {} },
+                    },
+                },
             },
         })
         require("fzf-lua").config.globals.fzf_opts["--border"] = nil

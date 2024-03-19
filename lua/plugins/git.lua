@@ -61,7 +61,7 @@ return {
                 end,
             })
         end,
-        event = { "VeryLazy" },
+        event = { "FileReadPre", "BufReadPre" },
         keys = {
             "<leader>gS",
             "<leader>gu",

@@ -56,7 +56,8 @@ return {
     },
     {
         "JMarkin/gentags.lua",
-        -- dev = true,
+        -- enabled = false,
+        dev = true,
         cond = vim.fn.executable("ctags") == 1,
         dependencies = {
             "nvim-lua/plenary.nvim",

@@ -142,20 +142,9 @@ opt.shada = ""
 vim.defer_fn(_rshada, 100)
 vim.api.nvim_create_autocmd("BufReadPre", { once = true, callback = _rshada })
 
----enable filetype
----@return true
-local function _filetype()
-    if not vim.g._filetype then
-        vim.cmd([[
-            filetype plugin on
-            filetype indent plugin on
-        ]])
-        vim.g._filetype = true
-    end
-    return true
-end
-
-vim.defer_fn(_filetype, 100)
+vim.cmd([[
+    syntax manual
+]])
 
 opt.backup = true
 opt.backupdir:remove(".")

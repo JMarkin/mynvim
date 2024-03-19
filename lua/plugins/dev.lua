@@ -2,12 +2,6 @@
 
 return {
     {
-        "theHamsta/nvim_rocks",
-        enabled = false,
-        lazy = true,
-        build = "pip3 install --user hererocks && python3 -mhererocks . -j2.1.0-beta3 -r3.0.0 && cp nvim_rocks.lua lua",
-    },
-    {
         "stevearc/profile.nvim",
         cond = function()
             return os.getenv("NVIM_PROFILE")
@@ -23,6 +17,7 @@ return {
                         function(filename)
                             if filename then
                                 prof.export(filename)
+                                vim.cmd([[profile stop]])
                                 vim.notify(string.format("Wrote %s", filename))
                             end
                         end

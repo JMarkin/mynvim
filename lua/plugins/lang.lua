@@ -1,42 +1,6 @@
 local is_not_mini = require("funcs").is_not_mini
 return {
     {
-        "nvimdev/guard.nvim",
-        enabled = false,
-        dev = true,
-        dependencies = {
-            {
-                "nvimdev/guard-collection",
-                -- dev = true,
-            },
-        },
-        lazy = true,
-        keys = {
-            { "<space>bf", "<cmd>GuardFmt<cr>", desc = "Format buffer" },
-        },
-        config = function()
-            local ft = require("guard.filetype")
-
-            ft("python"):fmt("ruff")
-
-            ft("lua"):fmt("stylua")
-
-            ft("c,cpp"):lint("clang-tidy")
-
-            ft("toml"):fmt("taplo")
-
-            ft("typescript,javascript,typescriptreact,markdown"):fmt("prettier")
-
-            require("guard").setup({
-                -- the only options for the setup function
-                fmt_on_save = false,
-                lint_on_change = false,
-                -- Use lsp if no formatter was defined for this filetype
-                lsp_as_default_formatter = true,
-            })
-        end,
-    },
-    {
         "mfussenegger/nvim-lint",
         lazy = true,
         enabled = true,
@@ -62,7 +26,7 @@ return {
         init = function()
             vim.g.neoformat_run_all_formatters = 1
             vim.g.neoformat_only_msg_on_error = 0
-            vim.g.neoformat_basic_format_align = 1
+            vim.g.neoformat_basic_format_align = 0
             vim.g.neoformat_basic_format_retab = 0
             vim.g.neoformat_basic_format_trim = 1
 
@@ -90,6 +54,7 @@ return {
         version = "^4", -- Recommended
         ft = { "rust" },
         cond = is_not_mini,
+        enabled = false,
     },
     {
         name = "clangd_extenstions",
