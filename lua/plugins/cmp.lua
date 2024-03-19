@@ -1,5 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local is_not_mini = require("funcs").is_not_mini
 
 local enabled = true
 
@@ -56,6 +57,29 @@ local function has_words_before()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
+
+local mini_sources = {
+    {
+        name = "tags",
+        option = {
+            -- this is the default options, change them if you want.
+            -- Delayed time after user input, in milliseconds.
+            complete_defer = 50,
+            -- Use exact word match when searching `taglist`, for better searching
+            -- performance.
+            exact_match = true,
+            -- Prioritize searching result for current buffer.
+            current_buffer_only = true,
+        },
+    },
+    {
+        name = "omni",
+        option = {
+            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
+        },
+        max_item_count = 20,
+    },
+}
 
 local _sources = {
     { name = "luasnip", keyword_length = 1, max_item_count = 5 },
@@ -160,9 +184,9 @@ end)
 
 local cmp_config = function(sources, buffer, comparators)
     comparators = comparators or default_comparators
-    local luasnip = require("luasnip")
+    local _, luasnip = pcall(require, "luasnip")
 
-    local neogen = require("neogen")
+    local _, neogen = pcall(require, "neogen")
 
     local cmp = require("cmp")
     local compare = require("cmp.config.compare")
@@ -216,7 +240,9 @@ local cmp_config = function(sources, buffer, comparators)
             disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
             disabled = disabled or (vim.fn.reg_recording() ~= "")
             disabled = disabled or (vim.fn.reg_executing() ~= "")
-            disabled = disabled or require("cmp_dap").is_dap_buffer()
+            if is_not_mini() then
+                disabled = disabled or require("cmp_dap").is_dap_buffer()
+            end
             return not disabled
         end,
         preselect = preselect,
@@ -232,7 +258,9 @@ local cmp_config = function(sources, buffer, comparators)
         },
         snippet = {
             expand = function(args)
-                require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+                if is_not_mini() then
+                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
+                end
             end,
         },
         matching = {
@@ -286,6 +314,10 @@ local cmp_config = function(sources, buffer, comparators)
                         vim_item.kind = vim_item.kind .. " " .. "[ML]"
                     end
                     vim_item.abbr = string.sub(vim_item.abbr, 1, 80)
+                    return vim_item
+                end
+
+                if not is_not_mini() then
                     return vim_item
                 end
                 local resp = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50, menu = menu_map })(
@@ -401,6 +433,7 @@ return {
         dependencies = {
             "rafamadriz/friendly-snippets",
         },
+        cond = is_not_mini,
         lazy = true,
         config = function(_, opts)
             if opts then
@@ -438,27 +471,31 @@ return {
         lazy = true,
         -- dev = true,
         dependencies = {
-            "lukas-reineke/cmp-under-comparator",
-            "lukas-reineke/cmp-rg",
-            "saadparwaiz1/cmp_luasnip",
+            { "lukas-reineke/cmp-under-comparator", cond = is_not_mini },
+            { "lukas-reineke/cmp-rg", cond = is_not_mini },
+            { "saadparwaiz1/cmp_luasnip", cond = is_not_mini },
             "hrsh7th/cmp-omni",
-            "danymat/neogen",
-            "hrsh7th/cmp-nvim-lua",
+            { "danymat/neogen", cond = is_not_mini },
+            { "hrsh7th/cmp-nvim-lua", cond = is_not_mini },
             {
                 "JMarkin/cmp-diag-codes",
+                cond = is_not_mini,
+
                 -- dev = true,
             },
             {
                 "hrsh7th/cmp-nvim-lsp",
                 dependencies = { "onsails/lspkind.nvim" },
+                cond = is_not_mini,
             },
-            "rcarriga/cmp-dap",
+            { "rcarriga/cmp-dap", cond = is_not_mini },
             "quangnguyen30192/cmp-nvim-tags",
             "dmitmel/cmp-cmdline-history",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-buffer",
             {
                 "tzachar/cmp-ai",
+                cond = is_not_mini,
                 config = function()
                     local cmp_ai = require("cmp_ai.config")
 
@@ -518,7 +555,11 @@ return {
                 -- end, 200)
             end
 
-            cmp_config(default_sources)
+            if is_not_mini() then
+                cmp_config(default_sources)
+            else
+                cmp_config(mini_sources)
+            end
             cmp_cmdline()
 
             -- cmp does not work with cmdline with type other than `:`, '/', and '?', e.g.

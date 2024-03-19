@@ -68,9 +68,21 @@ require("lazy").setup({ import = "plugins" }, {
             },
         },
     },
+    profiling = {
+        -- Enables extra stats on the debug tab related to the loader cache.
+        -- Additionally gathers stats about all package.loaders
+        loader = false,
+        -- Track each new require in the Lazy profiling tab
+        require = false,
+    },
 })
 local should_profile = os.getenv("NVIM_PROFILE")
 if should_profile then
+    vim.cmd([[
+        profile start profile.log
+        profile func *
+        profile file *
+    ]])
     require("profile").instrument_autocmds()
     if should_profile:lower():match("^start") then
         require("profile").start("*")

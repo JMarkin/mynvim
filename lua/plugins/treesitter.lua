@@ -60,6 +60,11 @@ local syntax_langs = {
     "gitattributes",
 }
 
+vim.g.treesitter_langs = {}
+for _, value in ipairs(syntax_langs) do
+    vim.g.treesitter_langs[value] = 1
+end
+
 local install = function(sync)
     require("nvim-treesitter")
     for _, lang in ipairs(syntax_langs) do
@@ -129,7 +134,7 @@ return {
         "yioneko/nvim-yati",
         {
             "andymass/vim-matchup",
-            enabled = true,
+            -- enabled = false,
             init = function()
                 vim.g.matchup_transmute_enabled = 1
                 vim.g.matchup_delim_noskips = 2
@@ -173,7 +178,7 @@ return {
             },
             highlight = {
                 enable = true,
-                additional_vim_regex_highlighting = true,
+                additional_vim_regex_highlighting = false,
                 disable = is_disable,
             },
             incremental_selection = {

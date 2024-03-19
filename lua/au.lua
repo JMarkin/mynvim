@@ -1,6 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
 local groupid = vim.api.nvim_create_augroup
 
+local lf = require("largefiles")
+
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = groupid("hl_yank", { clear = true }),
     pattern = "*",
@@ -16,7 +18,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 autocmd({ "BufReadPre", "FileReadPre" }, {
     group = groupid("large_fiels", { clear = true }),
     pattern = { "*" },
-    callback = require("largefiles").optimize_buffer,
+    callback = lf.optimize_buffer,
 })
 
 autocmd({ "LspAttach" }, {
@@ -112,6 +114,24 @@ local function augroup(group, ...)
     end
 end
 
+augroup("FastSyntax", {
+    { "BufReadPre" },
+    {
+        desc = "Fast syntax and filetype find",
+        callback = function(info)
+            local ft = vim.filetype.match({ buf = info.buf })
+            vim.bo.filetype = ft
+            local has_lang, lang = pcall(vim.treesitter.language.get_lang, ft)
+            has_lang = has_lang and lang
+
+            if not has_lang and not lf.is_large_file(info.buf, true) then
+                vim.bo[info.buf].syntax = ft
+                vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
+            end
+        end,
+    },
+})
+
 augroup("SplitRightDefaults", {
     "BufWinEnter",
     {
@@ -130,26 +150,6 @@ augroup("SplitRightDefaults", {
             if change then
                 vim.cmd.wincmd("L")
             end
-        end,
-    },
-})
-
-augroup("SYNTAX", {
-    "FileType",
-    {
-        desc = "syntax set",
-        callback = function(info)
-            vim.bo[info.buf].syntax = vim.bo[info.buf].ft
-        end,
-    },
-})
-
-augroup("OmniFunc", {
-    "FileType",
-    {
-        desc = "Smart set omnifunc",
-        callback = function(info)
-            vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
         end,
     },
 })
