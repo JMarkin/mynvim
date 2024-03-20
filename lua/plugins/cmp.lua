@@ -138,6 +138,27 @@ local default_comparators = function(compare)
     }
 end
 
+local rust_comparators = function(compare)
+    return {
+        -- deprioritize `.box`, `.mut`, etc.
+        require("cmp-rust").deprioritize_postfix,
+        -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
+        require("cmp-rust").deprioritize_borrow,
+        -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
+        require("cmp-rust").deprioritize_deref,
+        -- deprioritize `Into::into`, `Clone::clone`, etc.
+        require("cmp-rust").deprioritize_common_traits,
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.recently_used,
+        compare.locality,
+        compare.kind,
+        compare.length,
+        compare.order,
+    }
+end
+
 local python_comparators = function(compare)
     return {
         compare.offset,
@@ -387,6 +408,14 @@ if enabled then
 
     autocmd("FileType", {
         group = gr,
+        pattern = "rust",
+        callback = function(opts)
+            vim.b.comparators = rust_comparators
+        end,
+    })
+
+    autocmd("FileType", {
+        group = gr,
         pattern = { "c", "cpp", "h" },
         callback = function(opts)
             vim.b.comparators = clang_comparators
@@ -471,7 +500,8 @@ return {
         lazy = true,
         -- dev = true,
         dependencies = {
-            { "lukas-reineke/cmp-under-comparator", cond = is_not_mini },
+            { "lukas-reineke/cmp-under-comparator", cond = is_not_mini, lazy = true },
+            { "ryo33/nvim-cmp-rust", cond = is_not_mini, lazy = true },
             { "lukas-reineke/cmp-rg", cond = is_not_mini },
             { "saadparwaiz1/cmp_luasnip", cond = is_not_mini },
             "hrsh7th/cmp-omni",
@@ -480,7 +510,6 @@ return {
             {
                 "JMarkin/cmp-diag-codes",
                 cond = is_not_mini,
-
                 -- dev = true,
             },
             {
