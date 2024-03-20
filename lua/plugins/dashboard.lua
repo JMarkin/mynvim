@@ -119,7 +119,7 @@ return {
             callback = function()
                 local stats = require("lazy").stats()
                 local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-                M.version = "󰥱 v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+                M.version = string.format("󰥱 v%s", vim.version())
                 M.plugins = "⚡Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 
                 draw_footer(dashboard)
