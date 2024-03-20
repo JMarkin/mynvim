@@ -116,4 +116,4 @@ let s:aulist = [
       \ 'CompleteDone',
       \ 'User',
       \ ]
-
+" call s:log_autocmds_toggle()

@@ -114,21 +114,29 @@ local function augroup(group, ...)
     end
 end
 
+local highlight = function(info)
+    if vim.b.highlighted then
+        return
+    end
+    local ft = vim.bo.ft
+    -- local ft = vim.filetype.match({ buf = info.buf })
+    -- vim.bo.filetype = ft
+    local has_lang, lang = pcall(vim.treesitter.language.get_lang, ft)
+
+    has_lang = has_lang and lang
+
+    if ft and not has_lang and not lf.is_large_file(info.buf, true) then
+        vim.bo[info.buf].syntax = ft
+        vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
+    end
+    vim.b.highlighted = true
+end
+
 augroup("FastSyntax", {
-    { "BufReadPre" },
+    { "FileType" },
     {
         desc = "Fast syntax and filetype find",
-        callback = function(info)
-            local ft = vim.filetype.match({ buf = info.buf })
-            vim.bo.filetype = ft
-            local has_lang, lang = pcall(vim.treesitter.language.get_lang, ft)
-            has_lang = has_lang and lang
-
-            if not has_lang and not lf.is_large_file(info.buf, true) then
-                vim.bo[info.buf].syntax = ft
-                vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
-            end
-        end,
+        callback = highlight,
     },
 })
 

@@ -88,17 +88,19 @@ return {
         require("incline").setup({
             debounce_threshold = { falling = 150, rising = 30 },
             render = function(props)
-                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), "%:~:.")
+                local filename = vim.fn.expand('%:~:.')
                 local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+                filename = shorten_path(filename, "/", shorting_target)
 
-                local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,undercurl,italic"
+                local modified = vim.api.nvim_get_option_value("modified", { buf = props.buf })
+                        and "bold,undercurl,italic"
                     or "bold"
                 local st_diag, diag = pcall(get_diagnostic_label, props)
                 local st_git, git = pcall(get_git_diff, props)
-                local st_noice, noice = pcall(get_noice_recording, props)
+                -- local st_noice, noice = pcall(get_noice_recording, props)
 
                 local buffer = {
-                    { st_noice and noice or "" },
+                    -- { st_noice and noice or "" },
                     { st_diag and diag or "" },
                     { st_git and git or "" },
                     { ft_icon, guifg = ft_color },
@@ -112,7 +114,7 @@ return {
             },
             window = {
                 margin = {
-                    vertical = 2,
+                    vertical = 0,
                 },
             },
         })

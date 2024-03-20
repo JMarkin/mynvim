@@ -112,4 +112,9 @@ return {
             require("hlsearch").setup()
         end,
     },
+    {
+        "nvim-zh/colorful-winsep.nvim",
+        config = true,
+        event = { "WinNew" },
+    },
 }
