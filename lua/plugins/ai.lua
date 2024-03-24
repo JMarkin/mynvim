@@ -1,6 +1,6 @@
 return {
     "JMarkin/gen.nvim",
-    -- dev = true,
+    dev = true,
     config = function()
         require("gen").setup({
             debug = false,

@@ -54,7 +54,7 @@ return {
         version = "^4", -- Recommended
         ft = { "rust" },
         cond = is_not_mini,
-        enabled = false,
+        -- enabled = false,
     },
     {
         name = "clangd_extenstions",

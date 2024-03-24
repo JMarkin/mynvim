@@ -1,3 +1,6 @@
+local autocmd = vim.api.nvim_create_autocmd
+local groupid = vim.api.nvim_create_augroup
+
 local function get_diagnostic_label(props)
     local icons = { error = "", warn = "", info = "", hint = "󰌵" }
     local label = {}
@@ -88,9 +91,18 @@ return {
         require("incline").setup({
             debounce_threshold = { falling = 150, rising = 30 },
             render = function(props)
-                local filename = vim.fn.expand('%:~:.')
-                local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-                filename = shorten_path(filename, "/", shorting_target)
+                if not vim.b[props.buf] then
+                    vim.b[props.buf] = {}
+                end
+                if not vim.b[props.buf].incline_filename then
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), "%:~:.")
+                    filename = shorten_path(filename, "/", shorting_target)
+                    vim.b[props.buf].incline_filename = filename
+                end
+                if not vim.b[props.buf].incline_ft_icon_color then
+                    vim.b[props.buf].incline_ft_icon, vim.b.incline_ft_color =
+                        require("nvim-web-devicons").get_icon_color(vim.b.incline_filename)
+                end
 
                 local modified = vim.api.nvim_get_option_value("modified", { buf = props.buf })
                         and "bold,undercurl,italic"
@@ -103,9 +115,9 @@ return {
                     -- { st_noice and noice or "" },
                     { st_diag and diag or "" },
                     { st_git and git or "" },
-                    { ft_icon, guifg = ft_color },
+                    { vim.b[props.buf].incline_ft_icon, guifg = vim.b[props.buf].incline_ft_color },
                     { " " },
-                    { filename, gui = modified },
+                    { vim.b[props.buf].incline_filename, gui = modified },
                 }
                 return buffer
             end,
