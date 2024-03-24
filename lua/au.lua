@@ -114,20 +114,26 @@ local function augroup(group, ...)
     end
 end
 
+local ignore_syntax_ft = { cmp_menu = 1, incline = 1, NvimTree = 1 }
+
 local highlight = function(info)
     if vim.b.highlighted then
         return
     end
+
     local ft = vim.bo.ft
-    -- local ft = vim.filetype.match({ buf = info.buf })
-    -- vim.bo.filetype = ft
-    local has_lang, lang = pcall(vim.treesitter.language.get_lang, ft)
 
-    has_lang = has_lang and lang
+    if not ignore_syntax_ft[ft] then
+        -- local ft = vim.filetype.match({ buf = info.buf })
+        -- vim.bo.filetype = ft
+        local _, lang = pcall(vim.treesitter.language.get_lang, ft)
 
-    if ft and not has_lang and not lf.is_large_file(info.buf, true) then
-        vim.bo[info.buf].syntax = ft
-        vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
+        local has_lang, _ = pcall(vim.treesitter.language.inspect, lang)
+
+        if ft and not has_lang and not lf.is_large_file(info.buf, true) then
+            vim.bo[info.buf].syntax = ft
+            vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
+        end
     end
     vim.b.highlighted = true
 end

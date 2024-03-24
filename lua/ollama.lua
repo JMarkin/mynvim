@@ -77,6 +77,8 @@ M.toggle = function()
                 end,
             })
 
+            print(1, prompt)
+
             gen.exec({ prompt = prompt })
         end,
     })

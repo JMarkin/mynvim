@@ -2,6 +2,11 @@
 
 return {
     {
+        "vhyrro/luarocks.nvim",
+        config = true,
+        lazy = true,
+    },
+    {
         "stevearc/profile.nvim",
         cond = function()
             return os.getenv("NVIM_PROFILE")
