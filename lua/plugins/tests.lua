@@ -3,6 +3,7 @@ return {
     "nvim-neotest/neotest",
     cond = is_not_mini,
     dependencies = {
+        "nvim-neotest/nvim-nio",
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
@@ -11,7 +12,7 @@ return {
     },
     keys = {
         {
-            "<leader>Tests",
+            "<leader>T",
             function()
                 require("neotest").summary.toggle()
             end,
