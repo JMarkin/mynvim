@@ -1,4 +1,5 @@
 local is_large_file = require("largefiles").is_large_file
+local FILE_TYPE = require("largefiles").FILE_TYPE
 
 local syntax_langs = {
     -- languages
@@ -113,7 +114,8 @@ return {
                 -- separator = "---",
                 zindex = 20, -- The Z-index of the context window
                 on_attach = function(buf)
-                    return not is_large_file(buf, true)
+                    local _type = is_large_file(buf)
+                    return _type == FILE_TYPE.NORMAL or _type == FILE_TYPE.LARGE_SIZE
                 end,
             },
         },

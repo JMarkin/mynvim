@@ -96,11 +96,13 @@ local function optimize_buffer(args)
     vim.opt_local.foldmethod = "manual"
     vim.opt_local.swapfile = false
     vim.opt_local.bufhidden = "unload"
-    vim.cmd("syntax clear")
-    vim.opt_local.syntax = "off"
-    vim.opt_local.list = false
-    vim.opt_local.undolevels = -1
-    vim.opt_local.undofile = false
+    if _type == FILE_TYPE.LONG_LINE then
+        vim.cmd("syntax clear")
+        vim.opt_local.syntax = "off"
+        vim.opt_local.list = false
+        vim.opt_local.undolevels = -1
+        vim.opt_local.undofile = false
+    end
 
     pcall(function()
         require("rainbow-delimiters").disable(bufnr)
@@ -119,6 +121,6 @@ end
 
 return {
     is_large_file = is_large_file,
-    large_type = FILE_TYPE,
+    FILE_TYPE = FILE_TYPE,
     optimize_buffer = optimize_buffer,
 }

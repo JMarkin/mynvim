@@ -54,5 +54,5 @@ return {
             })
         end,
     },
-    { "echasnovski/mini.pairs", enabled = false, event = "InsertEnter", opts = {} },
+    { "echasnovski/mini.pairs", enabled = true, event = { "InsertEnter", "CmdwinEnter" }, opts = {} },
 }

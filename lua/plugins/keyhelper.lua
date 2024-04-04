@@ -59,7 +59,6 @@ return {
                     miniclue.gen_clues.z(),
 
                     { mode = "n", keys = "gz", desc = "Surround" },
-                    { mode = "n", keys = "<space>s", desc = "Scratch" },
                     { mode = "n", keys = "<space>b", desc = "Buffers" },
                     { mode = "n", keys = "<leader>b", desc = "Bookmark" },
                     { mode = "n", keys = "<Leader>l", desc = "Lang" },

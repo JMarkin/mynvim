@@ -62,9 +62,6 @@ local function tabswitch(tab_action, default_count)
             return
         end
         vim.cmd.tablast()
-        for _ = 1, count - num_tabs do
-            vim.cmd.tabnew()
-        end
     end
 end
 vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext))
