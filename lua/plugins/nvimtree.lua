@@ -99,6 +99,7 @@ return {
             lazy = true,
             dev = true,
             opts = {
+                -- toggled_on = false,
                 hooks = {
                     pre_open = function(path)
                         local is_showed = require("float-preview.utils").is_showed(path)

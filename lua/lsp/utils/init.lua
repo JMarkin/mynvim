@@ -88,13 +88,18 @@ local keys = {
         { desc = "Tagbar", silent = true },
     },
 }
+--- https://github.com/neovim/nvim-lspconfig/blob/f4619ab31fc4676001ea05ae8200846e6e7700c7/plugin/lspconfig.lua#L123
+---@param client vim.lsp.Client
+---@param bufnr integer
 
 --- Sets up LSP keymaps and autocommands for the given buffer.
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr integer
 local function on_attach(client, bufnr)
     if is_large_file(bufnr, true) then
-        vim.lsp.buf_detach_client(bufnr, client.id)
+        vim.schedule(function ()
+            vim.lsp.buf_detach_client(bufnr, client.id)
+        end)
         vim.bo[bufnr].tagfunc = nil
         return 0
     end

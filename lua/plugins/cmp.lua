@@ -298,7 +298,7 @@ local cmp_config = function(sources, buffer, comparators)
             ["<C-a>"] = cmp.mapping.abort(),
             ["<CR>"] = cmp.mapping({
                 i = function(fallback)
-                    if cmp.visible() and cmp.get_active_entry() then
+                    if cmp.visible() and cmp.get_active_entry() or vim.fn.pumvisible() > 0 then
                         cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
                     else
                         fallback()
@@ -449,7 +449,7 @@ if enabled then
         group = gr,
         callback = function(opts)
             cmp_config(default_sources, opts.buf)
-            cmp_cmdline(true)
+            -- cmp_cmdline(true)
         end,
     })
 end
@@ -589,7 +589,7 @@ return {
             else
                 cmp_config(mini_sources)
             end
-            cmp_cmdline()
+            -- cmp_cmdline()
 
             -- cmp does not work with cmdline with type other than `:`, '/', and '?', e.g.
             -- it does not respect the completion option of `input()`/`vim.ui.input()`, see

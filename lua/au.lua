@@ -178,27 +178,27 @@ augroup("SplitRightDefaults", {
 -- })
 
 -- number toggle
-augroup("NumberToggle", {
-    { "InsertLeave", "CmdlineLeave" },
-    {
-        callback = function()
-            if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
-                vim.opt.relativenumber = true
-            end
-        end,
-    },
-}, {
-    { "InsertEnter", "CmdlineEnter" },
-    {
-
-        callback = function()
-            if vim.o.nu then
-                vim.opt.relativenumber = false
-                vim.cmd("redraw")
-            end
-        end,
-    },
-})
+-- augroup("NumberToggle", {
+--     { "InsertLeave", "CmdlineLeave" },
+--     {
+--         callback = function()
+--             if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
+--                 vim.opt.relativenumber = true
+--             end
+--         end,
+--     },
+-- }, {
+--     { "InsertEnter", "CmdlineEnter" },
+--     {
+--
+--         callback = function()
+--             if vim.o.nu then
+--                 vim.opt.relativenumber = false
+--                 vim.cmd("redraw")
+--             end
+--         end,
+--     },
+-- })
 
 -- Persistent Folds
 augroup("auto_view", {
