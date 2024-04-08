@@ -17,6 +17,6 @@ return {
                 end,
             })
         end,
-        event = { "FileReadPre", "BufReadPre" },
+        event = { "FileReadPost", "BufReadPost" },
     },
 }
