@@ -86,8 +86,9 @@ vim.api.nvim_create_user_command("TSInstallDefaultSync", function(_)
 end, {})
 
 ---@diagnostic disable-next-line: unused-local
-local is_disable = function(_lang, _buf)
-    return is_large_file(_buf, true)
+local is_disable = function(_lang, buf)
+    local _type = is_large_file(buf)
+    return _type == FILE_TYPE.READ_ONLY or _type == FILE_TYPE.LARGE_SIZE
 end
 
 return {
@@ -114,8 +115,7 @@ return {
                 -- separator = "---",
                 zindex = 20, -- The Z-index of the context window
                 on_attach = function(buf)
-                    local _type = is_large_file(buf)
-                    return _type == FILE_TYPE.NORMAL or _type == FILE_TYPE.LARGE_SIZE
+                    return not is_disable(nil, buf)
                 end,
             },
         },
@@ -159,13 +159,18 @@ return {
                 require("rainbow-delimiters.setup").setup({
                     strategy = {
                         [""] = rainbow_delimiters.strategy["global"],
+                        vim = rainbow_delimiters.strategy["local"],
                         commonlisp = rainbow_delimiters.strategy["local"],
                     },
                     query = {
                         [""] = "rainbow-delimiters",
+                        lua = "rainbow-blocks",
                         latex = "rainbow-blocks",
                     },
-                    blacklist = {},
+                    priority = {
+                        [""] = 110,
+                        lua = 210,
+                    },
                     highlight = vim.g.rainbow_delimiters_highlight,
                 })
             end,

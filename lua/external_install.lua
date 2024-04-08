@@ -32,6 +32,7 @@ local DEFAULT_INSTALL_EXEC = {
     nginxbeautifier = { command = "npm", args = { "install", "-g", "nginxbeautifier" } },
     prettierd = { command = "npm", args = { "install", "-g", "@fsouza/prettierd" } },
     prettier = { command = "npm", args = { "install", "-g", "prettier" } },
+    biome = { command = "npm", args = { "install", "-g", "@biomejs/biome" } },
     ["bash-language-server"] = { command = "npm", args = { "install", "-g", "bash-language-server" } },
     ["vue-language-server"] = { command = "npm", args = { "install", "-g", "@volar/vue-language-server" } },
     ["docker-compose-langserver"] = {
@@ -160,7 +161,7 @@ local sources = {
     "ruff",
     "stylua",
     "nginxbeautifier",
-    "prettier",
+    "biome",
     "fixjson",
     "rustfmt",
     "taplo",

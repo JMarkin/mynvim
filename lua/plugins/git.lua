@@ -1,27 +1,6 @@
 return {
     {
-        "chrisgrieser/nvim-tinygit",
-        lazy = true,
-        ft = { "gitrebase", "gitcommit" }, -- so ftplugins are loaded
-        dependencies = {
-            "stevearc/dressing.nvim",
-            "ibhagwan/fzf-lua",
-            "rcarriga/nvim-notify", -- optional, but will lack some features without it
-        },
-        keys = {
-            -- stylua: ignore start
-            {"<leader>gm", function() require("tinygit").smartCommit() end, desc = "Git: smartcommit"},
-            {"<leader>gP", function() require("tinygit").push() end, desc = "Git: push"},
-            {"<leader>gAo", function() require("tinygit").amendOnlyMsg({ forcePushIfDiverged = false }) end, desc = "Git: amend only message"},
-            {"<leader>gAe", function() require("tinygit").amendNoEdit({ forcePushIfDiverged = false }) end, desc = "Git: amend no edit"},
-            -- stylua: ignore end
-        },
-    },
-    {
         "lewis6991/gitsigns.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
         config = function()
             require("gitsigns").setup({
                 on_attach = function(bufnr)

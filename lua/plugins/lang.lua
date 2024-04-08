@@ -55,7 +55,7 @@ return {
                 "scss",
                 "vue",
             }) do
-                vim.g["neoformat_enabled_" .. lang] = { "prettier" }
+                vim.g["neoformat_enabled_" .. lang] = { "biome" }
             end
         end,
     },

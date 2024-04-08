@@ -102,6 +102,7 @@ M.lsps = {
     --         require("lsp.utils").setup_lsp("sourcekit", {})
     --     end,
     -- },
+    biome = default_lsp("biome", "biome"),
 }
 M.install = function(sync, update)
     for _, lsp in pairs(M.lsps) do
