@@ -155,7 +155,7 @@ local function on_attach(client, bufnr)
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
 
-    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+    -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- local ok, sig_help = pcall(require, "lsp_signature")
     -- if ok then

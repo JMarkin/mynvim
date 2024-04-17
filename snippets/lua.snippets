@@ -15,8 +15,8 @@ snippet neogen
 snippet django
     vim.filetype.add({
         extension = {
-            html = "htmldjango",
-            htm = "htmldjango",
+            html = "jinja",
+            htm = "jinja",
         }
     })
 
@@ -85,3 +85,12 @@ snippet ignore
     -- stylua: ignore start
 
     -- stylua: ignore end
+
+snippet jinja_lsp
+    local utils = require("lsp.utils")
+    utils.setup_lsp("jinja_lsp", {
+        templates = "./templates",
+        backend = { "./src" },
+        lang = "python",
+    })
+

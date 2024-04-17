@@ -29,6 +29,9 @@ local ext = {
     dbml = "dbml",
     lalrpop = "lalrpop",
     snippets = "snippets",
+    jinja = "jinja",
+    jinja2 = "jinja",
+    j2 = "jinja",
 }
 
 vim2ext(ext, "*.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp,*.rgen,*.rmiss,*.rchit,*.rahit,*.rint,*.rcall", "glsl")

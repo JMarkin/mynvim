@@ -140,7 +140,7 @@ return {
             init = function()
                 vim.g.matchup_transmute_enabled = 1
                 vim.g.matchup_delim_noskips = 2
-                vim.g.matchup_matchparen_deferred = 1
+                vim.g.matchup_matchparen_deferred = 0
                 vim.g.matchup_delim_start_plaintext = 1
 
                 vim.g.matchup_matchparen_hi_surround_always = 1
@@ -212,6 +212,8 @@ return {
                 disable = is_disable,
             },
         })
+
+        vim.treesitter.language.register("htmldjango", "jinja")
 
         require("hlargs").setup({
             use_colorpalette = true,

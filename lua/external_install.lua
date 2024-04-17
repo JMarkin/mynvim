@@ -82,6 +82,13 @@ local DEFAULT_INSTALL_EXEC = {
             "neocmakelsp",
         },
     },
+    jinja_lsp = {
+        command = "cargo",
+        args = {
+            "install",
+            "jinja-lsp",
+        },
+    },
 
     -- rustup
     ["rust-analyzer"] = {
@@ -162,6 +169,7 @@ local sources = {
     "stylua",
     "nginxbeautifier",
     "biome",
+    "prettier",
     "fixjson",
     "rustfmt",
     "taplo",

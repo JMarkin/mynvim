@@ -28,15 +28,11 @@ M.lsps = {
     bashls = default_lsp("bash-language-server", "bashls"),
     vimls = default_lsp("vim-language-server", "vimls"),
     html = default_lsp("vscode-html-language-server", "html", {
-        filetypes = { "html", "htmldjango" },
+        filetypes = { "html", "jinja" },
     }),
     cssls = default_lsp("vscode-css-language-server", "cssls"),
-    jedi_language_server = default_lsp("jedi-language-server", "jedi_language_server", {
-        filetypes = { "python", "python.django", "django" },
-    }),
-    ruff_lsp = default_lsp("ruff-lsp", "ruff_lsp", {
-        filetypes = { "python", "python.django", "django" },
-    }),
+    jedi_language_server = default_lsp("jedi-language-server", "jedi_language_server"),
+    ruff_lsp = default_lsp("ruff-lsp", "ruff_lsp"),
     -- pylsp = default_lsp("python-lsp-server", "pylsp", {
     --     filetypes = { "python", "python.django", "django" },
     --     settings = {
@@ -103,6 +99,7 @@ M.lsps = {
     --     end,
     -- },
     biome = default_lsp("biome", "biome"),
+    jinja_lsp = default_lsp("jinja-lsp", "jinja_lsp"),
 }
 M.install = function(sync, update)
     for _, lsp in pairs(M.lsps) do

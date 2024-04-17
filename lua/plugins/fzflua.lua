@@ -203,8 +203,7 @@ return {
                     ["shift-up"] = "preview-page-up",
                     ["tab"] = "down",
                     ["shift-tab"] = "up",
-                    ["space"] = "toggle+down",
-                    ["ctrl-space"] = "toggle+up",
+                    ["ctrl-space"] = "toggle+down",
                 },
             },
             files = {
@@ -341,6 +340,9 @@ return {
                         syntax = false, -- preview syntax highlight?
                         treesitter = { enable = false, disable = {} },
                     },
+                },
+                grep = {
+                    rg_opts = "--multiline --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
                 },
             },
         })

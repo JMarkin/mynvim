@@ -546,7 +546,6 @@ return {
         config = function()
             local cmp = require("cmp")
             local cmp_core = require("cmp.core")
-
             ---@type integer
             local last_changed = 0
             local _cmp_on_change = cmp_core.on_change
