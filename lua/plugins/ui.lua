@@ -102,7 +102,7 @@ return {
         "tzachar/local-highlight.nvim",
         event = { "FileReadPost", "BufReadPost" },
         opts = {
-            insert_mode = true,
+            insert_mode = false,
         },
     },
     {

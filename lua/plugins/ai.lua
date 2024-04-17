@@ -4,7 +4,7 @@ return {
     config = function()
         require("gen").setup({
             debug = false,
-            model = "dolphin-mistral:latest", -- The default model to use.
+            model = "gemma:latest", -- The default model to use.
             display_mode = "split", -- The display mode. Can be "float" or "split".
             show_prompt = true, -- Shows the Prompt submitted to Ollama.
             show_model = true, -- Displays which model you are using at the beginning of your chat session.
@@ -23,7 +23,7 @@ return {
         })
         local Terminal = require("toggleterm.terminal").Terminal
         local oatmeal = Terminal:new({
-            cmd = "oatmeal -e neovim --model dolphin-mistral:latest",
+            cmd = "oatmeal -e neovim --model gemma:latest",
             hidden = true,
             direction = "tab",
             on_open = function(term)

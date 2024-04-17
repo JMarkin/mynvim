@@ -45,17 +45,24 @@ return {
             vim.g.neoformat_enabled_sql = { "sqlfluff" }
 
             for _, lang in ipairs({
-                "markdown",
                 "javascript",
                 "typescript",
+                "jsx",
+                "tsx",
+                "jsonc",
+            }) do
+                vim.g["neoformat_enabled_" .. lang] = { "biome" }
+            end
+            for _, lang in ipairs({
+                "markdown",
                 "html",
-                "htmldjango",
+                "jinja",
                 "css",
                 "yaml",
                 "scss",
                 "vue",
             }) do
-                vim.g["neoformat_enabled_" .. lang] = { "biome" }
+                vim.g["neoformat_enabled_" .. lang] = { "prettier" }
             end
         end,
     },
