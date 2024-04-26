@@ -1,4 +1,11 @@
 local is_not_mini = require("funcs").is_not_mini
+vim.g.linter_by_ft = {
+    sql = { "sqlfluff" },
+    jinja = { "djlint" },
+    htmldjango = { "djlint" },
+    python = { "mypy" },
+}
+
 return {
     {
         "mfussenegger/nvim-lint",
@@ -12,9 +19,7 @@ return {
             })
         end,
         config = function()
-            require("lint").linters_by_ft = {
-                sql = { "sqlfluff" },
-            }
+            require("lint").linters_by_ft = vim.g.linter_by_ft
         end,
     },
     {
@@ -36,6 +41,13 @@ return {
             vim.g.neoformat_enabled_toml = { "taplo" }
             vim.g.neoformat_enabled_json = { "fixjson" }
             vim.g.neoformat_enabled_lua = { "stylua" }
+            vim.g.neoformat_enabled_jinja = { "djlint" }
+            vim.g.neoformat_jinja_djlint = {
+                exe = "djlint",
+                args = { "-", "--reformat" },
+                stdin = 1,
+            }
+            vim.g.neoformat_enabled_htmldjango = { "djlint" }
 
             vim.g.neoformat_sql_sqlfluff = {
                 exe = "sqlfluff",
@@ -56,7 +68,6 @@ return {
             for _, lang in ipairs({
                 "markdown",
                 "html",
-                "jinja",
                 "css",
                 "yaml",
                 "scss",

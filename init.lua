@@ -4,7 +4,7 @@ if not vim.uv then
 end
 
 require("common")
-require("indent")
+-- require("indent")
 local default_vim_keymap_set = vim.keymap.set
 
 vim.keymap.set = function(mode, lhs, rhs, opts)
@@ -63,7 +63,7 @@ require("lazy").setup({ import = "plugins" }, {
                 "matchparen",
                 -- "netrwPlugin",
                 -- "tarPlugin",
-                "tohtml",
+                -- "tohtml",
                 "tutor",
                 -- "zipPlugin",
             },

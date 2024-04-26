@@ -58,6 +58,23 @@ local function has_words_before()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+local put_down_snippet = function(entry1, entry2)
+    local types = require("cmp.types")
+    local kind1 = entry1:get_kind() --- @type lsp.CompletionItemKind | number
+    local kind2 = entry2:get_kind() --- @type lsp.CompletionItemKind | number
+    kind1 = kind1 == types.lsp.CompletionItemKind.Text and 100 or kind1
+    kind2 = kind2 == types.lsp.CompletionItemKind.Text and 100 or kind2
+    if kind1 ~= kind2 then
+        if kind1 == types.lsp.CompletionItemKind.Snippet then
+            return false
+        end
+        if kind2 == types.lsp.CompletionItemKind.Snippet then
+            return true
+        end
+    end
+    return nil
+end
+
 local mini_sources = {
     {
         name = "tags",
@@ -88,12 +105,17 @@ local _sources = {
         option = {
             -- this is the default options, change them if you want.
             -- Delayed time after user input, in milliseconds.
-            complete_defer = 50,
+            complete_defer = 100,
+            -- Max items when searching `taglist`.
+            max_items = 10,
+            -- The number of characters that need to be typed to trigger
+            -- auto-completion.
+            keyword_length = 3,
             -- Use exact word match when searching `taglist`, for better searching
             -- performance.
-            exact_match = true,
+            exact_match = false,
             -- Prioritize searching result for current buffer.
-            current_buffer_only = true,
+            current_buffer_only = false,
         },
     },
     -- { name = "treesitter", keyword_length = 2, max_item_count = 5 },
@@ -129,6 +151,7 @@ local default_comparators = function(compare)
     return {
         compare.offset,
         compare.exact,
+        put_down_snippet,
         compare.score,
         compare.recently_used,
         compare.locality,
@@ -150,6 +173,7 @@ local rust_comparators = function(compare)
         require("cmp-rust").deprioritize_common_traits,
         compare.offset,
         compare.exact,
+        put_down_snippet,
         compare.score,
         compare.recently_used,
         compare.locality,
@@ -163,9 +187,10 @@ local python_comparators = function(compare)
     return {
         compare.offset,
         compare.exact,
+        put_down_snippet,
         compare.score,
-        compare.recently_used,
         require("cmp-under-comparator").under,
+        compare.recently_used,
         compare.locality,
         compare.kind,
         compare.length,
@@ -177,6 +202,7 @@ local clang_comparators = function(compare)
     return {
         compare.offset,
         compare.exact,
+        put_down_snippet,
         compare.score,
         compare.recently_used,
         require("clangd_extensions.cmp_scores"),
@@ -252,8 +278,12 @@ local cmp_config = function(sources, buffer, comparators)
 
     setup({
         performance = {
-            async_budget = 64,
-            max_view_entries = 64,
+            debounce = 0,
+            throttle = 0,
+            fetching_timeout = 5,
+            confirm_resolve_timeout = 80,
+            -- async_budget = 1,
+            max_view_entries = 20,
         },
         enabled = function()
             local disabled = false
@@ -272,16 +302,17 @@ local cmp_config = function(sources, buffer, comparators)
             comparators = comparators(compare),
         },
         view = {
-            entries = "custom",
+            entries = { name = "custom" },
+            docs = {
+                auto_open = false,
+            },
         },
         experimental = {
-            ghost_text = false,
+            ghost_text = true,
         },
         snippet = {
-            expand = function(args)
-                if is_not_mini() then
-                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
-                end
+            expand = is_not_mini() and function(args)
+                luasnip.lsp_expand(args.body) -- For `luasnip` users.
             end,
         },
         matching = {
@@ -292,6 +323,13 @@ local cmp_config = function(sources, buffer, comparators)
             disallow_prefix_unmatching = false,
         },
         mapping = {
+            ["<C-z>"] = cmp.mapping(function()
+                if cmp.visible_docs() then
+                    cmp.close_docs()
+                else
+                    cmp.open_docs()
+                end
+            end),
             ["<C-e>"] = cmp.mapping.scroll_docs(-4),
             ["<C-d>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
@@ -459,9 +497,9 @@ return {
         enabled = enabled,
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-        },
+        -- dependencies = {
+        --     "rafamadriz/friendly-snippets",
+        -- },
         cond = is_not_mini,
         lazy = true,
         config = function(_, opts)
@@ -478,20 +516,20 @@ return {
                 require("luasnip.loaders.from_" .. type).lazy_load()
             end, { "vscode", "snipmate", "lua" })
 
-            -- friendly-snippets - enable standardized comments snippets
-            require("luasnip").filetype_extend("typescript", { "tsdoc" })
-            require("luasnip").filetype_extend("javascript", { "jsdoc" })
-            require("luasnip").filetype_extend("lua", { "luadoc" })
-            require("luasnip").filetype_extend("python", { "pydoc" })
-            require("luasnip").filetype_extend("rust", { "rustdoc" })
-            require("luasnip").filetype_extend("cs", { "csharpdoc" })
-            require("luasnip").filetype_extend("java", { "javadoc" })
-            require("luasnip").filetype_extend("c", { "cdoc" })
-            require("luasnip").filetype_extend("cpp", { "cppdoc" })
-            require("luasnip").filetype_extend("php", { "phpdoc" })
-            require("luasnip").filetype_extend("kotlin", { "kdoc" })
-            require("luasnip").filetype_extend("ruby", { "rdoc" })
-            require("luasnip").filetype_extend("sh", { "shelldoc" })
+            -- -- friendly-snippets - enable standardized comments snippets
+            -- require("luasnip").filetype_extend("typescript", { "tsdoc" })
+            -- require("luasnip").filetype_extend("javascript", { "jsdoc" })
+            -- require("luasnip").filetype_extend("lua", { "luadoc" })
+            -- require("luasnip").filetype_extend("python", { "pydoc" })
+            -- require("luasnip").filetype_extend("rust", { "rustdoc" })
+            -- require("luasnip").filetype_extend("cs", { "csharpdoc" })
+            -- require("luasnip").filetype_extend("java", { "javadoc" })
+            -- require("luasnip").filetype_extend("c", { "cdoc" })
+            -- require("luasnip").filetype_extend("cpp", { "cppdoc" })
+            -- require("luasnip").filetype_extend("php", { "phpdoc" })
+            -- require("luasnip").filetype_extend("kotlin", { "kdoc" })
+            -- require("luasnip").filetype_extend("ruby", { "rdoc" })
+            -- require("luasnip").filetype_extend("sh", { "shelldoc" })
         end,
     },
     {
@@ -588,7 +626,7 @@ return {
             else
                 cmp_config(mini_sources)
             end
-            -- cmp_cmdline()
+            cmp_cmdline()
 
             -- cmp does not work with cmdline with type other than `:`, '/', and '?', e.g.
             -- it does not respect the completion option of `input()`/`vim.ui.input()`, see

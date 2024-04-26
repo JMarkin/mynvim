@@ -66,11 +66,11 @@ return {
             tabline = {
                 lualine_a = {
                     -- замедляют переключение
-                    -- {
-                    --     "windows",
-                    --     mode = 2,
-                    --     disabled_buftypes = { "prompt" },
-                    -- },
+                    {
+                        "windows",
+                        mode = 2,
+                        disabled_buftypes = { "prompt" },
+                    },
                 },
                 lualine_b = {},
                 lualine_c = {},

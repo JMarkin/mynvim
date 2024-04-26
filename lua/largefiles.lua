@@ -1,8 +1,28 @@
 local doau = require("funcs").doau
 local maxline = require("funcs").maxline
+local ifind = require("funcs").ifind
 
 local max_file_size = 2
 local max_file_size_readonly = 100
+
+local ignore_ft = {
+    "help",
+    "man",
+    "lspinfo",
+    "trouble",
+    "null-ls-info",
+    "qf",
+    "notify",
+    "startuptime",
+    "checkhealth",
+    "netrw",
+    "neotest-output",
+    "neotest-output-panel",
+    "neotest-summary",
+    "vista_kind",
+    "sagaoutline",
+    "",
+}
 
 local function get_buf_size(path)
     local ok, stats = pcall(function()
@@ -34,13 +54,20 @@ local function is_large_file(bufnr, as_bool)
             return large_buf
         end
 
+        local _type = FILE_TYPE.NORMAL
+        vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
+
+        if ifind(ignore_ft, function(item, _)
+            return vim.bo.ft == item
+        end) then
+            return
+        end
+
         bufnr = bufnr or vim.api.nvim_get_current_buf()
         local path = vim.api.nvim_buf_get_name(bufnr)
         local size = get_buf_size(path)
 
-        local _type = FILE_TYPE.NORMAL
         if not size then
-            vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
             return
         end
 
