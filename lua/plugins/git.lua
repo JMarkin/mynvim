@@ -1,5 +1,51 @@
 return {
     {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require("blame").setup({
+                date_format = "%d.%m.%Y",
+                virtual_style = "right",
+                commit_detail_view = "vsplit",
+                mappings = {
+                    commit_info = "<cr>",
+                    stack_push = "<TAB>",
+                    stack_pop = "<BS>",
+                    show_commit = "s",
+                    close = { "<esc>", "q" },
+                },
+            })
+        end,
+        keys = {
+            { "<space>G", ":BlameToggle window<cr>", { desc = "Git blame" } },
+        },
+    },
+    {
+        "moyiz/git-dev.nvim",
+        opts = {
+            cd_type = "tab",
+            opener = function(dir)
+                vim.cmd("tabnew")
+                require("yazi").yazi({}, vim.fn.fnameescape(dir))
+                -- vim.cmd("NvimTreeOpen " .. vim.fn.fnameescape(dir))
+            end,
+            git = {
+                base_uri_format = "%s",
+            },
+        },
+        keys = {
+            {
+                "<leader>o",
+                function()
+                    local repo = vim.fn.input("Repository name / URI: ")
+                    if repo ~= "" then
+                        require("git-dev").open(repo)
+                    end
+                end,
+                desc = "[O]pen a remote git repository",
+            },
+        },
+    },
+    {
         "lewis6991/gitsigns.nvim",
         config = function()
             require("gitsigns").setup({

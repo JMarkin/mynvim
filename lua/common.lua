@@ -159,7 +159,7 @@ g.netrw_liststyle = 1
 g.netrw_localcopydircmd = "cp -r"
 
 -- disable plugins shipped with neovim
-g.loaded_2html_plugin = 1
+-- g.loaded_2html_plugin = 1
 g.loaded_matchit = 1
 g.loaded_tutor_mode_plugin = 1
 g.loaded_vimball = 1

@@ -1,3 +1,13 @@
+vim.g.rainbow_delimiters_highlight = {
+    "RainbowDelimiterRed",
+    "RainbowDelimiterYellow",
+    "RainbowDelimiterBlue",
+    "RainbowDelimiterOrange",
+    "RainbowDelimiterGreen",
+    "RainbowDelimiterViolet",
+    "RainbowDelimiterCyan",
+}
+
 vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "*",
     callback = function()
@@ -36,9 +46,26 @@ if vim.g.modern_ui then
             priority = math.huge,
             config = function()
                 require("bamboo").setup({
+                    code_style = {
+                        comments = { italic = true },
+                        conditionals = { italic = true },
+                        keywords = { bold = true },
+                        functions = { bold = true },
+                        namespaces = { italic = true },
+                        parameters = { italic = true },
+                        strings = {},
+                        variables = {},
+                    },
                     dim_inactive = true,
+                    -- style = "multiplex",
+                    transparent = true,
                     lualine = {
                         transparent = true, -- lualine center bar transparency
+                    },
+                    diagnostics = {
+                        darker = true, -- darker colors for diagnostic
+                        undercurl = true, -- use undercurl instead of underline for diagnostics
+                        background = true, -- use background color for virtual text
                     },
                 })
                 require("bamboo").load()

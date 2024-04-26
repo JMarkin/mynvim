@@ -62,6 +62,9 @@ end
 
 return {
     "goolord/alpha-nvim",
+    cond = function()
+        return not vim.env.YAZI_ID
+    end,
     opts = function()
         local dashboard = require("alpha.themes.dashboard")
 

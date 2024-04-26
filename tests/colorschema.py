@@ -10,7 +10,6 @@ def sum_two_number(a: int, b: int) -> int:
     return a + b
 
 
-
 # TODO: 123
 # FIXME: 11
 

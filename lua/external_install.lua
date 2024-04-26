@@ -24,6 +24,7 @@ local DEFAULT_INSTALL_EXEC = {
     ["python-lsp-server"] = { command = "pip", args = { "install", "-U", "python-lsp-server" } },
     pyright = { command = "pip", args = { "install", "-U", "pyright" } },
     ["nginx-language-server"] = { command = "pip", args = { "install", "-U", "nginx-language-server" } },
+    djlint = { command = "pip", args = { "install", "-U", "djlint" } },
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
@@ -174,6 +175,7 @@ local sources = {
     "rustfmt",
     "taplo",
     "sqlfmt",
+    "djlint",
 }
 
 local install = function(sync, update)
