@@ -57,6 +57,10 @@ local function has_words_before()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
+local function has_words_after()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line, line + 1, true)[1]:sub(col, col):match("%s") == nil
+end
 
 local put_down_snippet = function(entry1, entry2)
     local types = require("cmp.types")
@@ -307,8 +311,10 @@ local cmp_config = function(sources, buffer, comparators)
                 auto_open = false,
             },
         },
-        experimental = {
-            ghost_text = true,
+        experimesntal = {
+            ghost_text = function()
+                return not has_words_after()
+            end,
         },
         snippet = {
             expand = is_not_mini() and function(args)
