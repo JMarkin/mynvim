@@ -3,8 +3,12 @@
 return {
     {
         "vhyrro/luarocks.nvim",
+        -- enabled = false,
         config = true,
         lazy = true,
+        opts = {
+            rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" },
+        },
     },
     {
         "stevearc/profile.nvim",

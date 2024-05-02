@@ -1,10 +1,9 @@
 return {
-    "JMarkin/gen.nvim",
-    dev = true,
+    "David-Kunz/gen.nvim",
     config = function()
         require("gen").setup({
             debug = false,
-            model = "gemma:latest", -- The default model to use.
+            model = "dolphin-llama3:8b-v2.9-q4_K_M", -- The default model to use.
             display_mode = "split", -- The display mode. Can be "float" or "split".
             show_prompt = true, -- Shows the Prompt submitted to Ollama.
             show_model = true, -- Displays which model you are using at the beginning of your chat session.
@@ -20,10 +19,12 @@ return {
                 focus_on_new = true,
                 map = "<c-r>",
             },
+            quit_map = "q", -- set keymap for close the response window
+            retry_map = "<c-r>", -- set keymap to re-send the current prompt
         })
         local Terminal = require("toggleterm.terminal").Terminal
         local oatmeal = Terminal:new({
-            cmd = "oatmeal -e neovim --model gemma:latest",
+            cmd = "oatmeal -e neovim --model dolphin-llama3:8b-v2.9-q4_K_M",
             hidden = true,
             direction = "tab",
             on_open = function(term)

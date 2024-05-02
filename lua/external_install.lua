@@ -1,30 +1,33 @@
+-- Maeson cool but
+
+local function pip_install(name, pip_args)
+    return {
+        command = "bash",
+        args = { "pip.sh", name, pip_args },
+        cwd = "~/.config/nvim/installers",
+    }
+end
+
 local DEFAULT_INSTALL_EXEC = {
     -- pip
-    ruff = { command = "pip", args = { "install", "-U", "ruff" } },
-    ["ruff-lsp"] = { command = "pip", args = { "install", "-U", "ruff-lsp" } },
-    curlylint = { command = "pip", args = { "install", "-U", "curlylint" } },
-    sqlfluff = { command = "pip", args = { "install", "-U", "sqlfluff" } },
-    sqlfmt = { command = "pip", args = { "install", "-U", "shandy-sqlfmt[jinjafmt]" } },
-    yapf = { command = "pip", args = { "install", "-U", "yapf" } },
-    black = { command = "pip", args = { "install", "-U", "black" } },
-    isort = { command = "pip", args = { "install", "-U", "isort" } },
-    mypy = { command = "pip", args = { "install", "-U", "mypy" } },
-    pylint = { command = "pip", args = { "install", "-U", "pylint" } },
-    flake8 = { command = "pip", args = { "install", "-U", "flake8" } },
-    djhtml = { command = "pip", args = { "install", "-U", "djhtml" } },
-    docformatter = { command = "pip", args = { "install", "-U", "docformatter" } },
-    jedi_language_server = {
-        command = "pip",
-        args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" },
-    },
-    ["jedi-language-server"] = {
-        command = "pip",
-        args = { "install", "-U", "git+https://github.com/JMarkin/jedi-language-server.git" },
-    },
-    ["python-lsp-server"] = { command = "pip", args = { "install", "-U", "python-lsp-server" } },
-    pyright = { command = "pip", args = { "install", "-U", "pyright" } },
-    ["nginx-language-server"] = { command = "pip", args = { "install", "-U", "nginx-language-server" } },
-    djlint = { command = "pip", args = { "install", "-U", "djlint" } },
+    ruff = pip_install("ruff", "ruff"),
+    ["ruff-lsp"] = pip_install("ruff-lsp", "ruff-lsp"),
+    curlylint = pip_install("curlylint", "curlylint" ),
+    sqlfluff = pip_install("sqlfluff", "sqlfluff"),
+    sqlfmt = pip_install("sqlfmt", "shandy-sqlfmt[jinjafmt]"),
+    yapf = pip_install("yapf", "yapf"),
+    black = pip_install("black", "black"),
+    isort = pip_install("isort", "isort"),
+    mypy = pip_install("mypy", "mypy"),
+    pylint = pip_install("pylint", "pylint"),
+    flake8 = pip_install("flake8", "flake8"),
+    djhtml = pip_install("djhtml", "djhtml"),
+    docformatter = pip_install("docformatter", "docformatter"),
+    ["jedi-language-server"] = pip_install("jedi-language-server", "git+https://github.com/JMarkin/jedi-language-server.git"),
+    ["python-lsp-server"] = pip_install("python-lsp-server", "python-lsp-server"),
+    pyright = pip_install("pyright", "pyright"),
+    ["nginx-language-server"] = pip_install("nginx-language-server", "nginx-language-server"),
+    djlint = pip_install("djlint", "djlint"),
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
@@ -83,7 +86,7 @@ local DEFAULT_INSTALL_EXEC = {
             "neocmakelsp",
         },
     },
-    jinja_lsp = {
+    ['jinja-lsp'] = {
         command = "cargo",
         args = {
             "install",
@@ -165,8 +168,9 @@ local function external_install(exec, sync, update)
     end
 end
 
-local sources = {
+local default_sources = {
     "ruff",
+    "mypy",
     "stylua",
     "nginxbeautifier",
     "biome",
@@ -178,10 +182,14 @@ local sources = {
     "djlint",
 }
 
-local install = function(sync, update)
+local install = function(sync, update, sources)
+    if not sources then
+        sources = default_sources
+    end
     for _, source in ipairs(sources) do
         external_install(source, sync, update)
     end
+
 end
 
 vim.api.nvim_create_user_command("ExternalInstallDefault", function(_)

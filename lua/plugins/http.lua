@@ -38,6 +38,40 @@ return {
         "<leader>hl",
     },
     config = function()
-        require("rest-nvim").setup()
+        require("rest-nvim").setup({
+            logs = {
+                level = "warn",
+                save = true,
+            },
+            result = {
+                split = {
+                    horizontal = true,
+                    in_place = false,
+                    stay_in_current_window_after_split = true,
+                },
+                behavior = {
+                    statistics = {
+                        enable = true,
+                        ---@see https://curl.se/libcurl/c/curl_easy_getinfo.html
+                        stats = {
+                            { "total_time", title = "Time total:" },
+                            { "namelookup_time", title = "Time dns:" },
+                            { "appconnect_time", title = "Time app connect:" },
+                            { "pretransfer_time", title = "Time pre transfer:" },
+                            -- { "redirect_time", title = "Time redirect:" },
+                            { "starttransfer_time", title = "Time start transfer:" },
+                            { "size_download_t", title = "Download size:" },
+                            { "speed_download_t", title = "Download speed:" },
+                            { "speed_upload_t", title = "Upload speed:" },
+                        },
+                    },
+                    formatters = {
+                        json = "jaq",
+                        html = "prettier",
+                        -- plain = "prettier",
+                    },
+                },
+            },
+        })
     end,
 }

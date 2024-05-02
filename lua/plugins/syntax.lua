@@ -32,6 +32,7 @@ local ext = {
     jinja = "jinja",
     jinja2 = "jinja",
     j2 = "jinja",
+    http = "http",
 }
 
 vim2ext(ext, "*.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp,*.rgen,*.rmiss,*.rchit,*.rahit,*.rint,*.rcall", "glsl")
@@ -59,30 +60,13 @@ vim.filetype.add({
 })
 
 return {
-    { "pearofducks/ansible-vim", ft = "yaml.ansible" },
-    { "mityu/vim-applescript", ft = "applescript" },
-    { "isobit/vim-caddyfile", ft = "caddyfile" },
     {
-        "chrisbra/csv.vim",
-        ft = "csv",
+        "sheerun/vim-polyglot",
+        event = { "BufReadPre", "FileReadPre" },
         init = function()
-            vim.g.csv_no_progress = 1
-            vim.g.csv_strict_columns = 1
-            vim.g.csv_start = 1
-            vim.g.csv_end = 100
-            vim.g.csv_nomap_up = 1
-            vim.g.csv_nomap_down = 1
-            vim.g.csv_default_delim = ";"
+            vim.g.polyglot_disabled = { "ftdetect" }
         end,
     },
-    { "CH-DanReif/haproxy.vim", ft = "haproxy" },
-    { "towolf/vim-helm", ft = "helm" },
-    { "sophacles/vim-bundle-mako", ft = "mako" },
-    { "chr4/nginx.vim", ft = "nginx" },
-    { "vim-scripts/svg.vim", ft = "svg" },
-    { "wgwoods/vim-systemd-syntax", ft = "systemd" },
-    { "MTDL9/vim-log-highlighting", ft = "log" },
-    { "jidn/vim-dbml", ft = "dbml" },
     {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
