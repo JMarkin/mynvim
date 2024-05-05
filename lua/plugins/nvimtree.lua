@@ -98,6 +98,7 @@ return {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
             dev = true,
+            dependencies = { "nvim-treesitter" },
             opts = {
                 -- toggled_on = false,
                 hooks = {
