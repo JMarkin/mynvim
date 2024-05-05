@@ -76,7 +76,10 @@ return {
 
     {
         "brenoprata10/nvim-highlight-colors",
-        event = { "FileReadPre", "BufReadPre" },
+        event = { "FileReadPost", "BufReadPost" },
+        config = function()
+            require("nvim-highlight-colors").turnOn()
+        end,
     },
 
     {
@@ -116,5 +119,12 @@ return {
         "nvim-zh/colorful-winsep.nvim",
         config = true,
         event = { "BufAdd" },
+    },
+    {
+        "grapp-dev/nui-components.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+        },
+        lazy = true,
     },
 }

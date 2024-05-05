@@ -4,35 +4,6 @@ local is_not_mini = require("funcs").is_not_mini
 
 local enabled = true
 
----@diagnostic disable: missing-fields
--- local kind_icons = {
---     Text = "",
---     Method = "󰆧",
---     Function = "󰊕",
---     Constructor = "",
---     Field = "󰇽",
---     Variable = "󰂡",
---     Class = "󰠱",
---     Interface = "",
---     Module = "",
---     Property = "󰜢",
---     Unit = "",
---     Value = "󰎠",
---     Enum = "",
---     Keyword = "󰌋",
---     Snippet = "",
---     Color = "󰏘",
---     File = "󰈙",
---     Reference = "",
---     Folder = "󰉋",
---     EnumMember = "",
---     Constant = "󰏿",
---     Struct = "",
---     Event = "",
---     Operator = "󰆕",
---     TypeParameter = "󰅲",
--- }
-
 local menu_map = {
     gh_issues = "ISSUE",
     buffer = "BUF",
@@ -53,10 +24,6 @@ local menu_map = {
     cmp_ai = "AI",
 }
 
-local function has_words_before()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 local function has_words_after()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line, line + 1, true)[1]:sub(col, col):match("%s") == nil
@@ -572,6 +539,7 @@ return {
         enabled = enabled,
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
+        ft = "snippets",
         -- dependencies = {
         --     "rafamadriz/friendly-snippets",
         -- },
@@ -611,6 +579,7 @@ return {
         "hrsh7th/nvim-cmp",
         enabled = enabled,
         lazy = true,
+        event = { "InsertEnter", "CmdlineEnter" },
         -- dev = true,
         dependencies = {
             { "lukas-reineke/cmp-under-comparator", cond = is_not_mini, lazy = true },
@@ -679,21 +648,6 @@ return {
                 end
 
                 _cmp_on_change(self, trigger_event)
-
-                -- local now = vim.uv.now()
-                -- local fast_typing = now - last_changed < 32
-                -- last_changed = now
-                --
-                -- if not fast_typing or trigger_event ~= "TextChanged" or cmp.visible() then
-                --     _cmp_on_change(self, trigger_event)
-                --     return
-                -- end
-                --
-                -- vim.defer_fn(function()
-                --     if last_changed == now then
-                --         _cmp_on_change(self, trigger_event)
-                --     end
-                -- end, 200)
             end
 
             if is_not_mini() then
@@ -712,6 +666,5 @@ return {
             cmp.setup.cmdline("-", { enabled = false })
             cmp.setup.cmdline("=", { enabled = false })
         end,
-        event = { "InsertEnter", "CmdlineEnter" },
     },
 }

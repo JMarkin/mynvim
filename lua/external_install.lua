@@ -12,7 +12,7 @@ local DEFAULT_INSTALL_EXEC = {
     -- pip
     ruff = pip_install("ruff", "ruff"),
     ["ruff-lsp"] = pip_install("ruff-lsp", "ruff-lsp"),
-    curlylint = pip_install("curlylint", "curlylint" ),
+    curlylint = pip_install("curlylint", "curlylint"),
     sqlfluff = pip_install("sqlfluff", "sqlfluff"),
     sqlfmt = pip_install("sqlfmt", "shandy-sqlfmt[jinjafmt]"),
     yapf = pip_install("yapf", "yapf"),
@@ -23,7 +23,10 @@ local DEFAULT_INSTALL_EXEC = {
     flake8 = pip_install("flake8", "flake8"),
     djhtml = pip_install("djhtml", "djhtml"),
     docformatter = pip_install("docformatter", "docformatter"),
-    ["jedi-language-server"] = pip_install("jedi-language-server", "git+https://github.com/JMarkin/jedi-language-server.git"),
+    ["jedi-language-server"] = pip_install(
+        "jedi-language-server",
+        "git+https://github.com/JMarkin/jedi-language-server.git"
+    ),
     ["python-lsp-server"] = pip_install("python-lsp-server", "python-lsp-server"),
     pyright = pip_install("pyright", "pyright"),
     ["nginx-language-server"] = pip_install("nginx-language-server", "nginx-language-server"),
@@ -86,7 +89,7 @@ local DEFAULT_INSTALL_EXEC = {
             "neocmakelsp",
         },
     },
-    ['jinja-lsp'] = {
+    ["jinja-lsp"] = {
         command = "cargo",
         args = {
             "install",
@@ -189,7 +192,6 @@ local install = function(sync, update, sources)
     for _, source in ipairs(sources) do
         external_install(source, sync, update)
     end
-
 end
 
 vim.api.nvim_create_user_command("ExternalInstallDefault", function(_)

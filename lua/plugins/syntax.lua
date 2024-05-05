@@ -67,9 +67,4 @@ return {
             vim.g.polyglot_disabled = { "ftdetect" }
         end,
     },
-    {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-        ft = "snippets",
-    },
 }

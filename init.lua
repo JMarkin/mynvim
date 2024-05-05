@@ -1,10 +1,14 @@
+-- Enable faster lua loader using byte-compilation
+-- https://github.com/neovim/neovim/commit/2257ade3dc2daab5ee12d27807c0b3bcf103cd29
+vim.loader.enable()
+
 table.unpack = table.unpack or unpack
 if not vim.uv then
     vim.uv = vim.loop
 end
 
 require("common")
--- require("indent")
+require("indent")
 local default_vim_keymap_set = vim.keymap.set
 
 vim.keymap.set = function(mode, lhs, rhs, opts)
