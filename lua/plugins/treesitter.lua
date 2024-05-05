@@ -97,7 +97,7 @@ return {
     -- enabled = false,
     lazy = true,
     -- ft = "qf",
-    event = { "VeryLazy", "FileReadPre", "BufReadPre" },
+    event = { "FileReadPre", "BufReadPre" },
     dependencies = {
         {
             "nvim-treesitter/nvim-treesitter-context",

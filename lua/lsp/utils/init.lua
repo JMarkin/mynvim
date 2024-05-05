@@ -97,7 +97,7 @@ local keys = {
 ---@param bufnr integer
 local function on_attach(client, bufnr)
     if is_large_file(bufnr, true) then
-        vim.schedule(function ()
+        vim.schedule(function()
             vim.lsp.buf_detach_client(bufnr, client.id)
         end)
         vim.bo[bufnr].tagfunc = nil
