@@ -66,7 +66,7 @@ if vim.g.modern_ui then
                     },
                     dim_inactive = true,
                     -- style = "multiplex",
-                    transparent = true,
+                    transparent = false,
                     lualine = {
                         transparent = true, -- lualine center bar transparency
                     },
