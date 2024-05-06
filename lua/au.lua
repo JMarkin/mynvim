@@ -114,7 +114,11 @@ local function augroup(group, ...)
     end
 end
 
-local ignore_syntax_ft = { cmp_menu = 1, incline = 1, NvimTree = 1 }
+local ignore_syntax_ft = { cmp_menu = 1, incline = 1, NvimTree = 1, NvimSeparator = 1, fidget = 1 }
+
+local FT_SYNTAX = {
+    ["jinja"] = "htmldjango",
+}
 
 local highlight = function(info)
     if vim.b.highlighted then
@@ -130,12 +134,18 @@ local highlight = function(info)
 
         local has_lang, _ = pcall(vim.treesitter.language.inspect, lang)
 
+        local force_syntax = FT_SYNTAX[ft]
+        if force_syntax then
+            ft = force_syntax
+            vim.bo[info.buf].syntax = ft
+        end
+
         if ft and not has_lang and not lf.is_large_file(info.buf, true) then
             vim.bo[info.buf].syntax = ft
             vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
         end
     end
-    vim.b.highlighted = true
+    vim.b.highlighted = ft
 end
 
 augroup("FastSyntax", {
@@ -143,6 +153,18 @@ augroup("FastSyntax", {
     {
         desc = "Fast syntax and filetype find",
         callback = highlight,
+    },
+})
+
+augroup("T", {
+    { "Syntax" },
+    {
+        desc = "Fast syntax and filetype find",
+        callback = function(info)
+            if vim.b.highlighted ~= vim.bo.ft then
+                vim.bo[info.buf].syntax = vim.b.highlighted
+            end
+        end,
     },
 })
 
