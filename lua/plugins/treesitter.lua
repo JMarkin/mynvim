@@ -234,6 +234,7 @@ return {
                 },
             },
             disable = is_disable,
+            excluded_filetypes = { "jinja", "htmldjango" },
         })
     end,
 }

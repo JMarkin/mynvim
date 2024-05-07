@@ -70,6 +70,7 @@ return {
 
         local header = require("ascii").get_random_global()
 
+        dashboard.autostart = true
         dashboard.config.layout[1].val = 1
 
         dashboard.section.header.val = header
