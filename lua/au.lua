@@ -257,3 +257,19 @@ augroup("auto_view", {
         end,
     },
 })
+
+-- nvim tree on .
+augroup("nvimtree on dot", {
+    { "VimEnter" },
+    {
+        desc = "nvimtree on dot",
+        callback = function(args)
+            if not args.file or #args.file == 0 then
+                return
+            end
+            if vim.fn.isdirectory(args.file) then
+                vim.cmd([[:NvimTree]])
+            end
+        end,
+    },
+})
