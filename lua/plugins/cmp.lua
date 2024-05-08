@@ -365,7 +365,7 @@ local cmp_config = function(sources, buffer, comparators)
             disallow_prefix_unmatching = false,
         },
         mapping = {
-            ["<C-z>"] = cmp.mapping(function()
+            ["<C-k>"] = cmp.mapping(function()
                 if cmp.visible_docs() then
                     cmp.close_docs()
                 else
@@ -607,14 +607,26 @@ return {
             {
                 "tzachar/cmp-ai",
                 cond = is_not_mini,
+                dev = true,
                 config = function()
                     local cmp_ai = require("cmp_ai.config")
+
+                    local host = vim.env.OLLAMA_HOST or "192.168.88.251"
+                    local port = vim.env.OLLAMA_PORt or "11434"
 
                     cmp_ai:setup({
                         max_lines = 200,
                         provider = "Ollama",
                         provider_options = {
-                            model = "codellama:7b-code",
+                            base_url = string.format("http://%s:%s/api/generate", host, port),
+                            model = "code-companion-gemma:latest",
+                            prompt = function(lines_before, lines_after)
+                                return string.format(
+                                    "<|fim_prefix|>%s<|fim_suffix|>%s<|fim_middle|>",
+                                    lines_before,
+                                    lines_after
+                                )
+                            end,
                         },
                         notify = true,
                         notify_callback = function(msg)

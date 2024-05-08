@@ -30,3 +30,4 @@ def rst_test(a):
     s.execute("select * from table")
     sa.text("select * from table")
     return [testcss, testhtml, testjs]
+

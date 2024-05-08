@@ -25,8 +25,8 @@ return {
             cd_type = "tab",
             opener = function(dir)
                 vim.cmd("tabnew")
-                require("yazi").yazi({}, vim.fn.fnameescape(dir))
-                -- vim.cmd("NvimTreeOpen " .. vim.fn.fnameescape(dir))
+                -- require("yazi").yazi({}, vim.fn.fnameescape(dir))
+                vim.cmd("NvimTreeOpen " .. vim.fn.fnameescape(dir))
             end,
             git = {
                 base_uri_format = "%s",
