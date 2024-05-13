@@ -136,15 +136,6 @@ augroup("SplitRightDefaults", {
     },
 })
 
-augroup("WinCloseJmp", {
-    "WinClosed",
-    {
-        nested = true,
-        desc = "Jump to last accessed window on closing the current one.",
-        command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
-    },
-})
-
 -- number toggle
 if vim.opt.relativenumber then
     augroup("NumberToggle", {
@@ -214,7 +205,9 @@ augroup("nvimtree on dot", {
                 return
             end
             if vim.fn.isdirectory(args.file) == 1 then
-                vim.cmd([[:NvimTree]])
+                vim.schedule(function()
+                    vim.cmd([[:NvimTree]])
+                end)
             end
         end,
     },
