@@ -88,7 +88,9 @@ end, {})
 ---@diagnostic disable-next-line: unused-local
 local is_disable = function(_lang, buf)
     local _type = is_large_file(buf)
-    return _type == FILE_TYPE.READ_ONLY or _type == FILE_TYPE.LARGE_SIZE
+
+    return _type ~= FILE_TYPE.NORMAL
+    -- return _type == FILE_TYPE.READ_ONLY or _type == FILE_TYPE.LARGE_SIZE
 end
 
 return {
@@ -99,36 +101,6 @@ return {
     -- ft = "qf",
     event = { "FileReadPre", "BufReadPre" },
     dependencies = {
-        {
-            "nvim-treesitter/nvim-treesitter-context",
-            enabled = false,
-            opts = {
-                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-                min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-                line_numbers = true,
-                multiline_threshold = 20, -- Maximum number of lines to show for a single context
-                trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-                mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
-                -- Separator between context and content. Should be a single character string, like '-'.
-                -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-                -- separator = "---",
-                zindex = 20, -- The Z-index of the context window
-                on_attach = function(buf)
-                    return not is_disable(nil, buf)
-                end,
-            },
-        },
-        {
-            "nvim-treesitter/nvim-treesitter-textobjects",
-            enabled = false,
-            init = function()
-                -- disable rtp plugin, as we only need its queries for mini.ai
-                -- In case other textobject modules are enabled, we will load them
-                -- once nvim-treesitter is loaded
-                require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-            end,
-        },
         {
             "m-demare/hlargs.nvim",
             -- dev = true,
