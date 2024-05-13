@@ -168,11 +168,11 @@ return {
                         latex = "rainbow-blocks",
                     },
                     priority = {
-                        [""] = 110,
-                        lua = 210,
+                        [""] = 210,
                     },
                     highlight = vim.g.rainbow_delimiters_highlight,
                 })
+                rainbow_delimiters.enable()
             end,
         },
     },
