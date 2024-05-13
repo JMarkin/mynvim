@@ -13,7 +13,7 @@ return {
     config = function()
         require("rest-nvim").setup({
             logs = {
-                level = "warn",
+                level = "error",
                 save = false,
             },
             result = {
