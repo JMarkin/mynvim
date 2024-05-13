@@ -29,7 +29,7 @@ local function get_buf_size(path)
         return vim.uv.fs_stat(path)
     end)
     if not (ok and stats) then
-        return
+        return 0
     end
     return math.floor(0.5 + (stats.size / (1024 * 1024)))
 end
@@ -50,6 +50,7 @@ local function is_large_file(bufnr, as_bool)
         if not ok then
             large_buf = nil
         end
+
         if large_buf ~= nil then
             return large_buf
         end
@@ -60,16 +61,12 @@ local function is_large_file(bufnr, as_bool)
         if ifind(ignore_ft, function(item, _)
             return vim.bo.ft == item
         end) then
-            return
+            return _type
         end
 
         bufnr = bufnr or vim.api.nvim_get_current_buf()
         local path = vim.api.nvim_buf_get_name(bufnr)
         local size = get_buf_size(path)
-
-        if not size then
-            return
-        end
 
         if size > max_file_size_readonly then
             vim.notify("LARGE FILE SIZE: READONLY " .. size, vim.log.levels.INFO)
@@ -92,12 +89,14 @@ local function is_large_file(bufnr, as_bool)
         vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
         return _type
     end
+
+    local _t = wrap()
+
     if not as_bool then
-        return wrap()
-    else
-        local _t = wrap()
-        return _t ~= FILE_TYPE.NORMAL
+        return _t
     end
+
+    return _t ~= FILE_TYPE.NORMAL
 end
 
 local function optimize_buffer(args)

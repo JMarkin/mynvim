@@ -26,7 +26,7 @@ local function on_attach(bufnr)
         api.tree.reload()
     end
 
-    -- FloatPreview.attach_nvimtree(bufnr)
+    FloatPreview.attach_nvimtree(bufnr)
 
     local function opts(desc)
         return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }

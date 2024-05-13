@@ -4,88 +4,87 @@ local is_not_mini = require("funcs").is_not_mini
 
 local enabled = true
 
-local mini_sources = {
-    {
-        name = "tags",
-        option = {
-            -- this is the default options, change them if you want.
-            -- Delayed time after user input, in milliseconds.
-            complete_defer = 50,
-            -- Use exact word match when searching `taglist`, for better searching
-            -- performance.
-            exact_match = true,
-            -- Prioritize searching result for current buffer.
-            current_buffer_only = true,
-        },
-    },
-    {
-        name = "omni",
-        option = {
-            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
-        },
-        max_item_count = 20,
+TAGS_SOURCE = {
+    name = "tags",
+    option = {
+        -- this is the default options, change them if you want.
+        -- Delayed time after user input, in milliseconds.
+        complete_defer = 100,
+        -- Max items when searching `taglist`.
+        max_items = 10,
+        -- The number of characters that need to be typed to trigger
+        -- auto-completion.
+        keyword_length = 3,
+        -- Use exact word match when searching `taglist`, for better searching
+        -- performance.
+        exact_match = false,
+        -- Prioritize searching result for current buffer.
+        current_buffer_only = false,
     },
 }
-
-local _sources = {
-    { name = "luasnip", keyword_length = 1, max_item_count = 5 },
-    {
-        name = "tags",
-        option = {
-            -- this is the default options, change them if you want.
-            -- Delayed time after user input, in milliseconds.
-            complete_defer = 100,
-            -- Max items when searching `taglist`.
-            max_items = 10,
-            -- The number of characters that need to be typed to trigger
-            -- auto-completion.
-            keyword_length = 3,
-            -- Use exact word match when searching `taglist`, for better searching
-            -- performance.
-            exact_match = false,
-            -- Prioritize searching result for current buffer.
-            current_buffer_only = false,
-        },
-    },
-    -- { name = "treesitter", keyword_length = 2, max_item_count = 5 },
-    {
-        name = "vim-dadbod-completion",
-        filetype = { "sql", "mssql", "plsql" },
-        max_item_count = 20,
-    },
-}
-local default_sources = vim.deepcopy(_sources)
-table.insert(default_sources, {
+OMNI_SOURCE = {
     name = "omni",
     option = {
         disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
     },
     max_item_count = 20,
-})
-
-local lsp_sources = vim.deepcopy(_sources)
-table.insert(lsp_sources, 1, { name = "diag-codes", in_comment = true })
-table.insert(lsp_sources, 1, { name = "nvim_lsp", max_item_count = 20 })
-table.insert(lsp_sources, {
+}
+LUASNIP_SOURCE = { name = "luasnip", keyword_length = 1, max_item_count = 5 }
+VIMDADBOD_SOURCE = {
+    name = "vim-dadbod-completion",
+    filetype = { "sql", "mssql", "plsql" },
+    max_item_count = 20,
+}
+DIAG_CODES_SOURCE = { name = "diag-codes", in_comment = true }
+LSP_SOURCE = { name = "nvim_lsp", max_item_count = 20 }
+RG_SOURCE = {
     name = "rg",
     keyword_length = 2,
     max_item_count = 5,
     option = { additional_arguments = "--max-depth 4" },
-})
+}
+NVIM_SOURCE = { name = "nvim_lua" }
 
-local nvim_sources = vim.deepcopy(lsp_sources)
-table.insert(nvim_sources, 1, { name = "nvim_lua" })
+local mini_sources = {
+    TAGS_SOURCE,
+    OMNI_SOURCE,
+}
+
+local default_sources = {
+    OMNI_SOURCE,
+    VIMDADBOD_SOURCE,
+    TAGS_SOURCE,
+    RG_SOURCE,
+    LUASNIP_SOURCE,
+}
+
+local lsp_sources = {
+    DIAG_CODES_SOURCE,
+    LSP_SOURCE,
+    VIMDADBOD_SOURCE,
+    TAGS_SOURCE,
+    RG_SOURCE,
+    LUASNIP_SOURCE,
+}
+
+local nvim_sources = {
+    NVIM_SOURCE,
+    DIAG_CODES_SOURCE,
+    LSP_SOURCE,
+    RG_SOURCE,
+    LUASNIP_SOURCE,
+}
 
 local default_comparators = function(compare)
     return {
-        require("cmp_tools").lspkind_comparator(),
+        require("cmp_tools").put_down_snippet,
         compare.offset,
         compare.exact,
-        require("cmp_tools").put_down_snippet,
         compare.score,
         compare.recently_used,
         compare.locality,
-        compare.kind,
+        require("cmp_tools").lspkind_comparator(),
+        compare.sort_text,
         compare.length,
         compare.order,
     }
@@ -93,22 +92,22 @@ end
 
 local rust_comparators = function(compare)
     return {
+        require("cmp_tools").put_down_snippet,
         -- deprioritize `.box`, `.mut`, etc.
-        require("cmp-rust").deprioritize_postfix,
+        require("cmp_tools").deprioritize_postfix,
         -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
-        require("cmp-rust").deprioritize_borrow,
+        require("cmp_tools").deprioritize_borrow,
         -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
-        require("cmp-rust").deprioritize_deref,
+        require("cmp_tools").deprioritize_deref,
         -- deprioritize `Into::into`, `Clone::clone`, etc.
-        require("cmp-rust").deprioritize_common_traits,
-        require("cmp_tools").lspkind_comparator(),
+        require("cmp-tools").deprioritize_common_traits,
         compare.offset,
         compare.exact,
-        require("cmp_tools").put_down_snippet,
         compare.score,
         compare.recently_used,
+        require("cmp_tools").lspkind_comparator(),
         compare.locality,
-        compare.kind,
+        compare.sort_text,
         compare.length,
         compare.order,
     }
@@ -116,15 +115,15 @@ end
 
 local python_comparators = function(compare)
     return {
-        require("cmp_tools").lspkind_comparator(),
+        require("cmp_tools").put_down_snippet,
         compare.offset,
         compare.exact,
-        require("cmp_tools").put_down_snippet,
         compare.score,
-        require("cmp-under-comparator").under,
+        require("cmp_tools").under,
         compare.recently_used,
         compare.locality,
-        compare.kind,
+        require("cmp_tools").lspkind_comparator(),
+        compare.sort_text,
         compare.length,
         compare.order,
     }
@@ -132,15 +131,16 @@ end
 
 local clang_comparators = function(compare)
     return {
+        require("cmp_tools").put_down_snippet,
         require("cmp_tools").lspkind_comparator(),
         compare.offset,
         compare.exact,
-        require("cmp_tools").put_down_snippet,
         compare.score,
         compare.recently_used,
         require("clangd_extensions.cmp_scores"),
         compare.locality,
         compare.kind,
+        compare.sort_text,
         compare.length,
         compare.order,
     }
@@ -252,13 +252,6 @@ local cmp_config = function(sources, buffer, comparators)
             expand = is_not_mini() and function(args)
                 luasnip.lsp_expand(args.body) -- For `luasnip` users.
             end,
-        },
-        matching = {
-            disallow_fuzzy_matching = false,
-            disallow_fullfuzzy_matching = false,
-            disallow_partial_fuzzy_matching = false,
-            disallow_partial_matching = false,
-            disallow_prefix_unmatching = false,
         },
         mapping = {
             ["<C-k>"] = cmp.mapping(function()
@@ -478,8 +471,6 @@ return {
         event = { "InsertEnter", "CmdlineEnter" },
         -- dev = true,
         dependencies = {
-            { "lukas-reineke/cmp-under-comparator", cond = is_not_mini, lazy = true },
-            { "ryo33/nvim-cmp-rust", cond = is_not_mini, lazy = true },
             { "lukas-reineke/cmp-rg", cond = is_not_mini },
             { "saadparwaiz1/cmp_luasnip", cond = is_not_mini },
             "hrsh7th/cmp-omni",

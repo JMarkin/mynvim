@@ -114,50 +114,6 @@ local function augroup(group, ...)
     end
 end
 
-local ignore_syntax_ft = { cmp_menu = 1, incline = 1, NvimTree = 1, NvimSeparator = 1, fidget = 1 }
-
-local highlight = function(info)
-    if vim.b.highlighted then
-        return
-    end
-
-    local ft = vim.bo.ft
-
-    if not ignore_syntax_ft[ft] then
-        -- local ft = vim.filetype.match({ buf = info.buf })
-        -- vim.bo.filetype = ft
-        local _, lang = pcall(vim.treesitter.language.get_lang, ft)
-
-        local has_lang, _ = pcall(vim.treesitter.language.inspect, lang)
-
-        if ft and not has_lang and not lf.is_large_file(info.buf, true) then
-            vim.bo[info.buf].syntax = ft
-            vim.bo[info.buf].omnifunc = "syntaxcomplete#Complete"
-        end
-    end
-    vim.b.highlighted = ft
-end
-
-augroup("FastSyntax", {
-    { "FileType" },
-    {
-        desc = "Fast syntax and filetype find",
-        callback = highlight,
-    },
-})
-
-augroup("T", {
-    { "Syntax" },
-    {
-        desc = "Fast syntax and filetype find",
-        callback = function(info)
-            if vim.b.highlighted ~= vim.bo.ft then
-                vim.bo[info.buf].syntax = vim.b.highlighted
-            end
-        end,
-    },
-})
-
 augroup("SplitRightDefaults", {
     "BufWinEnter",
     {
@@ -180,14 +136,14 @@ augroup("SplitRightDefaults", {
     },
 })
 
--- augroup("WinCloseJmp", {
---     "WinClosed",
---     {
---         nested = true,
---         desc = "Jump to last accessed window on closing the current one.",
---         command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
---     },
--- })
+augroup("WinCloseJmp", {
+    "WinClosed",
+    {
+        nested = true,
+        desc = "Jump to last accessed window on closing the current one.",
+        command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
+    },
+})
 
 -- number toggle
 if vim.opt.relativenumber then
@@ -257,7 +213,7 @@ augroup("nvimtree on dot", {
             if not args.file or #args.file == 0 then
                 return
             end
-            if vim.fn.isdirectory(args.file) then
+            if vim.fn.isdirectory(args.file) == 1 then
                 vim.cmd([[:NvimTree]])
             end
         end,

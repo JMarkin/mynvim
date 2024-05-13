@@ -335,10 +335,9 @@ return {
                 },
 
                 previewers = {
-                    -- check FastSyntax autocmd
                     builtin = {
-                        syntax = false, -- preview syntax highlight?
-                        treesitter = { enable = false, disable = {} },
+                        syntax = true, -- preview syntax highlight?
+                        treesitter = { enable = true, disable = {} },
                     },
                 },
                 grep = {
