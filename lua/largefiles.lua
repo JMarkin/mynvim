@@ -21,7 +21,6 @@ local ignore_ft = {
     "neotest-summary",
     "vista_kind",
     "sagaoutline",
-    "",
 }
 
 local function get_buf_size(path)
@@ -41,7 +40,7 @@ local FILE_TYPE = {
     READ_ONLY = 3,
 }
 
-local function is_large_file(bufnr, as_bool)
+local function is_large_file(bufnr, as_bool, path)
     local function wrap()
         if not bufnr then
             return false
@@ -65,7 +64,7 @@ local function is_large_file(bufnr, as_bool)
         end
 
         bufnr = bufnr or vim.api.nvim_get_current_buf()
-        local path = vim.api.nvim_buf_get_name(bufnr)
+        path = path or vim.api.nvim_buf_get_name(bufnr)
         local size = get_buf_size(path)
 
         if size > max_file_size_readonly then
@@ -83,10 +82,10 @@ local function is_large_file(bufnr, as_bool)
         end
 
         if _type ~= FILE_TYPE.NORMAL then
+            vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
             doau("LargeFile", {})
         end
 
-        vim.api.nvim_buf_set_var(bufnr, "large_buf", _type)
         return _type
     end
 
@@ -107,7 +106,7 @@ local function optimize_buffer(args)
         return
     end
 
-    local _type = is_large_file(bufnr)
+    local _type = is_large_file(bufnr, false, args.match)
 
     if _type == FILE_TYPE.NORMAL then
         return
