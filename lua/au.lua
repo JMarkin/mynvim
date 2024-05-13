@@ -116,10 +116,6 @@ end
 
 local ignore_syntax_ft = { cmp_menu = 1, incline = 1, NvimTree = 1, NvimSeparator = 1, fidget = 1 }
 
-local FT_SYNTAX = {
-    ["jinja"] = "htmldjango",
-}
-
 local highlight = function(info)
     if vim.b.highlighted then
         return
@@ -133,12 +129,6 @@ local highlight = function(info)
         local _, lang = pcall(vim.treesitter.language.get_lang, ft)
 
         local has_lang, _ = pcall(vim.treesitter.language.inspect, lang)
-
-        local force_syntax = FT_SYNTAX[ft]
-        if force_syntax then
-            ft = force_syntax
-            vim.bo[info.buf].syntax = ft
-        end
 
         if ft and not has_lang and not lf.is_large_file(info.buf, true) then
             vim.bo[info.buf].syntax = ft
