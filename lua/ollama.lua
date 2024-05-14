@@ -141,7 +141,7 @@ M.toggle = function()
 
     renderer:add_mappings({
         {
-            mode = { "n", "i" },
+            mode = { "n" },
             key = "q",
             handler = close,
         },
