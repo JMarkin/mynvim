@@ -59,7 +59,7 @@ return {
             adapters = {
                 require("neotest-python")({
                     dap = { justMyCode = false },
-                    args = { "--log-level", "DEBUG" },
+                    -- args = { "--log-level", "DEBUG", "--showlocals" },
                     runner = vim.g.python_test_runner or "pytest",
                 }),
                 require("neotest-rust")({}),

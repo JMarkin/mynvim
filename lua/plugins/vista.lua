@@ -8,6 +8,8 @@ return {
     init = function()
         vim.g.vista_update_on_text_changed = 1
         vim.g.vista_disable_statusline = 1
+        vim.g.vista_sidebar_width = 30
+        vim.g.vista_sidebar_open_cmd = "30vsplit"
     end,
     config = function()
         autocmd("FileType", {
@@ -18,6 +20,7 @@ return {
             },
             callback = function(event)
                 vim.keymap.set("n", "<space>T", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+                vim.cmd([[vertical resize 30]])
             end,
         })
     end,

@@ -121,12 +121,14 @@ augroup("SplitRightDefaults", {
         pattern = "*",
         callback = function(info)
             local change = false
-            if vim.o.filetype == "help" then
-                change = true
-            end
+            if vim.fn.winwidth("%") > 160 then
+                if vim.o.filetype == "help" then
+                    change = true
+                end
 
-            if vim.o.previewwindow then
-                change = true
+                if vim.o.previewwindow then
+                    change = true
+                end
             end
 
             if change then
@@ -137,12 +139,17 @@ augroup("SplitRightDefaults", {
 })
 
 -- number toggle
-if vim.opt.relativenumber then
+if vim.g.numbertoggle then
     augroup("NumberToggle", {
         { "InsertLeave", "CmdlineLeave" },
         {
-            callback = function()
-                if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
+            callback = function(event)
+                if
+                    vim.bo[event.buf].buflisted
+                    and vim.opt.number
+                    and vim.api.nvim_get_mode().mode ~= "i"
+                    and string.find(vim.fn.bufname(event.buf), "term://") == nil
+                then
                     vim.opt.relativenumber = true
                 end
             end,
@@ -150,9 +157,12 @@ if vim.opt.relativenumber then
     }, {
         { "InsertEnter", "CmdlineEnter" },
         {
-
-            callback = function()
-                if vim.o.nu then
+            callback = function(event)
+                if
+                    vim.bo[event.buf].buflisted
+                    and vim.opt.number
+                    and string.find(vim.fn.bufname(event.buf), "term://") == nil
+                then
                     vim.opt.relativenumber = false
                     vim.cmd("redraw")
                 end
