@@ -23,6 +23,7 @@ end
 require("keymap")
 require("funcs")
 require("au")
+require("term")
 
 if vim.g.neovide then
     require("neovide")
@@ -42,6 +43,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({ import = "plugins" }, {
+    concurrency = 6,
     change_detection = {
         enabled = false,
         notify = true,

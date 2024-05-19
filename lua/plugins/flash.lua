@@ -11,8 +11,11 @@ return {
         },
         label = {
             rainbow = {
-                enabled = true,
+                enabled = false,
             },
+        },
+        char = {
+            keys = { "f", "F", ";", "," },
         },
     },
     keys = {
