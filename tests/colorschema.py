@@ -6,7 +6,8 @@ import pathlib
 zxc
 """
 
-pathlib.Path('.').mkdir()
+pathlib.Path(".").mkdir()
+
 
 def sum_two_number(a: int, b: int) -> int:
     return a + b
