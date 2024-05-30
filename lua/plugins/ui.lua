@@ -15,7 +15,7 @@ return {
             timeout = 1000,
             stages = "static",
             level = vim.log.levels.INFO,
-            top_down = false,
+            top_down = true,
         },
         config = function(args)
             args.opts.background_colour = vim.g.notify_background_color

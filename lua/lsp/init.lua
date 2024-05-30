@@ -32,7 +32,7 @@ M.lsps = {
     }),
     cssls = default_lsp("vscode-css-language-server", "cssls"),
     jedi_language_server = default_lsp("jedi-language-server", "jedi_language_server"),
-    ruff_lsp = default_lsp("ruff-lsp", "ruff_lsp"),
+    ruff = default_lsp("ruff", "ruff"),
     -- pylsp = default_lsp("python-lsp-server", "pylsp", {
     --     filetypes = { "python", "python.django", "django" },
     --     settings = {

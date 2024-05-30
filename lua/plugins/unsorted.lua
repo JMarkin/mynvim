@@ -63,7 +63,7 @@ return {
             "nvim-lua/plenary.nvim",
         },
         opts = {
-            async = true,
+            async = false,
             args = {
                 "--extras=+r+q",
                 "--exclude=\\.*",
@@ -80,5 +80,9 @@ return {
             },
         },
         event = { "FileReadPost", "BufReadPost" },
+    },
+    {
+        "lewis6991/whatthejump.nvim",
+        keys = { "<C-i>", "<C-o>" },
     },
 }

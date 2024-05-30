@@ -7,7 +7,7 @@ return {
             local miniclue = require("mini.clue")
             miniclue.setup({
                 window = {
-                    delay = 300,
+                    delay = 200,
                 },
                 triggers = {
 

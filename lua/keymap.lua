@@ -10,11 +10,16 @@ vim.keymap.set(
     { "v" },
     { "<leader>w", "<leader>'" },
     "<Esc>:w<CR>",
-    { desc = "visual mode: escape to normal and save" }
+    { desc = "visual mode: escape to normal and save", silent = true }
 )
 
 vim.keymap.set({ "n" }, { "<leader>W" }, ":wa<CR>", { silent = true, desc = "normal mode: save" })
-vim.keymap.set({ "v" }, { "<leader>W" }, "<Esc>:wa<CR>", { desc = "visual mode: escape to normal and save" })
+vim.keymap.set(
+    { "v" },
+    { "<leader>W" },
+    "<Esc>:wa<CR>",
+    { silent = true, desc = "visual mode: escape to normal and save" }
+)
 
 vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
 

@@ -11,7 +11,6 @@ end
 local DEFAULT_INSTALL_EXEC = {
     -- pip
     ruff = pip_install("ruff", "ruff"),
-    ["ruff-lsp"] = pip_install("ruff-lsp", "ruff-lsp"),
     curlylint = pip_install("curlylint", "curlylint"),
     sqlfluff = pip_install("sqlfluff", "sqlfluff"),
     sqlfmt = pip_install("sqlfmt", "shandy-sqlfmt[jinjafmt]"),

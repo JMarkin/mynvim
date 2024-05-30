@@ -109,6 +109,10 @@ local function on_attach(client, bufnr)
         vim.keymap.set("n", table.unpack(keymap))
     end
 
+    if not client.supports_method(methods.textDocument_hover) then
+        client.server_capabilities.hoverProvider = false
+    end
+
     if client.supports_method(methods.textDocument_codeAction) then
         vim.keymap.set({ "n", "v" }, "<leader>ca", function()
             require("fzf-lua").lsp_code_actions({
@@ -156,17 +160,6 @@ local function on_attach(client, bufnr)
     end
 
     -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-    -- local ok, sig_help = pcall(require, "lsp_signature")
-    -- if ok then
-    --     sig_help.on_attach({
-    --         hint_enable = false,
-    --         -- hint_prefix = "",
-    --         -- hint_inline = function()
-    --         --     return true
-    --         -- end,
-    --     }, bufnr)
-    -- end
 
     return 1
 end
