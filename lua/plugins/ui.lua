@@ -76,6 +76,7 @@ return {
 
     {
         "brenoprata10/nvim-highlight-colors",
+        enabled = false,
         event = { "FileReadPost", "BufReadPost" },
         config = function()
             require("nvim-highlight-colors").turnOn()
