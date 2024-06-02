@@ -39,6 +39,9 @@ return {
     cmd = {
         "DiffviewOpen",
         "DiffviewFileHistory",
+        "DiffviewToggleFiles",
+        "DiffviewFocusFiles",
+        "DiffviewRefresh",
     },
     opts = {
         view = {

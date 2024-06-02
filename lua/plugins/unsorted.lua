@@ -83,6 +83,7 @@ return {
     },
     {
         "lewis6991/whatthejump.nvim",
+        -- enabled = false,
         keys = { "<C-i>", "<C-o>" },
     },
 }
