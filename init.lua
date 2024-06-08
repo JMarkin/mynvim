@@ -24,6 +24,7 @@ require("keymap")
 require("funcs")
 require("au")
 require("term")
+require("netrw_")
 
 if vim.g.neovide then
     require("neovide")

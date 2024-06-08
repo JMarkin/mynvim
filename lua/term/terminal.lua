@@ -18,6 +18,9 @@ Terminal.configure = function(bufnr)
     vim.opt_local.swapfile = false
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
+    vim.opt_local.winfixbuf = true
+    vim.opt_local.winfixheight = true
+    vim.opt_local.winfixwidth = true
     vim.cmd("startinsert!")
 end
 
