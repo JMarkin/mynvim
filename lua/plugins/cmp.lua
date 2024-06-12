@@ -277,16 +277,16 @@ local cmp_config = function(sources, buffer, comparators)
             }),
             ["<Tab>"] = move_down,
             ["<S-Tab>"] = move_up,
-            ["<C-]>"] = cmp.mapping(
-                cmp.mapping.complete({
-                    config = {
-                        sources = cmp.config.sources({
-                            { name = "cmp_ai" },
-                        }),
-                    },
-                }),
-                { "i" }
-            ),
+            -- ["<C-]>"] = cmp.mapping(
+            --     cmp.mapping.complete({
+            --         config = {
+            --             sources = cmp.config.sources({
+            --                 { name = "cmp_ai" },
+            --             }),
+            --         },
+            --     }),
+            --     { "i" }
+            -- ),
         },
         sources = sources,
         formatting = {
@@ -491,38 +491,39 @@ return {
             "dmitmel/cmp-cmdline-history",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-buffer",
-            {
-                "tzachar/cmp-ai",
-                cond = is_not_mini,
-                dev = true,
-                config = function()
-                    local cmp_ai = require("cmp_ai.config")
-
-                    local host = vim.env.OLLAMA_HOST or "192.168.88.251"
-                    local port = vim.env.OLLAMA_PORt or "11434"
-
-                    cmp_ai:setup({
-                        max_lines = 200,
-                        provider = "Ollama",
-                        provider_options = {
-                            base_url = string.format("http://%s:%s/api/generate", host, port),
-                            model = "code-companion-gemma:latest",
-                            prompt = function(lines_before, lines_after)
-                                return string.format(
-                                    "<|fim_prefix|>%s<|fim_suffix|>%s<|fim_middle|>",
-                                    lines_before,
-                                    lines_after
-                                )
-                            end,
-                        },
-                        notify = true,
-                        notify_callback = function(msg)
-                            vim.notify(msg)
-                        end,
-                        run_on_every_keystroke = false,
-                    })
-                end,
-            },
+            -- {
+            --     "tzachar/cmp-ai",
+            --     cond = is_not_mini,
+            --     -- dev = true,
+            --     config = function()
+            --         local cmp_ai = require("cmp_ai.config")
+            --
+            --         local host = vim.env.OLLAMA_HOST or "192.168.88.251"
+            --         local port = vim.env.OLLAMA_PORt or "11434"
+            --
+            --         cmp_ai:setup({
+            --             max_lines = 200,
+            --             provider = "Ollama",
+            --             provider_options = {
+            --                 base_url = string.format("http://%s:%s/api/generate", host, port),
+            --                 model = "codellama:7b-code",
+            --                 -- prompt = function(lines_before, lines_after)
+            --                 --     local prmpt =  string.format(
+            --                 --         "<|fim_prefix|>%s<|fim_suffix|>%s<|fim_middle|>",
+            --                 --         lines_before,
+            --                 --         lines_after
+            --                 --     )
+            --                 --     return prmpt
+            --                 -- end,
+            --             },
+            --             notify = true,
+            --             notify_callback = function(msg)
+            --                 vim.notify(msg)
+            --             end,
+            --             run_on_every_keystroke = true,
+            --         })
+            --     end,
+            -- },
         },
         config = function()
             local cmp = require("cmp")

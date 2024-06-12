@@ -25,6 +25,7 @@ require("funcs")
 require("au")
 require("term")
 require("netrw_")
+require("ai")
 
 if vim.g.neovide then
     require("neovide")
