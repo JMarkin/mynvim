@@ -3,7 +3,7 @@ return {
     config = function()
         require("gen").setup({
             debug = false,
-            model = "dolphin-llama3:8b-v2.9-q4_K_M", -- The default model to use.
+            model = "phi3:14b-medium-128k-instruct-q4_1", -- The default model to use.
             display_mode = "split", -- The display mode. Can be "float" or "split".
             show_prompt = true, -- Shows the Prompt submitted to Ollama.
             show_model = true, -- Displays which model you are using at the beginning of your chat session.
@@ -22,45 +22,6 @@ return {
             quit_map = "q", -- set keymap for close the response window
             retry_map = "<c-r>", -- set keymap to re-send the current prompt
         })
-        local Terminal = require("toggleterm.terminal").Terminal
-        local oatmeal = Terminal:new({
-            cmd = "oatmeal -e neovim --model dolphin-llama3:8b-v2.9-q4_K_M",
-            hidden = true,
-            direction = "tab",
-            on_open = function(term)
-                vim.cmd("startinsert")
-                vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-                vim.api.nvim_buf_set_keymap(
-                    term.bufnr,
-                    "n",
-                    "<A-a>",
-                    "<cmd>close<CR>",
-                    { noremap = true, silent = true }
-                )
-                vim.api.nvim_buf_set_keymap(
-                    term.bufnr,
-                    "t",
-                    "<A-a>",
-                    "<cmd>close<CR>",
-                    { noremap = true, silent = true }
-                )
-            end,
-        })
-        local function oatmeal_toggle()
-            oatmeal:toggle()
-        end
-        vim.keymap.set({ "n" }, "<A-a>", oatmeal_toggle, { desc = "Oatmeal", noremap = true, silent = true })
     end,
     cmd = "Gen",
-    keys = {
-        "<A-a>",
-        {
-            "<leader>]",
-            function()
-                require("ollama").toggle()
-            end,
-            mode = { "n", "v" },
-            desc = "AI",
-        },
-    },
 }

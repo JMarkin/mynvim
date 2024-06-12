@@ -251,4 +251,5 @@ local function setup_lsp(lsp_name, opts)
 end
 
 M.setup_lsp = setup_lsp
+
 return M

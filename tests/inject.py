@@ -31,3 +31,5 @@ def rst_test(a):
     sa.text("select * from table")
     return [testcss, testhtml, testjs]
 
+
+assert rs

@@ -354,5 +354,7 @@ return {
             group = fzf,
             command = 'lua require("fzf-lua").redraw()',
         })
+
+        require("fzf-lua").register_ui_select()
     end,
 }
