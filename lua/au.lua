@@ -222,3 +222,25 @@ augroup("nvimtree on dot", {
         end,
     },
 })
+
+-- syntaxes
+
+augroup("lazysyntaxes", {
+    { "VimEnter", "BufReadPre", "FileReadPre" },
+    {
+        desc = "add syntaxes",
+        callback = function(args)
+            require("syntx")
+        end,
+        once = true,
+    },
+})
+
+
+augroup("fastsyntax", {
+    { "BufWinEnter", "Syntax" },
+    {
+        pattern = "*",
+        command = "syn sync minlines=500 maxlines=500",
+    },
+})
