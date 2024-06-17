@@ -25,6 +25,7 @@ opt.equalalways             = false
 opt.updatetime              = 100
 opt.mousemoveevent          = true
 opt.number                  = true
+g.numbertoggle            = true
 opt.ruler                   = true
 opt.scrolloff               = 4
 opt.sidescrolloff           = 8
@@ -137,9 +138,10 @@ end
 opt.shada = ""
 vim.defer_fn(_rshada, 100)
 vim.api.nvim_create_autocmd("BufReadPre", { once = true, callback = _rshada })
+vim.api.nvim_create_autocmd("FileReadPre", { once = true, callback = _rshada })
 
 vim.cmd([[
-    syntax manual
+    syntax on
 ]])
 
 opt.backup = true
