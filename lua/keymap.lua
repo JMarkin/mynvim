@@ -1,3 +1,10 @@
+-- system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
+vim.keymap.set({ "n" }, "<leader>Y", '"+y$')
+
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
+vim.keymap.set({ "n", "v" }, "<leader>P", '"+P')
+
 vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
 vim.keymap.set({ "n", "v" }, "<C-e>", "<C-u>")
 
@@ -38,21 +45,6 @@ end, {})
 vim.api.nvim_create_user_command("UnicodeUndoEscape", function(_)
     vim.cmd([[:%s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g]])
 end, {})
-
--- ins-completion shortmaps
--- h ins-completion
-vim.cmd([[
-inoremap <C-F> <C-X><C-F>
-" inoremap <C-L> <C-X><C-L>
-" inoremap <C-N> <C-X><C-N>
-" inoremap <C-K> <C-X><C-K>
-" inoremap <C-T> <C-X><C-T>
-" inoremap <C-]> <C-X><C-]>
-" inoremap <C-D> <C-X><C-D>
-" inoremap <C-O> <C-X><C-O>
-" inoremap <C-s> <C-X><C-s>
-" inoremap <C-z> <C-N><C-P>
-]])
 
 -- Tabpages
 ---@param tab_action function

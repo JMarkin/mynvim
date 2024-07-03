@@ -45,7 +45,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({ import = "plugins" }, {
-    concurrency = 6,
+    concurrency = 10,
     change_detection = {
         enabled = false,
         notify = true,
@@ -83,6 +83,23 @@ require("lazy").setup({ import = "plugins" }, {
         loader = false,
         -- Track each new require in the Lazy profiling tab
         require = false,
+    },
+    {
+        pkg = {
+            enabled = true,
+            cache = vim.fn.stdpath("state") .. "/lazy/pkg-cache.lua",
+            -- the first package source that is found for a plugin will be used.
+            sources = {
+                "lazy",
+                "rockspec", -- will only be used when rocks.enabled is true
+                "packspec",
+            },
+        },
+        rocks = {
+            enabled = true,
+            root = vim.fn.stdpath("data") .. "/lazy-rocks",
+            server = "https://nvim-neorocks.github.io/rocks-binaries/",
+        },
     },
 })
 local should_profile = os.getenv("NVIM_PROFILE")

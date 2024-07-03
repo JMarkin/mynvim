@@ -61,7 +61,7 @@ return {
             },
             merge_tool = {
                 -- Config for conflicted files in diff views during a merge or rebase.
-                layout = "diff3_mixed",
+                layout = "diff4_mixed",
                 disable_diagnostics = true,
             },
             file_history = {

@@ -108,7 +108,7 @@ opt.relativenumber          = true
 
 -- stylua: ignore end
 
-opt.clipboard:append("unnamedplus")
+-- opt.clipboard:append("unnamedplus")
 opt.shortmess:append({ W = false, I = true, c = true, C = true, A = false })
 
 if g.modern_ui then

@@ -27,7 +27,7 @@ local keys = {
         { desc = "Search: Symbols" },
     },
     {
-        "gr",
+        "grr",
         function()
             require("fzf-lua").lsp_references({ multiprocess = true, ignore_current_line = true })
         end,
@@ -72,13 +72,13 @@ local keys = {
         { silent = true, desc = "Lang: show workspace disagnostic" },
     },
     {
-        "<leader>lr",
+        "grn",
         "<cmd>Lspsaga rename<CR>",
         { silent = true, desc = "Lang: rename" },
     },
     {
 
-        "<leader>lR",
+        "grN",
         "<cmd>Lspsaga rename ++project<CR>",
         { silent = true, desc = "Lang: rename project" },
     },
@@ -88,6 +88,7 @@ local keys = {
         { desc = "Tagbar", silent = true },
     },
 }
+
 --- https://github.com/neovim/nvim-lspconfig/blob/f4619ab31fc4676001ea05ae8200846e6e7700c7/plugin/lspconfig.lua#L123
 ---@param client vim.lsp.Client
 ---@param bufnr integer
@@ -114,7 +115,7 @@ local function on_attach(client, bufnr)
     end
 
     if client.supports_method(methods.textDocument_codeAction) then
-        vim.keymap.set({ "n", "v" }, "<leader>ca", function()
+        vim.keymap.set({ "n", "v" }, "gra", function()
             require("fzf-lua").lsp_code_actions({
                 winopts = {
                     relative = "cursor",

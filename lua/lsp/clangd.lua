@@ -10,7 +10,7 @@ return {
     end,
     setup = function()
         local opts = {
-            cmd = { "clangd", "--malloc-trim", "--background-index=false", "--clang-tidy" },
+            cmd = { "clangd", "--background-index=false", "--clang-tidy" },
         }
 
         local clangd_extensions_setuped = 0
