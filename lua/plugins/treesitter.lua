@@ -35,6 +35,7 @@ local syntax_langs = {
     "toml",
     "proto",
     "http",
+    "hurl",
     "make",
     "cmake",
     "dockerfile",

@@ -1,4 +1,19 @@
 local maxline = require("funcs").maxline
+local ifind = require("funcs").ifind
+
+local function ignore_dirs(path)
+    if
+        ifind({ ".git", ".venv", ".ruff_cache", ".mypy_cache", ".pytest_cache" }, function(val, index)
+            if string.find(path, val) then
+                return true
+            end
+            return false
+        end) ~= nil
+    then
+        return true
+    end
+    return false
+end
 
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
@@ -94,6 +109,7 @@ return {
     -- dev = true,
     -- dir = "~/projects/nvim-tree.lua",
     dependencies = {
+        "antosha417/nvim-lsp-file-operations",
         {
             "JMarkin/nvim-tree.lua-float-preview",
             lazy = true,
@@ -145,6 +161,7 @@ return {
         vim.keymap.set({ "n" }, { "<space>f", "<A-f>" }, "<Cmd>NvimTreeOpen<CR>", { desc = "FileTree" })
     end,
     config = function()
+        require("lsp-file-operations").setup()
         require("nvim-tree").setup({
             on_attach = on_attach,
             disable_netrw = false,
@@ -205,6 +222,13 @@ return {
                 remove_file = {
                     close_window = true,
                 },
+            },
+            git = {
+                enable = true,
+                disable_for_dirs = ignore_dirs,
+            },
+            filesystem_watchers = {
+                ignore_dirs = ignore_dirs,
             },
         })
     end,

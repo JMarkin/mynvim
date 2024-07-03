@@ -84,6 +84,10 @@ local get_prompt = function(state)
                 .. state.code
                 .. "\n```"
         end,
+        [OPTIONS.SQL] = function()
+            return "Generate correct sql query by following text, only output result in format:\n```sql```"
+                .. state.text
+        end,
     })
 end
 
