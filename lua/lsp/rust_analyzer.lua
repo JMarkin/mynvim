@@ -27,5 +27,6 @@ return {
                 },
             },
         }
+        require("rustaceanvim")
     end,
 }

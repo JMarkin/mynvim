@@ -12,42 +12,42 @@ return {
     },
     keys = {
         {
-            "<leader>T",
+            "<space>T",
             function()
                 require("neotest").summary.toggle()
             end,
             desc = "Tests",
         },
         {
-            "<leader>lto",
+            "<leader>to",
             function()
                 require("neotest").output_panel.toggle()
             end,
             desc = "Tests: output",
         },
         {
-            "<leader>ltt",
+            "<leader>tt",
             function()
                 require("neotest").run.run()
             end,
             desc = "Tests: run nearest test",
         },
         {
-            "<leader>lts",
+            "<leader>ts",
             function()
                 require("neotest").run.stop()
             end,
             desc = "Tests: stop nearest test",
         },
         {
-            "<leader>lta",
+            "<leader>ta",
             function()
                 require("neotest").run.attach()
             end,
             desc = "Tests: attach nearest test",
         },
         {
-            "<leader>ltf",
+            "<leader>tf",
             function()
                 require("neotest").run.run(vim.fn.expand("%"))
             end,

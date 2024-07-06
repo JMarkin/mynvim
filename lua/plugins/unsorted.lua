@@ -1,17 +1,6 @@
 return {
     "antoinemadec/FixCursorHold.nvim",
 
-    {
-        "max397574/better-escape.nvim",
-        enabled = true,
-        event = "InsertEnter",
-        opts = {
-            mapping = { "jj" },
-            clear_empty_lines = false,
-            keys = "<Esc>",
-        },
-    },
-
     { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", event = "VeryLazy" },
 
     {
@@ -66,6 +55,7 @@ return {
             "nvim-lua/plenary.nvim",
         },
         opts = {
+            autostart = false,
             async = false,
             args = {
                 "--extras=+r+q",
@@ -82,7 +72,11 @@ return {
                 "--exclude=__file__",
             },
         },
-        event = { "FileReadPost", "BufReadPost" },
+        cmd = {
+            "GenCTags",
+            "GenTagsEnable",
+            "GenTagsDisable",
+        },
     },
     {
         "lewis6991/whatthejump.nvim",
