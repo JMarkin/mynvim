@@ -357,4 +357,10 @@ return {
 
         require("fzf-lua").register_ui_select()
     end,
+    init = function()
+        vim.ui.select = function(...)
+            require("lazy").load({ plugins = { "fzf-lua" } })
+            return vim.ui.select(...)
+        end
+    end,
 }

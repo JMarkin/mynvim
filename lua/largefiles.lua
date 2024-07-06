@@ -21,6 +21,7 @@ local ignore_ft = {
     "neotest-summary",
     "vista_kind",
     "sagaoutline",
+    "httpResult",
 }
 
 local function get_buf_size(path)

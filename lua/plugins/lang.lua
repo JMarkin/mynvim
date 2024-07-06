@@ -80,8 +80,8 @@ return {
     {
         "mrcjkb/rustaceanvim",
         version = "^4", -- Recommended
-        ft = { "rust" },
         cond = is_not_mini,
+        lazy = true,
         -- enabled = false,
     },
     {

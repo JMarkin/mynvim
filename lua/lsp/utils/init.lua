@@ -82,11 +82,11 @@ local keys = {
         "<cmd>Lspsaga rename ++project<CR>",
         { silent = true, desc = "Lang: rename project" },
     },
-    {
-        "<space>T",
-        ":Vista nvim_lsp<cr>",
-        { desc = "Tagbar", silent = true },
-    },
+    -- {
+    --     "<space>T",
+    --     ":Vista nvim_lsp<cr>",
+    --     { desc = "Tagbar", silent = true },
+    -- },
 }
 
 --- https://github.com/neovim/nvim-lspconfig/blob/f4619ab31fc4676001ea05ae8200846e6e7700c7/plugin/lspconfig.lua#L123

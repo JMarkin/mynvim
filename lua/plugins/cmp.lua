@@ -100,7 +100,7 @@ local rust_comparators = function(compare)
         -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
         require("cmp_tools").deprioritize_deref,
         -- deprioritize `Into::into`, `Clone::clone`, etc.
-        require("cmp-tools").deprioritize_common_traits,
+        require("cmp_tools").deprioritize_common_traits,
         compare.offset,
         compare.exact,
         compare.score,
