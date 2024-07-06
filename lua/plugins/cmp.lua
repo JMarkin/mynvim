@@ -243,10 +243,8 @@ local cmp_config = function(sources, buffer, comparators)
                 auto_open = false,
             },
         },
-        experimesntal = {
-            ghost_text = function()
-                return not has_words_after()
-            end,
+        experimental = {
+            ghost_text = true,
         },
         snippet = {
             expand = is_not_mini() and function(args)
@@ -528,6 +526,12 @@ return {
         config = function()
             local cmp = require("cmp")
             local cmp_core = require("cmp.core")
+            local cmp_utils_keymap = require("cmp.utils.keymap")
+
+            cmp_utils_keymap.normalize = function(keys)
+                return vim.fn.keytrans(cmp_utils_keymap.t(keys))
+            end
+
             ---@type integer
             local last_changed = 0
             local _cmp_on_change = cmp_core.on_change
