@@ -38,7 +38,7 @@ Terminal.open = function(command, split_dir)
         split_dir = "tabnew"
     end
 
-    vim.cmd(split_dir .. " term://" .. command)
+    vim.cmd(split_dir .. " | redraw! | terminal " .. command)
 
     local bufnr = vim.api.nvim_get_current_buf()
 
