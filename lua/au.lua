@@ -3,18 +3,6 @@ local groupid = vim.api.nvim_create_augroup
 
 local lf = require("largefiles")
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    group = groupid("hl_yank", { clear = true }),
-    pattern = "*",
-    desc = "hightlight on yank",
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = "DiffChange",
-            timeout = 100,
-        })
-    end,
-})
-
 autocmd({ "BufReadPre", "FileReadPre" }, {
     group = groupid("large_fiels", { clear = true }),
     pattern = { "*" },

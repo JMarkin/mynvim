@@ -14,28 +14,19 @@ return {
             i = {
                 j = {
                     k = "<Esc>",
-                    j = "<Esc>",
-                },
-                l = {
-                    l = "<Esc>",
-                },
-                k = {
-                    k = "<Esc>",
-                },
-                h = {
-                    h = "<Esc>",
+                    n = "<Esc>",
                 },
             },
             c = {
                 j = {
                     k = "<Esc>",
-                    j = "<Esc>",
+                    n = "<Esc>",
                 },
             },
             t = {
                 j = {
                     k = "<Esc>",
-                    j = "<Esc>",
+                    n = "<Esc>",
                 },
             },
             v = {
@@ -45,7 +36,7 @@ return {
             },
             s = {
                 j = {
-                    k = "<Esc>",
+                    n = "<Esc>",
                 },
             },
         },

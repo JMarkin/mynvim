@@ -1,3 +1,12 @@
+vim.g.firenvim_config = {
+    -- config values, like in my case:
+    localSettings = {
+        [".*"] = {
+            takeover = "never",
+        },
+    },
+}
+
 return {
     "glacambre/firenvim",
 
@@ -7,16 +16,9 @@ return {
     build = function()
         vim.fn["firenvim#install"](0)
     end,
+    module = false,
     config = function()
         vim.opt.guifont = "JetBrainsMonoNL Nerd Font Mono:h10"
-        vim.g.firenvim_config = {
-            -- config values, like in my case:
-            localSettings = {
-                [".*"] = {
-                    takeover = "never",
-                },
-            },
-        }
         vim.o.laststatus = 0
     end,
 }

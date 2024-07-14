@@ -123,4 +123,13 @@ return {
         },
         lazy = true,
     },
+    {
+        "mei28/luminate.nvim",
+        event = { "VeryLazy" },
+        config = function()
+            require("luminate").setup({
+                duration = 100,
+            })
+        end,
+    },
 }
