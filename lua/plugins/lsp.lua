@@ -103,16 +103,7 @@ return {
             require("lspsaga").setup(opts)
         end,
     },
-    -- {
-    --     "j-hui/fidget.nvim",
-    --     opts = {},
-    --     event = "LspAttach",
-    -- },
     { "folke/neodev.nvim", lazy = true, opts = {
         lspconfig = false,
     } },
-    -- {
-    --     "ray-x/lsp_signature.nvim",
-    --     lazy = true,
-    -- },
 }
