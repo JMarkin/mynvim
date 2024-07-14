@@ -141,10 +141,6 @@ vim.defer_fn(_rshada, 100)
 vim.api.nvim_create_autocmd("BufReadPre", { once = true, callback = _rshada })
 vim.api.nvim_create_autocmd("FileReadPre", { once = true, callback = _rshada })
 
-vim.cmd([[
-    syntax on
-]])
-
 opt.backup = true
 opt.backupdir:remove(".")
 

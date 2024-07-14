@@ -1,19 +1,7 @@
 local maxline = require("funcs").maxline
 local ifind = require("funcs").ifind
 
-local function ignore_dirs(path)
-    if
-        ifind({ ".git", ".venv", ".ruff_cache", ".mypy_cache", ".pytest_cache" }, function(val, index)
-            if string.find(path, val) then
-                return true
-            end
-            return false
-        end) ~= nil
-    then
-        return true
-    end
-    return false
-end
+local ignore_dirs_t = { ".git", ".venv", ".ruff_cache", ".mypy_cache", ".pytest_cache" }
 
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
@@ -225,10 +213,10 @@ return {
             },
             git = {
                 enable = true,
-                disable_for_dirs = ignore_dirs,
+                disable_for_dirs = ignore_dirs_t,
             },
             filesystem_watchers = {
-                ignore_dirs = ignore_dirs,
+                ignore_dirs = ignore_dirs_t,
             },
         })
     end,
