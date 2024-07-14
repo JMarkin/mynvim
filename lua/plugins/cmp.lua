@@ -463,7 +463,9 @@ return {
         end,
     },
     {
-        "hrsh7th/nvim-cmp",
+        "JMarkin/nvim-cmp",
+        branch = "my",
+        dev = true,
         enabled = enabled,
         lazy = true,
         event = { "InsertEnter", "CmdlineEnter" },

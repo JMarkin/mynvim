@@ -25,7 +25,7 @@ opt.equalalways             = false
 opt.updatetime              = 100
 opt.mousemoveevent          = true
 opt.number                  = true
-g.numbertoggle            = true
+g.numbertoggle              = true
 opt.ruler                   = true
 opt.scrolloff               = 4
 opt.sidescrolloff           = 8
@@ -102,9 +102,10 @@ opt.smartcase               = true
 
 opt.termguicolors           = true
 
-opt.textwidth               = 120
+opt.textwidth               = 80
 
 opt.relativenumber          = true
+opt.sessionoptions          = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 
 -- stylua: ignore end
 
