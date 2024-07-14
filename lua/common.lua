@@ -4,10 +4,8 @@ local opt = vim.opt
 g.has_ui = #vim.api.nvim_list_uis() > 0
 g.modern_ui = (g.has_ui and vim.env.DISPLAY ~= nil) or string.format("%s", vim.env.TERM):find("256")
 
-if vim.fn.executable("bash") then
-    opt.shell = "bash"
-end
 -- stylua: ignore start
+opt.shell                   = 'sh'
 g.snips_author              = vim.env.AUTHOR or "Jury Markin"
 g.snips_email               = vim.env.EMAIL or "me@jmarkin.ru"
 g.snips_github              = vim.env.GITHUB or "https://github.com/JMarkin"
@@ -123,6 +121,10 @@ end
 
 if not vim.g.modern_ui then
     opt.termguicolors = false
+end
+
+if vim.fn.executable("bash") then
+    opt.shell = "bash"
 end
 
 ---Restore 'shada' option and read from shada once
