@@ -107,7 +107,7 @@ return {
                 end,
             })
         end,
-        event = { "FileReadPre", "BufReadPre" },
+        event = vim.g.pre_load_events,
         keys = {
             "<leader>gS",
             "<leader>gu",

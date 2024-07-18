@@ -17,6 +17,6 @@ return {
                 end,
             })
         end,
-        event = { "FileReadPost", "BufReadPost" },
+        event = vim.g.post_load_events,
     },
 }

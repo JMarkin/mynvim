@@ -3,6 +3,8 @@ local opt = vim.opt
 
 g.has_ui = #vim.api.nvim_list_uis() > 0
 g.modern_ui = (g.has_ui and vim.env.DISPLAY ~= nil) or string.format("%s", vim.env.TERM):find("256")
+vim.g.post_load_events = { "BufReadPost", "FileReadPost", "BufNewFile" }
+vim.g.pre_load_events = { "BufReadPre", "FileReadPre", "BufNewFile" }
 
 -- stylua: ignore start
 opt.shell                   = 'sh'

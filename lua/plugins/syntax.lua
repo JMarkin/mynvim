@@ -1,7 +1,7 @@
 return {
     {
         "sheerun/vim-polyglot",
-        event = { "BufReadPre", "FileReadPre" },
+        event = vim.g.pre_load_events,
         init = function()
             vim.cmd([[
                 syntax on

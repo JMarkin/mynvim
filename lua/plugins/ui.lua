@@ -72,7 +72,7 @@ return {
     {
         "brenoprata10/nvim-highlight-colors",
         enabled = true,
-        event = { "FileReadPost", "BufReadPost" },
+        event = vim.g.post_load_events,
         config = function()
             require("nvim-highlight-colors").turnOn()
         end,
@@ -99,7 +99,7 @@ return {
     },
     {
         "tzachar/local-highlight.nvim",
-        event = { "FileReadPost", "BufReadPost" },
+        event = vim.g.post_load_events,
         opts = {
             insert_mode = false,
         },
