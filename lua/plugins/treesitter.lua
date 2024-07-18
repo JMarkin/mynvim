@@ -100,7 +100,7 @@ return {
     -- enabled = false,
     lazy = true,
     -- ft = "qf",
-    event = { "FileReadPre", "BufReadPre" },
+    event = vim.g.pre_load_events,
     dependencies = {
         {
             "m-demare/hlargs.nvim",
@@ -112,6 +112,7 @@ return {
             -- enabled = false,
             init = function()
                 vim.g.matchup_transmute_enabled = 1
+
                 vim.g.matchup_delim_noskips = 2
                 vim.g.matchup_matchparen_deferred = 0
                 vim.g.matchup_delim_start_plaintext = 1

@@ -3,7 +3,7 @@ local groupid = vim.api.nvim_create_augroup
 
 local lf = require("largefiles")
 
-autocmd({ "BufReadPre", "FileReadPre" }, {
+autocmd(vim.g.pre_load_events, {
     group = groupid("large_fiels", { clear = true }),
     pattern = { "*" },
     callback = lf.optimize_buffer,

@@ -2,7 +2,7 @@ local is_not_mini = require("funcs").is_not_mini
 
 local ftMap = {
     vim = "treesitter",
-    python = "indent",
+    python = "treesitter",
 }
 
 local function customizeSelector(bufnr)
@@ -57,7 +57,7 @@ return {
     -- enabled = false,
     cond = is_not_mini,
     dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
-    event = "BufReadPost",
+    event = vim.g.post_load_events,
     opts = {
         fold_virt_text_handler = handler,
         provider_selector = function(_, filetype, _)
@@ -68,6 +68,7 @@ return {
             default = { "imports", "comment" },
             json = { "array" },
             c = { "comment", "region" },
+            python = { "comment" },
         },
         preview = {
             win_config = {
@@ -90,6 +91,7 @@ return {
         vim.o.foldenable = true
     end,
     keys = {
+        "z",
         {
             "zR",
             function()

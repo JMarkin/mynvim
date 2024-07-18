@@ -61,9 +61,9 @@ local function tabswitch(tab_action, default_count)
         vim.cmd.tablast()
     end
 end
-vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext))
-vim.keymap.set({ "n", "x" }, "gT", tabswitch(vim.cmd.tabprev))
-vim.keymap.set({ "n", "x" }, "gy", tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+vim.keymap.set({ "n", "x" }, "gt", tabswitch(vim.cmd.tabnext), { desc = "Tabs: next" })
+vim.keymap.set({ "n", "x" }, "gT", tabswitch(vim.cmd.tabprev), { desc = "Tabs: prev" })
+vim.keymap.set({ "n", "x" }, "gy", tabswitch(vim.cmd.tabprev), { desc = "Tabs: prev" }) -- gT is too hard to press
 
 vim.keymap.set("n", "<space>t", ":$tabnew<CR>", { desc = "Tabs: new" })
 vim.keymap.set("n", "<space>d", ":tabclose<CR>", { desc = "Tabs: close" })

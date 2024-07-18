@@ -21,5 +21,5 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter" },
     opts = {},
     cond = is_not_mini,
-    event = { "BufReadPost", "FileReadPost" },
+    event = vim.g.post_load_events,
 }

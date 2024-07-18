@@ -4,7 +4,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
-        event = { "FileReadPre", "BufReadPre" },
+        event = vim.g.pre_load_events,
         config = function()
             require("lsp").setup()
 
