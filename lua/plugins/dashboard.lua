@@ -65,15 +65,14 @@ return {
     cond = function()
         return not vim.env.YAZI_ID
     end,
-    opts = function()
-        local dashboard = require("alpha.themes.dashboard")
+    config = function()
+        local height = tonumber(vim.api.nvim_command_output("echo &lines")) or 0
 
-        local header = require("ascii").get_random_global()
+        local dashboard = require("alpha.themes.dashboard")
 
         dashboard.autostart = true
         dashboard.config.layout[1].val = 1
 
-        dashboard.section.header.val = header
         dashboard.section.buttons.val = {
             dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
             dashboard.button("f", " " .. " Find file", ":FzfLua files<cr>"),
@@ -101,9 +100,15 @@ return {
         dashboard.section.header.opts.hl = "AlphaHeader"
         dashboard.section.buttons.opts.hl = "AlphaButtons"
         dashboard.section.footer.opts.hl = "AlphaFooter"
-        return dashboard
-    end,
-    config = function(_, dashboard)
+
+        if height > 60 then
+            local header = require("ascii").get_random_global()
+            dashboard.section.header.val = header
+            run_neofetch(dashboard)
+        else
+            dashboard.section.header.val = ''
+        end
+
         -- close Lazy and re-open when the dashboard is ready
         local ft = vim.filetype.match({ buf = 0 })
         if ft == "lazy" then
@@ -117,7 +122,6 @@ return {
         end
 
         require("alpha").setup(dashboard.opts)
-        run_neofetch(dashboard)
         vim.api.nvim_create_autocmd("User", {
             pattern = "LazyVimStarted",
             callback = function()
@@ -126,12 +130,14 @@ return {
                 M.version = string.format("󰥱 v%s", vim.version())
                 M.plugins = "⚡Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 
-                draw_footer(dashboard)
+                if height > 60 then
+                    draw_footer(dashboard)
+                end
             end,
         })
     end,
     dependencies = {
         "nvim-web-devicons",
-        "JMarkin/ascii.nvim",
+        { "JMarkin/ascii.nvim", lazy = true },
     },
 }
