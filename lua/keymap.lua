@@ -5,7 +5,7 @@ vim.keymap.set({ "n" }, "<leader>Y", '"+y$')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 vim.keymap.set({ "n", "v" }, "<leader>P", '"+P')
 
-vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit" })
+vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit", silent = true, })
 vim.keymap.set({ "n", "v" }, "<C-e>", "<C-u>")
 
 vim.keymap.set({ "n" }, "o", "o<Esc>", { desc = "Add line under" })

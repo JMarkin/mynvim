@@ -83,4 +83,11 @@ return {
         -- enabled = false,
         keys = { "<C-i>", "<C-o>" },
     },
+
+    {
+        "m4xshen/hardtime.nvim",
+        event = "VeryLazy",
+        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+        opts = {},
+    },
 }
