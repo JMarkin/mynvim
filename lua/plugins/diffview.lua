@@ -15,8 +15,10 @@ vim.api.nvim_create_autocmd("User", {
     group = gr,
     pattern = "DiffviewViewEnter",
     callback = function(event)
-        pcall(vim.cmd, ":WindowsDisableAutowidth")
+        pcall(vim.cmd, ":Hardtime disable")
+        -- pcall(vim.cmd, ":WindowsDisableAutowidth")
         vim.keymap.set("n", "q", DiffviewToggle, { silent = true })
+
     end,
 })
 
@@ -24,7 +26,8 @@ vim.api.nvim_create_autocmd("User", {
     group = gr,
     pattern = "DiffviewViewLeave",
     callback = function()
-        pcall(vim.cmd, ":WindowsDisableAutowidth")
+        pcall(vim.cmd, ":Hardtime enable")
+        -- pcall(vim.cmd, ":WindowsDisableAutowidth")
         vim.keymap.del("n", "q")
     end,
 })

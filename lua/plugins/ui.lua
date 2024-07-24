@@ -125,11 +125,14 @@ return {
     },
     {
         "mei28/luminate.nvim",
-        enabled = false,
+        enabled = true,
         event = { "VeryLazy" },
         config = function()
             require("luminate").setup({
                 duration = 100,
+                paste = {
+                    enabled = false,
+                },
             })
         end,
     },
