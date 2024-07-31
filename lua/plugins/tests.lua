@@ -12,7 +12,7 @@ return {
     },
     keys = {
         {
-            "<space>T",
+            "<leader>T",
             function()
                 require("neotest").summary.toggle()
             end,

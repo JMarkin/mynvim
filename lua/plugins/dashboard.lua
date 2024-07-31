@@ -101,7 +101,7 @@ return {
         dashboard.section.buttons.opts.hl = "AlphaButtons"
         dashboard.section.footer.opts.hl = "AlphaFooter"
 
-        if height > 60 then
+        if height > 40 then
             local header = require("ascii").get_random_global()
             dashboard.section.header.val = header
             run_neofetch(dashboard)
