@@ -98,12 +98,19 @@ return {
         {
             "<leader>st",
             function()
-                require("fzf-lua").tags({ multiprocess = true })
+                require("fzf-lua").btags({ multiprocess = true })
             end,
-            desc = "Search: tags",
+            desc = "Search: tags current file",
         },
         {
-            "<leader>st",
+            "<leader>sT",
+            function()
+                require("fzf-lua").tags({ multiprocess = true })
+            end,
+            desc = "Search: tags global",
+        },
+        {
+            "<leader>sT",
             function()
                 require("fzf-lua").tags_grep_visual({ multiprocess = true })
             end,
