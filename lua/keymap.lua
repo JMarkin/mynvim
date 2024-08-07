@@ -32,13 +32,11 @@ vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
 
 vim.api.nvim_create_user_command("InstallDefault", function(_)
     vim.cmd.TSInstallDefault()
-    require("lsp").install()
     vim.cmd.ExternalInstallDefault()
 end, {})
 
 vim.api.nvim_create_user_command("UpdateDefault", function(_)
     vim.cmd.TSInstallDefault()
-    require("lsp").install(false, true)
     vim.cmd.ExternalUpdateDefault()
 end, {})
 

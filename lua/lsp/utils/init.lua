@@ -231,6 +231,7 @@ local function setup_lsp(lsp_name, opts)
         root_dir = lsp_util.root_pattern(table.unpack(vim.g.root_pattern)),
         capabilities = capabilities,
         on_attach = on_attach,
+        autostart = vim.g.lsp_autostart,
     }
     opts = vim.tbl_extend("force", opts, _opts)
 

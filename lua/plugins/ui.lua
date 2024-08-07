@@ -136,4 +136,9 @@ return {
             })
         end,
     },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {},
+        event = vim.g.post_load_events,
+    },
 }

@@ -1,6 +1,10 @@
 import json
 
 
+def word():
+    pass
+
+
 def rst_test(a):
     """This should be shown in rst formatting
 

@@ -174,3 +174,44 @@ g.loaded_perl_provider = 0
 -- g.loaded_tar = 1
 -- g.loaded_tarPlugin = 1
 -- stylua: ignore end
+
+vim.g.linter_by_ft = {
+    sql = { "codespell", "sqlfluff" },
+    jinja = { "djlint" },
+    htmldjango = { "djlint" },
+    python = { "codespell", "mypy" },
+    rust = { "codespell" },
+}
+
+vim.g.formatters_by_ft = {
+    lua = { "stylua" },
+    python = { "ruff_format" },
+    rust = { "rustfmt" },
+    javascript = { "prettier" },
+    json = { "fixjson" },
+    jinja = { "djlint" },
+    htmldjango = { "djlint" },
+    ["*"] = { "codespell" },
+}
+
+for _, lang in ipairs({
+    "javascript",
+    "typescript",
+    "jsx",
+    "tsx",
+    "jsonc",
+}) do
+    vim.g.formatters_by_ft[lang] = { "biome" }
+end
+for _, lang in ipairs({
+    "markdown",
+    "html",
+    "css",
+    "yaml",
+    "scss",
+    "vue",
+}) do
+    vim.g.formatters_by_ft[lang] = { "prettier" }
+end
+
+vim.g.lsp_autostart = false

@@ -1,7 +1,6 @@
 return {
     {
         "yorickpeterse/nvim-window",
-        event = "BufAdd",
         keys = {
             {
                 "<space>w",
@@ -13,5 +12,18 @@ return {
                 mode = { "n", "v" },
             },
         },
+    },
+    {
+        "leath-dub/snipe.nvim",
+        keys = {
+            {
+                "<space>bb",
+                function()
+                    require("snipe").open_buffer_menu()
+                end,
+                desc = "Open Snipe buffer menu",
+            },
+        },
+        opts = {},
     },
 }
