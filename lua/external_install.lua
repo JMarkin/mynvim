@@ -1,5 +1,7 @@
 -- Maeson cool but
 
+local fn = require("funcs")
+
 local function pip_install(name, pip_args)
     return {
         command = "bash",
@@ -10,7 +12,7 @@ end
 
 local DEFAULT_INSTALL_EXEC = {
     -- pip
-    ruff = pip_install("ruff", "ruff"),
+    ruff = pip_install("ruff", "ruff>=0.5.6"),
     curlylint = pip_install("curlylint", "curlylint"),
     sqlfluff = pip_install("sqlfluff", "sqlfluff"),
     sqlfmt = pip_install("sqlfmt", "shandy-sqlfmt[jinjafmt]"),
@@ -30,6 +32,7 @@ local DEFAULT_INSTALL_EXEC = {
     pyright = pip_install("pyright", "pyright"),
     ["nginx-language-server"] = pip_install("nginx-language-server", "nginx-language-server"),
     djlint = pip_install("djlint", "djlint"),
+    codespell = pip_install("codespell", "codespell"),
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
@@ -114,9 +117,35 @@ local DEFAULT_INSTALL_EXEC = {
     },
 }
 
-local function external_install(exec, sync, update)
+local client_notifs = {}
+
+local function get_notif_data(exec)
+    if not client_notifs[exec] then
+        client_notifs[exec] = {}
+    end
+
+    return client_notifs[exec]
+end
+
+local notify_progress = function(msg, exec, is_end, log_level)
+    local notify = require("notify")
+    local notify_data = get_notif_data(exec)
+    -- local opts = { replace = notify_data.notify }
+    local opts = {}
+    if is_end then
+        opts.timeout = 1000
+    end
+    if not log_level then
+        log_level = vim.log.levels.INFO
+    end
+    local notify = notify(msg, log_level, opts)
+    if notify then
+        notify_data.notify = notify
+    end
+end
+
+local function external_install(exec, sync, update, on_exit)
     local f = function()
-        local notify = nil
         if vim.fn.executable(exec) ~= 1 or update then
             local shell = DEFAULT_INSTALL_EXEC[exec]
             if shell ~= nil then
@@ -126,31 +155,26 @@ local function external_install(exec, sync, update)
                 shell.enable_recording = false
                 shell.on_exit = function(_, return_val)
                     if return_val ~= 0 then
-                        notify = vim.notify(string.format("%s error", exec), vim.log.levels.WARN, { replace = notify })
+                        notify_progress(string.format("%s error", exec), exec, true, vim.log.levels.WARN)
                     else
-                        notify = vim.notify(
-                            string.format("Complete install %s", exec),
-                            vim.log.levels.INFO,
-                            { replace = notify }
-                        )
+                        notify_progress(string.format("Complete install %s", exec), exec, true)
+                    end
+                    if on_exit then
+                        on_exit()
                     end
                 end
                 shell.on_stdout = function(_, data)
-                    notify = vim.notify(
-                        string.format("INSTALL %s %s", exec, data),
-                        vim.log.levels.INFO,
-                        { replace = notify }
-                    )
+                    notify_progress(string.format("INSTALL %s %s", exec, data), exec, false)
                 end
                 shell.on_stderr = function(_, data)
-                    notify = vim.notify(
-                        string.format("INSTALL %s %s", exec, data),
-                        vim.log.levels.INFO,
-                        { replace = notify }
-                    )
+                    notify_progress(string.format("INSTALL %s %s", exec, data), exec, false)
                 end
+
+                local notify_data = get_notif_data(exec)
+                notify_data.notify = vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
+
                 local job = require("plenary.job"):new(shell)
-                notify = vim.notify(exec .. " not found, try install", vim.log.levels.INFO)
+
                 job:start()
                 if sync then
                     -- 10min
@@ -175,22 +199,49 @@ local default_sources = {
     "mypy",
     "stylua",
     "nginxbeautifier",
-    "biome",
     "prettier",
     "fixjson",
     "rustfmt",
-    "taplo",
     "sqlfmt",
-    "djlint",
+    -- lsp
+    "nginx-language-server",
+    "jedi-language-server",
+    "lua-language-server",
+    "rust-analyzer",
+    "bash-language-server",
 }
+
+local MAX_CONCURRENT = 2
 
 local install = function(sync, update, sources)
     if not sources then
         sources = default_sources
     end
-    for _, source in ipairs(sources) do
-        external_install(source, sync, update)
+
+    local counter = 0
+    local jobs = #sources
+
+    local on_exit = function()
+        counter = counter - 1
+        jobs = jobs - 1
     end
+
+    local function loop()
+        if jobs > 0 then
+            if counter < MAX_CONCURRENT then
+                local source = sources[jobs - counter]
+                if not source then
+                    return
+                end
+                external_install(source, sync, update, on_exit)
+                counter = counter + 1
+            end
+            vim.defer_fn(function()
+                loop()
+            end, 100)
+        end
+    end
+    vim.schedule(loop)
 end
 
 vim.api.nvim_create_user_command("ExternalInstallDefault", function(_)
@@ -208,5 +259,28 @@ end, {})
 vim.api.nvim_create_user_command("ExternalUpdateDefaultSync", function(_)
     install(true, true)
 end, {})
+
+local COMPL = {}
+for key, _ in pairs(DEFAULT_INSTALL_EXEC) do
+    table.insert(COMPL, key)
+end
+
+vim.api.nvim_create_user_command("ExternalInstall", function(event)
+    external_install(event.args, false, false)
+end, {
+    nargs = 1,
+    complete = function(_)
+        return COMPL
+    end,
+})
+
+vim.api.nvim_create_user_command("ExternalUpdate", function(event)
+    external_install(event.args, false, true)
+end, {
+    nargs = 1,
+    complete = function(_)
+        return COMPL
+    end,
+})
 
 return external_install

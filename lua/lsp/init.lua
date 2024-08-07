@@ -101,32 +101,11 @@ M.lsps = {
     biome = default_lsp("biome", "biome"),
     jinja_lsp = default_lsp("jinja-lsp", "jinja_lsp"),
 }
-M.install = function(sync, update)
-    for _, lsp in pairs(M.lsps) do
-        lsp.install(sync, update)
-    end
-end
 
 M.setup = function()
     for _, lsp in pairs(M.lsps) do
         lsp.setup()
     end
 end
-
-vim.api.nvim_create_user_command("LspInstallDefault", function(_)
-    M.install()
-end, {})
-
-vim.api.nvim_create_user_command("LspInstallDefaultSync", function(_)
-    M.install(true)
-end, {})
-
-vim.api.nvim_create_user_command("LspUpdateDefault", function(_)
-    M.install(false, true)
-end, {})
-
-vim.api.nvim_create_user_command("LspUpdateDefaultSync", function(_)
-    M.install(true, true)
-end, {})
 
 return M

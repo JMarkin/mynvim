@@ -87,9 +87,12 @@ return {
     {
         "m4xshen/hardtime.nvim",
         event = "VeryLazy",
+        enabled = false,
         dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
         opts = {
             disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "dashboard", "vista", "vista_kind" },
+            disable_mouse = false,
+            restriction_mode = "hint",
         },
     },
 }

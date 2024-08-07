@@ -21,6 +21,6 @@ echo "install ${NAME}"
 "${VENV}"/bin/pip install -U "${NAME}" "${PIP_ARGS}"
 
 echo "link binary ${VENV}/bin/${NAME} -> ${BIN}"
-ln "${VENV}/bin/${NAME}" "${BIN}"
+ln -s "${VENV}/bin/${NAME}" "${BIN}"
 
 
