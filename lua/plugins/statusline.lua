@@ -12,7 +12,7 @@ end
 return {
     {
         "nanozuki/tabby.nvim",
-        event = "VimEnter", -- if you want lazy load, see below
+        event = "TabNew", -- if you want lazy load, see below
         dependencies = "nvim-tree/nvim-web-devicons",
         config = function()
             require("tabby").setup({
