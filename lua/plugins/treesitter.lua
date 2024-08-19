@@ -100,7 +100,8 @@ return {
     -- enabled = false,
     lazy = true,
     -- ft = "qf",
-    event = vim.g.pre_load_events,
+    -- event = vim.g.pre_load_events,
+    event = "VeryLazy",
     dependencies = {
         {
             "m-demare/hlargs.nvim",

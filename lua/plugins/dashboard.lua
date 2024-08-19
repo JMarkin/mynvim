@@ -63,6 +63,9 @@ end
 return {
     "goolord/alpha-nvim",
     cond = function()
+        if #vim.v.argv > 2 then
+            return false
+        end
         return not vim.env.YAZI_ID
     end,
     config = function()

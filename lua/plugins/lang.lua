@@ -5,20 +5,20 @@ return {
         "mfussenegger/nvim-lint",
         lazy = true,
         enabled = true,
-        init = function()
+        event = "VeryLazy",
+        config = function()
+            require("lint").linters_by_ft = vim.g.linter_by_ft
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "FileReadPost" }, {
                 callback = function()
                     require("lint").try_lint()
                 end,
             })
         end,
-        config = function()
-            require("lint").linters_by_ft = vim.g.linter_by_ft
-        end,
     },
     {
         "stevearc/conform.nvim",
-        event = vim.g.pre_load_events,
+        -- event = vim.g.pre_load_events,
+        -- event = "VeryLazy",
         cmd = { "ConformInfo" },
         keys = {
             {

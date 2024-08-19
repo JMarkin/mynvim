@@ -4,7 +4,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
-        event = vim.g.pre_load_events,
+        -- event = vim.g.pre_load_events,
+        event = "VeryLazy",
         config = function()
             require("lsp").setup()
 
