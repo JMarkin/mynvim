@@ -31,6 +31,9 @@ function M.maxline(path)
     local stat = vim.uv.fs_fstat(fd)
     local data = vim.uv.fs_read(fd, stat.size, nil)
     vim.uv.fs_close(fd)
+    if not data then
+        return max
+    end
 
     local lines = vim.split(data, "[\r]?\n")
 
