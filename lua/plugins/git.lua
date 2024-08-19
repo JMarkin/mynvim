@@ -37,7 +37,7 @@ return {
             })
         end,
         keys = {
-            { "<space>G", ":BlameToggle window<cr>", { desc = "Git blame" } },
+            { "<leader>gB", ":BlameToggle window<cr>", desc = "Git blame" },
         },
     },
     {
@@ -107,7 +107,8 @@ return {
                 end,
             })
         end,
-        event = vim.g.pre_load_events,
+        -- event = vim.g.pre_load_events,
+        event = "VeryLazy",
         keys = {
             "<leader>gS",
             "<leader>gu",

@@ -40,7 +40,7 @@ end
 return {
     {
         "ramilito/winbar.nvim",
-        event = "BufReadPre", -- Alternatively, BufReadPre if we don't care about the empty file when starting with 'nvim'
+        event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("winbar").setup({

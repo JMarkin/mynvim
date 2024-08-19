@@ -72,7 +72,8 @@ return {
     {
         "brenoprata10/nvim-highlight-colors",
         enabled = true,
-        event = vim.g.post_load_events,
+        -- event = vim.g.post_load_events,
+        event = "VeryLazy",
         config = function()
             require("nvim-highlight-colors").turnOn()
         end,
@@ -139,6 +140,7 @@ return {
     {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {},
-        event = vim.g.post_load_events,
+        -- event = vim.g.post_load_events,
+        ft = "markdown",
     },
 }

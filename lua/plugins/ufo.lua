@@ -57,7 +57,7 @@ return {
     -- enabled = false,
     cond = is_not_mini,
     dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
-    event = vim.g.post_load_events,
+    event = "VeryLazy",
     opts = {
         fold_virt_text_handler = handler,
         provider_selector = function(_, filetype, _)
