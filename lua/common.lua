@@ -149,13 +149,16 @@ opt.backup = true
 opt.backupdir:remove(".")
 
 -- netrw settings
+g.netrw_winsize = 20
 g.netrw_banner = 0
 g.netrw_cursor = 5
-g.netrw_keepdir = 0
-g.netrw_keepj = ""
+g.netrw_keepdir = 1
 g.netrw_list_hide = [[\(^\|\s\s\)\zs\.\S\+]]
-g.netrw_liststyle = 1
+g.netrw_liststyle = 0
 g.netrw_localcopydircmd = "cp -r"
+g.netrw_preview = 1
+g.netrw_alto = 1
+g.netrw_fastbrowse = 2
 
 -- disable plugins shipped with neovim
 -- g.loaded_2html_plugin = 1

@@ -87,7 +87,7 @@ local function on_attach(bufnr)
     vim.keymap.set("n", "U", api.tree.toggle_custom_filter, opts("Toggle Hidden"))
     vim.keymap.set("n", "W", api.tree.collapse_all, opts("Collapse"))
 
-    vim.keymap.set("n", "ga", git_add, opts("Git Add"))
+    vim.keymap.set("n", "s", git_add, opts("Git Add"))
 end
 
 return {

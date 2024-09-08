@@ -63,6 +63,8 @@ return {
                     "TelescopePrompt",
                     "prompt",
                     "httpResult",
+                    "http",
+                    "rest_nvim_result"
                 },
                 diagnostics = true,
                 buf_modified = true,

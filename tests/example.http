@@ -1,5 +1,17 @@
+###
+# this is a valid in-place variable syntax
+@myhost = httpbin.org
+
+###
+# get ip
 GET https://jmarkin.ru/ip
 
+###
+GET https://{{myhost}}/json
+
+###
+GET https://{{myhost}}/uuid
 
 
-GET https://httpbin.org/json
+###
+GET https://{{myhost}}/html
