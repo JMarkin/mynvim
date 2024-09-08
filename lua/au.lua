@@ -55,7 +55,6 @@ autocmd("FileType", {
         "notify",
         "startuptime",
         "checkhealth",
-        "netrw",
         "neotest-output",
         "neotest-output-panel",
         "neotest-summary",
@@ -102,30 +101,6 @@ local function augroup(group, ...)
     end
 end
 
-augroup("SplitRightDefaults", {
-    "BufWinEnter",
-    {
-        desc = "split right help, preview",
-        pattern = "*",
-        callback = function(info)
-            local change = false
-            if vim.fn.winwidth("%") > 160 then
-                if vim.o.filetype == "help" then
-                    change = true
-                end
-
-                if vim.o.previewwindow then
-                    change = true
-                end
-            end
-
-            if change then
-                vim.cmd.wincmd("L")
-            end
-        end,
-    },
-})
-
 -- number toggle
 if vim.g.numbertoggle then
     augroup("NumberToggle", {
@@ -134,7 +109,7 @@ if vim.g.numbertoggle then
             callback = function(event)
                 if
                     vim.bo[event.buf].buflisted
-                    and vim.opt.number
+                    and vim.opt_local.number
                     and vim.api.nvim_get_mode().mode ~= "i"
                     and string.find(vim.fn.bufname(event.buf), "term://") == nil
                 then
@@ -148,7 +123,7 @@ if vim.g.numbertoggle then
             callback = function(event)
                 if
                     vim.bo[event.buf].buflisted
-                    and vim.opt.number
+                    and vim.opt_local.number
                     and string.find(vim.fn.bufname(event.buf), "term://") == nil
                 then
                     vim.opt.relativenumber = false
@@ -192,38 +167,6 @@ augroup("auto_view", {
         end,
     },
 })
-
--- nvim tree on .
-augroup("nvimtree on dot", {
-    { "VimEnter" },
-    {
-        desc = "nvimtree on dot",
-        callback = function(args)
-            if not args.file or #args.file == 0 then
-                return
-            end
-            if vim.fn.isdirectory(args.file) == 1 then
-                vim.schedule(function()
-                    vim.cmd([[:NvimTree]])
-                end)
-            end
-        end,
-    },
-})
-
--- syntaxes
-
-augroup("lazysyntaxes", {
-    { "VimEnter", "BufReadPre", "FileReadPre" },
-    {
-        desc = "add syntaxes",
-        callback = function(args)
-            require("syntx")
-        end,
-        once = true,
-    },
-})
-
 
 augroup("fastsyntax", {
     { "BufWinEnter", "Syntax" },

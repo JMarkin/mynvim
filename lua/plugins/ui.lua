@@ -126,7 +126,7 @@ return {
     },
     {
         "mei28/luminate.nvim",
-        enabled = true,
+        enabled = false,
         event = { "VeryLazy" },
         config = function()
             require("luminate").setup({
@@ -142,5 +142,21 @@ return {
         opts = {},
         -- event = vim.g.post_load_events,
         ft = "markdown",
+    },
+    {
+        "prichrd/netrw.nvim",
+        config = function()
+            require("netrw").setup({
+                -- File icons to use when `use_devicons` is false or if
+                -- no icon is found for the given file type.
+                icons = {
+                    symlink = "",
+                    directory = "",
+                    file = "",
+                },
+                -- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
+                use_devicons = true,
+            })
+        end,
     },
 }

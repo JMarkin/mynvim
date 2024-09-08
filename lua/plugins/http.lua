@@ -1,77 +1,51 @@
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-
 return {
-    "JMarkin/rest.nvim",
-    dev = true,
+    "rest-nvim/rest.nvim",
+    cmd = "Rest",
     ft = "http",
+    -- dev = true,
     keys = {
-        "<leader>hr",
-        "<leader>hp",
-        "<leader>hl",
+        {
+            "<leader>hr",
+            "<cmd>Rest run<cr>",
+            silent = true,
+            desc = "run the request under the cursor",
+            ft = "http",
+        },
+        {
+            "<leader>hp",
+            "<Plug>RestNvimPreview",
+            silent = true,
+            desc = "preview the request cURL command",
+            ft = "http",
+        },
+        {
+            "<leader>hl",
+            "<cmd>Rest run last<cr>",
+            silent = true,
+            desc = "re-run the last request",
+            ft = "http",
+        },
     },
+    -- enabled = false,
     config = function()
-        require("rest-nvim").setup({
-            logs = {
-                level = "error",
-                save = false,
-            },
-            result = {
-                split = {
-                    horizontal = true,
-                    in_place = false,
-                    stay_in_current_window_after_split = true,
-                },
-                behavior = {
+        vim.g.rest_nvim = {
+            clients = {
+                curl = {
                     statistics = {
-                        enable = true,
-                        ---@see https://curl.se/libcurl/c/curl_easy_getinfo.html
-                        stats = {
-                            { "total_time", title = "Time total:" },
-                            { "namelookup_time", title = "Time dns:" },
-                            { "appconnect_time", title = "Time app connect:" },
-                            { "pretransfer_time", title = "Time pre transfer:" },
-                            -- { "redirect_time", title = "Time redirect:" },
-                            { "starttransfer_time", title = "Time start transfer:" },
-                            { "size_download_t", title = "Download size:" },
-                            { "speed_download_t", title = "Download speed:" },
-                            { "speed_upload_t", title = "Upload speed:" },
-                        },
-                    },
-                    formatters = {
-                        json = "jaq",
-                        html = "prettier",
-                        -- plain = "prettier",
+                        { id = "remote_ip", winbar = "ip", title = "Remote IP" },
+                        { id = "time_total", winbar = "time", title = "Time" },
+                        { id = "time_namelookup", title = "Time dns" },
+                        { id = "time_connect", title = "Time connect" },
+                        { id = "time_pretransfer", title = "Time pretransfer" },
+                        { id = "time_redirect", title = "Time redirect" },
+                        { id = "time_starttransfer", title = "Time starttransfer" },
+                        { id = "size_download", title = "Download size", winbar = false },
+                        { id = "speed_download", title = "Download speed" },
+                        { id = "size_upload", title = "Upload size" },
+                        { id = "speed_upload", title = "Upload speed" },
                     },
                 },
             },
-        })
-
-        autocmd("FileType", {
-            group = augroup("http", { clear = true }),
-            pattern = {
-                "http",
-            },
-            callback = function(event)
-                vim.keymap.set(
-                    "n",
-                    "<leader>hr",
-                    "<cmd>Rest run<cr>",
-                    { buffer = event.buf, silent = true, desc = "run the request under the cursor" }
-                )
-                vim.keymap.set(
-                    "n",
-                    "<leader>hp",
-                    "<Plug>RestNvimPreview",
-                    { buffer = event.buf, silent = true, desc = "preview the request cURL command" }
-                )
-                vim.keymap.set(
-                    "n",
-                    "<leader>hl",
-                    "<cmd>Rest run last<cr>",
-                    { buffer = event.buf, silent = true, desc = "re-run the last request" }
-                )
-            end,
-        })
+        }
     end,
 }

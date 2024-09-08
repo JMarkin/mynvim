@@ -63,7 +63,7 @@ M.lsps = {
     --     filetypes = { "python", "python.django", "django" },
     -- }),
     taplo = default_lsp("taplo", "taplo"),
-    tsserver = default_lsp("typescript-language-server", "tsserver"),
+    tsserver = default_lsp("typescript-language-server", "ts_ls"),
     neocmakelsp = default_lsp("neocmakelsp", "neocmake"),
     clangd = require("lsp.clangd"),
     volar = require("lsp.volar"),

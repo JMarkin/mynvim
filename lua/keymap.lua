@@ -5,7 +5,7 @@ vim.keymap.set({ "n" }, "<leader>Y", '"+y$')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 vim.keymap.set({ "n", "v" }, "<leader>P", '"+P')
 
-vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit", silent = true, })
+vim.keymap.set({ "n" }, { "<leader>q", "<space>q" }, ":q<cr>", { desc = "Quit", silent = true })
 vim.keymap.set({ "n", "v" }, "<C-e>", "<C-u>")
 
 vim.keymap.set({ "n" }, "o", "o<Esc>", { desc = "Add line under" })
@@ -72,3 +72,6 @@ vim.keymap.set("n", "<space>]", ":+tabmove<CR>", { desc = "Tabs: move to next" }
 for i = 1, 9, 1 do
     vim.keymap.set({ "n", "x" }, "<space>" .. i, tabswitch(vim.cmd.tabnext, i), { desc = "Tabs: go to " .. i })
 end
+
+vim.keymap.set("n", "<space>f", "<cmd>Lexplore<cr>", { noremap = true, desc = "Netrw: open" })
+vim.keymap.set("n", "<leader>f", "<cmd>Lexplore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })

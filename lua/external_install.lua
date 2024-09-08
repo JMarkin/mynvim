@@ -138,9 +138,9 @@ local notify_progress = function(msg, exec, is_end, log_level)
     if not log_level then
         log_level = vim.log.levels.INFO
     end
-    local notify = notify(msg, log_level, opts)
-    if notify then
-        notify_data.notify = notify
+    local ny = notify(msg, log_level, opts)
+    if ny then
+        notify_data.notify = ny
     end
 end
 
