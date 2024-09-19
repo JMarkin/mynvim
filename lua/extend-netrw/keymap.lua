@@ -3,7 +3,7 @@ local funcs = require("extend-netrw.funcs")
 local M = {}
 
 M.init = function(buffer)
-    if vim.fn.mapcheck("<c-l>") == "<Plug>NetrwRefresh" then
+    if vim.fn.mapcheck("<c-l>") == funcs.reload then
         vim.keymap.del("n", "<c-l>", { buffer = buffer })
         vim.keymap.del("n", "p", { buffer = buffer })
         vim.keymap.del("n", "P", { buffer = buffer })
@@ -15,7 +15,6 @@ M.init = function(buffer)
     vim.keymap.set("n", "<s-tab>", funcs.prev, { silent = true, nowait = true, buffer = buffer })
 
     vim.keymap.set("n", "I", funcs.debug, { silent = true, nowait = true, buffer = buffer })
-    -- vim.keymap.set("n", "%", funcs.create_under_cursor, { silent = true, nowait = true, buffer = true })
 end
 
 return M

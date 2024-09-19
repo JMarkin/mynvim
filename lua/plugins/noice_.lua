@@ -1,6 +1,7 @@
 return {
     "folke/noice.nvim",
     event = "VeryLazy",
+    commit = "d9328ef",
     opts = {
         format = {
             -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.

@@ -1,5 +1,6 @@
 local CFG = require("extend-netrw.float-preview.config")
 local get_node = require("extend-netrw.funcs").get_node
+local maxline = require("funcs").maxline
 
 local FloatPreview = {}
 FloatPreview.__index = FloatPreview
@@ -10,7 +11,6 @@ vim.api.nvim_create_augroup(preview_au, { clear = true })
 local st = {}
 local all_floats = {}
 local disabled = false
-
 
 -- original fzf lua
 local read_file_async = function(filepath, callback)
@@ -130,13 +130,37 @@ function FloatPreview:preview(path)
     vim.api.nvim_set_option_value("buflisted", false, { buf = self.buf })
 
     local width = vim.api.nvim_get_option_value("columns", {})
+    local max_ = maxline(path)
     local height = vim.api.nvim_get_option_value("lines", {})
-    local prev_height = math.ceil(height / 2)
+    local prev_height = math.ceil(height / 3)
+    local prev_width = math.ceil(width / 2)
+    if prev_width > max_ then
+        prev_width = max_ + 1
+    end
+
+    local f_len = #vim.fn.getline(".")
+
+    local ra = "N"
+    if vim.fn.winline() > vim.fn.winheight(0) - prev_height then
+        ra = "S"
+    end
+    local ca = "W"
+    if vim.fn.wincol() > vim.fn.winwidth(0) - prev_width then
+        ca = "E"
+    end
+    local anchor = ra .. ca
+
+    local row, col = 0, f_len +1
+    if ca == "E" then
+        col = col * -1
+    end
+
     local opts = {
-        width = math.ceil(width / 2),
+        width = prev_width,
         height = prev_height,
-        row = vim.fn.line("."),
-        col = vim.fn.winwidth(0) + 1,
+        row = row,
+        col = col,
+        anchor = anchor,
         focusable = false,
         noautocmd = true,
         style = self.cfg.window.style,
@@ -180,12 +204,15 @@ function FloatPreview:preview(path)
                 end
             end
             vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, lines)
+            vim.b[self.buf]._float_preview = 1
 
             local ft = vim.filetype.match({ buf = self.buf, filename = path })
             vim.bo[self.buf].ft = ft
 
-            local has_lang, lang = pcall(vim.treesitter.language.get_lang, ft)
-            local has_ts, _ = pcall(vim.treesitter.start, self.buf, has_lang and lang or ft)
+            local has_ts, lang = pcall(vim.treesitter.language.get_lang, ft)
+            if has_ts then
+                has_ts, _ = pcall(vim.treesitter.start, self.buf, has_ts and lang or ft)
+            end
             local syntax_ = vim.g.syntax_on or vim.g.syntax_manual
 
             if not has_ts and syntax_ then
@@ -198,14 +225,18 @@ function FloatPreview:preview(path)
     end
 end
 
-function FloatPreview:preview_under_cursor()
+function FloatPreview:preview_under_cursor(rewrite)
+    if rewrite == nil then
+        rewrite = false
+    end
     local _, node = pcall(get_node)
 
     if not node then
         return
     end
 
-    if node.absolute_path == self.path then
+    if node.absolute_path == self.path and not rewrite then
+        -- print(node.absolute_path, self.path)
         return
     end
     self:_close("change file")
@@ -227,6 +258,8 @@ function FloatPreview:scroll(line)
     if self.win then
         vim.api.nvim_win_set_cursor(self.win, { line, 0 })
         self.current_line = line
+        -- print(line)
+        -- print(vim.api.nvim_win_get_cursor(self.win))
     end
 end
 

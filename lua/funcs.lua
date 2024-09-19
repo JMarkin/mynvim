@@ -22,7 +22,10 @@ M.doau = function(pattern, data)
     })
 end
 
-function M.maxline(path)
+function M.maxline(path, break_after)
+    if break_after == nil then
+        break_after = vim.o.synmaxcol + 1
+    end
     local max = 0
     local fd = vim.uv.fs_open(path, "r", 1)
     if not fd then
@@ -40,6 +43,9 @@ function M.maxline(path)
     for _, line in pairs(lines) do
         if max < #line then
             max = #line
+        end
+        if max >= break_after then
+            return max
         end
     end
     return max
