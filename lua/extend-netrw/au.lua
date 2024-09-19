@@ -4,6 +4,8 @@ local netrw_funcs = require("extend-netrw.funcs")
 local float = require("extend-netrw.float-preview")
 local keymap = require("extend-netrw.keymap")
 
+local NETRW_WINDS = {}
+
 vim.api.nvim_create_autocmd("FileType", {
     group = groupid("netrw", { clear = false }),
     pattern = { "netrw" },
@@ -16,21 +18,26 @@ vim.api.nvim_create_autocmd("FileType", {
 
         keymap.init(event.buf)
         float.attach_netrw(event.buf)
-
-        -- vim.api.nvim_create_autocmd("BufLeave", {
-        --     buffer = event.buf,
+        -- NETRW_WINDS[win] = 1
+        --
+        -- vim.api.nvim_create_autocmd("BufEnter", {
+        --     pattern = "*",
+        --     once = true,
         --     callback = function(ev)
-        --         funcs.doau("LeaveNetRw", {
-        --             netrw_win = win,
-        --         })
+        --         local ft = vim.bo[ev.buf].ft
+        --         local cur_win = vim.api.nvim_get_current_win()
+        --         if ft ~= "netrw" and vim.b[ev.buf]._float_preview == nil then
+        --             if NETRW_WINDS[cur_win] == 1 then
+        --                 NETRW_WINDS[cur_win] = nil
+        --             end
+        --
+        --             for rwin, _ in pairs(NETRW_WINDS) do
+        --                 print("try win_close", rwin)
+        --                 -- pcall(vim.api.nvim_win_close, rwin, false)
+        --             end
+        --             NETRW_WINDS = {}
+        --         end
         --     end,
         -- })
-    end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-    pattern = "CloseNetrw",
-    callback = function(event)
-        netrw_funcs.close_netrw_debounce(event.data)
     end,
 })

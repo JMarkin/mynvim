@@ -9,50 +9,23 @@ return {
         "antoinemadec/FixCursorHold.nvim",
         "nvim-neotest/neotest-python",
         "rouge8/neotest-rust",
+        "nvim-dap-ui"
     },
     keys = {
         {
-            "<leader>T",
+            "<leader>ltt",
             function()
                 require("neotest").summary.toggle()
             end,
             desc = "Tests",
         },
         {
-            "<leader>to",
+            "<leader>lto",
             function()
                 require("neotest").output_panel.toggle()
             end,
             desc = "Tests: output",
-        },
-        {
-            "<leader>tt",
-            function()
-                require("neotest").run.run()
-            end,
-            desc = "Tests: run nearest test",
-        },
-        {
-            "<leader>ts",
-            function()
-                require("neotest").run.stop()
-            end,
-            desc = "Tests: stop nearest test",
-        },
-        {
-            "<leader>ta",
-            function()
-                require("neotest").run.attach()
-            end,
-            desc = "Tests: attach nearest test",
-        },
-        {
-            "<leader>tf",
-            function()
-                require("neotest").run.run(vim.fn.expand("%"))
-            end,
-            desc = "Tests: run current file",
-        },
+        }
     },
     config = function()
         require("neotest").setup({

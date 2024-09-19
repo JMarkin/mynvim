@@ -128,7 +128,7 @@ return {
         },
         {
             "HiPhish/rainbow-delimiters.nvim",
-            -- enabled = false,
+            enabled = false,
             config = function()
                 local rainbow_delimiters = require("rainbow-delimiters")
                 require("rainbow-delimiters.setup").setup({

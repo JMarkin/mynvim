@@ -55,23 +55,7 @@ def decorator(): ...
 def s(): ...
 
 
-def f(val1: str, ss, sncjllll):
-    print(val1, ss, sncjllll)
-
-
-s = "^[1-9]123\sxxn\t$"
-
-s = "<h>asd</h>"
-"""
-ss
-"""
-
-sum()
-
-print()
-
-
-def a():
+def f(val1: str, ss, sncjllll)::
     """asdsad."""
 
     def f():

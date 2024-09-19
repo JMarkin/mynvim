@@ -1,3 +1,6 @@
+local host = vim.env.OLLAMA_HOST or "192.168.88.251"
+local port = vim.env.OLLAMA_PORt or "11434"
+
 return {
     {
         "David-Kunz/gen.nvim",
@@ -12,8 +15,8 @@ return {
                 init = function(options)
                     -- pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
                 end,
-                host = vim.env.OLLAMA_HOST or "192.168.88.251",
-                port = vim.env.OLLAMA_PORt or "11434",
+                host = host,
+                port = port,
                 reprompt = {
                     enabled = true,
                     clear = false,

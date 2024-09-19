@@ -103,7 +103,7 @@ M.toggle = function()
         register = fn.get_visual()
         fn.exit_visual()
     end
-    local diags = vim.lsp.diagnostic.get_line_diagnostics()
+    local diags = vim.diagnostic.get()
 
     local default_signal_value = {
         selected_option = "chat",

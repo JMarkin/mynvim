@@ -175,3 +175,15 @@ augroup("fastsyntax", {
         command = "syn sync minlines=500 maxlines=500",
     },
 })
+
+augroup("omnifuncsetter", {
+    { "FileType" },
+    {
+        pattern = "*",
+        callback = function()
+            if vim.opt.omnifunc == "" then
+                vim.opt_local.omnifunc = "syntaxcomplete#Complete"
+            end
+        end,
+    },
+})

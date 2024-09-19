@@ -1,3 +1,5 @@
+local is_not_mini = require("funcs").is_not_mini
+--
 -- system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n" }, "<leader>Y", '"+y$')
@@ -73,5 +75,11 @@ for i = 1, 9, 1 do
     vim.keymap.set({ "n", "x" }, "<space>" .. i, tabswitch(vim.cmd.tabnext, i), { desc = "Tabs: go to " .. i })
 end
 
-vim.keymap.set("n", "<space>f", "<cmd>Lexplore<cr>", { noremap = true, desc = "Netrw: open" })
-vim.keymap.set("n", "<leader>f", "<cmd>Lexplore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })
+-- if is_not_mini() then
+--     vim.keymap.set("n", "<space>f", function()
+--         MiniFiles.open()
+--     end, { noremap = true, desc = "Netrw: open" })
+-- else
+    vim.keymap.set("n", "<space>f", "<cmd>Explore<cr>", { noremap = true, desc = "Netrw: open" })
+    vim.keymap.set("n", "<leader>f", "<cmd>Explore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })
+-- end

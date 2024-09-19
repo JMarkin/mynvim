@@ -74,5 +74,39 @@ return {
                 silent = false,
             },
         },
+        {
+            "echasnovski/mini.files",
+            version = false,
+            enabled = false,
+            opts = {
+                windows = {
+                    -- Maximum number of windows to show side by side
+                    max_number = math.huge,
+                    -- Whether to show preview of file/directory under cursor
+                    preview = true,
+                    -- Width of focused window
+                    width_focus = 50,
+                    -- Width of non-focused window
+                    width_nofocus = 15,
+                    -- Width of preview window
+                    width_preview = 50,
+                },
+                mappings = {
+                    close = "q",
+                    go_in = "<tab>",
+                    go_in_plus = "l",
+                    go_out = "<s-tab>",
+                    go_out_plus = "h",
+                    mark_goto = "'",
+                    mark_set = "m",
+                    reset = "<BS>",
+                    reveal_cwd = "@",
+                    show_help = "g?",
+                    synchronize = "=",
+                    trim_left = "<",
+                    trim_right = ">",
+                },
+            },
+        },
     },
 }

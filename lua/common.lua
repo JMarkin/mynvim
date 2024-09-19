@@ -62,8 +62,6 @@ opt.background              = "dark"
 
 opt.completeopt             = "menu,menuone,noselect"
 opt.tags                    = { "tags", ".git/tags" }
-g.omni_sql_no_default_maps  = true
-opt.omnifunc                = "syntaxcomplete#Complete"
 
 opt.spell                   = false
 opt.spelllang               = { "en", "ru" }
@@ -107,6 +105,7 @@ opt.textwidth               = 80
 opt.relativenumber          = true
 opt.sessionoptions          = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 
+g.omni_sql_ignorecase       = 1
 -- stylua: ignore end
 
 -- opt.clipboard:append("unnamedplus")
