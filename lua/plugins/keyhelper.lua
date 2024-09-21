@@ -1,8 +1,24 @@
 return {
     {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+            preset = "helix",
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
+    },
+    {
         "echasnovski/mini.clue",
         event = "VimEnter",
-        -- enabled = false,
+        enabled = false,
         config = function()
             local miniclue = require("mini.clue")
             miniclue.setup({

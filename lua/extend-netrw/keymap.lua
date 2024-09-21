@@ -11,6 +11,8 @@ M.init = function(buffer)
 
     vim.keymap.set("n", "<c-r>", funcs.reload, { silent = true, nowait = true, buffer = buffer })
     vim.keymap.set("n", "q", funcs.close, { silent = true, nowait = true, buffer = buffer })
+    vim.keymap.set("n", "<space>f", funcs.close, { silent = true, nowait = true, buffer = buffer })
+    vim.keymap.set("n", "<leader>f", funcs.close, { silent = true, nowait = true, buffer = buffer })
     vim.keymap.set("n", "<tab>", funcs.open, { silent = true, nowait = true, buffer = buffer })
     vim.keymap.set("n", "<s-tab>", funcs.prev, { silent = true, nowait = true, buffer = buffer })
 
