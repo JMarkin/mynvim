@@ -5,9 +5,6 @@ vim.keymap.set("v", "<leader>]", function()
     require("ollama").toggle()
 end, { desc = "AI" })
 
-local host = vim.env.OLLAMA_HOST or "192.168.88.251"
-local port = vim.env.OLLAMA_PORt or "11434"
-
 local lsp_ai_config = {
     -- Uncomment if using nvim-cmp
     -- capabilities = require('cmp_nvim_lsp').default_capabilities(),
@@ -21,7 +18,7 @@ local lsp_ai_config = {
             codegemma = {
                 type = "ollama",
                 model = "codegemma:2b-code-v1.1-fp16",
-                endpoint = string.format("http://%s:%s/api/generate", host, port),
+                endpoint = vim.g.ollama_endpoint,
             },
         },
         completion = {

@@ -62,7 +62,7 @@ end
 
 M.toggle_hidden = "<Plug>NetrwHide_a"
 M.close_preview = "<C-w>z"
-M.close = ":q<cr>"
+M.close = ":Rexplore<cr>"
 M.reload = "<Plug>NetrwRefresh"
 M.open = "<Plug>NetrwLocalBrowseCheck"
 M.server_edit = "<Plug>NetrwServerEdit"
