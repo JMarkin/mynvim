@@ -69,7 +69,9 @@ return {
                 diagnostics = true,
                 buf_modified = true,
                 dir_levels = 2,
-                buf_modified_symbol = "M",
+                -- buf_modified_symbol = "M",
+                -- or use an icon
+                buf_modified_symbol = "●",
                 dim_inactive = {
                     enabled = true,
                     highlight = "WinbarNC",

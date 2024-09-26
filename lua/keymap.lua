@@ -30,8 +30,6 @@ vim.keymap.set(
     { silent = true, desc = "visual mode: escape to normal and save" }
 )
 
-vim.keymap.set("t", "<c-esc>", "<C-\\><C-n>")
-
 vim.api.nvim_create_user_command("InstallDefault", function(_)
     vim.cmd.TSInstallDefault()
     vim.cmd.ExternalInstallDefault()
@@ -80,6 +78,6 @@ end
 --         MiniFiles.open()
 --     end, { noremap = true, desc = "Netrw: open" })
 -- else
-    vim.keymap.set("n", "<space>f", "<cmd>Explore<cr>", { noremap = true, desc = "Netrw: open" })
-    vim.keymap.set("n", "<leader>f", "<cmd>Explore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })
+vim.keymap.set("n", "<space>f", "<cmd>Explore<cr>", { noremap = true, desc = "Netrw: open" })
+vim.keymap.set("n", "<leader>f", "<cmd>Explore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })
 -- end

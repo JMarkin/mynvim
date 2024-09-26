@@ -15,14 +15,15 @@ local lsp_ai_config = {
             file_store = {},
         },
         models = {
-            codegemma = {
+            deepcoder = {
                 type = "ollama",
-                model = "codegemma:2b-code-v1.1-fp16",
-                endpoint = vim.g.ollama_endpoint,
+                model = "wojtek/deepseek-coder:7b-instruct-v1.5-q4_k",
+                generate_endpoint = vim.g.ollama_generate_endpoint,
+                chat_endpoint = vim.g.ollama_chat_endpoint,
             },
         },
         completion = {
-            model = "codegemma",
+            model = "deepcoder",
             parameters = {
                 fim = {
                     start = "<|fim_prefix|>",
@@ -43,19 +44,20 @@ local lsp_ai_config = {
 -- })
 
 -- Register key shortcut
-vim.keymap.set("n", "<leader>co", function()
-    vim.lsp.start(lsp_ai_config)
-    print("Loading completion...")
-
-    local x = vim.lsp.util.make_position_params(0)
-    local y = vim.lsp.util.make_text_document_params(0)
-
-    local combined = vim.tbl_extend("force", x, y)
-
-    local result = vim.lsp.buf_request_sync(0, "textDocument/completion", combined, 10000)
-
-    print(vim.inspect(result))
-end, {
-    noremap = true,
-    desc = "AI completion",
-})
+-- vim.keymap.set("n", "<leader>co", function()
+--     vim.lsp.start(lsp_ai_config)
+--     print("Loading completion...")
+--
+--     local x = vim.lsp.util.make_position_params(0)
+--     local y = vim.lsp.util.make_text_document_params(0)
+--
+--     local combined = vim.tbl_extend("force", x, y)
+--
+--     local result = vim.lsp.buf_request_sync(0, "textDocument/completion", combined, 10000)
+--
+--     print(vim.inspect(result))
+--     vim.lsp.st(lsp_ai_config)
+-- end, {
+--     noremap = true,
+--     desc = "AI completion",
+-- })

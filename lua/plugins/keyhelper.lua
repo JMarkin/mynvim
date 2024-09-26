@@ -1,9 +1,14 @@
+
 return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {
             preset = "helix",
+            keys = {
+                scroll_down = "<c-d>", -- binding to scroll down inside the popup
+                scroll_up = "<c-e>", -- binding to scroll up inside the popup
+            },
         },
         keys = {
             {
