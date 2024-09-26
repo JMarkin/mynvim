@@ -150,7 +150,7 @@ function FloatPreview:preview(path)
     end
     local anchor = ra .. ca
 
-    local row, col = 0, f_len +1
+    local row, col = 0, f_len + 1
     if ca == "E" then
         col = col * -1
     end
@@ -207,12 +207,16 @@ function FloatPreview:preview(path)
             vim.b[self.buf]._float_preview = 1
 
             local ft = vim.filetype.match({ buf = self.buf, filename = path })
+            if not ft then
+                return
+            end
             vim.bo[self.buf].ft = ft
 
             local has_ts, lang = pcall(vim.treesitter.language.get_lang, ft)
             if has_ts then
                 has_ts, _ = pcall(vim.treesitter.start, self.buf, has_ts and lang or ft)
             end
+
             local syntax_ = vim.g.syntax_on or vim.g.syntax_manual
 
             if not has_ts and syntax_ then

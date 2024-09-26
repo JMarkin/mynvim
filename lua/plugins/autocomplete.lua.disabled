@@ -1,3 +1,5 @@
+local is_not_mini = require("funcs").is_not_mini
+
 return {
     "max397574/care.nvim",
     event = { "InsertEnter", "CmdlineEnter" },
@@ -5,18 +7,8 @@ return {
         "max397574/care-cmp",
     },
     config = function()
-        vim.keymap.set("i", "<c-n>", function()
-            vim.snippet.jump(1)
-        end)
-        vim.keymap.set("i", "<c-p>", function()
-            vim.snippet.jump(-1)
-        end)
         vim.keymap.set("i", "<c-space>", function()
             require("care").api.complete()
-        end)
-
-        vim.keymap.set("i", "<F6>", function()
-            print(require("care").api.is_open())
         end)
 
         vim.keymap.set("i", "<cr>", "<Plug>(CareConfirm)")

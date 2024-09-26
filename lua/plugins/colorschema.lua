@@ -71,6 +71,86 @@ if vim.g.modern_ui then
                 require("bamboo").load()
             end,
         },
+        {
+            "Iron-E/nvim-highlite",
+            enabled = false,
+            lazy = false,
+            priority = math.huge,
+            config = function(_, opts)
+                -- OPTIONAL: setup the plugin. See "Configuration" for information
+                require("highlite").setup({
+                    generator = {
+                        terminal_palette = true,
+                        plugins = {
+                            nvim = {
+                                aerial = false,
+                                barbar = false,
+                                bqf = true,
+                                cmp = true,
+                                fzf = false,
+                                gitsigns = true,
+                                indent_blankline = false,
+                                lazy = true,
+                                leap = false,
+                                lspconfig = true,
+                                lspsaga = true,
+                                lsp_signature = false,
+                                mini = true,
+                                neo_tree = false,
+                                neotest = true,
+                                nvim_tree = false,
+                                packer = false,
+                                registers = false,
+                                symbols_outline = false,
+                                telescope = false,
+                                todo_comments = true,
+                                treesitter_context = true,
+                                trouble = true,
+                            },
+                            vim = {
+                                dadbod_ui = true,
+                                ale = false,
+                                coc = false,
+                                easymotion = false,
+                                fern = false,
+                                gitgutter = false,
+                                indent_guides = false,
+                                jumpmotion = false,
+                                nerdtree = false,
+                                sandwich = false,
+                                signify = false,
+                                swap = false,
+                                undotree = false,
+                                win = false,
+                            },
+                        },
+                        syntax = true,
+                    },
+                })
+
+                -- or one of the alternate colorschemes (see the "Built-in Colorschemes" section)
+                vim.api.nvim_command("colorscheme highlite")
+            end,
+            version = "^4.0.0",
+        },
+        {
+            "0xstepit/flow.nvim",
+            enabled = false,
+            lazy = false,
+            priority = math.huge,
+            config = function(_, opts)
+                require("flow").setup({
+                    dark_theme = true, -- Set the theme with dark background.
+                    high_contrast = true, -- Make the dark background darker or the light background lighter.
+                    transparent = false, -- Set transparent background.
+                    fluo_color = "green", -- Color used as fluo. Available values are pink, yellow, orange, or green.
+                    mode = "desaturate", -- Mode of the colors. Available values are: dark, bright, desaturate, or base.
+                    aggressive_spell = true, -- Use colors for spell check.
+                })
+
+                vim.cmd("colorscheme flow")
+            end,
+        },
     }
 else
     vim.api.nvim_command("colorscheme default")

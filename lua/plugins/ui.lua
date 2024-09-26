@@ -139,6 +139,7 @@ return {
     },
     {
         "MeanderingProgrammer/render-markdown.nvim",
+        enabled = false,
         opts = {},
         -- event = vim.g.post_load_events,
         ft = "markdown",

@@ -20,9 +20,9 @@ def sum_two_number(a: int, b: int) -> int:
 class TestClass:
     s: str = "sad"
 
-    def __init__(self, varible):
+    def __init__(self, variable):
         self.a = "%123"
-        self.variable = varible
+        self.variable = variable
 
 
 asdasdsa = asd
