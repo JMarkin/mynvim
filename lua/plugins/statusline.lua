@@ -54,19 +54,19 @@ return {
                                 hint = "󰝶 ",
                             },
                         },
-                        {
-                            require("noice").api.status.command.get,
-                            cond = require("noice").api.status.command.has,
-                        },
+                        -- {
+                        --     require("noice").api.status.command.get,
+                        --     cond = require("noice").api.status.command.has,
+                        -- },
 
                         -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
                         -- { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
                     },
                     lualine_x = {
-                        {
-                            require("noice").api.status.message.get_hl,
-                            cond = require("noice").api.status.message.has,
-                        },
+                        -- {
+                        --     require("noice").api.status.message.get_hl,
+                        --     cond = require("noice").api.status.message.has,
+                        -- },
                         {
                             require("lazy.status").updates,
                             cond = require("lazy.status").has_updates,

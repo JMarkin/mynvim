@@ -113,36 +113,11 @@ return {
         end,
     },
     {
-        "nvim-zh/colorful-winsep.nvim",
-        config = false,
-        event = { "BufAdd" },
-    },
-    {
         "grapp-dev/nui-components.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",
         },
         lazy = true,
-    },
-    {
-        "mei28/luminate.nvim",
-        enabled = false,
-        event = { "VeryLazy" },
-        config = function()
-            require("luminate").setup({
-                duration = 100,
-                paste = {
-                    enabled = false,
-                },
-            })
-        end,
-    },
-    {
-        "MeanderingProgrammer/render-markdown.nvim",
-        enabled = false,
-        opts = {},
-        -- event = vim.g.post_load_events,
-        ft = "markdown",
     },
     {
         "prichrd/netrw.nvim",
@@ -159,5 +134,16 @@ return {
                 use_devicons = true,
             })
         end,
+    },
+    {
+        "rasulomaroff/reactive.nvim",
+        enabled = false,
+        opts = {
+            builtin = {
+                cursorline = true,
+                cursor = true,
+                modemsg = true,
+            },
+        },
     },
 }

@@ -12,11 +12,6 @@ return {
             auto_resize_height = true,
         },
     },
-    --nginx
-    {
-        "chr4/sslsecure.vim",
-        ft = { "nginx" },
-    },
     {
         "dstein64/vim-startuptime",
         cmd = { "StartupTime" },
