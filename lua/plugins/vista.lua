@@ -11,7 +11,7 @@ return {
         vim.g.vista_sidebar_width = 30
         vim.g.vista_sidebar_open_cmd = "30vsplit"
         vim.g.vista_echo_cursor_strategy = "floating_win"
-        vim.g.vista_close_on_jump = 1
+        vim.g.vista_close_on_jump = 0
     end,
     config = function()
         autocmd("FileType", {

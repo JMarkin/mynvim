@@ -212,6 +212,8 @@ local cmp_config = function(sources, buffer, comparators)
     local has_words_after = require("cmp_tools").has_words_after
     local menu_map = require("cmp_tools").menu_map
 
+    vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+
     setup({
         performance = {
             debounce = 0,
@@ -243,8 +245,8 @@ local cmp_config = function(sources, buffer, comparators)
                 auto_open = false,
             },
         },
-        experimental = {
-            ghost_text = true,
+        ghost_text = {
+            hl_group = "CmpGhostText",
         },
         snippet = {
             expand = is_not_mini() and function(args)
