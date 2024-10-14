@@ -17,10 +17,12 @@ return {
     },
     {
         "mrjones2014/smart-splits.nvim",
+        event = "BufAdd",
         -- enabled = false,
         opts = {
             multiplexer_integration = "tmux",
         },
+        -- lazy = false,
         keys = {
         -- stylua: ignore start
             { "<C-l>", function(...) require("smart-splits").move_cursor_right(...) end, silent = true, desc = "right",        mode = { "n", "t", "v" }    },

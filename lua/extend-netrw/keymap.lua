@@ -3,6 +3,7 @@ local funcs = require("extend-netrw.funcs")
 local M = {}
 
 M.init = function(buffer)
+    print(123)
     if vim.fn.mapcheck("<c-l>") == funcs.reload then
         vim.keymap.del("n", "<c-l>", { buffer = buffer })
         vim.keymap.del("n", "p", { buffer = buffer })

@@ -110,8 +110,9 @@ g.omni_sql_ignorecase       = 1
 
 g.ollama_host = vim.env.OLLAMA_HOST or "192.168.87.238"
 g.ollama_port = vim.env.OLLAMA_PORT or "11434"
-g.ollama_generate_endpoint = string.format("http://%s:%s/api/generate", g.ollama_host, g.ollama_port)
-g.ollama_chat_endpoint = string.format("http://%s:%s/api/chat", g.ollama_host, g.ollama_port)
+g.ollama_url = string.format("http://%s:%s", g.ollama_host, g.ollama_port)
+g.ollama_generate_endpoint = string.format("%s/api/generate", g.ollama_url)
+g.ollama_chat_endpoint = string.format("%s/api/chat", g.ollama_url)
 
 -- stylua: ignore end
 
@@ -200,7 +201,6 @@ vim.g.formatters_by_ft = {
     json = { "fixjson" },
     jinja = { "djlint" },
     htmldjango = { "djlint" },
-    ["*"] = { "codespell" },
 }
 
 for _, lang in ipairs({

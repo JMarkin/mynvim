@@ -21,12 +21,18 @@ return {
                             },
                         },
                         procMacro = {
-                            enable = false,
+                            enable = true,
                         },
                     },
                 },
             },
         }
-        require("rustaceanvim")
+
+        vim.api.nvim_create_autocmd("FileType", {
+            once = true,
+            callback = function(_)
+                require("rustaceanvim")
+            end,
+        })
     end,
 }

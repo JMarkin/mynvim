@@ -1,37 +1,52 @@
 return {
     {
-        "David-Kunz/gen.nvim",
-        config = function()
-            require("gen").setup({
-                debug = false,
-                model = "phi3:14b-medium-128k-instruct-q4_1", -- The default model to use.
-                display_mode = "split", -- The display mode. Can be "float" or "split".
-                show_prompt = true, -- Shows the Prompt submitted to Ollama.
-                show_model = true, -- Displays which model you are using at the beginning of your chat session.
-                no_auto_close = false, -- Never closes the window automatically.
-                init = function(options)
-                    -- pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "stevearc/dressing.nvim", -- Optional: Improves `vim.ui.select`
+        },
+        cmd = {
+            "CodeCompanion",
+            "CodeCompanionChat",
+            "CodeCompanionActions",
+        },
+        opts = {
+            opts = {
+                log_level = "DEBUG",
+            },
+            strategies = {
+                chat = { adapter = "ollama" },
+                inline = { adapter = "ollama" },
+                agent = { adapter = "ollama" },
+            },
+            adapters = {
+                ollama = function()
+                    return require("codecompanion.adapters").extend("ollama", {
+                        env = {
+                            url = vim.g.ollama_url,
+                        },
+                        headers = {
+                            ["Content-Type"] = "application/json",
+                        },
+                        parameters = {
+                            sync = true,
+                        },
+                        name = "qwen2.5", -- Give this adapter a different name to differentiate it from the default ollama adapter
+                        schema = {
+                            model = {
+                                default = "qwen2.5-coder:latest",
+                            },
+                            num_ctx = {
+                                default = 16384,
+                            },
+                            num_predict = {
+                                default = -1,
+                            },
+                        },
+                    })
                 end,
-                host = vim.g.ollama_host,
-                port = vim.g.ollama_port,
-                reprompt = {
-                    enabled = true,
-                    clear = false,
-                    focus_on_new = true,
-                    map = "<c-r>",
-                },
-                quit_map = "q", -- set keymap for close the response window
-                retry_map = "<c-r>", -- set keymap to re-send the current prompt
-            })
-        end,
-        cmd = "Gen",
+            },
+        },
     },
-    -- {
-    --     "TabbyML/vim-tabby",
-    --     init = function()
-    --         vim.g.tabby_trigger_mode = "manual"
-    --         vim.g.tabby_keybinding_accept = "<tab>"
-    --         vim.g.tabby_keybinding_trigger_or_dismiss = "<C-\\>"
-    --     end,
-    -- },
 }

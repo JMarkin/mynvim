@@ -1,7 +1,7 @@
 import json
 
 
-def word():
+def word(f: str, g: int):
     pass
 
 

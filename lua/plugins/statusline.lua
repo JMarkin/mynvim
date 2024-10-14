@@ -18,9 +18,7 @@ return {
             require("tabby").setup({
                 option = {
                     lualine_theme = vim.g.lualine_theme or nil,
-                    buf_name = {
-                        mode = "unique",
-                    },
+                    buf_name = { mode = "unique" },
                 },
             })
         end,
@@ -45,15 +43,7 @@ return {
                         { "branch", icon = "" },
                     },
                     lualine_c = {
-                        {
-                            "diagnostics",
-                            symbols = {
-                                error = " ",
-                                warn = " ",
-                                info = " ",
-                                hint = "󰝶 ",
-                            },
-                        },
+                        { "diff", source = diff_source },
                         -- {
                         --     require("noice").api.status.command.get,
                         --     cond = require("noice").api.status.command.has,
@@ -71,7 +61,15 @@ return {
                             require("lazy.status").updates,
                             cond = require("lazy.status").has_updates,
                         },
-                        { "diff", source = diff_source },
+                        {
+                            "diagnostics",
+                            symbols = {
+                                error = " ",
+                                warn = " ",
+                                info = " ",
+                                hint = "󰝶 ",
+                            },
+                        },
                     },
                     lualine_y = {
                         "encoding",

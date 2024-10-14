@@ -22,21 +22,21 @@ TAGS_SOURCE = {
         current_buffer_only = false,
     },
 }
+
 OMNI_SOURCE = {
     name = "omni",
     option = {
         disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
     },
-    max_item_count = 20,
 }
 LUASNIP_SOURCE = { name = "luasnip", keyword_length = 1, max_item_count = 5 }
+LUASNIP_CHOIDCE_SOURCE = { name = "luasnip_choice" }
 VIMDADBOD_SOURCE = {
     name = "vim-dadbod-completion",
     filetype = { "sql", "mssql", "plsql" },
-    max_item_count = 20,
 }
 DIAG_CODES_SOURCE = { name = "diag-codes", in_comment = true }
-LSP_SOURCE = { name = "nvim_lsp", max_item_count = 20 }
+LSP_SOURCE = { name = "nvim_lsp" }
 RG_SOURCE = {
     name = "rg",
     keyword_length = 2,
@@ -72,18 +72,17 @@ local nvim_sources = {
     DIAG_CODES_SOURCE,
     LSP_SOURCE,
     RG_SOURCE,
-    LUASNIP_SOURCE,
 }
 
 local default_comparators = function(compare)
     return {
-        require("cmp_tools").put_down_snippet,
+        require("plugins.autocomplete._cmp_tools").put_down_snippet,
         compare.offset,
         compare.exact,
         compare.score,
         compare.recently_used,
         compare.locality,
-        require("cmp_tools").lspkind_comparator(),
+        require("plugins.autocomplete._cmp_tools").lspkind_comparator(),
         compare.sort_text,
         compare.length,
         compare.order,
@@ -92,20 +91,20 @@ end
 
 local rust_comparators = function(compare)
     return {
-        require("cmp_tools").put_down_snippet,
+        require("plugins.autocomplete._cmp_tools").put_down_snippet,
         -- deprioritize `.box`, `.mut`, etc.
-        require("cmp_tools").deprioritize_postfix,
+        require("plugins.autocomplete._cmp_tools").deprioritize_postfix,
         -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
-        require("cmp_tools").deprioritize_borrow,
+        require("plugins.autocomplete._cmp_tools").deprioritize_borrow,
         -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
-        require("cmp_tools").deprioritize_deref,
+        require("plugins.autocomplete._cmp_tools").deprioritize_deref,
         -- deprioritize `Into::into`, `Clone::clone`, etc.
-        require("cmp_tools").deprioritize_common_traits,
+        require("plugins.autocomplete._cmp_tools").deprioritize_common_traits,
         compare.offset,
         compare.exact,
         compare.score,
         compare.recently_used,
-        require("cmp_tools").lspkind_comparator(),
+        require("plugins.autocomplete._cmp_tools").lspkind_comparator(),
         compare.locality,
         compare.sort_text,
         compare.length,
@@ -115,14 +114,14 @@ end
 
 local python_comparators = function(compare)
     return {
-        require("cmp_tools").put_down_snippet,
+        require("plugins.autocomplete._cmp_tools").put_down_snippet,
         compare.offset,
         compare.exact,
         compare.score,
-        require("cmp_tools").under,
+        require("plugins.autocomplete._cmp_tools").under,
         compare.recently_used,
         compare.locality,
-        require("cmp_tools").lspkind_comparator(),
+        require("plugins.autocomplete._cmp_tools").lspkind_comparator(),
         compare.sort_text,
         compare.length,
         compare.order,
@@ -131,8 +130,8 @@ end
 
 local clang_comparators = function(compare)
     return {
-        require("cmp_tools").put_down_snippet,
-        require("cmp_tools").lspkind_comparator(),
+        require("plugins.autocomplete._cmp_tools").put_down_snippet,
+        require("plugins.autocomplete._cmp_tools").lspkind_comparator(),
         compare.offset,
         compare.exact,
         compare.score,
@@ -209,8 +208,8 @@ local cmp_config = function(sources, buffer, comparators)
         })
     end
 
-    local has_words_after = require("cmp_tools").has_words_after
-    local menu_map = require("cmp_tools").menu_map
+    local has_words_after = require("plugins.autocomplete._cmp_tools").has_words_after
+    local menu_map = require("plugins.autocomplete._cmp_tools").menu_map
 
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
@@ -341,8 +340,8 @@ local function cmp_cmdline(is_large)
         cmp.setup.cmdline({ "/", "?" }, {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
-                { name = "cmdline_history", max_item_count = 2 },
                 { name = "buffer" },
+                { name = "cmdline_history", max_item_count = 2 },
             },
             performance = {
                 max_view_entries = 10,
@@ -356,10 +355,10 @@ local function cmp_cmdline(is_large)
     cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-            { name = "cmdline_history", max_item_count = 2 },
             { name = "cmdline", option = {
                 ignore_cmds = { "Man" },
             } },
+            { name = "cmdline_history", max_item_count = 2 },
         }),
     })
 end
@@ -418,7 +417,6 @@ if enabled then
         group = gr,
         callback = function(opts)
             cmp_config(default_sources, opts.buf)
-            -- cmp_cmdline(true)
         end,
     })
 end
@@ -468,7 +466,8 @@ return {
         -- "JMarkin/nvim-cmp",
         -- branch = "perf-up",
         -- dev = true,
-        "hrsh7th/nvim-cmp",
+        -- "hrsh7th/nvim-cmp",
+        "iguanacucumber/magazine.nvim",
         enabled = enabled,
         lazy = true,
         event = { "InsertEnter", "CmdlineEnter" },

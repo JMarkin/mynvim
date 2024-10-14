@@ -57,7 +57,7 @@ return {
     -- enabled = false,
     cond = is_not_mini,
     dependencies = { "kevinhwang91/promise-async", "nvim-treesitter" },
-    event = "VeryLazy",
+    event = { table.unpack(vim.g.post_load_events), "LspAttach" },
     opts = {
         fold_virt_text_handler = handler,
         provider_selector = function(_, filetype, _)

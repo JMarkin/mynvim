@@ -131,7 +131,7 @@ local function on_attach(client, bufnr)
     if client.supports_method(methods.textDocument_inlayHint) then
         local inlay_hints_group = vim.api.nvim_create_augroup("toggle_inlay_hints", { clear = false })
         vim.keymap.set({ "n" }, "<leader>li", function()
-            local enabled = vim.lsp.inlay_hint.is_enabled(bufnr)
+            local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
 
             if not enabled then
                 vim.api.nvim_create_autocmd("InsertEnter", {
@@ -139,7 +139,7 @@ local function on_attach(client, bufnr)
                     desc = "Enable inlay hints",
                     buffer = bufnr,
                     callback = function()
-                        vim.lsp.inlay_hint.enable(bufnr, false)
+                        vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
                     end,
                 })
                 vim.api.nvim_create_autocmd("InsertLeave", {
@@ -147,7 +147,7 @@ local function on_attach(client, bufnr)
                     desc = "Disable inlay hints",
                     buffer = bufnr,
                     callback = function()
-                        vim.lsp.inlay_hint.enable(bufnr, true)
+                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     end,
                 })
             else
@@ -156,7 +156,7 @@ local function on_attach(client, bufnr)
                     group = inlay_hints_group,
                 })
             end
-            vim.lsp.inlay_hint.enable(bufnr, not enabled)
+            vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
         end, { buffer = bufnr, silent = true, desc = "Toggle Inlay hint" })
     end
 

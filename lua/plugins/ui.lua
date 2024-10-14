@@ -72,8 +72,8 @@ return {
     {
         "brenoprata10/nvim-highlight-colors",
         enabled = true,
-        -- event = vim.g.post_load_events,
-        event = "VeryLazy",
+        event = vim.g.post_load_events,
+        -- event = "VeryLazy",
         config = function()
             require("nvim-highlight-colors").turnOn()
         end,
@@ -134,16 +134,5 @@ return {
                 use_devicons = true,
             })
         end,
-    },
-    {
-        "rasulomaroff/reactive.nvim",
-        enabled = false,
-        opts = {
-            builtin = {
-                cursorline = true,
-                cursor = true,
-                modemsg = true,
-            },
-        },
     },
 }

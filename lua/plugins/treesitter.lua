@@ -46,6 +46,9 @@ local syntax_langs = {
     "requirements",
     "hcl",
     "xml",
+    "nginx",
+    "tmux",
+    "udev",
     -- tools
     "markdown_inline",
     "jq",
@@ -100,8 +103,8 @@ return {
     -- enabled = false,
     lazy = true,
     -- ft = "qf",
-    -- event = vim.g.pre_load_events,
-    event = "VeryLazy",
+    event = vim.g.post_load_events,
+    -- event = "VeryLazy",
     dependencies = {
         {
             "m-demare/hlargs.nvim",
@@ -181,7 +184,7 @@ return {
             },
             highlight = {
                 enable = true,
-                additional_vim_regex_highlighting = false,
+                additional_vim_regex_highlighting = true,
                 disable = is_disable,
             },
             incremental_selection = {

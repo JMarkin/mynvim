@@ -4,8 +4,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         cond = is_not_mini,
-        -- event = vim.g.pre_load_events,
-        event = "VeryLazy",
+        event = vim.g.post_load_events,
+        -- event = "VeryLazy",
         config = function()
             require("lsp").setup()
 
@@ -107,4 +107,11 @@ return {
     { "folke/neodev.nvim", lazy = true, opts = {
         lspconfig = false,
     } },
+    {
+        "j-hui/fidget.nvim",
+        event = "LspAttach",
+        opts = {
+            -- options
+        },
+    },
 }

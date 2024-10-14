@@ -31,10 +31,7 @@ return {
         cond = is_not_mini,
         dependencies = {
             "tpope/vim-dadbod",
-            {
-                "kristijanhusak/vim-dadbod-completion",
-                dependencies = "nvim-cmp",
-            },
+            "kristijanhusak/vim-dadbod-completion",
             "vim-scripts/dbext.vim",
         },
         init = function()

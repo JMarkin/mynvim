@@ -24,7 +24,7 @@ require("keymap")
 require("funcs")
 require("au")
 require("term")
-require("ai")
+require("extend-netrw")
 
 if vim.g.neovide then
     require("neovide")
@@ -114,5 +114,3 @@ if should_profile then
         require("profile").instrument("*")
     end
 end
-
-require("extend-netrw")
