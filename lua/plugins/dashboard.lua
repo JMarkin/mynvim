@@ -105,7 +105,7 @@ return {
         dashboard.section.footer.opts.hl = "AlphaFooter"
 
         if height > 40 then
-            local header = require("ascii").get_random_global()
+            local header = require("banner")
             dashboard.section.header.val = header
             run_neofetch(dashboard)
         else
@@ -141,6 +141,6 @@ return {
     end,
     dependencies = {
         "nvim-web-devicons",
-        { "JMarkin/ascii.nvim", lazy = true },
+        -- { "JMarkin/ascii.nvim", lazy = true },
     },
 }

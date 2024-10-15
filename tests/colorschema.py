@@ -55,7 +55,7 @@ def decorator(): ...
 def s(): ...
 
 
-def f(val1: str, ss, sncjllll)::
+def f(val1: str, ss, sncjllll):
     """asdsad."""
 
     def f():
@@ -66,3 +66,5 @@ def f(val1: str, ss, sncjllll)::
         return c
 
     return f
+
+

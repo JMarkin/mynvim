@@ -8,8 +8,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
         "nvim-neotest/neotest-python",
-        "rouge8/neotest-rust",
-        "nvim-dap-ui"
+        "nvim-dap-ui",
     },
     keys = {
         {
@@ -25,7 +24,7 @@ return {
                 require("neotest").output_panel.toggle()
             end,
             desc = "Tests: output",
-        }
+        },
     },
     config = function()
         require("neotest").setup({
@@ -35,7 +34,7 @@ return {
                     -- args = { "--log-level", "DEBUG", "--showlocals" },
                     runner = vim.g.python_test_runner or "pytest",
                 }),
-                require("neotest-rust")({}),
+                require("rustaceanvim.neotest"),
             },
         })
     end,

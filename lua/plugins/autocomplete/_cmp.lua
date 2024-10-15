@@ -267,9 +267,11 @@ local cmp_config = function(sources, buffer, comparators)
             ["<CR>"] = cmp.mapping({
                 i = function(fallback)
                     if cmp.visible() and cmp.get_active_entry() or vim.fn.pumvisible() > 0 then
-                        cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                        if not cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }) then
+                            require("pairs.enter").type()
+                        end
                     else
-                        fallback()
+                        require("pairs.enter").type()
                     end
                 end,
                 s = cmp.mapping.confirm({ select = true }),

@@ -25,7 +25,7 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
-        event = "VeryLazy",
+        event = vim.g.post_load_events,
         config = function()
             local lualine = require("lualine")
 

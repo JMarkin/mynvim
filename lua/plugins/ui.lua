@@ -22,8 +22,12 @@ return {
             require("notify").setup(args.opts)
             vim.notify = require("notify")
         end,
-        event = "VeryLazy",
-        lazy = true,
+        init = function()
+            vim.notify = function(...)
+                require("lazy").load({ plugins = { "nvim-notify" } })
+                return vim.notify(...)
+            end
+        end,
     },
 
     -- better vim.ui

@@ -40,7 +40,7 @@ end
 return {
     {
         "ramilito/winbar.nvim",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("winbar").setup({
@@ -64,7 +64,8 @@ return {
                     "prompt",
                     "httpResult",
                     "http",
-                    "rest_nvim_result"
+                    "rest_nvim_result",
+                    "netrw",
                 },
                 diagnostics = true,
                 buf_modified = true,

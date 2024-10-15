@@ -41,7 +41,7 @@ if vim.g.modern_ui then
         },
         {
             "ribru17/bamboo.nvim",
-            enabled = true,
+            enabled = false,
             lazy = false,
             priority = math.huge,
             config = function()
