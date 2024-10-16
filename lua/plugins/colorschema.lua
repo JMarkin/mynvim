@@ -57,7 +57,7 @@ if vim.g.modern_ui then
                         variables = {},
                     },
                     dim_inactive = true,
-                    -- style = "multiplex",
+                    style = "multiplex",
                     transparent = false,
                     lualine = {
                         transparent = true, -- lualine center bar transparency
@@ -134,21 +134,61 @@ if vim.g.modern_ui then
             version = "^4.0.0",
         },
         {
-            "0xstepit/flow.nvim",
-            enabled = false,
+            "ramojus/mellifluous.nvim",
+            enabled = true,
             lazy = false,
             priority = math.huge,
             config = function(_, opts)
-                require("flow").setup({
-                    dark_theme = true, -- Set the theme with dark background.
-                    high_contrast = true, -- Make the dark background darker or the light background lighter.
-                    transparent = false, -- Set transparent background.
-                    fluo_color = "green", -- Color used as fluo. Available values are pink, yellow, orange, or green.
-                    mode = "desaturate", -- Mode of the colors. Available values are: dark, bright, desaturate, or base.
-                    aggressive_spell = true, -- Use colors for spell check.
+                require("mellifluous").setup({
+                    dim_inactive = true,
+                    colorset = "tender",
+                    styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option
+                        main_keywords = { bold = true },
+                        other_keywords = {},
+                        types = { italic = true },
+                        operators = {},
+                        strings = {},
+                        functions = { bold = true },
+                        constants = {},
+                        comments = { italic = true },
+                        markup = {
+                            headings = { bold = true },
+                        },
+                        folds = {},
+                    },
+                    transparent_background = {
+                        enabled = false,
+                        floating_windows = true,
+                        telescope = true,
+                        file_tree = true,
+                        cursor_line = true,
+                        status_line = false,
+                    },
+                    flat_background = {
+                        line_numbers = false,
+                        floating_windows = false,
+                        file_tree = false,
+                        cursor_line_number = false,
+                    },
+                    plugins = {
+                        cmp = true,
+                        gitsigns = true,
+                        indent_blankline = false,
+                        nvim_tree = {
+                            enabled = false,
+                            show_root = false,
+                        },
+                        neo_tree = {
+                            enabled = false,
+                        },
+                        telescope = {
+                            enabled = false,
+                            nvchad_like = true,
+                        },
+                        startify = false,
+                    },
                 })
-
-                vim.cmd("colorscheme flow")
+                vim.cmd("colorscheme mellifluous")
             end,
         },
     }

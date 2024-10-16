@@ -163,9 +163,9 @@ end)
 
 local cmp_config = function(sources, buffer, comparators)
     comparators = comparators or default_comparators
-    local _, luasnip = pcall(require, "luasnip")
+    local luasnip_enabled, luasnip = pcall(require, "luasnip")
 
-    local _, neogen = pcall(require, "neogen")
+    local neogen_enabled, neogen = pcall(require, "neogen")
 
     local cmp = require("cmp")
     local compare = require("cmp.config.compare")
@@ -173,9 +173,9 @@ local cmp_config = function(sources, buffer, comparators)
     local move_down = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
-        elseif luasnip.expand_or_locally_jumpable() then
+        elseif luasnip_enabled and luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-        elseif neogen.jumpable() then
+        elseif neogen_enabled and neogen.jumpable() then
             neogen.jump_next()
         else
             fallback()
@@ -185,9 +185,9 @@ local cmp_config = function(sources, buffer, comparators)
     local move_up = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()
-        elseif luasnip.in_snippet() and luasnip.jumpable(-1) then
+        elseif luasnip and luasnip.in_snippet() and luasnip.jumpable(-1) then
             luasnip.jump(-1)
-        elseif neogen.jumpable(true) then
+        elseif neogen and neogen.jumpable(true) then
             neogen.jump_prev()
         else
             fallback()

@@ -67,16 +67,24 @@ return {
         "ranelpadon/python-copy-reference.vim",
         cond = is_not_mini,
         ft = { "python" },
+        init = function()
+            vim.g.python_remove_prefixes = { "src" }
+        end,
         keys = {
             {
                 "<leader>lcd",
                 ":PythonCopyReferenceDotted<CR>",
-                desc = "Copy as: ReferenceDotted",
+                desc = "Copy as: Python Dotted",
             },
             {
                 "<leader>lcp",
                 ":PythonCopyReferencePytest<CR>",
-                desc = "Copy as: ReferencePytest",
+                desc = "Copy as: Pytest",
+            },
+            {
+                "<leader>lci",
+                ":PythonCopyReferenceImport<CR>",
+                desc = "Copy as: Python Import",
             },
         },
     },

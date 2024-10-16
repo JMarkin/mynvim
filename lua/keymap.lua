@@ -73,11 +73,13 @@ for i = 1, 9, 1 do
     vim.keymap.set({ "n", "x" }, "<space>" .. i, tabswitch(vim.cmd.tabnext, i), { desc = "Tabs: go to " .. i })
 end
 
--- if is_not_mini() then
---     vim.keymap.set("n", "<space>f", function()
---         MiniFiles.open()
---     end, { noremap = true, desc = "Netrw: open" })
--- else
 vim.keymap.set("n", "<space>f", "<cmd>Explore<cr>", { noremap = true, desc = "Netrw: open" })
 vim.keymap.set("n", "<leader>f", "<cmd>Explore %:p:h<cr>", { noremap = true, desc = "Netrw: open current file" })
--- end
+
+vim.keymap.set("n", "<leader>lcl", function()
+    local s = string.format("%s:%s", vim.fn.expand("%"), vim.fn.line("."))
+    vim.notify(string.format("Copied reference: %s", s))
+    vim.fn.setreg("+", s)
+end, { noremap = true, desc = "Copy as: line" })
+
+vim.cmd([[command CDC lcd %:p:h]])

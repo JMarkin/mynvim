@@ -16,7 +16,6 @@ def sum_two_number(a: int, b: int) -> int:
 # TODO: 123
 # FIXME: 11
 
-
 class TestClass:
     s: str = "sad"
 

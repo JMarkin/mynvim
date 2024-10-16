@@ -65,6 +65,11 @@ local function all_open()
 end
 
 function FloatPreview.attach_netrw(bufnr)
+    local exists = all_floats[bufnr]
+    if exists ~= nil then
+        return
+    end
+    -- vim.notify(string.format("attached: %s", bufnr))
     local prev = FloatPreview:new()
     prev:attach(bufnr)
     all_open()

@@ -40,7 +40,6 @@ opt.scrollback              = 2000
 opt.conceallevel            = 0
 opt.autowriteall            = true
 opt.virtualedit             = 'block'
-opt.ttyfast                 = true
 opt.mouse                   = "a"
 g.mapleader                 = "\\"
 opt.fileencoding            = "utf-8"
@@ -108,7 +107,7 @@ opt.sessionoptions          = 'curdir,folds,globals,help,tabpages,terminal,winsi
 g.omni_sql_ignorecase       = 1
 
 
-g.ollama_host = vim.env.OLLAMA_HOST or "192.168.87.238"
+g.ollama_host = vim.env.OLLAMA_HOST or "localhost"
 g.ollama_port = vim.env.OLLAMA_PORT or "11434"
 g.ollama_url = string.format("http://%s:%s", g.ollama_host, g.ollama_port)
 g.ollama_generate_endpoint = string.format("%s/api/generate", g.ollama_url)
