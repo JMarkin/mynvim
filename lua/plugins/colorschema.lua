@@ -41,7 +41,7 @@ if vim.g.modern_ui then
         },
         {
             "ribru17/bamboo.nvim",
-            enabled = false,
+            enabled = true,
             lazy = false,
             priority = math.huge,
             config = function()
@@ -135,7 +135,7 @@ if vim.g.modern_ui then
         },
         {
             "ramojus/mellifluous.nvim",
-            enabled = true,
+            enabled = false,
             lazy = false,
             priority = math.huge,
             config = function(_, opts)

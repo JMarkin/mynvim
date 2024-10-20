@@ -14,7 +14,11 @@ local default_lsp = function(bin_name, lsp_name, opts)
             external_install(bin_name, sync, update)
         end,
         setup = function()
-            utils.setup_lsp(lsp_name, opts)
+            if vim.fn.executable(bin_name) then
+                utils.setup_lsp(lsp_name, opts)
+            else
+                vim.notify(string.format("Not Executable %s, try install", bin_name), vim.log.levels.DEBUG)
+            end
         end,
     }
 end

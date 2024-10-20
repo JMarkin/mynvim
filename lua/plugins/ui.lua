@@ -68,7 +68,8 @@ return {
         event = "ModeChanged",
         opts = {
             highlight = {
-                enabled = false, -- highlight yanked text
+                enabled = true, -- highlight yanked text
+                timeout = 200,
             },
         },
     },
@@ -78,6 +79,9 @@ return {
         enabled = true,
         event = vim.g.post_load_events,
         -- event = "VeryLazy",
+        opts = {
+            render = "virtual",
+        },
         config = function()
             require("nvim-highlight-colors").turnOn()
         end,
@@ -104,9 +108,10 @@ return {
     },
     {
         "tzachar/local-highlight.nvim",
-        event = vim.g.post_load_events,
+        lazy = true,
         opts = {
             insert_mode = false,
+            file_types = {},
         },
     },
     {

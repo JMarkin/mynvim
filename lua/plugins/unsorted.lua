@@ -1,7 +1,7 @@
 return {
     "antoinemadec/FixCursorHold.nvim",
 
-    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", event = "VeryLazy" },
+    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", },
 
     {
         "kevinhwang91/nvim-bqf",
@@ -46,9 +46,6 @@ return {
         -- enabled = false,
         dev = true,
         cond = vim.fn.executable("ctags") == 1,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
         opts = {
             autostart = false,
             async = false,
