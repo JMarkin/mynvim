@@ -36,7 +36,7 @@ VIMDADBOD_SOURCE = {
     filetype = { "sql", "mssql", "plsql" },
 }
 DIAG_CODES_SOURCE = { name = "diag-codes", in_comment = true }
-LSP_SOURCE = { name = "nvim_lsp" }
+LSP_SOURCE = { name = "nvim_lsp", max_item_count = 30 }
 RG_SOURCE = {
     name = "rg",
     keyword_length = 2,
@@ -44,6 +44,7 @@ RG_SOURCE = {
     option = { additional_arguments = "--max-depth 4" },
 }
 NVIM_SOURCE = { name = "nvim_lua" }
+FILE_SOURCE = { name = "async_path" }
 
 local mini_sources = {
     TAGS_SOURCE,
@@ -114,11 +115,11 @@ end
 
 local python_comparators = function(compare)
     return {
+        require("plugins.autocomplete._cmp_tools").under,
         require("plugins.autocomplete._cmp_tools").put_down_snippet,
         compare.offset,
         compare.exact,
         compare.score,
-        require("plugins.autocomplete._cmp_tools").under,
         compare.recently_used,
         compare.locality,
         require("plugins.autocomplete._cmp_tools").lspkind_comparator(),
@@ -220,7 +221,7 @@ local cmp_config = function(sources, buffer, comparators)
             fetching_timeout = 5,
             confirm_resolve_timeout = 80,
             -- async_budget = 1,
-            max_view_entries = 20,
+            max_view_entries = 50,
         },
         enabled = function()
             local disabled = false
@@ -241,7 +242,7 @@ local cmp_config = function(sources, buffer, comparators)
         view = {
             entries = { name = "custom" },
             docs = {
-                auto_open = false,
+                auto_open = true,
             },
         },
         ghost_text = {
@@ -263,6 +264,34 @@ local cmp_config = function(sources, buffer, comparators)
             ["<C-e>"] = cmp.mapping.scroll_docs(-4),
             ["<C-d>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
+            ["<c-x><c-f>"] = cmp.mapping.complete({
+                config = {
+                    sources = {
+                        FILE_SOURCE,
+                    },
+                },
+            }),
+            ["<c-f>"] = cmp.mapping.complete({
+                config = {
+                    sources = {
+                        FILE_SOURCE,
+                    },
+                },
+            }),
+            ["<c-x><c-]>"] = cmp.mapping.complete({
+                config = {
+                    sources = {
+                        TAGS_SOURCE,
+                    },
+                },
+            }),
+            ["<c-]>"] = cmp.mapping.complete({
+                config = {
+                    sources = {
+                        TAGS_SOURCE,
+                    },
+                },
+            }),
             ["<C-a>"] = cmp.mapping.abort(),
             ["<CR>"] = cmp.mapping({
                 i = function(fallback)
@@ -479,22 +508,38 @@ return {
             { "saadparwaiz1/cmp_luasnip", cond = is_not_mini },
             "hrsh7th/cmp-omni",
             { "danymat/neogen", cond = is_not_mini },
-            { "hrsh7th/cmp-nvim-lua", cond = is_not_mini },
+            {
+                -- "hrsh7th/cmp-nvim-lua",
+                "iguanacucumber/mag-nvim-lua",
+                name = "cmp-nvim-lua",
+                cond = is_not_mini,
+            },
             {
                 "JMarkin/cmp-diag-codes",
                 cond = is_not_mini,
                 -- dev = true,
             },
             {
-                "hrsh7th/cmp-nvim-lsp",
+                -- "hrsh7th/cmp-nvim-lsp",
+                "iguanacucumber/mag-nvim-lsp",
+                name = "cmp-nvim-lsp",
                 dependencies = { "onsails/lspkind.nvim" },
                 cond = is_not_mini,
             },
             { "rcarriga/cmp-dap", cond = is_not_mini },
             "quangnguyen30192/cmp-nvim-tags",
             "dmitmel/cmp-cmdline-history",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-buffer",
+            {
+                -- "hrsh7th/cmp-cmdline",
+                "iguanacucumber/mag-cmdline",
+                name = "cmp-cmdline",
+            },
+            {
+                -- "hrsh7th/cmp-buffer",
+                "iguanacucumber/mag-buffer",
+                name = "cmp-buffer",
+            },
+            "https://codeberg.org/FelipeLema/cmp-async-path",
             -- {
             --     "tzachar/cmp-ai",
             --     cond = is_not_mini,
@@ -531,34 +576,6 @@ return {
         },
         config = function()
             local cmp = require("cmp")
-            local cmp_core = require("cmp.core")
-            local cmp_utils_keymap = require("cmp.utils.keymap")
-
-            cmp_utils_keymap.normalize = function(keys)
-                return vim.fn.keytrans(cmp_utils_keymap.t(keys))
-            end
-
-            ---@type integer
-            local last_changed = 0
-            local _cmp_on_change = cmp_core.on_change
-            local string_byte_c = string.byte("c")
-            ---Improves performance when inserting in large files
-            ---@diagnostic disable-next-line: duplicate-set-field
-            function cmp_core.on_change(self, trigger_event)
-                -- Don't know why but inserting spaces/tabs causes higher latency than other
-                -- keys, e.g. when holding down 's' the interval between keystrokes is less
-                -- than 32ms (80 repeats/s keyboard), but when holding spaces/tabs the
-                -- interval increases to 100ms, guess is is due ot some other plugins that
-                -- triggers on spaces/tabs
-                -- Spaces/tabs are not useful in triggering completions in insert mode but can
-                -- be useful in command-line autocompletion, so ignore them only when not in
-                -- command-line mode
-                if (last_key == " " or last_key == "\t") and string.byte(vim.fn.mode(), 1) ~= string_byte_c then
-                    return
-                end
-
-                _cmp_on_change(self, trigger_event)
-            end
 
             if is_not_mini() then
                 cmp_config(default_sources)

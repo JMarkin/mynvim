@@ -1,7 +1,7 @@
 return {
     "antoinemadec/FixCursorHold.nvim",
 
-    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf", },
+    { "yorickpeterse/nvim-pqf", name = "pqf", config = true, ft = "qf" },
 
     {
         "kevinhwang91/nvim-bqf",

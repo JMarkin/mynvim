@@ -1,6 +1,7 @@
 import os
 import pathlib
 
+
 # dldldld
 """asd
 zxc
@@ -12,9 +13,11 @@ pathlib.Path(".").mkdir()
 def sum_two_number(a: int, b: int) -> int:
     return a + b
 
+su
 
 # TODO: 123
 # FIXME: 11
+
 
 class TestClass:
     s: str = "sad"
@@ -65,5 +68,3 @@ def f(val1: str, ss, sncjllll):
         return c
 
     return f
-
-

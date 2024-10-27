@@ -2,6 +2,7 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        enabled = false,
         opts_extend = { "spec" },
         opts = {
             defaults = {},
@@ -22,7 +23,9 @@ return {
                     { "g", group = "goto" },
                     { "gz", group = "surround" },
                     { "z", group = "fold" },
-                    { "<leader>b", group = "bmark" },
+                    { "m", group = "mark" },
+                    { "M", group = "mark" },
+                    { "dm", group = "mark" },
                     { "<Leader>lc", group = "copy_as" },
                     { "<Leader>lt", group = "tests" },
                     { "<Leader>h", group = "http" },
@@ -60,7 +63,7 @@ return {
     {
         "echasnovski/mini.clue",
         event = "VimEnter",
-        enabled = false,
+        enabled = true,
         config = function()
             local miniclue = require("mini.clue")
             miniclue.setup({
@@ -108,8 +111,6 @@ return {
                 },
 
                 clues = {
-                    -- Enhance this by adding descriptions for <Leader> mapping groups
-                    miniclue.gen_clues.builtin_completion(),
                     miniclue.gen_clues.g(),
                     miniclue.gen_clues.marks(),
                     miniclue.gen_clues.registers(),
@@ -118,7 +119,6 @@ return {
 
                     { mode = "n", keys = "gz", desc = "Surround" },
                     { mode = "n", keys = "<space>b", desc = "Buffers" },
-                    { mode = "n", keys = "<leader>b", desc = "Bookmark" },
                     { mode = "n", keys = "<Leader>l", desc = "Lang" },
                     { mode = "n", keys = "<Leader>g", desc = "Git" },
                     { mode = "v", keys = "<Leader>g", desc = "Git" },
@@ -130,6 +130,26 @@ return {
                     { mode = "n", keys = "<Leader>lc", desc = "Copy as" },
                     { mode = "n", keys = "<Leader>lt", desc = "Tests" },
                     { mode = "n", keys = "<Leader>h", desc = "Http" },
+
+                    -- completions
+                    { mode = "i", keys = "<C-x><C-d>", desc = "Defined identifiers" },
+                    { mode = "i", keys = "<C-x><C-e>", desc = "Scroll up" },
+                    { mode = "i", keys = "<C-x><C-i>", desc = "Identifiers" },
+                    { mode = "i", keys = "<C-x><C-k>", desc = "Identifiers from dictionary" },
+                    { mode = "i", keys = "<C-x><C-l>", desc = "Whole lines" },
+                    { mode = "i", keys = "<C-x><C-n>", desc = "Next completion" },
+                    { mode = "i", keys = "<C-x><C-o>", desc = "Omni completion" },
+                    { mode = "i", keys = "<C-x><C-p>", desc = "Previous completion" },
+                    { mode = "i", keys = "<C-x><C-s>", desc = "Spelling suggestions" },
+                    { mode = "i", keys = "<C-x><C-t>", desc = "Identifiers from thesaurus" },
+                    { mode = "i", keys = "<C-x><C-y>", desc = "Scroll down" },
+                    { mode = "i", keys = "<C-x><C-u>", desc = "With 'completefunc'" },
+                    { mode = "i", keys = "<C-x><C-v>", desc = "Like in command line" },
+                    { mode = "i", keys = "<C-x><C-z>", desc = "Stop completion" },
+                    { mode = "i", keys = "<C-x>s", desc = "Spelling suggestions" },
+
+                    { mode = "i", keys = "<c-x><c-f>", desc = "Files" },
+                    { mode = "i", keys = "<c-x><c-]>", desc = "Tags" },
                 },
             })
         end,

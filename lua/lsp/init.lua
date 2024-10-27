@@ -1,3 +1,6 @@
+--
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+
 if vim.env.NVIM_MINI ~= nil then
     return {}
 end
@@ -65,6 +68,19 @@ M.lsps = {
     -- }),
     -- pyright = default_lsp("pyright", "pyright", {
     --     filetypes = { "python", "python.django", "django" },
+    -- }),
+    -- pylyzer = default_lsp("pylyzer", "pylyzer"),
+    -- basedpyright = default_lsp("basedpyright", "basedpyright", {
+    --     filetypes = { "python", "python.django", "django" },
+    --     settings = {
+    --         basedpyright = {
+    --             disableOrganizeImports = true,
+    --             -- typeCheckingMode = "off",
+    --             analysis = {
+    --                 diagnosticMode = "openFilesOnly",
+    --             },
+    --         },
+    --     },
     -- }),
     taplo = default_lsp("taplo", "taplo"),
     tsserver = default_lsp("typescript-language-server", "ts_ls"),

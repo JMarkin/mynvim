@@ -57,7 +57,7 @@ if vim.g.modern_ui then
                         variables = {},
                     },
                     dim_inactive = true,
-                    style = "multiplex",
+                    -- style = "multiplex",
                     transparent = false,
                     lualine = {
                         transparent = true, -- lualine center bar transparency

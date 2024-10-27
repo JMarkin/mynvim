@@ -12,7 +12,7 @@ return {
         end)
 
         vim.keymap.set("i", "<cr>", "<Plug>(CareConfirm)")
-        vim.keymap.set("i", "<c-e>", "<Plug>(CareClose)")
+        vim.keymap.set("i", "<c-a>", "<Plug>(CareClose)")
         vim.keymap.set("i", "<tab>", "<Plug>(CareSelectNext)")
         vim.keymap.set("i", "<s-tab>", "<Plug>(CareSelectPrev)")
 

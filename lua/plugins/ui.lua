@@ -69,7 +69,7 @@ return {
         opts = {
             highlight = {
                 enabled = true, -- highlight yanked text
-                timeout = 200,
+                timeout = 100,
             },
         },
     },

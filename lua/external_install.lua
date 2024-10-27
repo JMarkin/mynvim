@@ -2,10 +2,10 @@
 
 local fn = require("funcs")
 
-local function pip_install(name, pip_args)
+local function pip_install(...)
     return {
         command = "bash",
-        args = { "pip.sh", name, pip_args },
+        args = { "pip.sh", ...},
         cwd = "~/.config/nvim/installers",
     }
 end
@@ -30,9 +30,11 @@ local DEFAULT_INSTALL_EXEC = {
     ),
     ["python-lsp-server"] = pip_install("python-lsp-server", "python-lsp-server"),
     pyright = pip_install("pyright", "pyright"),
+    basedpyright = pip_install("basedpyright", "basedpyright", "basedpyright-langserver"),
     ["nginx-language-server"] = pip_install("nginx-language-server", "nginx-language-server"),
     djlint = pip_install("djlint", "djlint"),
     codespell = pip_install("codespell", "codespell"),
+    pylyzer = pip_install("pylyzer", "pylyzer"),
 
     -- npm
     spectral = { command = "npm", args = { "install", "-g", "@stoplight/spectral-cli" } },
