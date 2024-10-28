@@ -44,7 +44,7 @@ return {
     {
         "JMarkin/gentags.lua",
         -- enabled = false,
-        dev = true,
+        -- dev = true,
         cond = vim.fn.executable("ctags") == 1,
         opts = {
             autostart = false,
