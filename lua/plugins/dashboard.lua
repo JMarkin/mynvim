@@ -127,7 +127,7 @@ return {
                 local stats = require("lazy").stats()
                 local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
                 M.version = string.format("󰥱 v%s", vim.version())
-                M.plugins = "⚡Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+                M.plugins = "⚡Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms"
 
                 if height > 60 then
                     draw_footer(dashboard)

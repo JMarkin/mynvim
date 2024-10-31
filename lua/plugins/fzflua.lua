@@ -240,6 +240,7 @@ return {
             },
             oldfiles = {
                 include_current_session = true,
+                fzf_opts = { ["--tiebreak"] = "index" },
             },
             git = {
                 files = {
