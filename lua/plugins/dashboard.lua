@@ -85,11 +85,7 @@ return {
                 "󰄉 " .. " Recent files",
                 ":lua require('fzf-lua').oldfiles({ multiprocess = true, cwd_only=true })<cr>"
             ),
-            dashboard.button(
-                "g",
-                "󰄉 " .. " Git status",
-                ":lua require('fzf-lua').git_status({ multiprocess = true })<cr>"
-            ),
+            dashboard.button("g", "󰄉 " .. " Git", ":Neogit <cr>"),
             dashboard.button("c", " " .. " Config", ":e .nvim.lua <CR>"),
             dashboard.button("u", "󰊳 " .. " Update Plugins", ":Lazy update<CR>"),
             dashboard.button("q", " " .. " Quit", ":qa<CR>"),
@@ -109,7 +105,7 @@ return {
             dashboard.section.header.val = header
             run_neofetch(dashboard)
         else
-            dashboard.section.header.val = ''
+            dashboard.section.header.val = ""
         end
 
         -- close Lazy and re-open when the dashboard is ready
