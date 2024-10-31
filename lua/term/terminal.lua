@@ -2,9 +2,12 @@ local Terminal = {}
 
 Terminal.close_augroup = "close_augroup"
 
-Terminal.set_keymaps = function(bufnr)
+Terminal.set_keymaps = function(bufnr, command)
     local opts = { buffer = bufnr }
-    vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+
+    if command ~= "fish" then
+        vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+    end
     vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
     vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
     vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
@@ -49,7 +52,7 @@ Terminal.open = function(command, split_dir)
         buffer = bufnr,
     })
 
-    Terminal.set_keymaps(bufnr)
+    Terminal.set_keymaps(bufnr, command)
     Terminal.configure(bufnr)
 
     return bufnr

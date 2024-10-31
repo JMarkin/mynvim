@@ -2,7 +2,7 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        enabled = false,
+        enabled = true,
         opts_extend = { "spec" },
         opts = {
             defaults = {},
@@ -38,6 +38,9 @@ return {
                     },
                 },
             },
+            triggers = {
+                { "<auto>", mode = "nixsotc" },
+            },
         },
         keys = {
             {
@@ -63,7 +66,7 @@ return {
     {
         "echasnovski/mini.clue",
         event = "VimEnter",
-        enabled = true,
+        enabled = false,
         config = function()
             local miniclue = require("mini.clue")
             miniclue.setup({
